@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" version="24.8.6">
   <diagram name="Seite-1" id="LhfKS-z94-HeNpTXFxl4">
-    <mxGraphModel dx="6097" dy="2363" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3116" dy="562" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -261,19 +261,19 @@
         <mxCell id="BhIb_LvlYHAXSey2lmdY-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="-1970" y="599" width="1974" height="530" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-1" value="Autonomous Systems" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-1" value="Autonomous Systems" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="-1814" y="1555" width="149" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="adXcQGUPG4oomT1BuJV5-5" target="adXcQGUPG4oomT1BuJV5-12">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="adXcQGUPG4oomT1BuJV5-5" target="adXcQGUPG4oomT1BuJV5-12" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-5" value="robotic machinery, drones.." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-5" value="robotic machinery, drones.." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1814" y="1583" width="149" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-6" value="&lt;font color=&quot;#990000&quot;&gt;Computer&lt;/font&gt; Vision / &lt;font color=&quot;#4d9900&quot;&gt;Machine&lt;/font&gt; vision" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-6" value="&lt;font color=&quot;#990000&quot;&gt;Computer&lt;/font&gt; Vision / &lt;font color=&quot;#4d9900&quot;&gt;Machine&lt;/font&gt; vision" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1799" y="1637" width="120" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="adXcQGUPG4oomT1BuJV5-9" target="adXcQGUPG4oomT1BuJV5-10">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="adXcQGUPG4oomT1BuJV5-9" target="adXcQGUPG4oomT1BuJV5-10" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="-1738" y="1980" />
@@ -281,44 +281,62 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-9" value="&lt;b&gt;Image processing&lt;/b&gt;: analyze and extract Data" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-9" value="&lt;b&gt;Image processing&lt;/b&gt;: analyze and extract Data" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1873.25" y="1937" width="270.25" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-10" value="&lt;b&gt;Frame Grabbing:&lt;/b&gt; capture digital images from &lt;i&gt;cameras&lt;/i&gt; and transfer them to the processing unit" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-10" value="&lt;b&gt;Frame Grabbing:&lt;/b&gt; capture digital images from &lt;i&gt;cameras&lt;/i&gt; and transfer them to the processing unit" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1873.25" y="1982" width="271.25" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-12" value="&lt;b&gt;Decision Making&lt;/b&gt;:&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-12" value="&lt;b&gt;Decision Making&lt;/b&gt;:&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1873.75" y="1738" width="269" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-13" value="&lt;font color=&quot;#990000&quot;&gt;detecting objects, scanning images, scanning texts, scanning videos, recognizing images, detecting faces and tracking objects, virtual reality, augmented reality and more.&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-13" value="&lt;font color=&quot;#990000&quot;&gt;detecting objects, scanning images, scanning texts, scanning videos, recognizing images, detecting faces and tracking objects, virtual reality, augmented reality and more.&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1873.75" y="1762" width="269" height="68" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-1739.814736842105" y="1879" as="sourcePoint" />
             <mxPoint x="-1738.677894736842" y="1937" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-14" value="&lt;div&gt;&lt;font color=&quot;#4d9900&quot;&gt;Inspecting objects, detecting flaws in objects and inspecting packages, classifying objects, detecting colors, verifying colors, detecting patterns and matching patterns in process control and robot guidance&amp;nbsp;&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-14" value="&lt;div&gt;&lt;font color=&quot;#4d9900&quot;&gt;Inspecting objects, detecting flaws in objects and inspecting packages, classifying objects, detecting colors, verifying colors, detecting patterns and matching patterns in process control and robot guidance&amp;nbsp;&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1873.25" y="1830" width="269" height="94" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-27" value="&lt;div&gt;quality&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;inspection&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-27" value="&lt;div&gt;quality&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;inspection&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1587" y="1738" width="234" height="154" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-30" value="3D Reconstruction" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-30" value="3D Reconstruction" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1468" y="1937" width="115" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-31" value="Stereo Vision" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-31" value="Stereo Vision" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1587" y="1982" width="234" height="45" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-32" value="Object recognition" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-32" value="Object recognition" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1587" y="1937" width="115" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-34" value="ML/ CNN" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-34" value="ML/ CNN" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1522" y="1900" width="115" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="adXcQGUPG4oomT1BuJV5-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+        <mxCell id="adXcQGUPG4oomT1BuJV5-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="-1963" y="1507" width="669" height="565" as="geometry" />
+        </mxCell>
+        <mxCell id="KuregqAKhO8P-oNyMGk7-1" value="Stereo Vision" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1123" y="1507" width="146" height="33" as="geometry" />
+        </mxCell>
+        <mxCell id="KuregqAKhO8P-oNyMGk7-2" value="Synchronization" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-910" y="1507" width="146" height="33" as="geometry" />
+        </mxCell>
+        <mxCell id="KuregqAKhO8P-oNyMGk7-4" value="Moving systems" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-905" y="1551" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="KuregqAKhO8P-oNyMGk7-5" value="Lac&lt;span style=&quot;background-color: initial;&quot;&gt;k of Data&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1136" y="1557" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="KuregqAKhO8P-oNyMGk7-6" value="3D Data and depth info" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1104" y="1652" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="KuregqAKhO8P-oNyMGk7-7" value="Cost Saving&lt;div&gt;Faster&lt;/div&gt;" style="triangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1118" y="1732" width="143" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
