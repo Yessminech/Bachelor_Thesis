@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.4">
   <diagram name="Seite-1" id="LhfKS-z94-HeNpTXFxl4">
-    <mxGraphModel dx="3887" dy="933" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2797" dy="390" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -268,7 +268,7 @@
           <mxGeometry x="-695" y="1240" width="547" height="367" as="geometry" />
         </mxCell>
         <mxCell id="w36qHaAKVGlrDXUNlCMk-4" value="Hardware Setup" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="-693" y="1242" width="60" height="30" as="geometry" />
+          <mxGeometry x="-693" y="1242" width="90" height="30" as="geometry" />
         </mxCell>
         <mxCell id="w36qHaAKVGlrDXUNlCMk-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="w36qHaAKVGlrDXUNlCMk-6" target="w36qHaAKVGlrDXUNlCMk-7">
           <mxGeometry relative="1" as="geometry">
@@ -329,6 +329,9 @@
               <mxPoint x="-434" y="1335" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-33" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.x" vertex="1" parent="1">
+          <mxGeometry x="-538" y="1373" width="30" height="28" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
