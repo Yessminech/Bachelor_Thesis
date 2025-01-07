@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.4">
   <diagram name="Seite-1" id="LhfKS-z94-HeNpTXFxl4">
-    <mxGraphModel dx="6583" dy="2266" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3887" dy="933" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -33,13 +33,6 @@
         </mxCell>
         <mxCell id="_EtR411--CDN1A1MT_r7-8" value="&lt;div&gt;Roboception GenICam Convenience Layer&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;locked=1;connectable=0;" parent="1" vertex="1">
           <mxGeometry x="-1048" y="179" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="_EtR411--CDN1A1MT_r7-9" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
-          <mxGeometry width="120" relative="1" as="geometry">
-            <mxPoint x="560" y="2031" as="sourcePoint" />
-            <mxPoint x="680" y="2031" as="targetPoint" />
-            <Array as="points" />
-          </mxGeometry>
         </mxCell>
         <mxCell id="_EtR411--CDN1A1MT_r7-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;locked=1;connectable=0;" parent="1" source="_EtR411--CDN1A1MT_r7-12" target="_EtR411--CDN1A1MT_r7-15" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -270,6 +263,72 @@
         </mxCell>
         <mxCell id="KuregqAKhO8P-oNyMGk7-7" value="Cost Saving&lt;div&gt;Faster&lt;/div&gt;" style="triangle;whiteSpace=wrap;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;locked=1;connectable=0;" parent="1" vertex="1">
           <mxGeometry x="-1118.25" y="1490" width="143" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-3" value="" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="1">
+          <mxGeometry x="-695" y="1240" width="547" height="367" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-4" value="Hardware Setup" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-693" y="1242" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="w36qHaAKVGlrDXUNlCMk-6" target="w36qHaAKVGlrDXUNlCMk-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-463" y="1385" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-6" value="acA2440-20gc" style="image;html=1;image=img/lib/clip_art/networking/Ip_Camera_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="-456" y="1356" width="44" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="w36qHaAKVGlrDXUNlCMk-7" target="w36qHaAKVGlrDXUNlCMk-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-7" value="Digitus DN-11004" style="image;html=1;image=img/lib/clip_art/networking/Switch_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="-516" y="1464" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="w36qHaAKVGlrDXUNlCMk-8" target="w36qHaAKVGlrDXUNlCMk-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-493" y="1385" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-8" value="acA2500-14gm" style="image;html=1;image=img/lib/clip_art/networking/Ip_Camera_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="-544" y="1356" width="44" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="w36qHaAKVGlrDXUNlCMk-12" target="w36qHaAKVGlrDXUNlCMk-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-12" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: light-dark(#ffffff, var(--ge-dark-color, #121212)); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;LogiLink UA0184A&lt;/span&gt;&lt;/div&gt;" style="image;html=1;image=img/lib/clip_art/computers/USB_Hub_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="-357" y="1485" width="25" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-13" value="Computer" style="image;html=1;image=img/lib/clip_art/computers/Netbook_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="-271" y="1464" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="w36qHaAKVGlrDXUNlCMk-26" target="w36qHaAKVGlrDXUNlCMk-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-26" value="Power" style="image;html=1;image=img/lib/clip_art/networking/power_distribution_unit_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="-662" y="1464" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-30" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="w36qHaAKVGlrDXUNlCMk-26" target="w36qHaAKVGlrDXUNlCMk-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-622.9966666666664" y="1446" as="sourcePoint" />
+            <mxPoint x="-530" y="1337" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-622" y="1337" />
+              <mxPoint x="-522" y="1336" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w36qHaAKVGlrDXUNlCMk-31" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="w36qHaAKVGlrDXUNlCMk-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-522" y="1336" as="sourcePoint" />
+            <mxPoint x="-437" y="1351" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-434" y="1335" />
+            </Array>
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
