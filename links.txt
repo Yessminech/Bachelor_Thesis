@@ -1,0 +1,14 @@
+https://cdn.alliedvision.com/fileadmin/content/documents/products/cameras/various/features/Alvium_Features_Reference.pdf
+https://docs.alliedvision.com/Vimba_X/VmbPy_Function_Reference/Camera.html
+https://www.reddit.com/r/computervision/comments/1dpdkdz/basler_camera_ptp_synchronization_issue/
+https://www.nettimelogic.com/resources/PTP%20Basics.pdf
+https://va-imaging.com/blogs/machine-vision-knowledge-center/connecting-multiple-gige-cameras-to-one-ethernet-port?srsltid=AfmBOoqwSLUbvF7LrWvgRC7bj6igHvmCF-f5vxd75uPSSXJs9xliKV9e
+https://support.thinklucid.com/app-note-multi-camera-synchronization-using-ptp-and-scheduled-action-commands/
+https://www.youtube.com/watch?v=mWU99wQNwf0
+https://docs.baslerweb.com/frame-grabbers/framegrabber-sdk
+https://docs.baslerweb.com/pylonapi/pylon-deployment-guide
+https://github.com/basler/pypylon/tree/master
+https://docs.baslerweb.com/pylonapi/cpp/namespace_gen_api
+https://en.ids-imaging.com/techtipp-details/items/ptp_clock_comparison.html
+draw.io:
+https://app.diagrams.net/#HYessminech%2FBachelor_Thesis%2Fmaster%2Fba.drawio#%7B%22pageId%22%3A%22LhfKS-z94-HeNpTXFxl4%22%7D
