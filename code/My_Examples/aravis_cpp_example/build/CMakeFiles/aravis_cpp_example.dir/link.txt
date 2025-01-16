@@ -1,0 +1,1 @@
+/usr/bin/c++ "CMakeFiles/aravis_cpp_example.dir/src/04-camera-features.cpp.o" -o aravis_cpp_example  -laravis-0.8 -lgio-2.0 -lgobject-2.0 -lglib-2.0 

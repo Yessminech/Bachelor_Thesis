@@ -1,0 +1,12 @@
+Release Notes of GenICam v3.4.2
+===============================
+
+[2438] Fix of security issues in 3rd party libraries:
+              Update zlib 1.3
+              Update miniz 1.14
+[2516] Update pcre to 10,42
+[2515] Update expat to v2.5.0
+[2519] Fix pack_unix.sh
+[2494] Fix loading of persistence file of GenApi 3.4.0
+[2487] Remove outdated license file gpl-2.0.txt
+[2470] Fix required version of cmake

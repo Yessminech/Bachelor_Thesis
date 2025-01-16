@@ -1,0 +1,26 @@
+The following changes with their trac ids were addressed.
+
+[2311] Add support for Mac ARM64
+[2367] Enhance snipper to be used for cross-compiling
+[1877] Improve robustness of persisting.
+[2236] Remove GenCP library from release package.
+[2297] Read accessmode of value edge only once.
+[2298] Increase message buffer.
+[2301] Check for illegal node names and enum entry names.
+       Add test case with illegal node names.
+[2303] Replace c++11 code by Compliler option.
+       Make it possible to catch exceptions in Persistence code.
+       Add test.
+[2312] Add support vor Visual Studio 2019
+[2335] Java binding: place into zip-package of its own.
+[2336] Fix error while packing MacOS test package.
+[2347] Fix issues reported by Klocwork static analyzer.
+[2348] Python binding: fix GenTL test.
+[2350] Add VC runtime libraries to installation package.
+[2352] Fix build failure on ubuntu. Correct spelling of filename.
+[2355] Python binding: fix setup script for package builders.
+[2356] Support INTEL ONEAPI compiler.
+[2358] Python binding: fix ignored pIsLocked property.
+[2359] Update supported Python versions (3.7-3.10)
+[2361] Python binding: add tests for chunk adapters.
+[2363] Revise fix CFeatureBag

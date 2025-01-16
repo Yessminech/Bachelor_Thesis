@@ -1,0 +1,3 @@
+/home/test/Documents/ba/aravis_discovery/my-aravis-project/build/CMakeFiles/aravis_cpp_example.dir
+/home/test/Documents/ba/aravis_discovery/my-aravis-project/build/CMakeFiles/edit_cache.dir
+/home/test/Documents/ba/aravis_discovery/my-aravis-project/build/CMakeFiles/rebuild_cache.dir

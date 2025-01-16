@@ -1,0 +1,3 @@
+/home/test/Documents/ba/genIcam/camera_communication/build/CMakeFiles/list_devices.dir
+/home/test/Documents/ba/genIcam/camera_communication/build/CMakeFiles/edit_cache.dir
+/home/test/Documents/ba/genIcam/camera_communication/build/CMakeFiles/rebuild_cache.dir
