@@ -1,0 +1,661 @@
+/* -----------------------------------------------
+bepress IR local stylesheet.
+Author:   David Stienstra
+Version:  2024
+PLEASE SAVE THIS FILE LOCALLY!
+----------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+/* ---------------- Meta Elements ---------------- */
+    /* --- Meta styles and background --- */
+body {
+    font: normal 14px/1.5 "Lato", Helvetica, Verdana, Arial, sans-serif;  /* should be medium except when fitting into a fixed container */
+    background: #fff url(assets/md5images/eb9404927e20b22c38e4ac5b07febefc.png) repeat-x left top;
+}
+/* ---------------- Header ---------------- */
+#uark #header {
+    position: relative;  /* needed for logo positioning */
+  height: auto !important; /* !important overrides mbl styling */
+  margin-top: 45px;
+  margin-bottom: 52px;
+}
+#uark #banner_image {
+    display: block; /* removes descender of inline element */
+    width: 980px; /* not necessary if image is sized correctly */
+    height: auto !important;  /* avoids warping improperly sized header image / SUP-19994 */
+}
+    /* --- Logo --- */
+#uark #logo_image {
+    position: absolute !important; /* !important overrides mbl styling */
+    top: 0;
+    left: 0;  /* change to "right:" for right aligned logo */
+    width: 26.42857142857% !important;  /* 240 / 980 */
+    height: auto !important; /* Important avoides DC assigning incorrect height to logo image */
+}
+#uark #logo_image2 {
+  position: absolute !important; /* !important overrides mbl styling */
+  top: 0;
+  left: 0.6122448979%;  /* change to "right:" for right aligned logo */
+  width: 62.1428571428% !important;  /* 240 / 980 */
+  height: auto !important; /* Important avoides DC assigning incorrect height to logo image */
+}
+#uark #header a#banner_link:focus img,
+#uark #header a#logo_link:focus img,
+#uark #header a#logo_link2:focus img {
+  outline: 1px dashed #000;
+}
+/* ---------------- Navigation ---------------- */
+
+#uark #navigation,
+#uark #navigation #tabs {
+    height: 57px;
+    overflow: hidden; /* have seen issues with tabs extending below nav container */
+    white-space: nowrap;
+    background: transparent;
+}
+#uark #navigation #tabs {
+	margin-left: 75px; }
+#uark #navigation #tabs,
+#uark #navigation #tabs ul,
+#uark #navigation #tabs ul li {
+    padding: 0;
+    margin: 0;
+}
+/* Flexbox Navigation July 2018 */
+#uark #navigation #tabs,
+#uark #navigation #tabs ul {
+    display: flex;
+    justify-content: flex-start; /* "flex-start" for left-aligned tabs, change to "flex-end" for right-aligned tabs, "center" for centered */
+    width: 100%;
+}
+#uark #navigation #tabs a {
+    font: normal 14px "Lato", Helvetica, Verdana, Arial, sans-serif;
+    display: block;
+    width: auto !important; /* fixes "my account" not fitting in container on page load */
+    height: 57px;
+    line-height: 57px;
+    color: #971e32;
+    transition: 0.3s ease-in-out;
+    background-color: transparent;
+    padding: 0 11px; /* with arial bold, this fits */
+    margin: 0;
+    border: 0;
+    text-transform: uppercase;
+}
+#uark #navigation #tabs a:hover,
+#uark #navigation #tabs a:active,
+#uark #navigation #tabs a:focus {
+    color: #000000;
+    text-decoration: underline;
+}
+#uark #navigation #tabs li:first-child {
+  margin-left: 339px;
+}
+/* ---------------- Sidebar ---------------- */
+#uark #sidebar {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  outline: 1px solid #e4e4e4;
+  padding-top: 16px;
+}
+#uark #sidebar p.site-follow {
+	display: none; }
+#uark #sidebar h2 {
+    font: normal 18px/2 "Lato", Helvetica, Verdana, Arial, sans-serif;
+    color: #000;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+#uark #sidebar a {
+    font: normal 14px "Lato", Helvetica, Verdana, Arial, sans-serif;
+    color: #9b2235;
+    text-decoration: none;
+}
+#uark #sidebar a:hover,
+#uark #sidebar a:active,
+#uark #sidebar a:focus {
+    color: #000000;
+    text-decoration: underline;
+}
+#uark #sidebar #sidebar-search label {
+    font: normal 14px "Lato", Helvetica, Verdana, Arial, sans-serif;
+    color: #000;
+}
+#uark #sidebar #sidebar-search {
+    margin-top: 8px;
+    padding-left: 15px;
+}
+#uark #sidebar #sidebar-search span.border { background: transparent; }
+.searchbutton { cursor: pointer; } /* best practice, should move to ir-layout.css */
+
+#uark #sidebar #lrc-badge a:hover,
+#uark #sidebar #lrc-badge a:active,
+#uark #sidebar #lrc-badge a:focus {
+  background: transparent url(/assets/images/lrc_badge.png) center center no-repeat;
+  outline: 1px dashed #000;
+}
+
+#uark #sidebar a:hover img,
+#uark #sidebar a:active img,
+#uark #sidebar a:focus img {
+  outline: 1px dashed #000;
+}
+
+#uark #sidebar form#browse {
+  padding-left: 15px;
+}
+
+#uark #sidebar form label {
+  color: #000;
+}
+#uark #sidebar ul#side-notify {
+  padding-top: 0;
+}
+#uark #sidebar #sb-custom-lowest h2.sb-custom-title {
+  background-color: #424242;
+  color: #fff;
+}
+#uark #sidebar #sb-custom-lowest .socialmedia {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+#uark #sidebar #sb-custom-lowest .socialmedia a {
+  background-color: #9d2235;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  height: 46px;
+  width: 46px;
+  margin-right: 15px;
+}
+#uark #sidebar #sb-custom-lowest .socialmedia a:last-of-type {
+  margin-right: 0;
+}
+#uark #sidebar #sb-custom-lowest .socialmedia a img {
+  margin: auto;
+}
+#uark #sidebar #sb-custom-lowest .socialmedia a:active,
+#uark #sidebar #sb-custom-lowest .socialmedia a:focus,
+#uark #sidebar #sb-custom-lowest .socialmedia a:hover {
+  outline: 2px solid #000;
+}
+#uark #sidebar #sb-custom-lowest .socialmedia a:active img,
+#uark #sidebar #sb-custom-lowest .socialmedia a:focus img ,
+#uark #sidebar #sb-custom-lowest .socialmedia a:hover img {
+  outline: none;
+}
+#uark #sidebar #sb-custom-upper .submit-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+#uark #sidebar #sb-custom-upper .submit-button a {
+  color: #fff;
+  background-color: #9d2235;
+  font: normal 14px/2.5 "Lato", Helvetica, Verdana, Arial, sans-serif;
+  margin: 0 15px;
+  width: 100%;
+  border-radius: 5px;
+}
+#uark #sidebar #sb-custom-upper .submit-button a:active,
+#uark #sidebar #sb-custom-upper .submit-button a:hover,
+#uark #sidebar #sb-custom-upper .submit-button a:focus {
+  outline: 2px solid #000;
+  text-decoration: none;
+}
+/* ---------------- Main Content ---------------- */
+#uark #wrapper { /* for full-length sidebar content background/elements */
+    background: url(assets/md5images/3336ccae8509c9e06f9918aa45494487.gif) repeat-y left top;
+    margin: 16px 0;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+}
+/*#uark #content { padding-top: 16px; }*/
+    /* --- Breadcrumbs --- */
+#uark #main.text div.crumbs a:link,
+#uark #main.text div.crumbs a:visited {
+    text-decoration: none;
+    color: #971e32;
+}
+#uark #main.text div.crumbs a:hover,
+#uark #main.text div.crumbs a:active,
+#uark #main.text div.crumbs a:focus {
+    text-decoration: underline;
+    color: #000000;
+}
+#uark #dcn-home > #homepage-intro { margin: 15px 0; }
+ /* adds space under full-width main-content image */
+#uark #home-page-banner { margin-bottom: 16px; }
+    /* --- Headers --- */
+#uark #dcn-home > h2,
+#uark #main.text h2#hometitle,
+#uark #main.text #homepage-heading-row h2 {
+    font: normal 21px "Lato", Helvetica, Verdana, Arial, sans-serif;
+}
+h3 {
+    margin: 0;
+    text-decoration: underline; }
+/* FF 55 takes parent element's color a text-deoration-color (black, usually) */
+#dcn-home #cover-browse h3 { color: #971e32; }
+#uark #dcn-home #cover-browse h3 a {
+    font: 400 17px/1.6 "Lato", Helvetica, Verdana, Arial, sans-serif;
+    text-decoration: none;
+}
+#uark #dcn-home #cover-browse h3 a:hover,
+#uark #dcn-home #cover-browse h3 a:focus,
+#uark #dcn-home #cover-browse h3 a:active {
+    text-decoration: underline;
+}
+    /* --- Links --- */
+#uark #main.text a:link,
+#uark #main.text a:visited {
+    color: #971e32; /* declared for #network-icon text */
+}
+#uark #main.text a:link span.icon-question-sign {
+  text-decoration: none;
+}
+#uark #main.text a:hover,
+#uark #main.text a:active,
+#uark #main.text a:focus {
+    color: #000000;
+    text-decoration: underline;
+}
+    /* PotD / Top DL widgets */
+#uark #dcn-home .box.aag h2,
+#uark #dcn-home .box.potd h2 {
+    width: 267px;
+    margin: 0;
+    font: normal 18px "Lato", Helvetica, Verdana, Arial, sans-serif;
+    border-bottom: 1px solid #d3d3d3;
+}
+#uark #main.text .box a:link,
+#uark #main.text .box a:visited {
+    font: bold 14px "Lato", Helvetica, Verdana, Arial, sans-serif;
+    text-decoration: none;
+    border-bottom: 1px solid #d3d3d3;
+    background: none;
+}
+#uark #main.text .box a:hover,
+#uark #main.text .box a:active,
+#uark #main.text .box a:focus {
+    text-decoration: underline;
+}
+/* article-level text // default values 12px/13px */
+#uark #alpha .element p,
+#uark #custom-fields .element p,
+#uark #alpha #recommended_citation p {
+  font-size: 14px;
+}
+#uark #beta_7-3 #beta-disciplines.aside p,
+#uark #alpha #attach_additional_files .files span {
+  font-size: 14px !important;
+}
+
+#uark #alpha .element h4,
+#uark #custom-fields .element h4,
+#uark #beta_7-3 h4,
+#uark #alpha .element h2,
+#uark #custom-fields .element h2,
+#uark #beta_7-3 h2,
+#uark #share.aside h2,
+#uark #alpha #attach_additional_files .related strong {
+  font-size: 15px !important;
+}
+#uark #alpha #title.element p {
+  font-size: 22px;
+}
+/* Breadcrumbs */
+#uark #breadcrumb a,
+#uark .crumbs p a,
+#uark #pager li {
+  font-size: 12px;
+}
+
+#uark ul#pager li {
+  padding-top: 5px;
+}
+
+/* Browse Disciplines */
+#uark #content .subnav li {
+  font-size: 13px;
+}
+
+#uark .discipline-browser dt,
+#uark .new-discipline dt {
+  font-size: 15px;
+}
+#uark .discipline-browser dd,
+#uark .new-discipline dd,
+#uark dl.communities dd ul li {
+  font-size: 14px;
+}
+
+#uark .discipline-browser dd,
+#uark .new-discipline dd {
+    padding: 3px 0;
+}
+/* Submit Research */
+#uark .communities dt,
+#uark .communities dt a:link {
+  font-size: 14px;
+  font-weight: normal;
+}
+#uark dl.communities dd ul li {
+    line-height: 1.3em;
+}
+
+/* Announcements */
+#uark #main.text #announce h3,
+#uark #main.text #announce h4,
+#uark #main.text #help h3 {
+  font-size: 15px;
+}
+
+/* Site subpage headings */
+#uark #main.text h2#ir-about,
+#uark #main.text h2#faq-top,
+#uark #main.text h1#faq-top,
+#uark #main.text h2#communities-title,
+#uark #main.text h2#top,
+#uark #main.text h2#submit-title,
+#uark #main.text #announce h2,
+#uark #main.text #accessibility-statement h2,
+#uark #main.text .discipline-block h2,
+#uark #main.text h2#activity-title,
+#uark #main.text h2#recent-title,
+#uark #main.text h2#topdownloads-title,
+#uark #main.text h1#topdownloads-title,
+#uark #main.text h2#peer-review-title,
+#uark #main.text > h2 {
+  font-size: 22px;
+}
+#uark #series-home .pdf, 
+#uark #series-home .native, 
+#uark #series-home .metadata-only, 
+#uark #series-home .external {
+  font-size: 12px;
+  line-height: 2.3em;
+}
+/* homepage stats */
+#uark p#stats,
+#uark #main.text #network-icon a {
+  font-size: 13px;
+}
+
+#uark ul#pager li {
+    padding-top: 5px;
+}
+#uark #dcn-home #homepage-heading-row .btn {
+    margin-bottom: 8px;
+}
+/* Journals */
+#uark .article-list h2,
+#coverart #alpha .article-list h2 {
+  font: normal 21px "Lato", Helvetica, Verdana, Arial, sans-serif;
+  background: transparent;   /* removes background and adds a line under doctype header */
+  border-bottom: 1px solid #bfbfbf;
+  padding-bottom: 0;
+  margin-bottom: 25px;
+}
+#uark #main.text .article-list h1,
+#alpha h1, #series-home h1 {
+  font: normal 22px "Lato", Helvetica, Verdana, Arial, sans-serif; /* Current Issue */
+}
+#coverart #beta {
+    float: right; }
+        /* Cover art */
+#coverart #beta .coverart-box h4 {
+    font: normal 18px "Lato", Helvetica, Verdana, Arial, sans-serif; /* default is 18px */
+    color: #000;
+    text-align: left;
+    text-transform: none;
+    border-bottom: 1px solid #bfbfbf; }
+#coverart #beta .coverart-box {
+    font: normal 14px "Lato", Helvetica, Verdana, Arial, sans-serif;
+    border: 0; }
+#coverart #beta #coverart-box-container {
+    border: 0; }
+
+#coverart #beta dl  {
+    margin-left: 0 !important; }
+#coverart #beta #coverart-editors dt {
+    font-size: 14px;
+    padding-top: 10px; }
+#coverart #beta #coverart-editors dd {
+    padding-top: 3px;
+}
+
+#uark #sidebar ul#navlist li a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 40px;
+  padding: 0;
+}
+/* Homepage buttons */
+#uark #main.text #homebuttons {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  justify-content: flex-start;
+}
+#uark #main.text #homebuttons a {
+  height: 138px;
+  width: 138px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #9d2235;
+  margin-bottom: 16px;
+  margin-right: 16px;
+}
+#uark #main.text #homebuttons a:nth-child(4n) {
+  margin-right: 0;
+}
+#uark #main.text #homebuttons a img {
+  height: 80px;
+  width: 80px;
+  margin: 0 auto;
+}
+#uark #main.text #homebuttons a h3 {
+  color: #fff;
+  font: normal 17px "Lato", Helvetica, Verdana, Arial, sans-serif !important;
+  text-decoration: none;
+  text-align: center;
+}
+#uark #content #main.text #homebuttons a:focus {
+  border-bottom: none;
+}
+#uark #main.text #homebuttons a:active,
+#uark #main.text #homebuttons a:hover,
+#uark #main.text #homebuttons a:focus {
+  text-decoration: none;
+  outline: 2px solid #000;
+}
+/* ---------------- Footer ---------------- */
+#uark #bepress a {
+	background-image: url(assets/md5images/679594240bfa0eb9493776f7d68fa330.svg);
+  background-size: 210px;
+	background-position: center;
+}
+#uark {
+    background: url(assets/md5images/00c1368ff96ba62d5bcb6a4f54a3a3e5.gif) repeat-x left bottom;
+}
+#uark #footer {
+    height: 88px;
+    background-color: #424242; }
+#uark #bepress a {
+    height: 86px;
+    margin: 1px 0;
+    background-color: #424242; }
+#uark #footer p,
+#uark #footer p a {
+    font: normal 14px/2 "Lato", Helvetica, Verdana, Arial, sans-serif;
+    color: #e9e9e9;
+    text-decoration: none;
+}
+#uark #footer p:first-of-type { padding-top: 16px; }
+
+#uark #container #footer a.secondary-link {
+  font-size: 12px;
+}
+#uark #footer p a:hover,
+#uark #footer p a:active,
+#uark #footer p a:focus {
+    text-decoration: underline; }
+#bepress a:focus {
+      outline: 1px dashed #fff;
+}
+#uark #content {
+    min-height: calc(100vh - 337px);  /* 310px varies by site. calculated by summing all fixed heights (header, navigation, footer, fixed margins between these elements) */
+}
+/* Search pages */
+.legacy #uark #wrapper:after {
+    content: none; /* search pages */
+}
+.legacy #uark #wrapper {
+  margin-bottom: 0;
+}
+.legacy #uark #content {
+  margin-bottom: 16px;
+}
+/* ---------------- Miscellaneous fixes ---------------- */
+    /* --- Advanced Search --- */
+.legacy #uark #wrapper {  background-image: none; }
+/* Browse Authors accessibility fix- CSFR-2648 */
+#uark #main.text .authorbrowser p.letters a:hover,
+#uark #main.text .authorbrowser p.letters a:focus {
+    background: url(/assets/azMe.jpg) bottom center no-repeat;
+    color: #fff;
+}
+/* Expert Gallery Suite SW Gallery */
+.egs-profile-gallery {
+	display: block; /* removes descender space below inline element */
+ /* left aligned */
+	margin: -16px 0 -16px -42px; /* #content .text padding: 16px 0; and #content .text (margin 32px) + #sidebar (margin 10px) */
+
+}
+/* ---------------- Mobile ---------------- */
+/*fixes bullet underline for Browse Research and Scholarship links*/
+.mbl #main #cover-browse h3 { text-decoration: none; }
+.mbl #dcn-home .box.aag span,
+.mbl #dcn-home .box.potd span {
+    display: block;
+}
+.mbl #uark #main.text #dcn-home .box.aag h2,
+.mbl #uark #main.text #dcn-home .box.potd h2 {
+  width: 100%;
+}
+header#mobile-nav {
+    font-size: 0;
+    line-height: 0; }
+.mbl #uark #header,
+.mbl #uark #header a#banner_link img,
+.mbl #uark #navigation {
+    width: 100% !important;
+}
+
+.mbl #sidebar h2 {
+  margin: 5px 0 !important;
+  padding-left: 3% !important;
+  width: 97% !important;
+}
+
+.mbl #sidebar #sb-custom-lower,
+.mbl #sidebar #sb-custom-lowest,
+.mbl #sidebar #sb-custom-upper,
+.mbl #sidebar #sb-custom-middle {
+  margin: 5px 0 !important;
+  width: 100% !important;
+}
+
+.mbl #sidebar ul.sb-custom-ul {
+  margin: 0 3% !important;
+  width: 94% !important;
+}
+
+.mbl #uark #header #logo_image {
+    position: absolute !important; /* !important overrides mbl styling */
+    top: 0;
+    left: 0;  /* change to "right:" for right aligned logo */
+    width: 26.42857142857% !important;  /* 240 / 980 */
+    height: auto !important; /* Important avoides DC assigning incorrect height to logo image */
+    display: none;
+}
+
+.mbl #uark #logo_image2 {
+  position: absolute !important; /* !important overrides mbl styling */
+  top: 0;
+  left: 0.6122448979%;  /* change to "right:" for right aligned logo */
+  width: 62.1428571428% !important;  /* 240 / 980 */
+  height: auto !important; /* Important avoides DC assigning incorrect height to logo image */
+}
+
+.mbl #uark #footer #bepress a {
+	background: transparent url(assets/md5images/679594240bfa0eb9493776f7d68fa330.svg) center no-repeat !important;
+	height: 50px !important;
+	margin: 0px !important;
+  background-size: contain !important;
+}
+
+.mbl #uark #footer {
+	background-color: #424242 !important; /* plug in footer background color */
+	background-image: none !important;
+}
+
+.mbl #uark #content {
+    min-height: unset;
+}
+
+.mbl #uark #dcn-home #homepage-heading-row {
+  align-items: center;
+}
+.mbl #uark #dcn-home #homepage-heading-row .btn {
+  display: inline;
+}
+.mbl #uark #dcn-home #homepage-heading-row .btn:hover,
+.mbl #uark #dcn-home #homepage-heading-row .btn:focus,
+.mbl #uark #dcn-home #homepage-heading-row .btn:active {
+  margin-left: 0;
+}
+.mbl #uark #dcn-home span.site-follow {
+  margin: 0 5px;
+}
+.mbl #uark #sidebar {
+  border-radius: 0;
+  outline: none;
+}
+
+.mbl #uark #main.text #homebuttons a:nth-child(4n) {
+  margin-right: 16px;
+}
+
+/* Miscellaneous */
+/* CSS from pre-redesign */
+/*Hiding the empty author link, 6/11/19, alei*/
+
+div#sidebar ul#side-author .faq {display:none}
+
+/* --- Social Media Icons --- added by Arthur Lei on 30 January 2020 */
+#uark #sidebar #sb-custom-lower ul#social-media-list{
+display:flex;
+flex-flow: column wrap;
+list-style-type: none;
+justify-content: center;
+align-items:center;
+}
+
+/*-Time to build a scrollbox-*/
+
+#uark .scrollbox-text {
+	height: 200px;
+	overflow-y:scroll;
+}
