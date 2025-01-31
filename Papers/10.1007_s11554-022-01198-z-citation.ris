@@ -1,0 +1,18 @@
+TY  - JOUR
+AU  - Subramanyam, Vasanth
+AU  - Kumar, Jayendra
+AU  - Singh, Shiva Nand
+PY  - 2022
+DA  - 2022/04/01
+TI  - Temporal synchronization framework of machine-vision cameras for high-speed steel surface inspection systems
+JO  - Journal of Real-Time Image Processing
+SP  - 445
+EP  - 461
+VL  - 19
+IS  - 2
+AB  - High-speed industrial machine-vision (MV) applications such as surface inspection of steel sheets necessitate synchronous operation of multiple high-resolution cameras. Synchronization of cameras in the microsecond band is necessary to ensure accurate frame matching while melding images together. Existing approaches for synchronization employ dedicated electronic circuits or network-time-protocol (NTP) whose accuracies are in the millisecond band. Conversely, IEEE-1508 precision-time-protocol (PTP) synchronizes computers in highly accurate industrial measurement and control networks. Synchronization algorithms using PTP involve synchronizing computers connected to cameras. Although the computers synchronize in the microsecond band, the cameras synchronize in the millisecond band. Moreover, PTP is practically not used for synchronizing multiple devices due to the high bandwidth utilization of the network. This paper proposes a temporal synchronization algorithm and framework with two-way communication with timestamps and estimates mean path delays. Unicast transmission forms the basis of the synchronization framework, so that the network utilization is minimal, thereby ensuring the necessary bandwidth is available for image transmission. Experimental results show that the proposed approach outperforms the existing methodologies with synchronization accuracies in the microsecond band.
+SN  - 1861-8219
+UR  - https://doi.org/10.1007/s11554-022-01198-z
+DO  - 10.1007/s11554-022-01198-z
+ID  - Subramanyam2022
+ER  - 

@@ -1,0 +1,19 @@
+TY  - JOUR
+AU  - Silva, A. C. Santos
+AU  - Lambros, J.
+AU  - Garner, D. M.
+AU  - Patterson, E. A.
+PY  - 2020
+DA  - 2020/01/01
+TI  - Dynamic Response of a Thermally Stressed Plate with Reinforced Edges
+JO  - Experimental Mechanics
+SP  - 81
+EP  - 92
+VL  - 60
+IS  - 1
+AB  - Conditions in hypersonic flight generate non-uniform temperature distributions that affect the performance and longevity of aircraft components. Historically, a limited amount of experimental work has been performed on the mechanical behaviour of reinforced aircraft structures subjected to very high temperatures. In this work on Hastelloy-X plates, non-contact techniques were used to measure the full-field temperature and deflection of a 1 mm thick plate with reinforced edges. The geometry was designed to emulate an aircraft’s skin with the reinforced edges performing the function of stringers and ribs. High temperatures were achieved using quartz lamps arranged in various configurations with controllable power output. Digital image correlation (DIC) was used to measure surface displacements and a micro-bolometer mapped the temperature distribution across the plate. Deflection results for the reinforced plate showed it to behave as a dynamic system that buckles out-of-plane when heated before relaxing to a steady state. It is demonstrated that the out-of-plane displacement field experienced by the plate is influenced both by the in-plane temperature gradient and the energy supplied.
+SN  - 1741-2765
+UR  - https://doi.org/10.1007/s11340-019-00536-w
+DO  - 10.1007/s11340-019-00536-w
+ID  - Silva2020
+ER  - 
