@@ -6,8 +6,6 @@
 #include <rc_genicam_api/image.h>
 #include <rc_genicam_api/image_store.h>
 #include <rc_genicam_api/nodemap_out.h>
-#include <opencv2/opencv.hpp> // OpenCV for visualization
-
 #include <iostream>
 #include <atomic>
 #include <thread>
@@ -192,7 +190,6 @@ void configureSyncFreeRun(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
 {
     if (nodemap)
     {
-        // ToDo: Add try and catch Exceptions
         rcg::setEnum(nodemap, "AcquisitionMode", "Continuous");
         // Make sure that the Frame Start trigger is set to Off to enable free run
         rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
@@ -205,16 +202,14 @@ void configureSyncFreeRun(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
 }
 
 // ToDo: Replace with loading from .xml file
-// Function to adjust camera settings (e.g., exposure, gain, PixelFormat)
+// Function to adjust camera settings (e.g., exposure, gain)
 void adjustCameraSettings(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
 {
-    std::cout << "Adjusting camera settings..." << std::endl;
     if (nodemap)
     {
-        rcg::setFloat(nodemap, "ExposureTimeAbs", 20000.0); // Set exposure to 20ms
-        rcg::setInteger(nodemap, "GainRaw", 5.0);  
-        rcg::setString(nodemap, "PixelFormat", "BayerRG8");
-        std::cout << "Camera settings adjusted: Exposure=20ms, Gain=5, PixelFormat=BayerGR12." << std::endl;
+        rcg::setFloat(nodemap, "ExposureTime", 20000.0); // Set exposure to 20ms
+        rcg::setFloat(nodemap, "Gain", 5.0);             // Set gain
+        std::cout << "Camera settings adjusted: Exposure=20ms, Gain=5." << std::endl;
     }
 }
 
@@ -250,33 +245,42 @@ void storeImage(const rcg::Buffer *buffer, const std::string &format = "png")
     std::cout << "Image stored: " << filename.str() << std::endl;
 }
 
-// Function to convert and display images using OpenCV
-void displayImage(const rcg::Buffer *buffer)
+// Function to start streaming
+bool startStreaming(std::shared_ptr<rcg::Device> device)
 {
-    if (!buffer || buffer->getIsIncomplete())
+    try
     {
-        std::cerr << "Received incomplete buffer, skipping display..." << std::endl;
-        return;
+        std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
+        enablePTP(nodemap); // ToDo: Extend to multiple cameras
+        printTimestamp(nodemap, device->getID());
+        printPtpConfig(nodemap, device->getID());
+        if (!waitForPTPStatus({device}, true, 10)) // ToDo set right value for timeout and change deprecated implementation
+        {
+            return false;
+        }
+        auto streams = device->getStreams();
+        if (streams.empty())
+        {
+            std::cerr << "No streams found!" << std::endl;
+            return false;
+        }
+
+        stream = streams[0];
+        stream->open();
+        stream->startStreaming();
+
+        enableChunkData(nodemap);      // Enable metadata extraction
+        configureSyncFreeRun(nodemap); // Set to Sync Free Run mode
+
+        adjustCameraSettings(nodemap); // Apply exposure and gain settings
+
+        std::cout << "\033[1;32mStreaming started. Press Ctrl+C to stop.\033[0m" << std::endl;
+        return true;
     }
-
-    // Convert the buffer to an OpenCV Mat
-    rcg::Image image(buffer, 0); // Assume first part contains the image
-
-    cv::Mat frame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
-
-    // Convert grayscale to BGR for display
-    cv::Mat display_frame;
-    cv::cvtColor(frame, display_frame, cv::COLOR_BayerBG2BGR );
-    cv::flip(display_frame, display_frame, 1); // Flip vertically
-    cv::resize(display_frame, display_frame, cv::Size(), 0.2, 0.2);
-
-    // Show the image
-    cv::imshow("Live Stream", display_frame);
-
-    // Press 'ESC' to stop streaming
-    if (cv::waitKey(1) == 27)
+    catch (const std::exception &ex)
     {
-        stop_streaming = true;
+        std::cerr << "Error: " << ex.what() << std::endl;
+        return false;
     }
 }
 
@@ -299,61 +303,12 @@ void stopStreaming(std::shared_ptr<rcg::Device> device)
     rcg::System::clearSystems();
 }
 
-// Function to start streaming
-bool startStreaming(std::shared_ptr<rcg::Device> device)
-{
-    try
-    {
-        std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
-        adjustCameraSettings(nodemap); // Apply exposure and gain settings
-        configureSyncFreeRun(nodemap); // Set to Sync Free Run mode
-        enablePTP(nodemap); // ToDo: Extend to multiple cameras
-        printTimestamp(nodemap, device->getID());
-        printPtpConfig(nodemap, device->getID());
-        if (!waitForPTPStatus({device}, true, 10)) // ToDo set right value for timeout and change deprecated implementation
-        {
-            return false;
-        }
-        auto streams = device->getStreams();
-        if (streams.empty())
-        {
-            std::cerr << "No streams found!" << std::endl;
-            return false;
-        }
-
-        stream = streams[0];
-        stream->open();
-        stream->startStreaming();
-
-        enableChunkData(nodemap);      // Enable metadata extraction
-        std::cout << "\033[1;32mStreaming started. Press Ctrl+C to stop.\033[0m" << std::endl;
-        while (!stop_streaming)
-        {
-            const rcg::Buffer *buffer = stream->grab(1000);
-            if (buffer)
-            {
-                displayImage(buffer); // Display using OpenCV
-            }
-        }
-
-        stopStreaming(device);
-        return true;
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << "Error: " << ex.what() << std::endl;
-        return false;
-    }
-}
-
 // Function to capture a single image
 void captureSingleImage(const std::string &format, std::shared_ptr<rcg::Device> device)
 {
     try
     {
         std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
-        adjustCameraSettings(nodemap);
-        configureSyncFreeRun(nodemap); // Ensure it's in Sync Free Run mode
         enablePTP(nodemap); // ToDo: Extend to multiple cameras
         printTimestamp(nodemap, device->getID());
         printPtpConfig(nodemap, device->getID());
@@ -369,6 +324,10 @@ void captureSingleImage(const std::string &format, std::shared_ptr<rcg::Device> 
         stream->startStreaming();
 
         enableChunkData(nodemap);
+        configureSyncFreeRun(nodemap); // Ensure it's in Sync Free Run mode
+
+        adjustCameraSettings(nodemap);
+
         std::cout << "Capturing a single image..." << std::endl;
 
         const rcg::Buffer *buffer = stream->grab(2000);
@@ -417,6 +376,16 @@ int main(int argc, char *argv[])
                     return 1;
                 }
 
+                while (!stop_streaming)
+                {
+                    const rcg::Buffer *buffer = stream->grab(1000);
+                    if (buffer)
+                    {
+                        extractMetadata(device->getRemoteNodeMap(), buffer);   // Extract and print metadata
+                        storeImage(buffer, "png"); // Save the image as PNG
+                    }
+                }
+
                 stopStreaming(device);
                 device->close();
             }
@@ -424,7 +393,5 @@ int main(int argc, char *argv[])
         }
         system->close();
     }
-
-    cv::destroyAllWindows(); // Close OpenCV window
     return 0;
 }

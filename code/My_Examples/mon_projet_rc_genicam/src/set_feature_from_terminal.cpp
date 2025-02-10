@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
         // Set the feature using rcg::setString. If the node is of a different type,
         // consider using rcg::setBoolean, rcg::setInteger, or rcg::setFloat as appropriate.
         std::cout << "Setting feature '" << feature << "' to '" << value << "'." << std::endl;
+        // ToDo: Add try and catch Exceptions
+        // ToDo: Add check for feature type and use appropriate set function
         rcg::setString(nodemap, feature.c_str(), value.c_str(), true);
 
         // Optionally, read back the feature's value to confirm the change.

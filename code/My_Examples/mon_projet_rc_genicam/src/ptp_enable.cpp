@@ -70,31 +70,3 @@ int main(int argc, char *argv[])
 }
 
 
-        //     try
-        //     {
-        //       // just test if Ptp parameters are available
-        //       rcg::getString(nodemap, "PtpEnable", true);
-
-        //       if (!readonly)
-        //       {
-        //         rcg::callCommand(nodemap, "PtpDataSetLatch");
-
-        //         std::cout << "PTP:                        " << rcg::getString(nodemap, "PtpEnable") << std::endl;
-        //         std::cout << "PTP status:                 " << rcg::getString(nodemap, "PtpStatus") << std::endl;
-        //         std::cout << "PTP offset:                 " << rcg::getInteger(nodemap, "PtpOffsetFromMaster") << " ns" << std::endl;
-        //       }
-        //       else
-        //       {
-        //         std::cout << "Ptp cannot be shown due to another application with control access." << std::endl;
-        //         std::cout << std::endl;
-        //       }
-        //     }
-        //     catch (const std::exception &)
-        //     {
-        //       std::cout << "Ptp parameters are not available" << std::endl;
-        //       std::cout << std::endl;
-        //     }
-        //   }
-
-        //   dev->close();
-        // }
