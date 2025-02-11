@@ -1,4 +1,4 @@
-# Install script for directory: /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam
+# Install script for directory: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

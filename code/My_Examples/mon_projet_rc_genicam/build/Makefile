@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam
+CMAKE_SOURCE_DIR = /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build
+CMAKE_BINARY_DIR = /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,24 +117,37 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named genicam_example
+# Target rules for targets named main_example
 
 # Build rule for target.
-genicam_example: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 genicam_example
-.PHONY : genicam_example
+main_example: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main_example
+.PHONY : main_example
 
 # fast build rule for target.
-genicam_example/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/genicam_example.dir/build.make CMakeFiles/genicam_example.dir/build
-.PHONY : genicam_example/fast
+main_example/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/build
+.PHONY : main_example/fast
+
+#=============================================================================
+# Target rules for targets named set_feature
+
+# Build rule for target.
+set_feature: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 set_feature
+.PHONY : set_feature
+
+# fast build rule for target.
+set_feature/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/build
+.PHONY : set_feature/fast
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/genicam_example.dir/build.make CMakeFiles/genicam_example.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -142,7 +155,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/genicam_example.dir/build.make CMakeFiles/genicam_example.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -150,8 +163,32 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/genicam_example.dir/build.make CMakeFiles/genicam_example.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
+
+src/set_feature_from_terminal.o: src/set_feature_from_terminal.cpp.o
+.PHONY : src/set_feature_from_terminal.o
+
+# target to build an object file
+src/set_feature_from_terminal.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/src/set_feature_from_terminal.cpp.o
+.PHONY : src/set_feature_from_terminal.cpp.o
+
+src/set_feature_from_terminal.i: src/set_feature_from_terminal.cpp.i
+.PHONY : src/set_feature_from_terminal.i
+
+# target to preprocess a source file
+src/set_feature_from_terminal.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/src/set_feature_from_terminal.cpp.i
+.PHONY : src/set_feature_from_terminal.cpp.i
+
+src/set_feature_from_terminal.s: src/set_feature_from_terminal.cpp.s
+.PHONY : src/set_feature_from_terminal.s
+
+# target to generate assembly for a file
+src/set_feature_from_terminal.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/src/set_feature_from_terminal.cpp.s
+.PHONY : src/set_feature_from_terminal.cpp.s
 
 # Help Target
 help:
@@ -161,10 +198,14 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... genicam_example"
+	@echo "... main_example"
+	@echo "... set_feature"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/set_feature_from_terminal.o"
+	@echo "... src/set_feature_from_terminal.i"
+	@echo "... src/set_feature_from_terminal.s"
 .PHONY : help
 
 

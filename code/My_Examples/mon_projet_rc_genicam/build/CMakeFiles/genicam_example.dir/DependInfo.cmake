@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/src/main.cpp" "CMakeFiles/genicam_example.dir/src/main.cpp.o" "gcc" "CMakeFiles/genicam_example.dir/src/main.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/src/main.cpp" "CMakeFiles/genicam_example.dir/src/main.cpp.o" "gcc" "CMakeFiles/genicam_example.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links.

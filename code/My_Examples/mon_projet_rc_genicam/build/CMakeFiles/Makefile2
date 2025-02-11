@@ -54,16 +54,17 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam
+CMAKE_SOURCE_DIR = /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build
+CMAKE_BINARY_DIR = /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/genicam_example.dir/all
+all: CMakeFiles/main_example.dir/all
+all: CMakeFiles/set_feature.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +72,61 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/genicam_example.dir/clean
+clean: CMakeFiles/main_example.dir/clean
+clean: CMakeFiles/set_feature.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/genicam_example.dir
+# Target rules for target CMakeFiles/main_example.dir
 
 # All Build rule for target.
-CMakeFiles/genicam_example.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/genicam_example.dir/build.make CMakeFiles/genicam_example.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/genicam_example.dir/build.make CMakeFiles/genicam_example.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=1,2 "Built target genicam_example"
-.PHONY : CMakeFiles/genicam_example.dir/all
+CMakeFiles/main_example.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=1,2 "Built target main_example"
+.PHONY : CMakeFiles/main_example.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/genicam_example.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/genicam_example.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yessmine/Documents/BA_Studies/7Semester/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 0
-.PHONY : CMakeFiles/genicam_example.dir/rule
+CMakeFiles/main_example.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/main_example.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 0
+.PHONY : CMakeFiles/main_example.dir/rule
 
 # Convenience name for target.
-genicam_example: CMakeFiles/genicam_example.dir/rule
-.PHONY : genicam_example
+main_example: CMakeFiles/main_example.dir/rule
+.PHONY : main_example
 
 # clean rule for target.
-CMakeFiles/genicam_example.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/genicam_example.dir/build.make CMakeFiles/genicam_example.dir/clean
-.PHONY : CMakeFiles/genicam_example.dir/clean
+CMakeFiles/main_example.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/clean
+.PHONY : CMakeFiles/main_example.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/set_feature.dir
+
+# All Build rule for target.
+CMakeFiles/set_feature.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=3,4 "Built target set_feature"
+.PHONY : CMakeFiles/set_feature.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/set_feature.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/set_feature.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 0
+.PHONY : CMakeFiles/set_feature.dir/rule
+
+# Convenience name for target.
+set_feature: CMakeFiles/set_feature.dir/rule
+.PHONY : set_feature
+
+# clean rule for target.
+CMakeFiles/set_feature.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/clean
+.PHONY : CMakeFiles/set_feature.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
