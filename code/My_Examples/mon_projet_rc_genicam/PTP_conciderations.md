@@ -33,3 +33,5 @@ Fixed frame rate synchronization
 GevTimestampValue.
 5. Start streaming each camera
 PtpAcquisitionGateTime = Current G evTimestampValue + delta, where delta  is the combined time required to set PtpAcquisitionGateTime on each camera (at minimum). This time varies depending on operating system, host, network hardware, and system load.
+
+Delay: The Action Command is scheduled after a user defined time interval in ms. Minimum value: 20 ms.

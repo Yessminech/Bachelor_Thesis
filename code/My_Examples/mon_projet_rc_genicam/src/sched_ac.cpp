@@ -1,226 +1,264 @@
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
 #include <rc_genicam_api/device.h>
+#include <rc_genicam_api/stream.h>
+#include <rc_genicam_api/buffer.h>
 #include <rc_genicam_api/nodemap_out.h>
-#include <rc_genicam_api/exception.h>
+#include <GenApi/ICommand.h>
 
 #include <iostream>
-#include <vector>
 #include <memory>
-#include <stdexcept>
-#include <cstdint>
-#include <string>
+#include <vector>
+#include <chrono>
+#include <thread>
 
-using namespace rcg;
+std::shared_ptr<rcg::Stream> stream;
+
+void configureActionCommandDevice(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1)
+{
+    try
+    {
+            auto nodemap = device->getRemoteNodeMap();
+
+        rcg::setString(nodemap, "ActionUnconditionalMode", "On");
+
+        // Set Action Device Key, Group Key, and Group Mask
+        rcg::setInteger(nodemap, "ActionDeviceKey", actionDeviceKey);
+        rcg::setInteger(nodemap, "ActionGroupKey", groupKey);
+        rcg::setInteger(nodemap, "ActionGroupMask", groupMask);
+        rcg::setInteger(nodemap, "ActionSelector", actionSelector);
+
+        // Configure Triggering
+        rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
+        rcg::setEnum(nodemap, "TriggerMode", "On");
+        rcg::setEnum(nodemap, "TriggerSource", triggerSource);
+            std::cout << "✅ Camera " << device->getID() << " configured to start acquisition on Action Command.\n";
+    std::cout << "✅ Action Device Key: " << rcg::getInteger(nodemap, "ActionDeviceKey") << ", Group Key: " << rcg::getInteger(nodemap, "ActionGroupKey") << ", Group Mask: " << rcg::getInteger(nodemap, "ActionGroupMask") << ", ActionSelector: " << rcg::getInteger(nodemap, "ActionSelector") << std::endl;
+
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "⚠️ Failed to configure Action Command Device: " << e.what() << std::endl;
+    }
+
+}
+
+void configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource = "Action1", uint32_t actionSelector = 1, uint32_t destinationIP = 0xFFFFFFFF)
+{
+
+    try
+    {
+        auto nodemap = interf->getNodeMap();
+        rcg::setInteger(nodemap, "GevActionDestinationIPAddress", destinationIP);
+        // Set Action Device Key, Group Key, and Group Mask
+        rcg::setInteger(nodemap, "ActionDeviceKey", actionDeviceKey);
+        rcg::setInteger(nodemap, "ActionGroupKey", groupKey);
+        rcg::setInteger(nodemap, "ActionGroupMask", groupMask);
+        rcg::setBoolean(nodemap, "ActionScheduledTimeEnable", true);
+        // ✅ Calculate the execution time (e.g., 5 seconds from now)
+        auto now = std::chrono::system_clock::now().time_since_epoch();
+        uint64_t currTimeNs = std::chrono::duration_cast<std::chrono::nanoseconds>(now).count();
+        uint64_t executeTime = currTimeNs + 5000000000ULL; // 5 seconds later
+        rcg::setInteger(nodemap, "ActionScheduledTime", executeTime);
+
+        std::cout << "✅ Interface configured to start acquisition on Action Command.\n";
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "⚠️ Failed to configure Action Command Interface: " << e.what() << std::endl;
+    }
+}
+
+// ✅ Function to synchronize PTP time before sending Action Command
+void syncPTP(std::shared_ptr<rcg::Device> device)
+{
+    auto nodemap = device->getRemoteNodeMap();
+    try
+    {
+        rcg::callCommand(nodemap, "PtpDataSetLatch"); // Latch PTP timestamp
+        uint64_t timestamp = rcg::getInteger(nodemap, "PtpDataSetLatchValue");
+        std::cout << "✅ PTP Time synchronized: " << timestamp << " ns\n";
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "⚠️ Failed to sync PTP time: " << e.what() << std::endl;
+    }
+}
+
+void enablePTP(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
+{
+    std::string feature = "PtpEnable";
+    std::string value = "true";
+    try
+    {
+        rcg::setString(nodemap, feature.c_str(), value.c_str(), true);
+        std::cout << "Feature '" << feature << "' is now set to: " << rcg::getBoolean(nodemap, feature.c_str()) << std::endl;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << "Failed to set " << feature << ": - Trying deprecated feature: GevIEEE1588" << std::endl;
+        feature = "GevIEEE1588";
+        try
+        {
+            rcg::setString(nodemap, feature.c_str(), value.c_str(), true);
+            std::cout << "Feature '" << feature << "' is now set to: " << rcg::getBoolean(nodemap, feature.c_str()) << std::endl;
+        }
+        catch (const std::exception &ex)
+        {
+            std::cerr << "Failed to set " << feature << ": " << ex.what() << std::endl;
+        }
+    }
+}
+
+
+// ✅ Function to send an Action Command
+void sendActionCommand(std::shared_ptr<rcg::System> system)
+{
+
+    // Fire the Action Command
+    try
+    {
+        auto nodemap = system->getNodeMap();
+
+        rcg::callCommand(nodemap, "ActionCommand");
+            std::cout << "✅ Action Command scheduled \n"; // for execution at: " << executeTime << " ns.
+
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "⚠️ Failed to send Action Command: " << e.what() << std::endl;
+    }
+
+}
+
+bool startStreaming(std::shared_ptr<rcg::Device> device)
+{
+    try
+    {
+        std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
+        enablePTP(nodemap); // ToDo: Extend to multiple cameras
+
+        auto streams = device->getStreams();
+        if (streams.empty())
+        {
+            std::cerr << "No streams found!" << std::endl;
+            return false;
+        }
+
+        stream = streams[0];
+        stream->open();
+        stream->startStreaming();
+
+        std::cout << "\033[1;32mStreaming started. Press Ctrl+C to stop.\033[0m" << std::endl;
+        return true;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << "Error: " << ex.what() << std::endl;
+        return false;
+    }
+}
+
+// Function to stop streaming
+void stopStreaming(std::shared_ptr<rcg::Device> device)
+{
+    if (stream)
+    {
+        stream->stopStreaming();
+        stream->close();
+        std::cout << "Streaming stopped." << std::endl;
+    }
+
+    if (device)
+    {
+        device->close();
+        std::cout << "Device closed." << std::endl;
+    }
+
+    rcg::System::clearSystems();
+}
 
 int main()
 {
     try
     {
-        // Retrieve the available GenICam systems.
-        auto systems = System::getSystems();
-        if (systems.empty())
+        // Define Action Command parameters
+        uint32_t actionDeviceKey = 0x12345678;
+        uint32_t groupKey = 0x1;
+        uint32_t groupMask = 0x1;
+
+        // ✅ Retrieve all available systems
+        auto systems = rcg::System::getSystems();
+
+        for (const auto &system : systems)
         {
-            throw std::runtime_error("No GenICam systems found.");
-        }
-        // Open the first system.
-        systems[0]->open();
+            system->open();
+            auto interfaces = system->getInterfaces();
 
-        // Retrieve the interfaces from the system.
-        auto interfaces = systems[0]->getInterfaces();
-        if (interfaces.empty())
-        {
-            throw std::runtime_error("No interfaces found.");
-        }
-        // Open the first interface.
-        interfaces[0]->open();
-
-        // Retrieve the camera devices from the interface.
-        auto cameras = interfaces[0]->getDevices();
-        if (cameras.empty())
-        {
-            throw std::runtime_error("No camera devices found.");
-        }
-
-        //--- Start of camera setup ---
-        // Configure each camera for synchronous image acquisition.
-        for (size_t i = 0; i < cameras.size(); ++i)
-        {
-            // Open the camera connection in CONTROL mode to access its remote nodemap.
-            cameras[i]->open(Device::CONTROL);
-
-            // Retrieve the remote node map.
-            auto nodemap = cameras[i]->getRemoteNodeMap();
-            if (!nodemap)
+            for (const auto &interf : interfaces)
             {
-                std::cerr << "No remote node map available for camera "
-                          << cameras[i]->getID() << std::endl;
-                cameras[i]->close();
-                continue;
+                interf->open();
+                auto devices = interf->getDevices();
+
+                // ✅ Configure each camera
+                for (const auto &device : devices)
+                {
+                    device->open(rcg::Device::EXCLUSIVE);
+                    syncPTP(device); // Sync PTP before configuring Action Commands
+                    configureActionCommandDevice(device, actionDeviceKey, groupKey, groupMask, "Action0", 0);
+                    configureActionCommandInterface(interf, actionDeviceKey, groupKey, groupMask, "Action0", 0, 0xFFFFFFFF);
+                    // ✅ Send the Action Command
+                    sendActionCommand(system);
+                    device->close();
+                }
+
+                // ✅ Acquire Image after Action Command
+                for (const auto &device : devices)
+                {
+                    device->open(rcg::Device::CONTROL);
+                    std::cout << "✅ Number of queued Actions: " << rcg::getInteger(device->getRemoteNodeMap(), "ActionQueueSize") << " \n";
+                    ;
+                    auto streams = device->getStreams();
+                    if (streams.empty())
+                    {
+                        std::cerr << "⚠️ No streams found for device " << device->getID() << std::endl;
+                        return 1;
+                    }
+
+                    stream = streams[0];
+                    stream->open();
+                    stream->startStreaming();
+
+                    // ✅ Wait for an image
+                    const rcg::Buffer *buffer = stream->grab(8000); // 5-second timeout
+
+                    if (buffer && buffer->getTimestamp() > 0)
+                    {
+                        std::cout << "✅ Image acquired at timestamp: " << buffer->getTimestamp() << " ns\n";
+                    }
+                    else
+                    {
+                        std::cerr << "⚠️ No image received! Action Command may have failed.\n";
+                    }
+        stopStreaming(device);
+
+                    // ✅ Cleanup
+                    stream->close();
+                    device->close();
+                }
+
+                interf->close();
             }
 
-            // Configure the trigger selector: select "FrameStart".
-            {
-                auto triggerSelector = nodemap->GetNode("TriggerSelector");
-                if (triggerSelector)
-                {
-                    triggerSelector->SetValue("FrameStart");
-                }
-                else
-                {
-                    std::cerr << "TriggerSelector not found for camera "
-                              << cameras[i]->getID() << std::endl;
-                }
-            }
-
-            // Configure the trigger mode: set it to "On".
-            {
-                auto triggerMode = nodemap->GetNode("TriggerMode");
-                if (triggerMode)
-                {
-                    triggerMode->SetValue("On");
-                }
-                else
-                {
-                    std::cerr << "TriggerMode not found for camera "
-                              << cameras[i]->getID() << std::endl;
-                }
-            }
-
-            // Configure the trigger source: select "Action1".
-            {
-                auto triggerSource = nodemap->GetNode("TriggerSource");
-                if (triggerSource)
-                {
-                    triggerSource->SetValue("Action1");
-                }
-                else
-                {
-                    std::cerr << "TriggerSource not found for camera "
-                              << cameras[i]->getID() << std::endl;
-                }
-            }
-
-            // Specify the action device key (e.g., 4711).
-            {
-                auto actionDeviceKey = nodemap->GetNode("ActionDeviceKey");
-                if (actionDeviceKey)
-                {
-                    actionDeviceKey->SetValue(4711);
-                }
-                else
-                {
-                    std::cerr << "ActionDeviceKey not found for camera "
-                              << cameras[i]->getID() << std::endl;
-                }
-            }
-
-            // Set the action group key (here, all cameras are in group 1).
-            {
-                auto actionGroupKey = nodemap->GetNode("ActionGroupKey");
-                if (actionGroupKey)
-                {
-                    actionGroupKey->SetValue(1);
-                }
-                else
-                {
-                    std::cerr << "ActionGroupKey not found for camera "
-                              << cameras[i]->getID() << std::endl;
-                }
-            }
-
-            // Set the action group mask (all cameras will respond to any mask != 0).
-            {
-                auto actionGroupMask = nodemap->GetNode("ActionGroupMask");
-                if (actionGroupMask)
-                {
-                    actionGroupMask->SetValue(0xffffffff);
-                }
-                else
-                {
-                    std::cerr << "ActionGroupMask not found for camera "
-                              << cameras[i]->getID() << std::endl;
-                }
-            }
-
-            // Close the camera after configuration.
-            cameras[i]->close();
-        }
-        //--- End of camera setup ---
-
-        // Get the current timestamp of the first camera.
-        // NOTE: All cameras must be synchronized via Precision Time Protocol (PTP).
-        // Reopen the first camera to access its remote nodemap.
-        cameras[0]->open(Device::CONTROL);
-        auto nodemap = cameras[0]->getRemoteNodeMap();
-        if (!nodemap)
-        {
-            throw std::runtime_error("Failed to retrieve remote node map from first camera.");
+            system->close();
         }
 
-        // Latch the current timestamp.
-        {
-            auto timestampLatch = nodemap->GetNode("GevTimestampControlLatch");
-            if (timestampLatch)
-            {
-                timestampLatch->Execute();
-            }
-            else
-            {
-                throw std::runtime_error("GevTimestampControlLatch node not found.");
-            }
-        }
-
-        // Retrieve the latched timestamp value.
-        int64_t currentTimestamp = 0;
-        {
-            auto timestampNode = nodemap->GetNode("GevTimestampValue");
-            if (timestampNode)
-            {
-                currentTimestamp = timestampNode->GetValue();
-                std::cout << "Current timestamp: " << currentTimestamp << std::endl;
-            }
-            else
-            {
-                throw std::runtime_error("GevTimestampValue node not found.");
-            }
-        }
-        cameras[0]->close();
-
-        // Specify that the scheduled action should be executed roughly 30 seconds
-        // (30,000,000,000 ticks) after the current timestamp.
-        int64_t actionTime = currentTimestamp + 30000000000LL;
-
-        // Issue a scheduled action command to the cameras.
-        // This command is normally issued via the GenTL layer.
-        // For example, if rc_genicam exposes the GenTL wrapper, you might do:
-        /*
-        auto genTL = systems[0]->getGenTLWrapper();
-        if (genTL)
-        {
-            genTL->IssueScheduledActionCommand(4711, 1, 0xffffffff, actionTime, "192.168.1.255");
-        }
-        else
-        {
-            std::cerr << "GenTL wrapper not available to issue scheduled action command." << std::endl;
-        }
-        */
-        // For demonstration, we simply print the scheduled action command parameters.
-        std::cout << "Scheduled Action Command:" << std::endl;
-        std::cout << "  Action Device Key: 4711" << std::endl;
-        std::cout << "  Action Group Key: 1" << std::endl;
-        std::cout << "  Action Group Mask: 0xffffffff" << std::endl;
-        std::cout << "  Action Time: " << actionTime << std::endl;
-        std::cout << "  Destination IP: 192.168.1.255" << std::endl;
-
-        // Cleanup: close the interface and system.
-        interfaces[0]->close();
-        systems[0]->close();
-        System::clearSystems();
+        // ✅ Clean up the GenICam systems
+        rcg::System::clearSystems();
     }
     catch (const std::exception &ex)
     {
-        std::cerr << "Exception: " << ex.what() << std::endl;
+        std::cerr << "❌ Exception: " << ex.what() << std::endl;
         return 1;
     }
 

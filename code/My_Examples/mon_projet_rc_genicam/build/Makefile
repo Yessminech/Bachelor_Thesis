@@ -142,6 +142,82 @@ set_feature/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/build
 .PHONY : set_feature/fast
 
+#=============================================================================
+# Target rules for targets named get_timestamp
+
+# Build rule for target.
+get_timestamp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 get_timestamp
+.PHONY : get_timestamp
+
+# fast build rule for target.
+get_timestamp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/get_timestamp.dir/build.make CMakeFiles/get_timestamp.dir/build
+.PHONY : get_timestamp/fast
+
+#=============================================================================
+# Target rules for targets named ptp_with_timestamps
+
+# Build rule for target.
+ptp_with_timestamps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ptp_with_timestamps
+.PHONY : ptp_with_timestamps
+
+# fast build rule for target.
+ptp_with_timestamps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_with_timestamps.dir/build.make CMakeFiles/ptp_with_timestamps.dir/build
+.PHONY : ptp_with_timestamps/fast
+
+#=============================================================================
+# Target rules for targets named stream
+
+# Build rule for target.
+stream: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 stream
+.PHONY : stream
+
+# fast build rule for target.
+stream/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stream.dir/build.make CMakeFiles/stream.dir/build
+.PHONY : stream/fast
+
+#=============================================================================
+# Target rules for targets named sched_ac
+
+# Build rule for target.
+sched_ac: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sched_ac
+.PHONY : sched_ac
+
+# fast build rule for target.
+sched_ac/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/build
+.PHONY : sched_ac/fast
+
+src/get_timestamp.o: src/get_timestamp.cpp.o
+.PHONY : src/get_timestamp.o
+
+# target to build an object file
+src/get_timestamp.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/get_timestamp.dir/build.make CMakeFiles/get_timestamp.dir/src/get_timestamp.cpp.o
+.PHONY : src/get_timestamp.cpp.o
+
+src/get_timestamp.i: src/get_timestamp.cpp.i
+.PHONY : src/get_timestamp.i
+
+# target to preprocess a source file
+src/get_timestamp.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/get_timestamp.dir/build.make CMakeFiles/get_timestamp.dir/src/get_timestamp.cpp.i
+.PHONY : src/get_timestamp.cpp.i
+
+src/get_timestamp.s: src/get_timestamp.cpp.s
+.PHONY : src/get_timestamp.s
+
+# target to generate assembly for a file
+src/get_timestamp.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/get_timestamp.dir/build.make CMakeFiles/get_timestamp.dir/src/get_timestamp.cpp.s
+.PHONY : src/get_timestamp.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -165,6 +241,54 @@ src/main.s: src/main.cpp.s
 src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
+
+src/ptp_with_timestamps.o: src/ptp_with_timestamps.cpp.o
+.PHONY : src/ptp_with_timestamps.o
+
+# target to build an object file
+src/ptp_with_timestamps.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_with_timestamps.dir/build.make CMakeFiles/ptp_with_timestamps.dir/src/ptp_with_timestamps.cpp.o
+.PHONY : src/ptp_with_timestamps.cpp.o
+
+src/ptp_with_timestamps.i: src/ptp_with_timestamps.cpp.i
+.PHONY : src/ptp_with_timestamps.i
+
+# target to preprocess a source file
+src/ptp_with_timestamps.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_with_timestamps.dir/build.make CMakeFiles/ptp_with_timestamps.dir/src/ptp_with_timestamps.cpp.i
+.PHONY : src/ptp_with_timestamps.cpp.i
+
+src/ptp_with_timestamps.s: src/ptp_with_timestamps.cpp.s
+.PHONY : src/ptp_with_timestamps.s
+
+# target to generate assembly for a file
+src/ptp_with_timestamps.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_with_timestamps.dir/build.make CMakeFiles/ptp_with_timestamps.dir/src/ptp_with_timestamps.cpp.s
+.PHONY : src/ptp_with_timestamps.cpp.s
+
+src/sched_ac.o: src/sched_ac.cpp.o
+.PHONY : src/sched_ac.o
+
+# target to build an object file
+src/sched_ac.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/src/sched_ac.cpp.o
+.PHONY : src/sched_ac.cpp.o
+
+src/sched_ac.i: src/sched_ac.cpp.i
+.PHONY : src/sched_ac.i
+
+# target to preprocess a source file
+src/sched_ac.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/src/sched_ac.cpp.i
+.PHONY : src/sched_ac.cpp.i
+
+src/sched_ac.s: src/sched_ac.cpp.s
+.PHONY : src/sched_ac.s
+
+# target to generate assembly for a file
+src/sched_ac.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/src/sched_ac.cpp.s
+.PHONY : src/sched_ac.cpp.s
 
 src/set_feature_from_terminal.o: src/set_feature_from_terminal.cpp.o
 .PHONY : src/set_feature_from_terminal.o
@@ -190,6 +314,30 @@ src/set_feature_from_terminal.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/src/set_feature_from_terminal.cpp.s
 .PHONY : src/set_feature_from_terminal.cpp.s
 
+src/stream.o: src/stream.cpp.o
+.PHONY : src/stream.o
+
+# target to build an object file
+src/stream.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stream.dir/build.make CMakeFiles/stream.dir/src/stream.cpp.o
+.PHONY : src/stream.cpp.o
+
+src/stream.i: src/stream.cpp.i
+.PHONY : src/stream.i
+
+# target to preprocess a source file
+src/stream.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stream.dir/build.make CMakeFiles/stream.dir/src/stream.cpp.i
+.PHONY : src/stream.cpp.i
+
+src/stream.s: src/stream.cpp.s
+.PHONY : src/stream.s
+
+# target to generate assembly for a file
+src/stream.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stream.dir/build.make CMakeFiles/stream.dir/src/stream.cpp.s
+.PHONY : src/stream.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -198,14 +346,30 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... get_timestamp"
 	@echo "... main_example"
+	@echo "... ptp_with_timestamps"
+	@echo "... sched_ac"
 	@echo "... set_feature"
+	@echo "... stream"
+	@echo "... src/get_timestamp.o"
+	@echo "... src/get_timestamp.i"
+	@echo "... src/get_timestamp.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/ptp_with_timestamps.o"
+	@echo "... src/ptp_with_timestamps.i"
+	@echo "... src/ptp_with_timestamps.s"
+	@echo "... src/sched_ac.o"
+	@echo "... src/sched_ac.i"
+	@echo "... src/sched_ac.s"
 	@echo "... src/set_feature_from_terminal.o"
 	@echo "... src/set_feature_from_terminal.i"
 	@echo "... src/set_feature_from_terminal.s"
+	@echo "... src/stream.o"
+	@echo "... src/stream.i"
+	@echo "... src/stream.s"
 .PHONY : help
 
 
