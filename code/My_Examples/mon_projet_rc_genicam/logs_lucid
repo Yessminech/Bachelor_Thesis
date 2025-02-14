@@ -1,0 +1,50 @@
+test@Yessmine-Ubuntu:~/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/Examples/Arena/Cpp_Save_Jpeg$ ./Cpp_Save_Jpeg 
+Cpp_Save_Jpeg
+Select device:
+  1. acA2440-20gc  23630913  192.168.3.3
+  2. acA2440-20gc  23630914  192.168.3.103
+  3. HLT003S-001  210201103  169.254.23.75
+  4. TRI032S-C  210200799  169.254.173.31
+  5. acA2440-20gc  23630914  192.168.3.103
+  6. acA2440-20gc  23630913  192.168.3.3
+  7. HLT003S-001  210201103  169.254.23.75
+  8. TRI032S-C  210200799  169.254.173.31
+  Make selection (1-8): 1
+
+GenICam exception thrown: AccessException (GC_ERR_ACCESS_DENIED): Unable to open device (System.cpp, CreateDevice; GenTL::IFOpenDevice); Error Stack:
+  -1005 GenTL::GC_ERR_ACCESS_DENIED(-1005) :
+      IFOpenDevice():2157: GenTL::GC_ERR_ACCESS_DENIED(-1005)
+  -1005 GenTL::GC_ERR_ACCESS_DENIED(-1005) :
+      OpenDevice():566: GenTL::GC_ERR_ACCESS_DENIED(-1005)
+  -1005 GenTL::GC_ERR_ACCESS_DENIED(-1005) :
+      Open():655: Invalid security code!
+  -1005 GenTL::GC_ERR_ACCESS_DENIED(-1005) :
+      Access blocked, couldn't write security key
+  -1013 GenTL::GC_ERR_INVALID_BUFFER(-1013) :
+      GenTL::HALGev::Unlock is invalid: -1013 : , ACK = 225, status = 32769, ack_id = 7, length = 0
+ (file 'System.cpp', line 679)
+Press enter to complete
+
+test@Yessmine-Ubuntu:~/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/Examples/Arena/Cpp_Save_Jpeg$ ./Cpp_Save_Jpeg 
+Cpp_Save_Jpeg
+Select device:
+  1. acA2440-20gc  23630913  192.168.3.3
+  2. acA2440-20gc  23630914  192.168.3.103
+  3. HLT003S-001  210201103  169.254.23.75
+  4. TRI032S-C  210200799  169.254.173.31
+  5. acA2440-20gc  23630913  192.168.3.3
+  6. acA2440-20gc  23630914  192.168.3.103
+  7. HLT003S-001  210201103  169.254.23.75
+  8. TRI032S-C  210200799  169.254.173.31
+  Make selection (1-8): 4
+Commence example
+
+  Convert image to BGR8
+  Prepare image parameters
+  Prepare image writer
+  Set image writer to JPEG
+  Save image
+
+Example complete
+Press enter to complete
+test@Yessmine-Ubuntu:~/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/Examples/Arena/Cpp_Save_Jpeg$ 

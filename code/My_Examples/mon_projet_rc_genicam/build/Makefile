@@ -194,6 +194,19 @@ sched_ac/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/build
 .PHONY : sched_ac/fast
 
+#=============================================================================
+# Target rules for targets named list_all
+
+# Build rule for target.
+list_all: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 list_all
+.PHONY : list_all
+
+# fast build rule for target.
+list_all/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/build
+.PHONY : list_all/fast
+
 src/get_timestamp.o: src/get_timestamp.cpp.o
 .PHONY : src/get_timestamp.o
 
@@ -217,6 +230,30 @@ src/get_timestamp.s: src/get_timestamp.cpp.s
 src/get_timestamp.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/get_timestamp.dir/build.make CMakeFiles/get_timestamp.dir/src/get_timestamp.cpp.s
 .PHONY : src/get_timestamp.cpp.s
+
+src/list_all.o: src/list_all.cpp.o
+.PHONY : src/list_all.o
+
+# target to build an object file
+src/list_all.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/src/list_all.cpp.o
+.PHONY : src/list_all.cpp.o
+
+src/list_all.i: src/list_all.cpp.i
+.PHONY : src/list_all.i
+
+# target to preprocess a source file
+src/list_all.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/src/list_all.cpp.i
+.PHONY : src/list_all.cpp.i
+
+src/list_all.s: src/list_all.cpp.s
+.PHONY : src/list_all.s
+
+# target to generate assembly for a file
+src/list_all.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/src/list_all.cpp.s
+.PHONY : src/list_all.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -347,6 +384,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... get_timestamp"
+	@echo "... list_all"
 	@echo "... main_example"
 	@echo "... ptp_with_timestamps"
 	@echo "... sched_ac"
@@ -355,6 +393,9 @@ help:
 	@echo "... src/get_timestamp.o"
 	@echo "... src/get_timestamp.i"
 	@echo "... src/get_timestamp.s"
+	@echo "... src/list_all.o"
+	@echo "... src/list_all.i"
+	@echo "... src/list_all.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

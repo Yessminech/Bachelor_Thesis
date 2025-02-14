@@ -32,7 +32,7 @@ void enableChunkData(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
     if (nodemap)
     {
         rcg::setBoolean(nodemap, "ChunkModeActive", true);
-        std::cout << "Chunk Data Mode enabled." << std::endl;
+        // std::cout << "Chunk Data Mode enabled." << std::endl;
     }
 }
 
@@ -197,7 +197,7 @@ void configureSyncFreeRun(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
         // Specify a trigger rate of 30 frames per second
         rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
         rcg::setFloat(nodemap, "AcquisitionFrameRate", 30.0); // Set FPS to 30
-        std::cout << "Camera configured for Sync Free Run (Continuous Acquisition) at 30 FPS." << std::endl;
+        // std::cout << "Camera configured for Sync Free Run (Continuous Acquisition) at 30 FPS." << std::endl;
     }
 }
 
@@ -251,13 +251,13 @@ bool startStreaming(std::shared_ptr<rcg::Device> device)
     try
     {
         std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
-        enablePTP(nodemap); // ToDo: Extend to multiple cameras
-        printTimestamp(nodemap, device->getID());
-        printPtpConfig(nodemap, device->getID());
-        if (!waitForPTPStatus({device}, true, 10)) // ToDo set right value for timeout and change deprecated implementation
-        {
-            return false;
-        }
+        // enablePTP(nodemap); // ToDo: Extend to multiple cameras
+        // printTimestamp(nodemap, device->getID());
+        // printPtpConfig(nodemap, device->getID());
+        // if (!waitForPTPStatus({device}, true, 10)) // ToDo set right value for timeout and change deprecated implementation
+        // {
+        //     return false;
+        // }
         auto streams = device->getStreams();
         if (streams.empty())
         {
@@ -309,9 +309,9 @@ void captureSingleImage(const std::string &format, std::shared_ptr<rcg::Device> 
     try
     {
         std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
-        enablePTP(nodemap); // ToDo: Extend to multiple cameras
-        printTimestamp(nodemap, device->getID());
-        printPtpConfig(nodemap, device->getID());
+        // enablePTP(nodemap); // ToDo: Extend to multiple cameras
+        // printTimestamp(nodemap, device->getID());
+        // printPtpConfig(nodemap, device->getID());
         auto streams = device->getStreams();
         if (streams.empty())
         {
@@ -322,7 +322,9 @@ void captureSingleImage(const std::string &format, std::shared_ptr<rcg::Device> 
         stream = streams[0];
         stream->open();
         stream->startStreaming();
-
+        // enablePTP(nodemap); // ToDo: Extend to multiple cameras
+        // printTimestamp(nodemap, device->getID());
+        // printPtpConfig(nodemap, device->getID());
         enableChunkData(nodemap);
         configureSyncFreeRun(nodemap); // Ensure it's in Sync Free Run mode
 
@@ -355,14 +357,23 @@ int main(int argc, char *argv[])
     signal(SIGINT, signalHandler); // Handle Ctrl+C to stop streaming
     std::vector<std::shared_ptr<rcg::System>> systems = rcg::System::getSystems();
     int deviceCount = 0;
+    std::string targetDeviceID = (argc > 2) ? argv[2] : "";
+
     for (auto &system : systems)
     {
         system->open();
         for (auto &interf : system->getInterfaces())
         {
             interf->open();
+            
             for (auto &device : interf->getDevices())
             {
+                if (!targetDeviceID.empty() && device->getID() != targetDeviceID)
+                {
+                    continue; // Skip devices that do not match the target ID
+                }
+
+                std::cout << "Opening device: " << device->getID() << std::endl;
                 deviceCount++;
                 device->open(rcg::Device::CONTROL);
                 if (argc > 1 && std::string(argv[1]) == "--single-shot")
@@ -393,5 +404,12 @@ int main(int argc, char *argv[])
         }
         system->close();
     }
+
+    if (deviceCount == 0)
+    {
+        std::cerr << "No devices found or no device matched the given ID." << std::endl;
+        return 1;
+    }
+
     return 0;
 }

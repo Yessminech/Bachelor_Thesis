@@ -18,9 +18,15 @@
 #include <stdexcept>
 #include <chrono>
 
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define YELLOW "\033[33m"
+#define GREEN "\033[32m"
+
 std::atomic<bool> stop_streaming(false);
 std::shared_ptr<rcg::Stream> stream;
 
+// ToDo: Add prints in debug mode
 // Function to handle termination signals (Ctrl+C)
 void signalHandler(int)
 {
@@ -34,7 +40,7 @@ void enableChunkData(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
     if (nodemap)
     {
         rcg::setBoolean(nodemap, "ChunkModeActive", true);
-        std::cout << "Chunk Data Mode enabled." << std::endl;
+        // std::cout << "Chunk Data Mode enabled." << std::endl;
     }
 }
 
@@ -200,7 +206,7 @@ void configureSyncFreeRun(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
         // Specify a trigger rate of 30 frames per second
         rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
         rcg::setFloat(nodemap, "AcquisitionFrameRate", 30.0); // Set FPS to 30
-        std::cout << "Camera configured for Sync Free Run (Continuous Acquisition) at 30 FPS." << std::endl;
+        // std::cout << "Camera configured for Sync Free Run (Continuous Acquisition) at 30 FPS." << std::endl;
     }
 }
 
@@ -208,13 +214,13 @@ void configureSyncFreeRun(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
 // Function to adjust camera settings (e.g., exposure, gain, PixelFormat)
 void adjustCameraSettings(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
 {
-    std::cout << "Adjusting camera settings..." << std::endl;
+    // std::cout << "Adjusting camera settings..." << std::endl;
     if (nodemap)
     {
         rcg::setFloat(nodemap, "ExposureTimeAbs", 20000.0); // Set exposure to 20ms
-        rcg::setInteger(nodemap, "GainRaw", 5.0);  
-        rcg::setString(nodemap, "PixelFormat", "BayerRG8");
-        std::cout << "Camera settings adjusted: Exposure=20ms, Gain=5, PixelFormat=BayerGR12." << std::endl;
+        rcg::setInteger(nodemap, "GainRaw", 5.0);
+        // rcg::setString(nodemap, "PixelFormat", "BayerRG8"); // ToDo not available
+        // std::cout << "Camera settings adjusted: Exposure=20ms, Gain=5, PixelFormat=BayerGR12." << std::endl;
     }
 }
 
@@ -227,8 +233,7 @@ void extractMetadata(std::shared_ptr<GenApi::CNodeMapRef> nodemap, const rcg::Bu
         double exposure = rcg::getFloat(nodemap, "ExposureTime");
         double gain = rcg::getFloat(nodemap, "Gain");
 
-        std::cout << "Metadata - Timestamp: " << timestamp << " ns, Exposure: "
-                  << exposure << " ms, Gain: " << gain << std::endl;
+        // std::cout << "Metadata - Timestamp: " << timestamp << " ns, Exposure: " << exposure << " ms, Gain: " << gain << std::endl;
     }
 }
 
@@ -266,7 +271,7 @@ void displayImage(const rcg::Buffer *buffer)
 
     // Convert grayscale to BGR for display
     cv::Mat display_frame;
-    cv::cvtColor(frame, display_frame, cv::COLOR_BayerBG2BGR );
+    cv::cvtColor(frame, display_frame, cv::COLOR_BayerBG2BGR);
     cv::flip(display_frame, display_frame, 1); // Flip vertically
     cv::resize(display_frame, display_frame, cv::Size(), 0.2, 0.2);
 
@@ -297,6 +302,7 @@ void stopStreaming(std::shared_ptr<rcg::Device> device)
     }
 
     rcg::System::clearSystems();
+    cv::destroyAllWindows(); // Close OpenCV window
 }
 
 // Function to start streaming
@@ -307,13 +313,13 @@ bool startStreaming(std::shared_ptr<rcg::Device> device)
         std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
         adjustCameraSettings(nodemap); // Apply exposure and gain settings
         configureSyncFreeRun(nodemap); // Set to Sync Free Run mode
-        enablePTP(nodemap); // ToDo: Extend to multiple cameras
-        printTimestamp(nodemap, device->getID());
-        printPtpConfig(nodemap, device->getID());
-        if (!waitForPTPStatus({device}, true, 10)) // ToDo set right value for timeout and change deprecated implementation
-        {
-            return false;
-        }
+        // enablePTP(nodemap); // ToDo: Extend to multiple cameras
+        // printTimestamp(nodemap, device->getID());
+        // printPtpConfig(nodemap, device->getID());
+        // if (!waitForPTPStatus({device}, true, 10)) // ToDo set right value for timeout and change deprecated implementation
+        // {
+        //     return false;
+        // }
         auto streams = device->getStreams();
         if (streams.empty())
         {
@@ -354,9 +360,9 @@ void captureSingleImage(const std::string &format, std::shared_ptr<rcg::Device> 
         std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
         adjustCameraSettings(nodemap);
         configureSyncFreeRun(nodemap); // Ensure it's in Sync Free Run mode
-        enablePTP(nodemap); // ToDo: Extend to multiple cameras
-        printTimestamp(nodemap, device->getID());
-        printPtpConfig(nodemap, device->getID());
+        // enablePTP(nodemap); // ToDo: Extend to multiple cameras
+        // printTimestamp(nodemap, device->getID());
+        // printPtpConfig(nodemap, device->getID());
         auto streams = device->getStreams();
         if (streams.empty())
         {
@@ -390,41 +396,81 @@ void captureSingleImage(const std::string &format, std::shared_ptr<rcg::Device> 
     }
 }
 
-// Main function to handle both continuous and single-shot modes
 int main(int argc, char *argv[])
 {
     signal(SIGINT, signalHandler); // Handle Ctrl+C to stop streaming
     std::vector<std::shared_ptr<rcg::System>> systems = rcg::System::getSystems();
     int deviceCount = 0;
+    std::string targetDeviceID = (argc > 2) ? argv[2] : "";
+
     for (auto &system : systems)
     {
         system->open();
         for (auto &interf : system->getInterfaces())
         {
             interf->open();
-            for (auto &device : interf->getDevices())
+            // Check if a target device ID is provided
+            if (!targetDeviceID.empty())
             {
-                deviceCount++;
+                auto device = interf->getDevice(targetDeviceID.c_str());
+                std::cout << GREEN << "Opening device '" << device->getID() << "'..." << RESET << std::endl;
                 device->open(rcg::Device::CONTROL);
+
                 if (argc > 1 && std::string(argv[1]) == "--single-shot")
                 {
                     captureSingleImage("png", device);
+                    stopStreaming(device);
                     return 0;
                 }
-
-                if (!startStreaming(device))
+                if (argc > 1 && std::string(argv[1]) == "--stream")
                 {
-                    return 1;
+                    if (!startStreaming(device))
+                    {
+                        stopStreaming(device);
+                        return 1;
+                    }
                 }
-
-                stopStreaming(device);
                 device->close();
+            }
+            else
+            {
+                // ToDo correct this to not iterate over interfaces
+                for (auto &device : interf->getDevices())
+                {
+                    deviceCount++;
+                    std::cout << GREEN << "Opening device '" << device->getID() << "'..." << RESET << std::endl;
+                    device->open(rcg::Device::CONTROL);
+
+                    if (argc > 1 && std::string(argv[1]) == "--single-shot")
+                    {
+                        captureSingleImage("png", device);
+                        stopStreaming(device);
+                        return 0;
+                    }
+
+                    if (!startStreaming(device))
+                    {
+                        stopStreaming(device);
+                        return 1;
+                    }
+
+                    stopStreaming(device);
+                    device->close();
+                }
             }
             interf->close();
         }
         system->close();
     }
 
-    cv::destroyAllWindows(); // Close OpenCV window
+    if (deviceCount == 0)
+    {
+        std::cerr << RED << "No devices found." << RESET << std::endl;
+        return 1;
+    }
+
     return 0;
 }
+
+// ./main_example --single-shot 210200799
+

@@ -8,11 +8,12 @@ find_package(OpenCV REQUIRED)
 
 include_directories("/usr/include/rc_genicam_api")
 include_directories("/usr/include/rc_genicam_api/genicam")
+include_directories("~/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/include")
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 # Manually add the directory containing the library.
 link_directories("/usr/lib/x86_64-linux-gnu")
-
+link_directories("~/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/lib64")
 # Create the executable
 add_executable(main_example src/main.cpp)
 add_executable(set_feature src/set_feature_from_terminal.cpp)
@@ -38,3 +39,7 @@ target_link_libraries(get_timestamp PRIVATE rc_genicam_api )
 target_link_libraries(ptp_with_timestamps PRIVATE rc_genicam_api ${OpenCV_LIBS})
 target_link_libraries(stream PRIVATE rc_genicam_api ${OpenCV_LIBS})
 target_link_libraries(sched_ac PRIVATE rc_genicam_api ${OpenCV_LIBS})
+
+add_executable(list_all src/list_all.cpp)
+target_compile_definitions(list_all PRIVATE GENICAM_NO_AUTO_IMPLIB)
+target_link_libraries(list_all PRIVATE rc_genicam_api ${OpenCV_LIBS})

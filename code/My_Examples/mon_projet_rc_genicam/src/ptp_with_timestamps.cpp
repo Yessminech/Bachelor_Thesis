@@ -9,7 +9,57 @@
 #include <stdexcept>
 #include <chrono>
 #include <thread>
+#include <iomanip>
+#include <signal.h>
+#include <atomic>
 
+// Global variables
+std::atomic<bool> stop_program(false);
+
+// ANSI color codes
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define YELLOW "\033[33m"
+#define GREEN "\033[32m"
+
+int num_init = 0;
+int num_master = 0;
+int num_slave = 0;
+int offset_threshold = 30;    // ns
+int accuracy_threshhold = 30; // ns
+
+void signalHandler(int signum)
+{
+    std::cout << "\nStopping program..." << std::endl;
+    stop_program = true;
+}
+
+// ToDo Correct this 
+void cleanup(std::vector<std::shared_ptr<rcg::System>>& systems)
+{
+    for (auto &system : systems)
+    {
+        for (auto &interf : system->getInterfaces())
+        {
+            for (const auto &device : interf->getDevices())
+            {
+                // if (device->isOpen())
+                {
+                    device->close();
+                }
+            }
+            // if (interf->isOpen())
+            {
+                interf->close();
+            }
+        }
+        // if (system->isOpen())
+        {
+            system->close();
+        }
+    }
+    rcg::System::clearSystems();
+}
 void enablePTP(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
 {
     std::string feature = "PtpEnable";
@@ -17,225 +67,154 @@ void enablePTP(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
     try
     {
         rcg::setString(nodemap, feature.c_str(), value.c_str(), true);
-        std::cout << "Feature '" << feature << "' is now set to: " << rcg::getBoolean(nodemap, feature.c_str()) << std::endl;
     }
     catch (const std::exception &ex)
     {
-        std::cerr << "Failed to set " << feature << ": - Trying depracted feature: GevIEEE1588" << std::endl;
+        // std::cerr << YELLOW << "Warning: Failed to set " << feature << ": - Trying deprecated feature: GevIEEE1588" << RESET << std::endl;
         feature = "GevIEEE1588";
         try
         {
             rcg::setString(nodemap, feature.c_str(), value.c_str(), true);
-            std::cout << "Feature '" << feature << "' is now set to: " << rcg::getBoolean(nodemap, feature.c_str()) << std::endl;
         }
         catch (const std::exception &ex)
         {
-            std::cerr << "Failed to set " << feature << ": " << ex.what() << std::endl;
+            std::cerr << RED << "Error: Failed to set " << feature << ": " << ex.what() << RESET << std::endl;
         }
     }
 }
 
-void printTimestamp(std::shared_ptr<GenApi::CNodeMapRef> nodemap, const std::string &deviceID)
+void printTimestamp(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
 {
-    try
+    if (rcg::getString(nodemap, "TimestampLatchValue") == "")
     {
-        rcg::callCommand(nodemap, "TimestampLatch");
-        if (rcg::getString(nodemap, "TimestampLatchValue") == "")
-        {
-            std::cerr << "Failed to get Timestamp from device '" << deviceID << ": - Trying depracted features: GevTimestampControlLatch, GevTimestampValue" << std::endl;
+        // std::cerr << YELLOW << "Warning: Failed to get Timestamp from device '" << deviceID << "': - Trying deprecated features: GevTimestampControlLatch, GevTimestampValue" << RESET << std::endl;
 
-            rcg::callCommand(nodemap, "GevTimestampControlLatch");
-            uint64_t timestamp = std::stoull(rcg::getString(nodemap, "GevTimestampValue"));
-            double tickFrequency = std::stod(rcg::getString(nodemap, "GevTimestampTickFrequency")); // if PTP is used, this feature must return 1,000,000,000 (1 GHz).
-            uint64_t timestamp_s = timestamp / tickFrequency;
-            std::cout << "Timestamp on device '" << deviceID << "' is: " << timestamp_s << std::endl;
-        }
-
-        else
-        {
-            std::cout << "Timestamp on device '" << deviceID << "' is: " << rcg::getString(nodemap, "TimestampLatchValue") << "ns." << std::endl;
-        }
+        rcg::callCommand(nodemap, "GevTimestampControlLatch");
+        uint64_t timestamp = std::stoull(rcg::getString(nodemap, "GevTimestampValue"));
+        double tickFrequency = std::stod(rcg::getString(nodemap, "GevTimestampTickFrequency")); // if PTP is used, this feature must return 1,000,000,000 (1 GHz).
+        uint64_t timestamp_s = timestamp / tickFrequency;
+        std::cout << "Timestamp:                  " << timestamp << " ns" << std::endl;
     }
-    catch (const std::exception &ex)
+    else
     {
-        std::cerr << "Failed to get Timestamp from device '" << deviceID << ": - Trying depracted features: GevTimestampControlLatch, GevTimestampValue" << std::endl;
-        try
-        {
-            rcg::callCommand(nodemap, "GevTimestampControlLatch");
-            std::cout << "Timestamp on device '" << deviceID << "' is: " << rcg::getString(nodemap, "GevTimestampValue") << std::endl;
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << "Failed to get Timestamp from device '" << deviceID << ": " << ex.what() << std::endl;
-        }
+        std::cout << "Timestamp:                  " << rcg::getString(nodemap, "TimestampLatchValue") << " ns" << std::endl;
     }
 }
 
 void printPtpConfig(std::shared_ptr<GenApi::CNodeMapRef> nodemap, const std::string &deviceID)
 {
-
     try
     {
         rcg::getString(nodemap, "PtpEnable", true);
+        rcg::callCommand(nodemap, "TimestampLatch");
         rcg::callCommand(nodemap, "PtpDataSetLatch");
+        std::cout << GREEN << "Device ID:                  " << deviceID << RESET << std::endl;
         std::cout << "PTP:                        " << rcg::getString(nodemap, "PtpEnable") << std::endl;
         std::cout << "PTP status:                 " << rcg::getString(nodemap, "PtpStatus") << std::endl;
+        std::cout << "Clock accuray:              " << rcg::getString(nodemap, "PtpClockAccuracy") << std::endl;
         std::cout << "PTP offset:                 " << rcg::getInteger(nodemap, "PtpOffsetFromMaster") << " ns" << std::endl;
+        printTimestamp(nodemap);
     }
-    catch (const std::exception &)
+    catch (const std::exception &ex)
     {
-        std::cerr << "Failed to get PTP configuration from device '" << deviceID << "'- Trying depracted features: GevIEEE1588, GevIEEE1588Status " << std::endl;
+        // std::cerr << YELLOW << "Warning: Failed to get PTP configuration from device '" << deviceID << "'- Trying deprecated features: GevIEEE1588, GevIEEE1588Status " << RESET << std::endl;
         try
         {
             rcg::getString(nodemap, "GevIEEE1588", true);
+            std::cout << GREEN << "Device ID:                  " << deviceID << RESET << std::endl;
             std::cout << "PTP:                        " << rcg::getString(nodemap, "GevIEEE1588") << std::endl;
             std::cout << "PTP status:                 " << rcg::getString(nodemap, "GevIEEE1588Status") << std::endl;
+            // std::cout << "Clock accuracy              " << rcg::getEnum(nodemap, "GevIEEE1588ClockAccuracy") << std::endl; //ToDo Invisible?
+            printTimestamp(nodemap);
         }
         catch (const std::exception &ex)
         {
-            std::cout << "Ptp parameters are not available" << std::endl;
+            std::cout << RED << "Ptp parameters are not available" << std::endl;
             std::cout << std::endl;
         }
     }
 }
 
-// Waits until all cameras are set to slaves and one camera to master
-bool waitForPTPStatus(const std::vector<std::shared_ptr<rcg::Device>> &cameras, bool deprecated, int ptp_sync_timeout)
+void statusCheck(const std::string &current_status)
 {
-    std::string feature;
-    std::cout << "Waiting for " << cameras.size() << " cameras to have correct PTP status." << std::endl;
-    if (deprecated)
+    if (current_status == "Master")
     {
-        feature = "GevIEEE1588Status";
+        ++num_master;
+    }
+    else if (current_status == "Slave")
+    {
+        ++num_slave;
     }
     else
     {
-        feature = "PtpStatus";
-    }
-    auto timeout_time = std::chrono::steady_clock::now() + std::chrono::seconds(ptp_sync_timeout);
-    while (true)
-    {
-        int num_init = 0;
-        int num_master = 0;
-        int num_slave = 0;
-        int64_t master_clock_id = 0;
-
-        for (const auto &camera : cameras)
-        {
-            auto nodemap = camera->getRemoteNodeMap();
-            std::string current_status = rcg::getString(nodemap, feature.c_str());
-
-            if (current_status == "Master")
-            {
-                ++num_master;
-            }
-            else if (current_status == "Slave")
-            {
-                ++num_slave;
-            }
-            else
-            {
-                ++num_init;
-            }
-        }
-
-        if (num_slave == cameras.size() - 1 && num_master == 1)
-        {
-            std::cout << "All camera clocks are PTP slaves to master clock: " << master_clock_id << std::endl;
-            return true;
-        }
-        else
-        {
-            std::cout << "Camera PTP status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
-        }
-
-        if (std::chrono::steady_clock::now() > timeout_time)
-        {
-            std::cerr << "Timed out waiting for camera clocks to become PTP camera slaves. Current status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
-            return false;
-        }
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        ++num_init;
     }
 }
+void setThreshhold(std::shared_ptr<rcg::Interface> interf)
+{
+    bool slaves = false;
+    bool offset_available = false;
+    const int timeout_seconds = 10; // Timeout after 10 seconds
+    auto start_time = std::chrono::steady_clock::now();
 
-// ToDo: Double read this function
-//  Waits until all cameras maintain a clock offset below max_offset_ns for offset_window_s seconds.
-// bool waitForPTPClockSync(const std::vector<std::shared_ptr<rcg::Device>> &cameras, int max_offset_ns, int offset_window_s, int ptp_sync_timeout)
-// {
-//     std::cout << "Waiting for clock offsets < " << max_offset_ns << " ns over " << offset_window_s << " s..." << std::endl;
-//     bool currently_below = false;
-//     auto below_start = std::chrono::steady_clock::now();
-//     std::vector<int64_t> current_offsets(cameras.size(), 0);
-//     int64_t current_max_abs_offset = 0;
+    for (auto &device : interf->getDevices())
+    {
+        while (!slaves && !stop_program)
+        {
+            device->open(rcg::Device::CONTROL);
+            auto nodemap = device->getRemoteNodeMap();
 
-//     auto timeout_time = std::chrono::steady_clock::now() + std::chrono::seconds(ptp_sync_timeout);
-//     while (true)
-//     {
-//         current_max_abs_offset = 0;
-//         for (size_t i = 0; i < cameras.size(); ++i)
-//         {
-//             cameras[i]->open(rcg::Device::CONTROL);
-//             auto nodemap = cameras[i]->getRemoteNodeMap();
-//             if (nodemap)
-//             {
-//                 auto latchNode = nodemap->GetNode("GevIEEE1588DataSetLatch");
-//                 if (latchNode)
-//                     latchNode->Execute();
-//                 try
-//                 {
-//                 }
-//                 catch (const std::exception &ex)
-//                 {
-//                     std::cerr << "Failed to get PTP offset from device '" << cameras[i]->getID() << "', trying deprecated features " << std::endl;
-//                 }
-//                 auto offsetNode = nodemap->GetNode("GevIEEE1588OffsetFromMaster");
-//                 if (offsetNode)
-//                 {
-//                     current_offsets[i] = offsetNode->GetValue();
-//                     current_max_abs_offset = std::max(current_max_abs_offset,
-//                                                       static_cast<int64_t>(std::abs(current_offsets[i])));
-//                 }
-//             }
-//             cameras[i]->close();
-//         }
-//         if (current_max_abs_offset < max_offset_ns)
-//         {
-//             if (!currently_below)
-//             {
-//                 currently_below = true;
-//                 below_start = std::chrono::steady_clock::now();
-//             }
-//             else if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - below_start).count() >= offset_window_s)
-//             {
-//                 std::cout << "All clocks synced" << std::endl;
-//                 return true;
-//             }
-//         }
-//         else
-//         {
-//             currently_below = false;
-//         }
-//         if (std::chrono::steady_clock::now() > timeout_time)
-//         {
-//             std::cerr << "PTP clock synchronization timed out waiting for offsets < " << max_offset_ns << " ns over " << offset_window_s << " s" << std::endl;
-//             std::cerr << "Current clock offsets:" << std::endl;
-//             for (size_t i = 0; i < cameras.size(); ++i)
-//             {
-//                 std::cerr << i << ": " << current_offsets[i] << std::endl;
-//             }
-//             return false;
-//         }
-//         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-//     }
-//     return false;
-// }
+            std::string status;
+            try
+            {
+                status = rcg::getString(nodemap, "PtpStatus");
+                offset_available = true;
+            }
+            catch (const std::exception &ex)
+            {
+                // Handle exception if needed
+            }
 
+            if (status == "Slave" && offset_available)
+            {
+                slaves = true;
+
+                do
+                {
+                    std::cout << "PtpOffsetFromMaster: " << rcg::getInteger(nodemap, "PtpOffsetFromMaster") << std::endl;
+                    printTimestamp(nodemap);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Sleep for 100ms to avoid busy waiting
+                } while (rcg::getInteger(nodemap, "PtpOffsetFromMaster") > offset_threshold &&
+                         std::chrono::steady_clock::now() - start_time < std::chrono::seconds(timeout_seconds) &&
+                         !stop_program);
+            }
+
+            device->close();
+
+            if (std::chrono::steady_clock::now() - start_time >= std::chrono::seconds(timeout_seconds))
+            {
+                std::cout << YELLOW << "Warning: Timeout reached while waiting for PTP offset to be within threshold." << RESET << std::endl;
+                break;
+            }
+        }
+
+        // Check if the program should stop
+        if (stop_program)
+        {
+            break;
+        }
+    }
+}
 int main(int argc, char *argv[])
 {
+    // Register signal handler for Ctrl+C
+    // signal(SIGINT, signalHandler);
+
+    std::vector<std::shared_ptr<rcg::System>> systems;
+
     try
     {
-        std::vector<std::shared_ptr<rcg::System>> systems = rcg::System::getSystems();
+        systems = rcg::System::getSystems();
         int deviceCount = 0;
         for (auto &system : systems)
         {
@@ -250,37 +229,52 @@ int main(int argc, char *argv[])
                     auto nodemap = device->getRemoteNodeMap();
 
                     enablePTP(nodemap);
-                    printTimestamp(nodemap, device->getID());
                     printPtpConfig(nodemap, device->getID());
-                    if (!waitForPTPStatus({device}, true, 10)) //ToDo set right value for timeout and change deprecated implementation
-                    {
-                        return 1;
-                    }
+                    std::string current_status = rcg::getString(nodemap, "GevIEEE1588Status");
+                    statusCheck(current_status);
                     device->close();
+
+                    // Check if the program should stop
+                    if (stop_program)
+                    {
+                        break;
+                    }
                 }
+                // setThreshhold(interf);
                 interf->close();
+
+                // Check if the program should stop
+                if (stop_program)
+                {
+                    break;
+                }
             }
             system->close();
+
+            // Check if the program should stop
+            if (stop_program)
+            {
+                break;
+            }
         }
         if (deviceCount == 0)
         {
-            std::cout << "No cameras found." << std::endl;
+            std::cout << YELLOW << "Warning: No cameras found." << RESET << std::endl;
         }
         else
         {
+            // ToDo: Print Status until Master is found
+            std::cout << GREEN << "Camera PTP status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << RESET << std::endl;
             std::cout << "Number of devices found: " << deviceCount << std::endl;
         }
     }
     catch (const std::exception &ex)
     {
-        std::cerr << "Exception: " << ex.what() << std::endl;
+        std::cerr << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
+        // cleanup(systems);
         return 2;
     }
 
-    rcg::System::clearSystems();
+    // cleanup(systems);
     return 0;
 }
-// if (!waitForPTPSlave(cameras) || !waitForPTPClockSync(cameras, ptp_max_offset_ns, ptp_offset_window_s))
-// {
-//     return 1;
-// }
