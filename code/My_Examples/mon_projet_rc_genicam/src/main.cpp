@@ -258,11 +258,11 @@ void storeImage(const rcg::Buffer *buffer, const std::string &format = "png")
 // Function to convert and display images using OpenCV
 void displayImage(const rcg::Buffer *buffer)
 {
-    if (!buffer || buffer->getIsIncomplete())
-    {
+    // if (!buffer || buffer->getIsIncomplete())
+    // {
         std::cerr << "Received incomplete buffer, skipping display..." << std::endl;
-        return;
-    }
+    //     return;
+    // }
 
     // Convert the buffer to an OpenCV Mat
     rcg::Image image(buffer, 0); // Assume first part contains the image
@@ -336,10 +336,10 @@ bool startStreaming(std::shared_ptr<rcg::Device> device)
         while (!stop_streaming)
         {
             const rcg::Buffer *buffer = stream->grab(1000);
-            if (buffer)
-            {
+            // if (buffer)
+            // {
                 displayImage(buffer); // Display using OpenCV
-            }
+            // }
         }
 
         stopStreaming(device);
@@ -398,74 +398,92 @@ void captureSingleImage(const std::string &format, std::shared_ptr<rcg::Device> 
 
 int main(int argc, char *argv[])
 {
-    signal(SIGINT, signalHandler); // Handle Ctrl+C to stop streaming
-    std::vector<std::shared_ptr<rcg::System>> systems = rcg::System::getSystems();
-    int deviceCount = 0;
-    std::string targetDeviceID = (argc > 2) ? argv[2] : "";
-
-    for (auto &system : systems)
+    try
     {
-        system->open();
-        for (auto &interf : system->getInterfaces())
+        if (argc <= 1)
         {
-            interf->open();
-            // Check if a target device ID is provided
-            if (!targetDeviceID.empty())
-            {
-                auto device = interf->getDevice(targetDeviceID.c_str());
-                std::cout << GREEN << "Opening device '" << device->getID() << "'..." << RESET << std::endl;
-                device->open(rcg::Device::CONTROL);
+            throw std::invalid_argument("No arguments provided. Use '--single-shot' or '--stream' followed by the device ID.");
+        }
 
-                if (argc > 1 && std::string(argv[1]) == "--single-shot")
-                {
-                    captureSingleImage("png", device);
-                    stopStreaming(device);
-                    return 0;
-                }
-                if (argc > 1 && std::string(argv[1]) == "--stream")
-                {
-                    if (!startStreaming(device))
-                    {
-                        stopStreaming(device);
-                        return 1;
-                    }
-                }
-                device->close();
-            }
-            else
+        signal(SIGINT, signalHandler); // Handle Ctrl+C to stop streaming
+        std::vector<std::shared_ptr<rcg::System>> systems = rcg::System::getSystems();
+        int deviceCount = 0;
+        std::string targetDeviceID = (argc > 2) ? argv[2] : "";
+
+        for (auto &system : systems)
+        {
+            system->open();
+            for (auto &interf : system->getInterfaces())
             {
-                // ToDo correct this to not iterate over interfaces
-                for (auto &device : interf->getDevices())
+                interf->open();
+                // Check if a target device ID is provided
+                if (!targetDeviceID.empty())
                 {
-                    deviceCount++;
+                    auto device = interf->getDevice(targetDeviceID.c_str());
+                    if (!device)
+                    {
+                        std::cerr << RED << "Device with ID '" << targetDeviceID << "' not found." << RESET << std::endl;
+                        continue;
+                    }
                     std::cout << GREEN << "Opening device '" << device->getID() << "'..." << RESET << std::endl;
                     device->open(rcg::Device::CONTROL);
 
-                    if (argc > 1 && std::string(argv[1]) == "--single-shot")
+                    if (std::string(argv[1]) == "--single-shot")
                     {
                         captureSingleImage("png", device);
                         stopStreaming(device);
                         return 0;
                     }
-
-                    if (!startStreaming(device))
+                    if (std::string(argv[1]) == "--stream")
                     {
-                        stopStreaming(device);
-                        return 1;
+                        if (!startStreaming(device))
+                        {
+                            stopStreaming(device);
+                            return 1;
+                        }
                     }
-
-                    stopStreaming(device);
                     device->close();
                 }
-            }
-            interf->close();
-        }
-        system->close();
-    }
+                else
+                {
+                    // ToDo correct this to not iterate over interfaces
+                    for (auto &device : interf->getDevices())
+                    {
+                        deviceCount++;
+                        std::cout << GREEN << "Opening device '" << device->getID() << "'..." << RESET << std::endl;
+                        device->open(rcg::Device::CONTROL);
 
-    if (deviceCount == 0)
+                        if (std::string(argv[1]) == "--single-shot")
+                        {
+                            captureSingleImage("png", device);
+                            stopStreaming(device);
+                            return 0;
+                        }
+
+                        if (!startStreaming(device))
+                        {
+                            stopStreaming(device);
+                            return 1;
+                        }
+
+                        stopStreaming(device);
+                        device->close();
+                    }
+                }
+                interf->close();
+            }
+            system->close();
+        }
+
+        if (deviceCount == 0)
+        {
+            std::cerr << RED << "No devices found." << RESET << std::endl;
+            return 1;
+        }
+    }
+    catch (const std::exception &ex)
     {
-        std::cerr << RED << "No devices found." << RESET << std::endl;
+        std::cerr << "Error: " << ex.what() << std::endl;
         return 1;
     }
 
@@ -473,4 +491,3 @@ int main(int argc, char *argv[])
 }
 
 // ./main_example --single-shot 210200799
-

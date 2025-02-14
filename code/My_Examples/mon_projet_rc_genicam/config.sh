@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Set the GENICAM_GENTL64_PATH environment variable
+unset GENICAM_GENTL64_PATH
+
 export GENICAM_GENTL64_PATH=/opt/pylon/lib/gentlproducer/gtl
 echo "GENICAM_GENTL64_PATH set to $GENICAM_GENTL64_PATH"
 
