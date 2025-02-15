@@ -26,8 +26,7 @@
 std::atomic<bool> stop_streaming(false);
 std::shared_ptr<rcg::Stream> stream;
 
-// Function to enable Chunk Data Mode for metadata extraction
-void enableChunkData(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
+void enableChunkData(std::shared_ptr<GenApi::CNodeMapRef> nodemap) // ToDo: What s this doing and do I need it ? 
 {
     if (nodemap)
     {
@@ -48,7 +47,6 @@ void configureSyncFreeRun(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
     }
 }
 
-// Function to stop streaming
 void stopStreaming()
 {
     if (stream)
@@ -61,7 +59,6 @@ void stopStreaming()
 }
 
 
-// Function to convert and display images using OpenCV
 void displayImage(const rcg::Buffer *buffer)
 {
     if (!buffer || buffer->getIsIncomplete())
@@ -91,7 +88,6 @@ void displayImage(const rcg::Buffer *buffer)
     }
 }
 
-// Function to start streaming
 bool startStreaming(std::shared_ptr<rcg::Device> device)
 {
     try
@@ -117,8 +113,6 @@ bool startStreaming(std::shared_ptr<rcg::Device> device)
                 displayImage(buffer);
             }
         }
-
-        stopStreaming(); // ToDo why is this calle twice
         return true;
     }
     catch (const std::exception &ex)
