@@ -156,17 +156,17 @@ ptp_ctrl/fast:
 .PHONY : ptp_ctrl/fast
 
 #=============================================================================
-# Target rules for targets named stream
+# Target rules for targets named continuous_stream
 
 # Build rule for target.
-stream: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 stream
-.PHONY : stream
+continuous_stream: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 continuous_stream
+.PHONY : continuous_stream
 
 # fast build rule for target.
-stream/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stream.dir/build.make CMakeFiles/stream.dir/build
-.PHONY : stream/fast
+continuous_stream/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/continuous_stream.dir/build.make CMakeFiles/continuous_stream.dir/build
+.PHONY : continuous_stream/fast
 
 #=============================================================================
 # Target rules for targets named sched_ac
@@ -217,6 +217,30 @@ src/cam_ctrl.s: src/cam_ctrl.cpp.s
 src/cam_ctrl.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam_ctrl.dir/build.make CMakeFiles/cam_ctrl.dir/src/cam_ctrl.cpp.s
 .PHONY : src/cam_ctrl.cpp.s
+
+src/continuous_stream.o: src/continuous_stream.cpp.o
+.PHONY : src/continuous_stream.o
+
+# target to build an object file
+src/continuous_stream.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/continuous_stream.dir/build.make CMakeFiles/continuous_stream.dir/src/continuous_stream.cpp.o
+.PHONY : src/continuous_stream.cpp.o
+
+src/continuous_stream.i: src/continuous_stream.cpp.i
+.PHONY : src/continuous_stream.i
+
+# target to preprocess a source file
+src/continuous_stream.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/continuous_stream.dir/build.make CMakeFiles/continuous_stream.dir/src/continuous_stream.cpp.i
+.PHONY : src/continuous_stream.cpp.i
+
+src/continuous_stream.s: src/continuous_stream.cpp.s
+.PHONY : src/continuous_stream.s
+
+# target to generate assembly for a file
+src/continuous_stream.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/continuous_stream.dir/build.make CMakeFiles/continuous_stream.dir/src/continuous_stream.cpp.s
+.PHONY : src/continuous_stream.cpp.s
 
 src/list_all.o: src/list_all.cpp.o
 .PHONY : src/list_all.o
@@ -314,30 +338,6 @@ src/sched_ac.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/src/sched_ac.cpp.s
 .PHONY : src/sched_ac.cpp.s
 
-src/stream.o: src/stream.cpp.o
-.PHONY : src/stream.o
-
-# target to build an object file
-src/stream.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stream.dir/build.make CMakeFiles/stream.dir/src/stream.cpp.o
-.PHONY : src/stream.cpp.o
-
-src/stream.i: src/stream.cpp.i
-.PHONY : src/stream.i
-
-# target to preprocess a source file
-src/stream.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stream.dir/build.make CMakeFiles/stream.dir/src/stream.cpp.i
-.PHONY : src/stream.cpp.i
-
-src/stream.s: src/stream.cpp.s
-.PHONY : src/stream.s
-
-# target to generate assembly for a file
-src/stream.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stream.dir/build.make CMakeFiles/stream.dir/src/stream.cpp.s
-.PHONY : src/stream.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -347,14 +347,17 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... cam_ctrl"
+	@echo "... continuous_stream"
 	@echo "... list_all"
 	@echo "... main_example"
 	@echo "... ptp_ctrl"
 	@echo "... sched_ac"
-	@echo "... stream"
 	@echo "... src/cam_ctrl.o"
 	@echo "... src/cam_ctrl.i"
 	@echo "... src/cam_ctrl.s"
+	@echo "... src/continuous_stream.o"
+	@echo "... src/continuous_stream.i"
+	@echo "... src/continuous_stream.s"
 	@echo "... src/list_all.o"
 	@echo "... src/list_all.i"
 	@echo "... src/list_all.s"
@@ -367,9 +370,6 @@ help:
 	@echo "... src/sched_ac.o"
 	@echo "... src/sched_ac.i"
 	@echo "... src/sched_ac.s"
-	@echo "... src/stream.o"
-	@echo "... src/stream.i"
-	@echo "... src/stream.s"
 .PHONY : help
 
 

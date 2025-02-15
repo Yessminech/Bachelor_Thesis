@@ -27,18 +27,19 @@ struct PTPConfig
     uint64_t timestamp_s;
     std::string clockAccuracy;
     int offsetFromMaster;
-    int threshhold; // ToDo set or compute this
 };
+int ptp_sync_timeout; // ToDo set or compute this
 
 // [https://docs.baslerweb.com/timestamp?utm_source=chatgpt.com]
 // PTP disabled: 125 MHz (= 125 000 000 ticks per second, 1 tick = 8 ns)
 // PTP enabled: 1 GHz (= 1 000 000 000 ticks per second, 1 tick = 1 ns)
-// Timestamp could be set 
+// Timestamp could be set
 
 std::atomic<bool> stop_program(false);
 int num_init = 0;
 int num_master = 0;
 int num_slave = 0;
+int64_t master_clock_id = 0;
 
 bool getGenTLVersion(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
 {
@@ -56,12 +57,6 @@ bool getGenTLVersion(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
         std::cerr << RED << "Error: Failed to get GenTL version: " << ex.what() << RESET << std::endl;
         return false;
     }
-}
-
-void signalHandler(int signum)
-{
-    std::cout << "\nStopping program..." << std::endl;
-    stop_program = true;
 }
 
 void enablePTP(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConfig ptpConfig, bool deprecatedFeatures)
@@ -153,6 +148,7 @@ void statusCheck(const std::string &current_status)
 {
     if (current_status == "Master")
     {
+        master_clock_id = 1; // ToDo: Get the actual master clock ID
         ++num_master;
     }
     else if (current_status == "Slave")
@@ -185,7 +181,6 @@ void monitorPtpStatus(std::shared_ptr<rcg::Interface> interf, int deviceCount)
 
 int main(int argc, char *argv[])
 {
-    signal(SIGINT, signalHandler);
     std::vector<std::shared_ptr<rcg::System>> systems;
 
     try
@@ -218,7 +213,22 @@ int main(int argc, char *argv[])
                     }
                 }
                 monitorPtpStatus(interf, deviceCount);
-                std::cout << GREEN << "Camera PTP status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << RESET << std::endl;
+                auto timeout_time = std::chrono::steady_clock::now() + std::chrono::seconds(ptp_sync_timeout);
+                if (num_slave == deviceCount - 1 && num_master == 1)
+                {
+                    std::cout << "All camera clocks are PTP slaves to master clock: " << master_clock_id << std::endl;
+                    return true;
+                }
+                else
+                {
+                    std::cout << "Camera PTP status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
+                }
+
+                if (std::chrono::steady_clock::now() > timeout_time)
+                {
+                    std::cerr << "Timed out waiting for camera clocks to become PTP camera slaves. Current status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
+                    return false;
+                }
 
                 interf->close();
 
@@ -243,93 +253,7 @@ int main(int argc, char *argv[])
     catch (const std::exception &ex)
     {
         std::cerr << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
-        // cleanup(systems);
         return 2;
     }
-
-    // cleanup(systems);
     return 0;
 }
-
-// // ToDo Correct this
-// void cleanup(std::vector<std::shared_ptr<rcg::System>> &systems)
-// {
-//     for (auto &system : systems)
-//     {
-//         for (auto &interf : system->getInterfaces())
-//         {
-//             for (const auto &device : interf->getDevices())
-//             {
-//                 // if (device->isOpen())
-//                 {
-//                     device->close();
-//                 }
-//             }
-//             // if (interf->isOpen())
-//             {
-//                 interf->close();
-//             }
-//         }
-//         // if (system->isOpen())
-//         {
-//             system->close();
-//         }
-//     }
-//     rcg::System::clearSystems();
-// }
-
-// void setThreshhold(std::shared_ptr<rcg::Interface> interf)
-// {
-//     bool slaves = false;
-//     bool offset_available = false;
-//     const int timeout_seconds = 10; // Timeout after 10 seconds
-//     auto start_time = std::chrono::steady_clock::now();
-
-//     for (auto &device : interf->getDevices())
-//     {
-//         while (!slaves && !stop_program)
-//         {
-//             device->open(rcg::Device::CONTROL);
-//             auto nodemap = device->getRemoteNodeMap();
-
-//             std::string status;
-//             try
-//             {
-//                 status = rcg::getString(nodemap, "PtpStatus");
-//                 offset_available = true;
-//             }
-//             catch (const std::exception &ex)
-//             {
-//                 // Handle exception if needed
-//             }
-
-//             if (status == "Slave" && offset_available)
-//             {
-//                 slaves = true;
-
-//                 do
-//                 {
-//                     std::cout << "PtpOffsetFromMaster: " << rcg::getInteger(nodemap, "PtpOffsetFromMaster") << std::endl;
-//                     printTimestamp(nodemap);
-//                     std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Sleep for 100ms to avoid busy waiting
-//                 } while (rcg::getInteger(nodemap, "PtpOffsetFromMaster") > offset_threshold &&
-//                          std::chrono::steady_clock::now() - start_time < std::chrono::seconds(timeout_seconds) &&
-//                          !stop_program);
-//             }
-
-//             device->close();
-
-//             if (std::chrono::steady_clock::now() - start_time >= std::chrono::seconds(timeout_seconds))
-//             {
-//                 std::cout << YELLOW << "Warning: Timeout reached while waiting for PTP offset to be within threshold." << RESET << std::endl;
-//                 break;
-//             }
-//         }
-
-//         // Check if the program should stop
-//         if (stop_program)
-//         {
-//             break;
-//         }
-//     }
-// }
