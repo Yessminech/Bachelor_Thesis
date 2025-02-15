@@ -75,6 +75,54 @@ DeviceConfig getConfig(const std::shared_ptr<rcg::Device> &device)
   return config;
 }
 
+bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "")
+{
+  bool ret = true;
+  std::set<std::string> printedSerialNumbers;
+
+  // list all systems, interfaces and devices
+  std::vector<std::shared_ptr<rcg::System>> system = rcg::System::getSystems();
+  for (size_t i = 0; i < system.size(); i++)
+  {
+    system[i]->open();
+    std::vector<std::shared_ptr<rcg::Interface>> interf = system[i]->getInterfaces();
+    for (size_t k = 0; k < interf.size(); k++)
+    {
+      interf[k]->open();
+      std::vector<std::shared_ptr<rcg::Device>> device = interf[k]->getDevices();
+      for (size_t j = 0; j < device.size(); j++)
+      {
+        auto nodemap = device[j]->getRemoteNodeMap();
+        std::string serialNumber = device[j]->getSerialNumber();
+        std::string currentIP = getCurrentIP(device[j]);
+        if ((id.empty() || device[j]->getID() == id) && (ip.empty() || currentIP == ip))
+        {
+          if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
+          {
+            printedSerialNumbers.insert(serialNumber);
+            DeviceConfig config = getConfig(device[j]);
+            std::cout << "        Device             " << config.id << std::endl;
+            std::cout << "        Vendor:            " << config.vendor << std::endl;
+            std::cout << "        Model:             " << config.model << std::endl;
+            std::cout << "        TL type:           " << config.tlType << std::endl;
+            std::cout << "        Display name:      " << config.displayName << std::endl;
+            std::cout << "        User defined name: " << config.userDefinedName << std::endl;
+            std::cout << "        Access status:     " << config.accessStatus << std::endl;
+            std::cout << "        Serial number:     " << config.serialNumber << std::endl;
+            std::cout << "        Version:           " << config.version << std::endl;
+            std::cout << "        TS Frequency:      " << config.timestampFrequency << std::endl;
+            std::cout << "        Current IP:        " << config.currentIP << std::endl;
+            std::cout << "        MAC:               " << config.MAC << std::endl;
+            std::cout << std::endl;
+          }
+        }
+      }
+      interf[k]->close();
+    }
+    system[i]->close();
+  }
+  return ret;
+}
 bool listDevices()
 { // ToDo: Exceptions handling
   bool ret = true;
