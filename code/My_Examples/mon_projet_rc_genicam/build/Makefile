@@ -130,30 +130,30 @@ main_example/fast:
 .PHONY : main_example/fast
 
 #=============================================================================
-# Target rules for targets named set_feature
+# Target rules for targets named cam_ctrl
 
 # Build rule for target.
-set_feature: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 set_feature
-.PHONY : set_feature
+cam_ctrl: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cam_ctrl
+.PHONY : cam_ctrl
 
 # fast build rule for target.
-set_feature/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/build
-.PHONY : set_feature/fast
+cam_ctrl/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam_ctrl.dir/build.make CMakeFiles/cam_ctrl.dir/build
+.PHONY : cam_ctrl/fast
 
 #=============================================================================
-# Target rules for targets named ptp_with_timestamps
+# Target rules for targets named ptp_ctrl
 
 # Build rule for target.
-ptp_with_timestamps: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ptp_with_timestamps
-.PHONY : ptp_with_timestamps
+ptp_ctrl: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ptp_ctrl
+.PHONY : ptp_ctrl
 
 # fast build rule for target.
-ptp_with_timestamps/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_with_timestamps.dir/build.make CMakeFiles/ptp_with_timestamps.dir/build
-.PHONY : ptp_with_timestamps/fast
+ptp_ctrl/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_ctrl.dir/build.make CMakeFiles/ptp_ctrl.dir/build
+.PHONY : ptp_ctrl/fast
 
 #=============================================================================
 # Target rules for targets named stream
@@ -193,6 +193,30 @@ list_all: cmake_check_build_system
 list_all/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/build
 .PHONY : list_all/fast
+
+src/cam_ctrl.o: src/cam_ctrl.cpp.o
+.PHONY : src/cam_ctrl.o
+
+# target to build an object file
+src/cam_ctrl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam_ctrl.dir/build.make CMakeFiles/cam_ctrl.dir/src/cam_ctrl.cpp.o
+.PHONY : src/cam_ctrl.cpp.o
+
+src/cam_ctrl.i: src/cam_ctrl.cpp.i
+.PHONY : src/cam_ctrl.i
+
+# target to preprocess a source file
+src/cam_ctrl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam_ctrl.dir/build.make CMakeFiles/cam_ctrl.dir/src/cam_ctrl.cpp.i
+.PHONY : src/cam_ctrl.cpp.i
+
+src/cam_ctrl.s: src/cam_ctrl.cpp.s
+.PHONY : src/cam_ctrl.s
+
+# target to generate assembly for a file
+src/cam_ctrl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam_ctrl.dir/build.make CMakeFiles/cam_ctrl.dir/src/cam_ctrl.cpp.s
+.PHONY : src/cam_ctrl.cpp.s
 
 src/list_all.o: src/list_all.cpp.o
 .PHONY : src/list_all.o
@@ -242,29 +266,29 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/ptp_with_timestamps.o: src/ptp_with_timestamps.cpp.o
-.PHONY : src/ptp_with_timestamps.o
+src/ptp_ctrl.o: src/ptp_ctrl.cpp.o
+.PHONY : src/ptp_ctrl.o
 
 # target to build an object file
-src/ptp_with_timestamps.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_with_timestamps.dir/build.make CMakeFiles/ptp_with_timestamps.dir/src/ptp_with_timestamps.cpp.o
-.PHONY : src/ptp_with_timestamps.cpp.o
+src/ptp_ctrl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_ctrl.dir/build.make CMakeFiles/ptp_ctrl.dir/src/ptp_ctrl.cpp.o
+.PHONY : src/ptp_ctrl.cpp.o
 
-src/ptp_with_timestamps.i: src/ptp_with_timestamps.cpp.i
-.PHONY : src/ptp_with_timestamps.i
+src/ptp_ctrl.i: src/ptp_ctrl.cpp.i
+.PHONY : src/ptp_ctrl.i
 
 # target to preprocess a source file
-src/ptp_with_timestamps.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_with_timestamps.dir/build.make CMakeFiles/ptp_with_timestamps.dir/src/ptp_with_timestamps.cpp.i
-.PHONY : src/ptp_with_timestamps.cpp.i
+src/ptp_ctrl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_ctrl.dir/build.make CMakeFiles/ptp_ctrl.dir/src/ptp_ctrl.cpp.i
+.PHONY : src/ptp_ctrl.cpp.i
 
-src/ptp_with_timestamps.s: src/ptp_with_timestamps.cpp.s
-.PHONY : src/ptp_with_timestamps.s
+src/ptp_ctrl.s: src/ptp_ctrl.cpp.s
+.PHONY : src/ptp_ctrl.s
 
 # target to generate assembly for a file
-src/ptp_with_timestamps.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_with_timestamps.dir/build.make CMakeFiles/ptp_with_timestamps.dir/src/ptp_with_timestamps.cpp.s
-.PHONY : src/ptp_with_timestamps.cpp.s
+src/ptp_ctrl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_ctrl.dir/build.make CMakeFiles/ptp_ctrl.dir/src/ptp_ctrl.cpp.s
+.PHONY : src/ptp_ctrl.cpp.s
 
 src/sched_ac.o: src/sched_ac.cpp.o
 .PHONY : src/sched_ac.o
@@ -289,30 +313,6 @@ src/sched_ac.s: src/sched_ac.cpp.s
 src/sched_ac.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/src/sched_ac.cpp.s
 .PHONY : src/sched_ac.cpp.s
-
-src/set_feature_from_terminal.o: src/set_feature_from_terminal.cpp.o
-.PHONY : src/set_feature_from_terminal.o
-
-# target to build an object file
-src/set_feature_from_terminal.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/src/set_feature_from_terminal.cpp.o
-.PHONY : src/set_feature_from_terminal.cpp.o
-
-src/set_feature_from_terminal.i: src/set_feature_from_terminal.cpp.i
-.PHONY : src/set_feature_from_terminal.i
-
-# target to preprocess a source file
-src/set_feature_from_terminal.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/src/set_feature_from_terminal.cpp.i
-.PHONY : src/set_feature_from_terminal.cpp.i
-
-src/set_feature_from_terminal.s: src/set_feature_from_terminal.cpp.s
-.PHONY : src/set_feature_from_terminal.s
-
-# target to generate assembly for a file
-src/set_feature_from_terminal.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/set_feature.dir/build.make CMakeFiles/set_feature.dir/src/set_feature_from_terminal.cpp.s
-.PHONY : src/set_feature_from_terminal.cpp.s
 
 src/stream.o: src/stream.cpp.o
 .PHONY : src/stream.o
@@ -346,27 +346,27 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... cam_ctrl"
 	@echo "... list_all"
 	@echo "... main_example"
-	@echo "... ptp_with_timestamps"
+	@echo "... ptp_ctrl"
 	@echo "... sched_ac"
-	@echo "... set_feature"
 	@echo "... stream"
+	@echo "... src/cam_ctrl.o"
+	@echo "... src/cam_ctrl.i"
+	@echo "... src/cam_ctrl.s"
 	@echo "... src/list_all.o"
 	@echo "... src/list_all.i"
 	@echo "... src/list_all.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/ptp_with_timestamps.o"
-	@echo "... src/ptp_with_timestamps.i"
-	@echo "... src/ptp_with_timestamps.s"
+	@echo "... src/ptp_ctrl.o"
+	@echo "... src/ptp_ctrl.i"
+	@echo "... src/ptp_ctrl.s"
 	@echo "... src/sched_ac.o"
 	@echo "... src/sched_ac.i"
 	@echo "... src/sched_ac.s"
-	@echo "... src/set_feature_from_terminal.o"
-	@echo "... src/set_feature_from_terminal.i"
-	@echo "... src/set_feature_from_terminal.s"
 	@echo "... src/stream.o"
 	@echo "... src/stream.i"
 	@echo "... src/stream.s"
