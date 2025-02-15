@@ -167,4 +167,4 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// ./countinuous_stream 210200799
+// ./single_shot 210200799

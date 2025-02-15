@@ -53,6 +53,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/cam_ctrl.dir/DependInfo.cmake"
   "CMakeFiles/ptp_ctrl.dir/DependInfo.cmake"
   "CMakeFiles/continuous_stream.dir/DependInfo.cmake"
+  "CMakeFiles/single_shot.dir/DependInfo.cmake"
   "CMakeFiles/sched_ac.dir/DependInfo.cmake"
   "CMakeFiles/list_all.dir/DependInfo.cmake"
   )

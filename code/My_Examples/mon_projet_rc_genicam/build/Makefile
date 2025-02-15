@@ -169,6 +169,19 @@ continuous_stream/fast:
 .PHONY : continuous_stream/fast
 
 #=============================================================================
+# Target rules for targets named single_shot
+
+# Build rule for target.
+single_shot: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 single_shot
+.PHONY : single_shot
+
+# fast build rule for target.
+single_shot/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/single_shot.dir/build.make CMakeFiles/single_shot.dir/build
+.PHONY : single_shot/fast
+
+#=============================================================================
 # Target rules for targets named sched_ac
 
 # Build rule for target.
@@ -338,6 +351,30 @@ src/sched_ac.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/src/sched_ac.cpp.s
 .PHONY : src/sched_ac.cpp.s
 
+src/single_shot.o: src/single_shot.cpp.o
+.PHONY : src/single_shot.o
+
+# target to build an object file
+src/single_shot.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/single_shot.dir/build.make CMakeFiles/single_shot.dir/src/single_shot.cpp.o
+.PHONY : src/single_shot.cpp.o
+
+src/single_shot.i: src/single_shot.cpp.i
+.PHONY : src/single_shot.i
+
+# target to preprocess a source file
+src/single_shot.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/single_shot.dir/build.make CMakeFiles/single_shot.dir/src/single_shot.cpp.i
+.PHONY : src/single_shot.cpp.i
+
+src/single_shot.s: src/single_shot.cpp.s
+.PHONY : src/single_shot.s
+
+# target to generate assembly for a file
+src/single_shot.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/single_shot.dir/build.make CMakeFiles/single_shot.dir/src/single_shot.cpp.s
+.PHONY : src/single_shot.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -352,6 +389,7 @@ help:
 	@echo "... main_example"
 	@echo "... ptp_ctrl"
 	@echo "... sched_ac"
+	@echo "... single_shot"
 	@echo "... src/cam_ctrl.o"
 	@echo "... src/cam_ctrl.i"
 	@echo "... src/cam_ctrl.s"
@@ -370,6 +408,9 @@ help:
 	@echo "... src/sched_ac.o"
 	@echo "... src/sched_ac.i"
 	@echo "... src/sched_ac.s"
+	@echo "... src/single_shot.o"
+	@echo "... src/single_shot.i"
+	@echo "... src/single_shot.s"
 .PHONY : help
 
 
