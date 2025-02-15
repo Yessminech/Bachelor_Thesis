@@ -51,7 +51,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/main_example.dir/DependInfo.cmake"
   "CMakeFiles/set_feature.dir/DependInfo.cmake"
-  "CMakeFiles/get_timestamp.dir/DependInfo.cmake"
   "CMakeFiles/ptp_with_timestamps.dir/DependInfo.cmake"
   "CMakeFiles/stream.dir/DependInfo.cmake"
   "CMakeFiles/sched_ac.dir/DependInfo.cmake"

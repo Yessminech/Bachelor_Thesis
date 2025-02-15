@@ -143,19 +143,6 @@ set_feature/fast:
 .PHONY : set_feature/fast
 
 #=============================================================================
-# Target rules for targets named get_timestamp
-
-# Build rule for target.
-get_timestamp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 get_timestamp
-.PHONY : get_timestamp
-
-# fast build rule for target.
-get_timestamp/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/get_timestamp.dir/build.make CMakeFiles/get_timestamp.dir/build
-.PHONY : get_timestamp/fast
-
-#=============================================================================
 # Target rules for targets named ptp_with_timestamps
 
 # Build rule for target.
@@ -206,30 +193,6 @@ list_all: cmake_check_build_system
 list_all/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/build
 .PHONY : list_all/fast
-
-src/get_timestamp.o: src/get_timestamp.cpp.o
-.PHONY : src/get_timestamp.o
-
-# target to build an object file
-src/get_timestamp.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/get_timestamp.dir/build.make CMakeFiles/get_timestamp.dir/src/get_timestamp.cpp.o
-.PHONY : src/get_timestamp.cpp.o
-
-src/get_timestamp.i: src/get_timestamp.cpp.i
-.PHONY : src/get_timestamp.i
-
-# target to preprocess a source file
-src/get_timestamp.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/get_timestamp.dir/build.make CMakeFiles/get_timestamp.dir/src/get_timestamp.cpp.i
-.PHONY : src/get_timestamp.cpp.i
-
-src/get_timestamp.s: src/get_timestamp.cpp.s
-.PHONY : src/get_timestamp.s
-
-# target to generate assembly for a file
-src/get_timestamp.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/get_timestamp.dir/build.make CMakeFiles/get_timestamp.dir/src/get_timestamp.cpp.s
-.PHONY : src/get_timestamp.cpp.s
 
 src/list_all.o: src/list_all.cpp.o
 .PHONY : src/list_all.o
@@ -383,16 +346,12 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... get_timestamp"
 	@echo "... list_all"
 	@echo "... main_example"
 	@echo "... ptp_with_timestamps"
 	@echo "... sched_ac"
 	@echo "... set_feature"
 	@echo "... stream"
-	@echo "... src/get_timestamp.o"
-	@echo "... src/get_timestamp.i"
-	@echo "... src/get_timestamp.s"
 	@echo "... src/list_all.o"
 	@echo "... src/list_all.i"
 	@echo "... src/list_all.s"

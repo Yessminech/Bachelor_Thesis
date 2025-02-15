@@ -22,8 +22,6 @@ struct DeviceConfig
   double timestampFrequency;
 };
 
-//   bool deprecated = rcg::getString(nodemap, "GevCurrentIPAddress") != "" ? true : false;
-
 std::string getCurrentIP(const std::shared_ptr<rcg::Device> &device)
 {
   device->open(rcg::Device::CONTROL);
@@ -57,7 +55,7 @@ std::string getMAC(const std::shared_ptr<rcg::Device> &device)
     return "";
   }
 }
-DeviceConfig getConfig(const std::shared_ptr<rcg::Device> &device) 
+DeviceConfig getConfig(const std::shared_ptr<rcg::Device> &device)
 { // ToDo: Exceptions handling
   DeviceConfig config;
   config.id = device->getID();
@@ -123,6 +121,7 @@ bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "")
   }
   return ret;
 }
+
 bool listDevices()
 { // ToDo: Exceptions handling
   bool ret = true;
@@ -164,6 +163,30 @@ bool listDevices()
         {
           std::cout << "        Looking...        " << std::endl;
         }
+      }
+      interf[k]->close();
+    }
+    system[i]->close();
+  }
+  return ret;
+}
+
+// Function to list all available devices
+bool listDevicesIDs()
+{ // ToDo: Exceptions handling
+  bool ret = true;
+  std::vector<std::shared_ptr<rcg::System>> system = rcg::System::getSystems();
+  for (size_t i = 0; i < system.size(); i++)
+  {
+    system[i]->open();
+    std::vector<std::shared_ptr<rcg::Interface>> interf = system[i]->getInterfaces();
+    for (size_t k = 0; k < interf.size(); k++)
+    {
+      interf[k]->open();
+      std::vector<std::shared_ptr<rcg::Device>> device = interf[k]->getDevices();
+      for (size_t j = 0; j < device.size(); j++)
+      {
+        std::cout << "Device ID: " << device[j]->getID() << std::endl;
       }
       interf[k]->close();
     }
