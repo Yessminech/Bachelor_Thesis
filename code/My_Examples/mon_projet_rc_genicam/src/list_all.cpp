@@ -102,10 +102,10 @@ std::string convertDecimalToMAC(uint64_t decimalMAC)
 {
   std::ostringstream macStream;
   for (int i = 5; i >= 0; --i)
-  { 
+  {
     macStream << std::hex << std::setw(2) << std::setfill('0') << ((decimalMAC >> (i * 8)) & 0xFF);
     if (i > 0)
-      macStream << ":"; 
+      macStream << ":";
   }
   return macStream.str();
 }
@@ -296,6 +296,8 @@ bool listDevices()
 bool listDevicesIDs()
 { // ToDo: Exceptions handling
   bool ret = true;
+  std::set<std::string> printedSerialNumbers;
+
   std::vector<std::shared_ptr<rcg::System>> system = rcg::System::getSystems();
   for (size_t i = 0; i < system.size(); i++)
   {
@@ -314,7 +316,13 @@ bool listDevicesIDs()
           std::string deviceVendor = device[j]->getVendor();
           if (deviceVendor == systemVendor)
           {
-            std::cout << "Device ID: " << device[j]->getID() << std::endl;
+            std::string serialNumber = device[j]->getSerialNumber();
+            if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
+            {
+              printedSerialNumbers.insert(serialNumber);
+
+              std::cout << "Device ID: " << device[j]->getID() << std::endl;
+            }
           }
         }
         interf[k]->close();
@@ -339,7 +347,7 @@ int main(int argc, char *argv[])
 
   try
   {
-    if (!listDevices())
+    if (!listDevicesIDs())
     {
       std::cerr << "No devices found!" << std::endl;
       ret = 1;
@@ -357,4 +365,4 @@ int main(int argc, char *argv[])
 }
 
 // ToDo: Solve bug that cams can't always be listed when the program is run multiple times
-// ToDo add default case using baumer and mvimpact  
+// ToDo add default case using baumer and mvimpact
