@@ -181,6 +181,8 @@ bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "")
     try
     {
       std::string systemVendor = system[i]->getVendor();
+
+
       system[i]->open();
       std::vector<std::shared_ptr<rcg::Interface>> interf = system[i]->getInterfaces();
       for (size_t k = 0; k < interf.size(); k++)
@@ -223,12 +225,12 @@ bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "")
     catch (const std::exception &ex)
     {
       std::cerr << "Exception: " << ex.what() << std::endl;
-      system[i]->clearSystems();
       system[i]->close();
       return false;
     }
-    system[i]->clearSystems();
     system[i]->close();
+    system[i]->clearSystems();
+    system[i]->~System();
   }
   return ret;
 }
@@ -282,13 +284,12 @@ bool listDevices()
     catch (const std::exception &ex)
     {
       std::cerr << "Exception: " << ex.what() << std::endl;
-      system[i]->clearSystems();
       system[i]->close();
       return false;
     }
-    system[i]->clearSystems();
     system[i]->close();
-  }
+    system[i]->clearSystems();
+    system[i]->~System();  }
   return ret;
 }
 
@@ -304,16 +305,25 @@ bool listDevicesIDs()
     try
     {
       std::string systemVendor = system[i]->getVendor();
+      std::cout << "System Path: " << system[i]->getDisplayName() << std::endl;
       system[i]->open();
       std::vector<std::shared_ptr<rcg::Interface>> interf = system[i]->getInterfaces();
       for (size_t k = 0; k < interf.size(); k++)
       {
-
         interf[k]->open();
         std::vector<std::shared_ptr<rcg::Device>> device = interf[k]->getDevices();
+        if (device.empty())
+        {
+          std::cout << "No devices found on this interface. Please try again in a moment." << std::endl;
+        }
+
         for (size_t j = 0; j < device.size(); j++)
         {
+
           std::string deviceVendor = device[j]->getVendor();
+
+          std::cout << "System Vendor: " << systemVendor << std::endl;  
+          std::cout << "Device Vendor: " << deviceVendor << std::endl;
           if (deviceVendor == systemVendor)
           {
             std::string serialNumber = device[j]->getSerialNumber();
@@ -331,13 +341,13 @@ bool listDevicesIDs()
     catch (const std::exception &ex)
     {
       std::cerr << "Exception: " << ex.what() << std::endl;
-      system[i]->clearSystems();
       system[i]->close();
+      system[i]->~System();    
       return false;
     }
-    system[i]->clearSystems();
     system[i]->close();
-  }
+    system[i]->clearSystems();
+    system[i]->~System();  }
   return ret;
 }
 
@@ -358,9 +368,6 @@ int main(int argc, char *argv[])
     std::cerr << "Exception: " << ex.what() << std::endl;
     ret = 2;
   }
-
-  rcg::System::clearSystems();
-
   return ret;
 }
 

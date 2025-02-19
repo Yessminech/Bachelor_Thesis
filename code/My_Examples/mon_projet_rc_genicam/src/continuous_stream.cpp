@@ -26,7 +26,13 @@
 std::atomic<bool> stop_streaming(false);
 std::shared_ptr<rcg::Stream> stream;
 
-void enableChunkData(std::shared_ptr<GenApi::CNodeMapRef> nodemap) // ToDo: What s this doing and do I need it ? 
+void signalHandler(int signum)
+{
+    std::cout << "\nStopping streaming..." << std::endl;
+    stop_streaming = true;
+}
+
+void enableChunkData(std::shared_ptr<GenApi::CNodeMapRef> nodemap) // ToDo: What s this doing and do I need it ?
 {
     if (nodemap)
     {
@@ -58,7 +64,6 @@ void stopStreaming()
     cv::destroyAllWindows();
 }
 
-
 void displayImage(const rcg::Buffer *buffer)
 {
     if (!buffer || buffer->getIsIncomplete())
@@ -67,24 +72,31 @@ void displayImage(const rcg::Buffer *buffer)
         return;
     }
 
-    // Convert the buffer to an OpenCV Mat
-    rcg::Image image(buffer, 0); // Assume first part contains the image
-
-    cv::Mat frame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
-
-    // Convert grayscale to BGR for display
-    cv::Mat display_frame;
-    cv::cvtColor(frame, display_frame, cv::COLOR_BayerBG2BGR);
-    cv::flip(display_frame, display_frame, 1); // Flip vertically
-    cv::resize(display_frame, display_frame, cv::Size(), 0.2, 0.2);
-
-    // Show the image
-    cv::imshow("Live Stream", display_frame);
-
-    // Press 'ESC' to stop streaming
-    if (cv::waitKey(1) == 27)
+    try
     {
-        stop_streaming = true;
+        // Convert the buffer to an OpenCV Mat
+        rcg::Image image(buffer, 0); // Assume first part contains the image
+
+        cv::Mat frame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
+
+        // Convert grayscale to BGR for display
+        cv::Mat display_frame;
+        cv::cvtColor(frame, display_frame, cv::COLOR_BayerBG2BGR);
+        cv::flip(display_frame, display_frame, 1); // Flip vertically
+        cv::resize(display_frame, display_frame, cv::Size(), 0.2, 0.2);
+
+        // Show the image
+        cv::imshow("Live Stream", display_frame);
+
+        // Press 'ESC' to stop streaming
+        if (cv::waitKey(1) == 27)
+        {
+            stop_streaming = true;
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << "Error displaying image: " << ex.what() << std::endl;
     }
 }
 
@@ -102,6 +114,7 @@ bool startStreaming(std::shared_ptr<rcg::Device> device)
 
         stream = streams[0];
         stream->open();
+        stream->attachBuffers(true);
         stream->startStreaming();
 
         std::cout << "\033[1;32mStreaming started. Press Ctrl+C to stop.\033[0m" << std::endl;
@@ -124,6 +137,9 @@ bool startStreaming(std::shared_ptr<rcg::Device> device)
 
 int main(int argc, char *argv[])
 {
+    signal(SIGINT, signalHandler); // Handle Ctrl+C to stop streaming
+    std::set<std::string> printedSerialNumbers;
+
     try
     {
         if (argc <= 1)
@@ -137,6 +153,7 @@ int main(int argc, char *argv[])
 
         for (auto &system : systems)
         {
+            std::string systemVendor = system->getVendor();
             system->open();
             for (auto &interf : system->getInterfaces())
             {
@@ -147,33 +164,38 @@ int main(int argc, char *argv[])
                     auto device = interf->getDevice(targetDeviceID.c_str());
                     if (!device)
                     {
-                        std::cerr << RED << "Device with ID '" << targetDeviceID << "' not found." << RESET << std::endl;
                         continue;
                     }
-                    std::cout << GREEN << "Opening device '" << device->getID() << "'..." << RESET << std::endl;
-                    device->open(rcg::Device::CONTROL);
-                    auto nodemap = device->getRemoteNodeMap();
-                    // ptpConfiguration(device); //ToDo uncomment for sync free run
-                    configureSyncFreeRun(nodemap);
-                    enableChunkData(nodemap);
-                    if (!startStreaming(device))
+                    std::string deviceVendor = device->getVendor();
+                    std::string serialNumber = device->getSerialNumber();
+                    if (deviceVendor == systemVendor)
                     {
-                        stopStreaming();
-                        return 1;
-                    }
+                        printedSerialNumbers.insert(serialNumber);
+                        std::cout << GREEN << "Opening device '" << device->getID() << "'..." << RESET << std::endl;
+                        device->open(rcg::Device::CONTROL);
+                        deviceCount++;
+                        auto nodemap = device->getRemoteNodeMap();
+                        // configureSyncFreeRun(nodemap);
+                        enableChunkData(nodemap);
+                        if (!startStreaming(device))
+                        {
+                            stopStreaming();
+                            return 1;
+                        }
 
-                    device->close();
+                        device->close();
+                    }
                 }
-                else
+                for (auto &device : interf->getDevices())
                 {
-                    for (auto &device : interf->getDevices())
+                    std::string deviceVendor = device->getVendor();
+                    if (deviceVendor == systemVendor)
                     {
                         deviceCount++;
                         std::cout << GREEN << "Opening device '" << device->getID() << "'..." << RESET << std::endl;
                         device->open(rcg::Device::CONTROL);
                         auto nodemap = device->getRemoteNodeMap();
-                        // ptpConfiguration(device); //ToDo uncomment for sync free run
-                        configureSyncFreeRun(nodemap);
+                        // configureSyncFreeRun(nodemap);
                         enableChunkData(nodemap);
                         if (!startStreaming(device))
                         {
@@ -190,10 +212,55 @@ int main(int argc, char *argv[])
             system->close();
         }
 
-        if (deviceCount == 0)
+        if (deviceCount == 0 && !targetDeviceID.empty())
         {
-            std::cerr << RED << "No devices found." << RESET << std::endl;
-            return 1;
+            const char *baumerCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib";
+            if (baumerCtiPath == nullptr)
+            {
+                std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
+                return 1;
+            }
+            rcg::System::setSystemsPath(baumerCtiPath, nullptr);
+            std::vector<std::shared_ptr<rcg::System>> baumerSystems = rcg::System::getSystems();
+            for (auto &system : baumerSystems)
+            {
+                system->open();
+                for (auto &interf : system->getInterfaces())
+                {
+                    interf->open();
+                    for (auto &device : interf->getDevices())
+                    {
+                        std::string serialNumber = device->getSerialNumber();
+                        if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
+                        {
+                            printedSerialNumbers.insert(serialNumber);
+                            deviceCount++;
+                            std::cout << GREEN << "Opening device '" << device->getID() << "'..." << RESET << std::endl;
+                            device->open(rcg::Device::CONTROL);
+                            auto nodemap = device->getRemoteNodeMap();
+                            // configureSyncFreeRun(nodemap);
+                            enableChunkData(nodemap);
+                            if (!startStreaming(device))
+                            {
+                                stopStreaming();
+                                return 1;
+                            }
+
+                            stopStreaming();
+                            device->close();
+                        }
+                    }
+                    interf->close();
+                }
+
+                system->close();
+            }
+
+            if (deviceCount == 0)
+            {
+                std::cerr << RED << "No devices found." << RESET << std::endl;
+                return 1;
+            }
         }
     }
     catch (const std::exception &ex)
@@ -204,5 +271,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
 // ./countinuous_stream 210200799
