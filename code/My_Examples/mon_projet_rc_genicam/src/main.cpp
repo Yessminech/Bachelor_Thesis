@@ -1,4 +1,3 @@
-// ToDo: Plan for next week 
 // ToDo: Start all stream at the same time
 // ToDo: Scheduled Action Commands Impelentation
 // ToDo: Function to get/ set features and values from the camera and and .xml file

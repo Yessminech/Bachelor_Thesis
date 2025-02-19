@@ -63,7 +63,6 @@ CMAKE_BINARY_DIR = /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/main_example.dir/all
 all: CMakeFiles/cam_ctrl.dir/all
 all: CMakeFiles/ptp_ctrl.dir/all
 all: CMakeFiles/continuous_stream.dir/all
@@ -77,7 +76,6 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/main_example.dir/clean
 clean: CMakeFiles/cam_ctrl.dir/clean
 clean: CMakeFiles/ptp_ctrl.dir/clean
 clean: CMakeFiles/continuous_stream.dir/clean
@@ -85,32 +83,6 @@ clean: CMakeFiles/single_shot.dir/clean
 clean: CMakeFiles/sched_ac.dir/clean
 clean: CMakeFiles/list_all.dir/clean
 .PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/main_example.dir
-
-# All Build rule for target.
-CMakeFiles/main_example.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=7,8 "Built target main_example"
-.PHONY : CMakeFiles/main_example.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/main_example.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/main_example.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 0
-.PHONY : CMakeFiles/main_example.dir/rule
-
-# Convenience name for target.
-main_example: CMakeFiles/main_example.dir/rule
-.PHONY : main_example
-
-# clean rule for target.
-CMakeFiles/main_example.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/clean
-.PHONY : CMakeFiles/main_example.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/cam_ctrl.dir
@@ -145,7 +117,7 @@ CMakeFiles/cam_ctrl.dir/clean:
 CMakeFiles/ptp_ctrl.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_ctrl.dir/build.make CMakeFiles/ptp_ctrl.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_ctrl.dir/build.make CMakeFiles/ptp_ctrl.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=9,10 "Built target ptp_ctrl"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=7,8 "Built target ptp_ctrl"
 .PHONY : CMakeFiles/ptp_ctrl.dir/all
 
 # Build rule for subdir invocation for target.
@@ -197,7 +169,7 @@ CMakeFiles/continuous_stream.dir/clean:
 CMakeFiles/single_shot.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/single_shot.dir/build.make CMakeFiles/single_shot.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/single_shot.dir/build.make CMakeFiles/single_shot.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=13,14 "Built target single_shot"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=11,12 "Built target single_shot"
 .PHONY : CMakeFiles/single_shot.dir/all
 
 # Build rule for subdir invocation for target.
@@ -223,7 +195,7 @@ CMakeFiles/single_shot.dir/clean:
 CMakeFiles/sched_ac.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=11,12 "Built target sched_ac"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=9,10 "Built target sched_ac"
 .PHONY : CMakeFiles/sched_ac.dir/all
 
 # Build rule for subdir invocation for target.

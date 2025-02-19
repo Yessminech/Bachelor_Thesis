@@ -26,9 +26,9 @@ void printHelp()
     std::cout << "  control <feature>[=<value>] ...:  read/write device features\n";
     std::cout << "If no command is given, this utility will list all the available devices.\n";
     std::cout << "Examples:\n\n";
-    std::cout << "cam_ctrl control Width=128 Height=128 Gain R[0x10000]=0x10\n";
-    std::cout << "cam_ctrl features\n";
-    std::cout << "cam_ctrl -n Basler-210ab4 features\n";
+    std::cout << "./cam_ctrl control Width=128 Height=128 Gain R[0x10000]=0x10\n";
+    std::cout << "./cam_ctrl features\n";
+    std::cout << "./cam_ctrl -n Basler-210ab4 features\n";
 }
 
 void listFeatures(const std::string &deviceID)
@@ -93,11 +93,13 @@ int main(int argc, char *argv[])
     }
     else if (command == "features")
     {
+        std::cerr << "Warning: 'features' command not implemented yet." << std::endl;
         listFeatures("");
         return 0;
     }
     else if (command == "values")
     {
+        std::cerr << "Warning: 'values' command not implemented yet." << std::endl;
         listValues("");
         return 0;
     }

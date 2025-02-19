@@ -117,19 +117,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main_example
-
-# Build rule for target.
-main_example: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main_example
-.PHONY : main_example
-
-# fast build rule for target.
-main_example/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/build
-.PHONY : main_example/fast
-
-#=============================================================================
 # Target rules for targets named cam_ctrl
 
 # Build rule for target.
@@ -279,30 +266,6 @@ src/list_all.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/src/list_all.cpp.s
 .PHONY : src/list_all.cpp.s
 
-src/main.o: src/main.cpp.o
-.PHONY : src/main.o
-
-# target to build an object file
-src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
-
-src/main.i: src/main.cpp.i
-.PHONY : src/main.i
-
-# target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
-
-src/main.s: src/main.cpp.s
-.PHONY : src/main.s
-
-# target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_example.dir/build.make CMakeFiles/main_example.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
-
 src/ptp_ctrl.o: src/ptp_ctrl.cpp.o
 .PHONY : src/ptp_ctrl.o
 
@@ -386,7 +349,6 @@ help:
 	@echo "... cam_ctrl"
 	@echo "... continuous_stream"
 	@echo "... list_all"
-	@echo "... main_example"
 	@echo "... ptp_ctrl"
 	@echo "... sched_ac"
 	@echo "... single_shot"
@@ -399,9 +361,6 @@ help:
 	@echo "... src/list_all.o"
 	@echo "... src/list_all.i"
 	@echo "... src/list_all.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
 	@echo "... src/ptp_ctrl.o"
 	@echo "... src/ptp_ctrl.i"
 	@echo "... src/ptp_ctrl.s"

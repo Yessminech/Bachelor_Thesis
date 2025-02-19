@@ -49,7 +49,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/main_example.dir/DependInfo.cmake"
   "CMakeFiles/cam_ctrl.dir/DependInfo.cmake"
   "CMakeFiles/ptp_ctrl.dir/DependInfo.cmake"
   "CMakeFiles/continuous_stream.dir/DependInfo.cmake"
