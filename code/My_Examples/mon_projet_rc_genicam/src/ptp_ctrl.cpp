@@ -37,11 +37,18 @@ int ptp_sync_timeout = 800; // ToDo Set or compute this value
 // PTP enabled: 1 GHz (= 1 000 000 000 ticks per second, 1 tick = 1 ns)
 // Timestamp could be set
 
+std::atomic<bool> stop_signal(false);
+
 int num_init = 0;
 int num_master = 0;
 int num_slave = 0;
 int64_t master_clock_id = 0;
 bool debug = false;
+
+void signalHandler(int signum)
+{
+    stop_signal = true;
+}
 
 bool getGenTLVersion(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
 {
@@ -180,10 +187,10 @@ void statusCheck(const std::string &current_status)
 
 void monitorPtpStatus(std::shared_ptr<rcg::Interface> interf, int deviceCount)
 {
+
     auto start_time = std::chrono::steady_clock::now();
-    while (num_slave != deviceCount - 1 && num_master != 1)
-    {
-        int num_init = 0;
+    while (!stop_signal && num_slave != deviceCount - 1 && num_master != 1)
+    {    int num_init = 0;
         int num_master = 0;
         int num_slave = 0;
         for (auto &device : interf->getDevices())
@@ -198,22 +205,26 @@ void monitorPtpStatus(std::shared_ptr<rcg::Interface> interf, int deviceCount)
             bool deprecatedFeatures = getGenTLVersion(nodemap);
             getPtpParameters(nodemap, ptpConfig, deprecatedFeatures);
             statusCheck(ptpConfig.status);
-            std::cout << "Camera PTP status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(10));
             device->close();
         }
-
+        std::cout << "Camera PTP status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
         if (std::chrono::steady_clock::now() - start_time > std::chrono::seconds(ptp_sync_timeout))
         {
             std::cerr << "Timed out waiting for camera clocks to become PTP camera slaves. Current status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
             break;
         }
+        if (stop_signal)
+        {
+            break; //cleanup?
+        }
+        std::this_thread::sleep_for(std::chrono::seconds(10));
     }
 }
 
 int main(int argc, char *argv[])
 {
     int deviceCount = 0;
+    signal(SIGINT, signalHandler);
     std::set<std::string> printedSerialNumbers;
     try
     {
