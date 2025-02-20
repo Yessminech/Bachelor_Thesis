@@ -225,6 +225,70 @@ void streamFromAllDevices()
     }
 }
 
+
+int main(int argc, char *argv[])
+{
+    signal(SIGINT, signalHandler); // Handle Ctrl+C to stop streaming
+
+    try
+    {
+        if (argc > 1)
+        {
+            std::vector<std::thread> threads;
+            for (int i = 1; i < argc; ++i)
+            {
+                threads.emplace_back(streamFromDevice, std::string(argv[i]));
+            }
+            for (auto &thread : threads)
+            {
+                thread.join();
+            }
+        }
+        else
+        {
+            streamFromAllDevices();
+        }
+
+        // Main loop to grab and display images from all streams
+        while (!stop_streaming)
+        {
+            std::vector<cv::Mat> frames;
+            for (auto &stream : streams)
+            {
+                const rcg::Buffer *buffer = stream->grab(1000); // Timeout of 1000 ms
+                if (buffer && !buffer->getIsIncomplete())
+                {
+                    try
+                    {
+                        rcg::Image image(buffer, 0); // Assume first part contains the image
+                        cv::Mat frame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
+                        cv::Mat display_frame;
+                        cv::cvtColor(frame, display_frame, cv::COLOR_BayerBG2BGR);
+                        cv::flip(display_frame, display_frame, 1); // Flip vertically
+                        cv::resize(display_frame, display_frame, cv::Size(), 0.2, 0.2);
+                        frames.push_back(display_frame);
+                    }
+                    catch (const std::exception &ex)
+                    {
+                        std::cerr << "Error displaying image: " << ex.what() << std::endl;
+                    }
+                }
+            }
+            displayImages(frames);
+        }
+
+        stopStreaming();
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << "Error: " << ex.what() << std::endl;
+        stopStreaming();
+        return 1;
+    }
+
+    return 0;
+}
+// ./countinuous_stream 210200799
 // int main(int argc, char *argv[])
 // {
 //     signal(SIGINT, signalHandler); // Handle Ctrl+C to stop streaming
@@ -361,66 +425,3 @@ void streamFromAllDevices()
 
 //     return 0;
 // }
-int main(int argc, char *argv[])
-{
-    signal(SIGINT, signalHandler); // Handle Ctrl+C to stop streaming
-
-    try
-    {
-        if (argc > 1)
-        {
-            std::vector<std::thread> threads;
-            for (int i = 1; i < argc; ++i)
-            {
-                threads.emplace_back(streamFromDevice, std::string(argv[i]));
-            }
-            for (auto &thread : threads)
-            {
-                thread.join();
-            }
-        }
-        else
-        {
-            streamFromAllDevices();
-        }
-
-        // Main loop to grab and display images from all streams
-        while (!stop_streaming)
-        {
-            std::vector<cv::Mat> frames;
-            for (auto &stream : streams)
-            {
-                const rcg::Buffer *buffer = stream->grab(1000); // Timeout of 1000 ms
-                if (buffer && !buffer->getIsIncomplete())
-                {
-                    try
-                    {
-                        rcg::Image image(buffer, 0); // Assume first part contains the image
-                        cv::Mat frame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
-                        cv::Mat display_frame;
-                        cv::cvtColor(frame, display_frame, cv::COLOR_BayerBG2BGR);
-                        cv::flip(display_frame, display_frame, 1); // Flip vertically
-                        cv::resize(display_frame, display_frame, cv::Size(), 0.2, 0.2);
-                        frames.push_back(display_frame);
-                    }
-                    catch (const std::exception &ex)
-                    {
-                        std::cerr << "Error displaying image: " << ex.what() << std::endl;
-                    }
-                }
-            }
-            displayImages(frames);
-        }
-
-        stopStreaming();
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << "Error: " << ex.what() << std::endl;
-        stopStreaming();
-        return 1;
-    }
-
-    return 0;
-}
-// ./countinuous_stream 210200799
