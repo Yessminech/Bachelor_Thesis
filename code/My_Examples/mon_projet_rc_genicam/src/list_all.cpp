@@ -9,6 +9,13 @@
 #include <arpa/inet.h>
 #include <iomanip>
 #include <regex>
+
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define YELLOW "\033[33m"
+#define GREEN "\033[32m"
+
+bool debug = false;
 struct DeviceConfig
 {
   std::string id;
@@ -23,6 +30,7 @@ struct DeviceConfig
   std::string MAC;
   double timestampFrequency;
 };
+
 bool isDottedIP(const std::string &ip)
 {
   std::regex ipPattern(R"(^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$)");
@@ -182,7 +190,6 @@ bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "")
     {
       std::string systemVendor = system[i]->getVendor();
 
-
       system[i]->open();
       std::vector<std::shared_ptr<rcg::Interface>> interf = system[i]->getInterfaces();
       for (size_t k = 0; k < interf.size(); k++)
@@ -289,7 +296,8 @@ bool listDevices()
     }
     system[i]->close();
     system[i]->clearSystems();
-    system[i]->~System();  }
+    system[i]->~System();
+  }
   return ret;
 }
 
@@ -305,7 +313,10 @@ bool listDevicesIDs()
     try
     {
       std::string systemVendor = system[i]->getVendor();
-      std::cout << "System Path: " << system[i]->getDisplayName() << std::endl;
+      if (debug)
+      {
+        std::cout << "System Path: " << system[i]->getDisplayName() << std::endl;
+      }
       system[i]->open();
       std::vector<std::shared_ptr<rcg::Interface>> interf = system[i]->getInterfaces();
       for (size_t k = 0; k < interf.size(); k++)
@@ -314,23 +325,28 @@ bool listDevicesIDs()
         std::vector<std::shared_ptr<rcg::Device>> device = interf[k]->getDevices();
         if (device.empty())
         {
-          std::cout << "No devices found on this interface. Please try again in a moment." << std::endl;
+          if (debug)
+          {
+            std::cout << "No devices found on this interface. Please try again in a moment." << std::endl;
+          }
+          continue;
         }
 
         for (size_t j = 0; j < device.size(); j++)
         {
 
           std::string deviceVendor = device[j]->getVendor();
-
-          std::cout << "System Vendor: " << systemVendor << std::endl;  
-          std::cout << "Device Vendor: " << deviceVendor << std::endl;
+          if (debug)
+          {
+            std::cout << "System Vendor: " << systemVendor << std::endl;
+            std::cout << "Device Vendor: " << deviceVendor << std::endl;
+          }
           if (deviceVendor == systemVendor)
           {
             std::string serialNumber = device[j]->getSerialNumber();
             if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
             {
               printedSerialNumbers.insert(serialNumber);
-
               std::cout << "Device ID: " << device[j]->getID() << std::endl;
             }
           }
@@ -342,12 +358,67 @@ bool listDevicesIDs()
     {
       std::cerr << "Exception: " << ex.what() << std::endl;
       system[i]->close();
-      system[i]->~System();    
+      system[i]->~System();
       return false;
     }
     system[i]->close();
     system[i]->clearSystems();
-    system[i]->~System();  }
+    system[i]->~System();
+  }
+  try
+  {
+    const char *defaultCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact
+    if (defaultCtiPath == nullptr)
+    {
+      std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
+      return 1;
+    }
+    rcg::System::setSystemsPath(defaultCtiPath, nullptr);
+    std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
+    if (defaultSystems.empty())
+    {
+      std::cerr << RED << "Error: No systems found." << RESET << std::endl;
+      return 1;
+    }
+    for (auto &system : defaultSystems)
+    {
+      system->open();
+      std::vector<std::shared_ptr<rcg::Interface>> interfs = system->getInterfaces();
+      if (interfs.empty())
+      {
+        continue;
+      }
+      for (auto &interf : interfs)
+      {
+        interf->open();
+        std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
+        if (devices.empty())
+        {
+          continue;
+        }
+
+        for (auto &device : devices)
+        {
+          if (device->getVendor() == system->getVendor())
+          {
+            std::string serialNumber = device->getSerialNumber();
+            if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
+            {
+              printedSerialNumbers.insert(serialNumber);
+              std::cout << "Device ID: " << device->getID() << std::endl;
+            }
+          }
+          device->close();
+        }
+        interf->close();
+      }
+      system->close();
+    }
+  }
+  catch (const std::exception &ex)
+  {
+    std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
+  }
   return ret;
 }
 
@@ -357,11 +428,7 @@ int main(int argc, char *argv[])
 
   try
   {
-    if (!listDevicesIDs())
-    {
-      std::cerr << "No devices found!" << std::endl;
-      ret = 1;
-    }
+    listDevicesIDs();
   }
   catch (const std::exception &ex)
   {
@@ -372,4 +439,3 @@ int main(int argc, char *argv[])
 }
 
 // ToDo: Solve bug that cams can't always be listed when the program is run multiple times
-// ToDo add default case using baumer and mvimpact

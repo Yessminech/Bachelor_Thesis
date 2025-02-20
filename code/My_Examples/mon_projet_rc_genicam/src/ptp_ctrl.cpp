@@ -68,6 +68,7 @@ bool getGenTLVersion(std::shared_ptr<GenApi::CNodeMapRef> nodemap)
     }
 }
 
+// ToDo add a ptpcheck method that checks if ptp is true on all devices and there are masters and slave it 
 void enablePTP(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConfig &ptpConfig, bool deprecatedFeatures)
 {
     std::string feature = deprecatedFeatures ? "GevIEEE1588" : "PtpEnable";
