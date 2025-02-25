@@ -268,8 +268,8 @@ int main(int argc, char *argv[])
                     {
                         continue;
                     }
-                    printedSerialNumbers.insert(serialNumber);
                     device->open(rcg::Device::CONTROL);
+                    printedSerialNumbers.insert(serialNumber);
                     deviceCount++;
                     PTPConfig ptpConfig;
                     std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();

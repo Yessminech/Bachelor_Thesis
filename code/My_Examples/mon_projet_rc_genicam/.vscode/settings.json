@@ -63,6 +63,7 @@
         "fstream": "cpp",
         "hash_map": "cpp",
         "bitset": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "csignal": "cpp"
     }
 }

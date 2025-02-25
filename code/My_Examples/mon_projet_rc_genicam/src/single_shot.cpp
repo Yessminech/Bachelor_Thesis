@@ -168,3 +168,8 @@ int main(int argc, char *argv[])
 }
 
 // ./single_shot 210200799
+/*****************/
+/* ToDo */
+// Multi-threading for parallel streaming 
+// Bendwidth configuration
+// Grapping Timetsamps from metadata, log and compare them

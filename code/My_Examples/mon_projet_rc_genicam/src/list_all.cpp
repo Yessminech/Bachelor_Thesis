@@ -428,7 +428,7 @@ int main(int argc, char *argv[])
 
   try
   {
-    listDevicesIDs();
+    listDevices();
   }
   catch (const std::exception &ex)
   {

@@ -194,6 +194,19 @@ list_all/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/build
 .PHONY : list_all/fast
 
+#=============================================================================
+# Target rules for targets named gpt_multistream_exemple
+
+# Build rule for target.
+gpt_multistream_exemple: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gpt_multistream_exemple
+.PHONY : gpt_multistream_exemple
+
+# fast build rule for target.
+gpt_multistream_exemple/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gpt_multistream_exemple.dir/build.make CMakeFiles/gpt_multistream_exemple.dir/build
+.PHONY : gpt_multistream_exemple/fast
+
 src/cam_ctrl.o: src/cam_ctrl.cpp.o
 .PHONY : src/cam_ctrl.o
 
@@ -241,6 +254,30 @@ src/continuous_stream.s: src/continuous_stream.cpp.s
 src/continuous_stream.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/continuous_stream.dir/build.make CMakeFiles/continuous_stream.dir/src/continuous_stream.cpp.s
 .PHONY : src/continuous_stream.cpp.s
+
+src/gpt_multistream_exemple.o: src/gpt_multistream_exemple.cpp.o
+.PHONY : src/gpt_multistream_exemple.o
+
+# target to build an object file
+src/gpt_multistream_exemple.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gpt_multistream_exemple.dir/build.make CMakeFiles/gpt_multistream_exemple.dir/src/gpt_multistream_exemple.cpp.o
+.PHONY : src/gpt_multistream_exemple.cpp.o
+
+src/gpt_multistream_exemple.i: src/gpt_multistream_exemple.cpp.i
+.PHONY : src/gpt_multistream_exemple.i
+
+# target to preprocess a source file
+src/gpt_multistream_exemple.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gpt_multistream_exemple.dir/build.make CMakeFiles/gpt_multistream_exemple.dir/src/gpt_multistream_exemple.cpp.i
+.PHONY : src/gpt_multistream_exemple.cpp.i
+
+src/gpt_multistream_exemple.s: src/gpt_multistream_exemple.cpp.s
+.PHONY : src/gpt_multistream_exemple.s
+
+# target to generate assembly for a file
+src/gpt_multistream_exemple.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gpt_multistream_exemple.dir/build.make CMakeFiles/gpt_multistream_exemple.dir/src/gpt_multistream_exemple.cpp.s
+.PHONY : src/gpt_multistream_exemple.cpp.s
 
 src/list_all.o: src/list_all.cpp.o
 .PHONY : src/list_all.o
@@ -348,6 +385,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... cam_ctrl"
 	@echo "... continuous_stream"
+	@echo "... gpt_multistream_exemple"
 	@echo "... list_all"
 	@echo "... ptp_ctrl"
 	@echo "... sched_ac"
@@ -358,6 +396,9 @@ help:
 	@echo "... src/continuous_stream.o"
 	@echo "... src/continuous_stream.i"
 	@echo "... src/continuous_stream.s"
+	@echo "... src/gpt_multistream_exemple.o"
+	@echo "... src/gpt_multistream_exemple.i"
+	@echo "... src/gpt_multistream_exemple.s"
 	@echo "... src/list_all.o"
 	@echo "... src/list_all.i"
 	@echo "... src/list_all.s"
