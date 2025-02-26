@@ -1,0 +1,8 @@
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles/cam_ctrl.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles/ptp_ctrl.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles/continuous_stream.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles/single_shot.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles/sched_ac.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles/list_all.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles/edit_cache.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles/rebuild_cache.dir
