@@ -69,7 +69,6 @@ all: CMakeFiles/continuous_stream.dir/all
 all: CMakeFiles/single_shot.dir/all
 all: CMakeFiles/sched_ac.dir/all
 all: CMakeFiles/list_all.dir/all
-all: CMakeFiles/gpt_multistream_exemple.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -83,7 +82,6 @@ clean: CMakeFiles/continuous_stream.dir/clean
 clean: CMakeFiles/single_shot.dir/clean
 clean: CMakeFiles/sched_ac.dir/clean
 clean: CMakeFiles/list_all.dir/clean
-clean: CMakeFiles/gpt_multistream_exemple.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -119,7 +117,7 @@ CMakeFiles/cam_ctrl.dir/clean:
 CMakeFiles/ptp_ctrl.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_ctrl.dir/build.make CMakeFiles/ptp_ctrl.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ptp_ctrl.dir/build.make CMakeFiles/ptp_ctrl.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=9,10 "Built target ptp_ctrl"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=7,8 "Built target ptp_ctrl"
 .PHONY : CMakeFiles/ptp_ctrl.dir/all
 
 # Build rule for subdir invocation for target.
@@ -171,7 +169,7 @@ CMakeFiles/continuous_stream.dir/clean:
 CMakeFiles/single_shot.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/single_shot.dir/build.make CMakeFiles/single_shot.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/single_shot.dir/build.make CMakeFiles/single_shot.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=13,14 "Built target single_shot"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=11,12 "Built target single_shot"
 .PHONY : CMakeFiles/single_shot.dir/all
 
 # Build rule for subdir invocation for target.
@@ -197,7 +195,7 @@ CMakeFiles/single_shot.dir/clean:
 CMakeFiles/sched_ac.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sched_ac.dir/build.make CMakeFiles/sched_ac.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=11,12 "Built target sched_ac"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=9,10 "Built target sched_ac"
 .PHONY : CMakeFiles/sched_ac.dir/all
 
 # Build rule for subdir invocation for target.
@@ -223,7 +221,7 @@ CMakeFiles/sched_ac.dir/clean:
 CMakeFiles/list_all.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=7,8 "Built target list_all"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=5,6 "Built target list_all"
 .PHONY : CMakeFiles/list_all.dir/all
 
 # Build rule for subdir invocation for target.
@@ -241,32 +239,6 @@ list_all: CMakeFiles/list_all.dir/rule
 CMakeFiles/list_all.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_all.dir/build.make CMakeFiles/list_all.dir/clean
 .PHONY : CMakeFiles/list_all.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/gpt_multistream_exemple.dir
-
-# All Build rule for target.
-CMakeFiles/gpt_multistream_exemple.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gpt_multistream_exemple.dir/build.make CMakeFiles/gpt_multistream_exemple.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gpt_multistream_exemple.dir/build.make CMakeFiles/gpt_multistream_exemple.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles --progress-num=5,6 "Built target gpt_multistream_exemple"
-.PHONY : CMakeFiles/gpt_multistream_exemple.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/gpt_multistream_exemple.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/gpt_multistream_exemple.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build/CMakeFiles 0
-.PHONY : CMakeFiles/gpt_multistream_exemple.dir/rule
-
-# Convenience name for target.
-gpt_multistream_exemple: CMakeFiles/gpt_multistream_exemple.dir/rule
-.PHONY : gpt_multistream_exemple
-
-# clean rule for target.
-CMakeFiles/gpt_multistream_exemple.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gpt_multistream_exemple.dir/build.make CMakeFiles/gpt_multistream_exemple.dir/clean
-.PHONY : CMakeFiles/gpt_multistream_exemple.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

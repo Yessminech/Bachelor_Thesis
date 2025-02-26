@@ -39,7 +39,3 @@ target_link_libraries(continuous_stream PRIVATE rc_genicam_api ${OpenCV_LIBS})
 target_link_libraries(single_shot PRIVATE rc_genicam_api ${OpenCV_LIBS})
 target_link_libraries(sched_ac PRIVATE rc_genicam_api ${OpenCV_LIBS})
 target_link_libraries(list_all PRIVATE rc_genicam_api ${OpenCV_LIBS})
-
-add_executable(gpt_multistream_exemple src/gpt_multistream_exemple.cpp)
-target_compile_definitions(gpt_multistream_exemple PRIVATE GENICAM_NO_AUTO_IMPLIB)
-target_link_libraries(gpt_multistream_exemple PRIVATE rc_genicam_api ${OpenCV_LIBS})

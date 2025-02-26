@@ -239,6 +239,57 @@ bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "")
     system[i]->clearSystems();
     system[i]->~System();
   }
+  try
+  {
+    const char *defaultCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact
+    if (defaultCtiPath == nullptr)
+    {
+      std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
+      return 1;
+    }
+    rcg::System::setSystemsPath(defaultCtiPath, nullptr);
+    std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
+    if (defaultSystems.empty())
+    {
+      std::cerr << RED << "Error: No systems found." << RESET << std::endl;
+      return 1;
+    }
+    for (auto &system : defaultSystems)
+    {
+      system->open();
+      std::vector<std::shared_ptr<rcg::Interface>> interfs = system->getInterfaces();
+      if (interfs.empty())
+      {
+        continue;
+      }
+      for (auto &interf : interfs)
+      {
+        interf->open();
+        std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
+        if (devices.empty())
+        {
+          continue;
+        }
+
+        for (auto &device : devices)
+        {
+
+            std::string serialNumber = device->getSerialNumber();
+            if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
+            {
+              printedSerialNumbers.insert(serialNumber);
+              std::cout << "Device ID: " << device->getID() << std::endl;
+            }
+          }
+          interf->close();
+        }
+        system->close();
+      }
+  }
+  catch (const std::exception &ex)
+  {
+    std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
+  }
   return ret;
 }
 
@@ -297,6 +348,58 @@ bool listDevices()
     system[i]->close();
     system[i]->clearSystems();
     system[i]->~System();
+  }
+  try
+  {
+    const char *defaultCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact
+    if (defaultCtiPath == nullptr)
+    {
+      std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
+      return 1;
+    }
+    rcg::System::setSystemsPath(defaultCtiPath, nullptr);
+    std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
+    if (defaultSystems.empty())
+    {
+      std::cerr << RED << "Error: No systems found." << RESET << std::endl;
+      return 1;
+    }
+    for (auto &system : defaultSystems)
+    {
+      system->open();
+      std::vector<std::shared_ptr<rcg::Interface>> interfs = system->getInterfaces();
+      if (interfs.empty())
+      {
+        continue;
+      }
+      for (auto &interf : interfs)
+      {
+        interf->open();
+        std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
+        if (devices.empty())
+        {
+          continue;
+        }
+
+        for (auto &device : devices)
+        {
+
+            std::string serialNumber = device->getSerialNumber();
+            if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
+            {
+              printedSerialNumbers.insert(serialNumber);
+              std::cout << "Device ID: " << device->getID() << std::endl;
+            }
+          device->close();
+        }
+        interf->close();
+      }
+      system->close();
+    }
+  }
+  catch (const std::exception &ex)
+  {
+    std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
   }
   return ret;
 }
@@ -399,8 +502,7 @@ bool listDevicesIDs()
 
         for (auto &device : devices)
         {
-          if (device->getVendor() == system->getVendor())
-          {
+
             std::string serialNumber = device->getSerialNumber();
             if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
             {
@@ -408,12 +510,12 @@ bool listDevicesIDs()
               std::cout << "Device ID: " << device->getID() << std::endl;
             }
           }
-          device->close();
+          interf->close();
+
         }
-        interf->close();
+        system->close();
+
       }
-      system->close();
-    }
   }
   catch (const std::exception &ex)
   {
@@ -439,3 +541,4 @@ int main(int argc, char *argv[])
 }
 
 // ToDo: Solve bug that cams can't always be listed when the program is run multiple times
+//ToDo: correct default cases 
