@@ -1,0 +1,40 @@
+### First setup eith 5 cams (using only baumer cti)
+Device ID:                  devicemodul00_30_53_37_67_41
+PTP Enabled:                Yes
+PTP Status:                 Slave
+PTP Clock Accuracy:         Unavailable
+PTP Offset From Master:     -1 ns
+Timestamp:                  153249809432 ns
+Timestamp (seconds):        153 s
+
+Device ID:                  devicemodul00_30_53_37_67_42
+PTP Enabled:                Yes
+PTP Status:                 Slave
+PTP Clock Accuracy:         Unavailable
+PTP Offset From Master:     -1 ns
+Timestamp:                  153497131144 ns
+Timestamp (seconds):        153 s
+
+Device ID:                  devicemodul1c_0f_af_b2_4b_16
+PTP Enabled:                Yes
+PTP Status:                 Slave
+PTP Clock Accuracy:         GreaterThan10s
+PTP Offset From Master:     46 ns
+Timestamp:                  153964678776 ns
+Timestamp (seconds):        153 s
+
+Device ID:                  devicemodul1c_0f_af_ad_1f_ac
+PTP Enabled:                Yes
+PTP Status:                 Slave
+PTP Clock Accuracy:         GreaterThan10s
+PTP Offset From Master:     181 ns
+Timestamp:                  154491920816 ns
+Timestamp (seconds):        154 s
+
+Device ID:                  devicemodul04_5d_4b_79_71_12 (Sony)
+PTP Enabled:                Yes
+PTP Status:                 Master
+PTP Clock Accuracy:         Unavailable
+PTP Offset From Master:     -1 ns
+Timestamp:                  160432354850 ns
+Timestamp (seconds):        160 s

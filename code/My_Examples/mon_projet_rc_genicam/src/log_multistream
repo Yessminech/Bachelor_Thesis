@@ -1,0 +1,59 @@
+test@Yessmine-Ubuntu:~/Documents/ba/Bachelor_Thesis/code/My_Examples/mon_projet_rc_genicam/build$ ./continuous_stream devicemodul00_30_53_37_67_42 devicemodul00_30_53_37_67_41 210200799 devicemodul04_5d_4b_79_71_12
+[DEBUG] Launching stream thread for camera devicemodul00_30_53_37_67_42
+[DEBUG] Opening device devicemodul00_30_53_37_67_42
+[DEBUG] Camera devicemodul00_30_53_37_67_42: Configured free-run mode
+[DEBUG] Camera devicemodul00_30_53_37_67_42: Chunk mode enabled
+[DEBUG] numCams and CamIndex: 4 0
+[DEBUG] Camera devicemodul00_30_53_37_67_42: Calculated packet delay: 256714 ns
+[DEBUG] Camera devicemodul00_30_53_37_67_42: Calculated transmission delay: 0 ns
+[DEBUG] Camera devicemodul00_30_53_37_67_42: GevSCPD set to: 256713 ns
+[DEBUG] Camera devicemodul00_30_53_37_67_42: GevSCFTD in seconds: 0 s
+[DEBUG] Camera devicemodul00_30_53_37_67_42: GevSCFTD set to: 0 ns
+[DEBUG] Camera devicemodul00_30_53_37_67_42: Exposure time set to 80 ms
+[DEBUG] Camera devicemodul00_30_53_37_67_42: Gain set to 20 dB
+[DEBUG] Camera devicemodul00_30_53_37_67_42: White balance set to auto
+[DEBUG] Stream started for camera devicemodul00_30_53_37_67_42
+[DEBUG] Launching stream thread for camera devicemodul00_30_53_37_67_41
+[DEBUG] Opening device devicemodul00_30_53_37_67_41
+[DEBUG] Camera devicemodul00_30_53_37_67_41: Configured free-run mode
+[DEBUG] Camera devicemodul00_30_53_37_67_41: Chunk mode enabled
+[DEBUG] numCams and CamIndex: 4 1
+[DEBUG] Camera devicemodul00_30_53_37_67_41: Calculated packet delay: 256714 ns
+[DEBUG] Camera devicemodul00_30_53_37_67_41: Calculated transmission delay: 256714 ns
+[DEBUG] Camera devicemodul00_30_53_37_67_41: GevSCPD set to: 256713 ns
+[DEBUG] Camera devicemodul00_30_53_37_67_41: GevSCFTD in seconds: 0.000256713 s
+[DEBUG] Camera devicemodul00_30_53_37_67_41: GevSCFTD set to: 256713 ns
+[DEBUG] Camera devicemodul00_30_53_37_67_41: Exposure time set to 80 ms
+[DEBUG] Camera devicemodul00_30_53_37_67_41: Gain set to 20 dB
+[DEBUG] Camera devicemodul00_30_53_37_67_41: White balance set to auto
+[DEBUG] Stream started for camera devicemodul00_30_53_37_67_41
+[DEBUG] Launching stream thread for camera 210200799
+[DEBUG] Opening device 210200799
+[DEBUG] Camera 210200799: Configured free-run mode
+[DEBUG] Camera 210200799: Chunk mode enabled
+[DEBUG] numCams and CamIndex: 4 2
+[DEBUG] Camera 210200799: Calculated packet delay: 256714 ns
+[DEBUG] Camera 210200799: Calculated transmission delay: 513427 ns
+[DEBUG] Camera 210200799: GevSCPD set to: 256713 ns
+[DEBUG] Camera 210200799: GevSCFTD in seconds: 0.000513427 s
+[DEBUG] Camera 210200799: GevSCFTD set to: 513427 ns
+[DEBUG] Camera 210200799: Exposure time set to 80 ms
+[DEBUG] Camera 210200799: Gain set to 20 dB
+[DEBUG] Camera 210200799: White balance set to auto
+[DEBUG] Stream started for camera 210200799
+[DEBUG] Launching stream thread for camera devicemodul04_5d_4b_79_71_12
+[DEBUG] Opening device devicemodul04_5d_4b_79_71_12
+[DEBUG] Camera devicemodul04_5d_4b_79_71_12: Configured free-run mode
+Failed to enable chunk mode for camera devicemodul04_5d_4b_79_71_12: CPort::Write(address=0xa100, length=4): WritePort failed. (-1019)
+[DEBUG] numCams and CamIndex: 4 3
+[DEBUG] Camera devicemodul04_5d_4b_79_71_12: Calculated packet delay: 256714 ns
+[DEBUG] Camera devicemodul04_5d_4b_79_71_12: Calculated transmission delay: 770141 ns
+[DEBUG] Camera devicemodul04_5d_4b_79_71_12: GevSCPD set to: 65535 ns
+[DEBUG] Camera devicemodul04_5d_4b_79_71_12: GevSCFTD in seconds: 0.00077014 s
+[DEBUG] Camera devicemodul04_5d_4b_79_71_12: GevSCFTD set to: 770140 ns
+[DEBUG] Camera devicemodul04_5d_4b_79_71_12: Exposure time set to 80 ms
+[DEBUG] Camera devicemodul04_5d_4b_79_71_12: Gain set to 20 dB
+[DEBUG] Camera devicemodul04_5d_4b_79_71_12: White balance set to auto
+[DEBUG] Stream started for camera devicemodul04_5d_4b_79_71_12
+All threads have started successfully.
+Segmentation fault (core dumped)
