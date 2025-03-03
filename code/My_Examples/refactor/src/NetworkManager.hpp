@@ -20,12 +20,12 @@ int num_init = 0;
 int num_master = 0;
 int num_slave = 0;
 int64_t master_clock_id = 0;
-
+void statusCheck(const std::string &current_status);
 void printPtpConfig(PTPConfig ptpConfig);
 void monitorPtpStatus(std::shared_ptr<rcg::Interface> interf, int deviceCount);
 void configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource = "Action1", uint32_t actionSelector = 1, uint32_t destinationIP = 0xFFFFFFFF);
 void sendActionCommand(std::shared_ptr<rcg::System> system);
-// + enablePTP()                   // Enables Precision Time Protocol for synchronization
+// + setPTPConfig()                   // Enables Precision Time Protocol for synchronization
 // + disablePTP()                  // Disables PTP sync
 // + getNetworkStatus() : NetworkStatus // Returns network status
 // + setBandwidth(cameraId, bandwidth) // Allocates bandwidth for a camera

@@ -13,3 +13,4 @@ void streamFromDevice(const std::string &deviceID);
 bool startStreaming(std::shared_ptr<rcg::Device> device);
 void stopStreaming(std::shared_ptr<rcg::Device> device);
 void processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint64_t pixelFormat);
+void startSyncFreeRun(const std::shared_ptr<rcg::Device> &device, int index);

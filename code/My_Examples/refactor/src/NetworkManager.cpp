@@ -50,7 +50,7 @@ void monitorPtpStatus(std::shared_ptr<rcg::Interface> interf, int deviceCount)
             PTPConfig ptpConfig;
             std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
             bool deprecatedFeatures = getGenTLVersion(nodemap);
-            getPtpParameters(nodemap, ptpConfig, deprecatedFeatures);
+            getPTPConfig(nodemap, ptpConfig, deprecatedFeatures);
             statusCheck(ptpConfig.status);
             device->close();
         }
@@ -111,4 +111,24 @@ void sendActionCommand(std::shared_ptr<rcg::System> system)
         std::cerr << "⚠️ Failed to send Action Command: " << e.what() << std::endl;
     }
 
+}
+
+void statusCheck(const std::string &current_status)
+{
+    if (current_status == "Initializing")
+    {
+        num_init++;
+    }
+    else if (current_status == "Master")
+    {
+        num_master++;
+    }
+    else if (current_status == "Slave")
+    {
+        num_slave++;
+    }
+    else
+    {
+        std::cerr << RED << "Unknown PTP status: " << current_status << RESET << std::endl;
+    }
 }
