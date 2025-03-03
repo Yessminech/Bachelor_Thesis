@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/camera.dir/src/camera.cpp.o -o camera   -L/home/test/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/lib64  -Wl,-rpath,/home/test/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/lib64 -lrc_genicam_api 

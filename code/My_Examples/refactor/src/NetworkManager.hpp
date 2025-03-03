@@ -25,6 +25,9 @@ void printPtpConfig(PTPConfig ptpConfig);
 void monitorPtpStatus(std::shared_ptr<rcg::Interface> interf, int deviceCount);
 void configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource = "Action1", uint32_t actionSelector = 1, uint32_t destinationIP = 0xFFFFFFFF);
 void sendActionCommand(std::shared_ptr<rcg::System> system);
+void setBandwidth(const std::shared_ptr<rcg::Device> &device, double camIndex);
+double CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams);
+double CalculateTransmissionDelayNs(double packetDelayNs, int camIndex);
 // + setPTPConfig()                   // Enables Precision Time Protocol for synchronization
 // + disablePTP()                  // Disables PTP sync
 // + getNetworkStatus() : NetworkStatus // Returns network status

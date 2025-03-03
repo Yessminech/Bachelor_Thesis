@@ -1,3 +1,4 @@
+#include "camera.hpp"
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
 #include <rc_genicam_api/device.h>
@@ -14,7 +15,22 @@ Camera::Camera(std::shared_ptr<rcg::Device> device) : device(device)
 {
     if (device)
     {
-        setCameraConfig(device->getRemoteNodeMap(), device->getID());
+        device = device;
+        device->open(rcg::Device::CONTROL);
+        nodemap = device->getRemoteNodeMap();
+        setCameraConfig();
+        deviceConfig.id = device->getID();
+        deviceConfig.vendor = device->getVendor();
+        deviceConfig.model = device->getModel();
+        deviceConfig.tlType = device->getTLType();
+        deviceConfig.displayName = device->getDisplayName();
+        deviceConfig.accessStatus = device->getAccessStatus();
+        deviceConfig.serialNumber = device->getSerialNumber();
+        deviceConfig.version = device->getVersion();
+        deviceConfig.timestampFrequency = device->getTimestampFrequency();
+        deviceConfig.currentIP = getCurrentIP();
+        deviceConfig.MAC = getMAC();
+        deviceConfig.deprecatedFW = rcg::getString(nodemap, "PtpEnable").empty(); // ToDo do this in a better way 
     }
     else
     {
@@ -30,70 +46,35 @@ Camera::~Camera()
     }
 }
 
-void Camera::setCameraConfig(const std::shared_ptr<GenApi::CNodeMapRef> &nodemap, const std::string &camID)
+void Camera::setCameraConfig()
 {
-    // Ideally: Load config from xml file
-    DeviceConfig config;
-    config.id = device->getID();
-    config.vendor = device->getVendor();
-    config.model = device->getModel();
-    config.tlType = device->getTLType();
-    config.displayName = device->getDisplayName();
-    config.accessStatus = device->getAccessStatus();
-    config.serialNumber = device->getSerialNumber();
-    config.version = device->getVersion();
-    config.timestampFrequency = device->getTimestampFrequency();
-    config.currentIP = getCurrentIP(device);
-    config.MAC = getMAC(device);
-    // config.deprecatedFW
-    if (nodemap)
+    try
     {
-        try
+        rcg::setBoolean(nodemap, "ChunkModeActive", true);
+        if (!deviceConfig.deprecatedFW)
         {
-            rcg::setBoolean(nodemap, "ChunkModeActive", true);
-            rcg::setBoolean(nodemap, "ChunkDataControl", true); // add deprecated check
-            rcg::setBoolean(nodemap, "ChunkEnable", true);      // add deprecated check
+            rcg::setBoolean(nodemap, "ChunkDataControl", true); 
+            rcg::setBoolean(nodemap, "ChunkEnable", true);      
+            rcg::setFloat(nodemap, "ExposureTimeAbs", exposure); 
 
-            if (debug)
-                std::cout << "[DEBUG] Camera " << camID << ": Chunk mode enabled" << std::endl;
         }
-        catch (const std::exception &ex)
+        // rcg::setEnum(nodemap, "ExposureAuto","Continuous");
+        rcg::setFloat(nodemap, "ExposureTime", exposure);    // Example: 20 ms
+        rcg::setFloat(nodemap, "Gain", gain);                 // Example: Gain of 10 dB
+        rcg::setBoolean(nodemap, "AutoFunctionROIUseWhiteBalance", true);
+        rcg::setEnum(nodemap, "BalanceWhiteAuto", "Continuous"); // Example: Auto white balance
+        if (debug)
         {
-            std::cerr << RED << "Failed to enable chunk mode for camera " << camID << ": " << ex.what() << RESET << std::endl;
+            std::cout << GREEN << "setCameraConfig success" << RESET << std::endl;
         }
     }
-    if (nodemap)
+    catch (const std::exception &ex)
     {
-        try
-        {
-            // Set exposure time.
-            rcg::setFloat(nodemap, "ExposureTimeAbs", 222063); // Example: 20 ms
-            rcg::setFloat(nodemap, "ExposureTime", 222063);    // Example: 20 ms
-
-            // rcg::setEnum(nodemap, "ExposureAuto","Continuous");
-
-            if (debug)
-                std::cout << "[DEBUG] Camera " << camID << ": Exposure time set to 80 ms" << std::endl;
-
-            // Set gain.
-            rcg::setFloat(nodemap, "Gain", 0); // Example: Gain of 10 dB
-            if (debug)
-                std::cout << "[DEBUG] Camera " << camID << ": Gain set to 20 dB" << std::endl;
-
-            // Set white balance.
-            rcg::setBoolean(nodemap, "AutoFunctionROIUseWhiteBalance", true);
-
-            rcg::setEnum(nodemap, "BalanceWhiteAuto", "Continuous"); // Example: Auto white balance
-            if (debug)
-                std::cout << "[DEBUG] Camera " << camID << ": White balance set to auto" << std::endl;
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << RED << "Failed to set camera settings for camera " << camID << ": " << ex.what() << RESET << std::endl;
-        }
+        std::cerr << RED << "Failed to set camera settings for camera " << deviceConfig.id << ": " << ex.what() << RESET << std::endl;
     }
 }
 
+// ToDo: Implement
 void Camera::setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource, uint32_t actionSelector)
 {
     try
@@ -114,6 +95,10 @@ void Camera::setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, u
         rcg::setEnum(nodemap, "TriggerSource", triggerSource);
         std::cout << "✅ Camera " << device->getID() << " configured to start acquisition on Action Command.\n";
         std::cout << "✅ Action Device Key: " << rcg::getInteger(nodemap, "ActionDeviceKey") << ", Group Key: " << rcg::getInteger(nodemap, "ActionGroupKey") << ", Group Mask: " << rcg::getInteger(nodemap, "ActionGroupMask") << ", ActionSelector: " << rcg::getInteger(nodemap, "ActionSelector") << std::endl;
+        if (debug)
+        {
+            std::cout << GREEN << "setActionCommandDeviceConfig success" << RESET << std::endl;
+        }
     }
     catch (const std::exception &e)
     {
@@ -121,10 +106,9 @@ void Camera::setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, u
     }
 }
 
-// ToDo add a ptpcheck method that checks if ptp is true on all devices and there are masters and slave it
-void Camera::setPTPConfig(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConfig &ptpConfig, bool deprecatedFeatures)
+void Camera::setPTPConfig()
 {
-    std::string feature = deprecatedFeatures ? "GevIEEE1588" : "PtpEnable";
+    std::string feature = deviceConfig.deprecatedFW ? "GevIEEE1588" : "PtpEnable";
 
     try
     {
@@ -138,137 +122,6 @@ void Camera::setPTPConfig(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConfi
     catch (const std::exception &ex)
     {
         std::cerr << RED << "Error: Failed to enable PTP: " << ex.what() << RESET << std::endl;
-    }
-}
-
-// Calculate packet delay (not used in composite display but provided for completeness).
-double Camera::CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams)
-{
-    double buffer = (bufferPercent / 100.0) * (packetSizeB * (1e9 / deviceLinkSpeedBps));
-    return (((packetSizeB * (1e9 / deviceLinkSpeedBps)) + buffer) * (numCams - 1));
-}
-
-// Calculate packet delay (not used in composite display but provided for completeness).
-double Camera::CalculateTransmissionDelayNs(double packetDelayNs, int camIndex)
-{
-    return packetDelayNs * camIndex;
-}
-
-// Set bandwidth parameters on the device.
-void Camera::setBandwidth(const std::shared_ptr<rcg::Device> &device, double camIndex)
-{
-    double deviceLinkSpeedBps = 125000000; // 1 Gbps // ToDo What does this mean and how to define this
-    double packetSizeB = 8228;             // ToDo What does this mean and how to define this, jumbo frames?
-    double bufferPercent = 15;             // 10.93;
-
-    try
-    {
-        device->open(rcg::Device::CONTROL);
-        auto nodemap = device->getRemoteNodeMap();
-        double packetDelay = CalculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
-        if (debug)
-            std::cout << "[DEBUG] numCams and CamIndex: " << numCams << " " << camIndex << std::endl;
-        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << packetDelay << " ns" << std::endl;
-        double transmissionDelay = CalculateTransmissionDelayNs(packetDelay, camIndex);
-        if (debug)
-            std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated transmission delay: " << transmissionDelay << " ns" << std::endl;
-        int64_t gevSCPDValue = static_cast<int64_t>(packetDelay);
-        double gevSCPDValueMs = gevSCPDValue / 1e6;
-
-        rcg::setInteger(nodemap, "GevSCPD", gevSCPDValue);
-        if (debug)
-            std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPD set to: " << rcg::getInteger(nodemap, "GevSCPD") << " ns" << std::endl;
-        if (device->getID() == "devicemodul04_5d_4b_79_71_12") // Example: skip specific device.
-        {
-            rcg::setInteger(nodemap, "GevSCPD", gevSCPDValueMs);
-        }
-        int64_t gevSCFTDValue = static_cast<int64_t>(transmissionDelay);
-        double gevSCFTDValueMs = gevSCFTDValue / 1e6;
-        if (debug)
-            std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCFTD in seconds: " << gevSCFTDValueMs << " s" << std::endl;
-        rcg::setInteger(nodemap, "GevSCFTD", gevSCFTDValue);
-        if (device->getID() == "devicemodul04_5d_4b_79_71_12") // Example: skip specific device.
-        {
-            rcg::setEnum(nodemap, "ImageTransferDelayMode", "On");
-            rcg::setFloat(nodemap, "ImageTransferDelayValue", gevSCFTDValueMs);
-        }
-
-        if (debug)
-            std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCFTD set to: " << rcg::getInteger(nodemap, "GevSCFTD") << " ns" << std::endl;
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "Failed to set bandwidth for camera " << device->getID() << ": " << ex.what() << RESET << std::endl;
-    }
-}
-
-std::string Camera::getCurrentIP(const std::shared_ptr<rcg::Device> &device)
-{
-    device->open(rcg::Device::CONTROL);
-    auto nodemap = device->getRemoteNodeMap();
-    try
-    {
-        std::string currentIP = rcg::getString(nodemap, "GevCurrentIPAddress");
-        if (!isDottedIP(currentIP))
-        {
-            try
-            {
-                if (currentIP.find_first_not_of("0123456789") == std::string::npos)
-                {
-                    currentIP = decimalToIP(std::stoul(currentIP));
-                }
-                else
-                {
-                    currentIP = hexToIP(currentIP);
-                }
-            }
-            catch (const std::invalid_argument &e)
-            {
-                std::cerr << "Invalid IP address format: " << currentIP << std::endl;
-                currentIP = "";
-            }
-        }
-
-        device->close();
-        return currentIP;
-    }
-    catch (const std::exception &ex)
-    {
-        device->close();
-        std::cerr << "Exception: " << ex.what() << std::endl;
-        return "";
-    }
-}
-
-void Camera::getPTPConfig(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConfig &ptpConfig, bool deprecatedFeatures)
-{
-    try
-    {
-        if (!deprecatedFeatures)
-        {
-            rcg::callCommand(nodemap, "TimestampLatch");
-            rcg::callCommand(nodemap, "PtpDataSetLatch");
-            ptpConfig.enabled = rcg::getBoolean(nodemap, "PtpEnable");
-            ptpConfig.status = rcg::getString(nodemap, "PtpStatus");
-            ptpConfig.clockAccuracy = rcg::getString(nodemap, "PtpClockAccuracy");
-            ptpConfig.offsetFromMaster = rcg::getInteger(nodemap, "PtpOffsetFromMaster");
-        }
-        else
-        {
-            rcg::callCommand(nodemap, "GevIEEE1588");
-            ptpConfig.enabled = rcg::getBoolean(nodemap, "GevIEEE1588");
-            ptpConfig.status = rcg::getString(nodemap, "GevIEEE1588Status");
-            ptpConfig.clockAccuracy = "Unavailable";
-            ptpConfig.offsetFromMaster = -1;
-        }
-        if (debug)
-        {
-            std::cout << GREEN << "PTP Parameters success " << RESET << std::endl;
-        }
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "Error: Failed to get PTP parameters: " << ex.what() << RESET << std::endl;
     }
 }
 
@@ -303,6 +156,71 @@ std::string Camera::hexToIP(const std::string &hexIP)
     return decimalToIP(decimalIP);
 }
 
+std::string Camera::getCurrentIP()
+{
+    try
+    {
+        std::string currentIP = rcg::getString(nodemap, "GevCurrentIPAddress");
+        if (!isDottedIP(currentIP))
+        {
+            try
+            {
+                if (currentIP.find_first_not_of("0123456789") == std::string::npos)
+                {
+                    currentIP = decimalToIP(std::stoul(currentIP));
+                }
+                else
+                {
+                    currentIP = hexToIP(currentIP);
+                }
+            }
+            catch (const std::invalid_argument &e)
+            {
+                std::cerr << "Invalid IP address format: " << currentIP << std::endl;
+                currentIP = "";
+            }
+        }
+        return currentIP;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << "Exception: " << ex.what() << std::endl;
+        return "";
+    }
+}
+
+void Camera::getPTPConfig()
+{
+    try
+    {
+        if (!deviceConfig.deprecatedFW)
+        {
+            rcg::callCommand(nodemap, "TimestampLatch");
+            rcg::callCommand(nodemap, "PtpDataSetLatch");
+            ptpConfig.enabled = rcg::getBoolean(nodemap, "PtpEnable");
+            ptpConfig.status = rcg::getString(nodemap, "PtpStatus");
+            ptpConfig.clockAccuracy = rcg::getString(nodemap, "PtpClockAccuracy");
+            ptpConfig.offsetFromMaster = rcg::getInteger(nodemap, "PtpOffsetFromMaster");
+        }
+        else
+        {
+            rcg::callCommand(nodemap, "GevIEEE1588");
+            ptpConfig.enabled = rcg::getBoolean(nodemap, "GevIEEE1588");
+            ptpConfig.status = rcg::getString(nodemap, "GevIEEE1588Status");
+            ptpConfig.clockAccuracy = "Unavailable";
+            ptpConfig.offsetFromMaster = -1;
+        }
+        if (debug)
+        {
+            std::cout << GREEN << "PTP Parameters success " << RESET << std::endl;
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Error: Failed to get PTP parameters: " << ex.what() << RESET << std::endl;
+    }
+}
+
 std::string Camera::decimalToMAC(uint64_t decimalMAC)
 {
     std::ostringstream macStream;
@@ -321,12 +239,9 @@ std::string Camera::hexToMAC(const std::string &hexMAC)
     return decimalToMAC(decimalMAC);
 }
 
-std::string Camera::getMAC(const std::shared_ptr<rcg::Device> &device)
+std::string Camera::getMAC()
 {
     std::regex macPattern(R"(^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$)");
-
-    device->open(rcg::Device::CONTROL);
-    auto nodemap = device->getRemoteNodeMap();
     try
     {
         std::string MAC = rcg::getString(nodemap, "GevMACAddress");
@@ -350,35 +265,33 @@ std::string Camera::getMAC(const std::shared_ptr<rcg::Device> &device)
                 MAC = "";
             }
         }
-        device->close();
         return MAC;
     }
     catch (const std::exception &ex)
     {
-        device->close();
         std::cerr << "Exception: " << ex.what() << std::endl;
         return "";
     }
 }
 
-void Camera::getTimestamps(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConfig &ptpConfig, bool deprecatedFeatures)
+void Camera::getTimestamps()
 {
     try
     {
-        if (!deprecatedFeatures)
+        if (!deviceConfig.deprecatedFW)
         {
             rcg::callCommand(nodemap, "TimestampLatch");
             ptpConfig.timestamp_ns = rcg::getString(nodemap, "TimestampLatchValue");
-            ptpConfig.tickFrequency = "1000000000"; // Assuming 1 GHz if PTP is used
+            ptpConfig.tickFrequency = ptpConfig.enabled ? "1000000000" : "8000000000";
         }
         else
         {
             rcg::callCommand(nodemap, "GevTimestampControlLatch");
             ptpConfig.timestamp_ns = rcg::getString(nodemap, "GevTimestampValue");
-            ptpConfig.tickFrequency = rcg::getString(nodemap, "GevTimestampTickFrequency"); // if PTP is used, this feature must return 1,000,000,000 (1 GHz).
+            ptpConfig.tickFrequency = rcg::getString(nodemap, "GevTimestampTickFrequency"); 
         }
-
         ptpConfig.timestamp_s = std::stoull(ptpConfig.timestamp_ns) / std::stoull(ptpConfig.tickFrequency);
+        
         if (debug)
         {
             std::cout << GREEN << "Timestamp success" << RESET << std::endl;
@@ -393,4 +306,15 @@ void Camera::getTimestamps(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConf
 void Camera::startStreaming()
 {
     // ToDo
+}
+
+// ToDo: delete -> only for testing
+int main ()
+{
+    std::shared_ptr<rcg::Device> device = rcg::getDevice("file:///home/user/genicam.vin");
+    Camera camera(device);
+    camera.setPTPConfig();
+    camera.getPTPConfig();
+    camera.getTimestamps();
+    return 0;
 }

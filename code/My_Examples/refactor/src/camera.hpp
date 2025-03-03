@@ -8,6 +8,12 @@
 #include <memory>
 #include <cstdint>
 
+// Todo remove this
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define YELLOW "\033[33m"
+#define GREEN "\033[32m"
+bool debug = true;
 struct DeviceConfig
 {
   std::string id;
@@ -44,27 +50,26 @@ public:
 
   // Camera Configuration
   // ToDo add clear configuration method
-  void setCameraConfig(const std::shared_ptr<GenApi::CNodeMapRef> &nodemap, const std::string &camID);
+  void setCameraConfig();
   void setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1);
-  void setPTPConfig(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConfig &ptpConfig, bool deprecatedFeatures);
-  void setBandwidth(const std::shared_ptr<rcg::Device> &device, double camIndex);
+  void setPTPConfig();
 
   // Network Control
-  std::string getCurrentIP(const std::shared_ptr<rcg::Device> &device);
-  void getPTPConfig(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConfig &ptpConfig, bool deprecatedFeatures);
-  std::string getMAC(const std::shared_ptr<rcg::Device> &device);
-  void getTimestamps(std::shared_ptr<GenApi::CNodeMapRef> nodemap, PTPConfig &ptpConfig, bool deprecatedFeatures);
+  std::string getCurrentIP();
+  void getPTPConfig();
+  std::string getMAC();
+  void getTimestamps();
 
   // Streaming Control
   void startStreaming(); // ToDo
 
 private:
   std::shared_ptr<rcg::Device> device;
-  bool streaming;
-  DeviceConfig deviceConfig;
+  std::shared_ptr<GenApi::CNodeMapRef> nodemap;
+  float exposure = 222063; // Example: 20 ms
+  float gain = 0; // Example: Gain of 10 dB
+  DeviceConfig deviceConfig; // ToDo Public?
   PTPConfig ptpConfig; // ToDo Public?
-  double CalculateTransmissionDelayNs(double packetDelayNs, int camIndex);
-  double CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams);
   std::string decimalToIP(uint32_t decimalIP);
   std::string hexToIP(const std::string &hexIP);
   std::string decimalToMAC(uint64_t decimalMAC);

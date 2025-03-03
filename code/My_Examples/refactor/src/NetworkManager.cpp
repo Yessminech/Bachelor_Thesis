@@ -132,3 +132,64 @@ void statusCheck(const std::string &current_status)
         std::cerr << RED << "Unknown PTP status: " << current_status << RESET << std::endl;
     }
 }
+
+// Calculate packet delay (not used in composite display but provided for completeness).
+double Camera::CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams)
+{
+    double buffer = (bufferPercent / 100.0) * (packetSizeB * (1e9 / deviceLinkSpeedBps));
+    return (((packetSizeB * (1e9 / deviceLinkSpeedBps)) + buffer) * (numCams - 1));
+}
+
+// Calculate packet delay (not used in composite display but provided for completeness).
+double Camera::CalculateTransmissionDelayNs(double packetDelayNs, int camIndex)
+{
+    return packetDelayNs * camIndex;
+}
+
+// Set bandwidth parameters on the device.
+void Camera::setBandwidth(const std::shared_ptr<rcg::Device> &device, double camIndex)
+{
+    double deviceLinkSpeedBps = 125000000; // 1 Gbps // ToDo What does this mean and how to define this
+    double packetSizeB = 8228;             // ToDo What does this mean and how to define this, jumbo frames?
+    double bufferPercent = 15;             // 10.93;
+
+    try
+    {
+        device->open(rcg::Device::CONTROL);
+        auto nodemap = device->getRemoteNodeMap();
+        double packetDelay = CalculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
+        if (debug)
+            std::cout << "[DEBUG] numCams and CamIndex: " << numCams << " " << camIndex << std::endl;
+        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << packetDelay << " ns" << std::endl;
+        double transmissionDelay = CalculateTransmissionDelayNs(packetDelay, camIndex);
+        if (debug)
+            std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated transmission delay: " << transmissionDelay << " ns" << std::endl;
+        int64_t gevSCPDValue = static_cast<int64_t>(packetDelay);
+        double gevSCPDValueMs = gevSCPDValue / 1e6;
+
+        rcg::setInteger(nodemap, "GevSCPD", gevSCPDValue);
+        if (debug)
+            std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPD set to: " << rcg::getInteger(nodemap, "GevSCPD") << " ns" << std::endl;
+        if (device->getID() == "devicemodul04_5d_4b_79_71_12") // Example: skip specific device.
+        {
+            rcg::setInteger(nodemap, "GevSCPD", gevSCPDValueMs);
+        }
+        int64_t gevSCFTDValue = static_cast<int64_t>(transmissionDelay);
+        double gevSCFTDValueMs = gevSCFTDValue / 1e6;
+        if (debug)
+            std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCFTD in seconds: " << gevSCFTDValueMs << " s" << std::endl;
+        rcg::setInteger(nodemap, "GevSCFTD", gevSCFTDValue);
+        if (device->getID() == "devicemodul04_5d_4b_79_71_12") // Example: skip specific device.
+        {
+            rcg::setEnum(nodemap, "ImageTransferDelayMode", "On");
+            rcg::setFloat(nodemap, "ImageTransferDelayValue", gevSCFTDValueMs);
+        }
+
+        if (debug)
+            std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCFTD set to: " << rcg::getInteger(nodemap, "GevSCFTD") << " ns" << std::endl;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Failed to set bandwidth for camera " << device->getID() << ": " << ex.what() << RESET << std::endl;
+    }
+}
