@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.0.16">
   <diagram name="Seite-1" id="LhfKS-z94-HeNpTXFxl4">
-    <mxGraphModel dx="4234" dy="820" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="5687" dy="965" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -933,6 +933,83 @@
         </mxCell>
         <mxCell id="8JwkAh5fV-CRs9uDr2Kq-16" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="8JwkAh5fV-CRs9uDr2Kq-15">
           <mxGeometry y="26" width="160" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-21" value="Top Level diagram&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;locked=1;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="-2984" y="6675" width="695" height="793" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="8JwkAh5fV-CRs9uDr2Kq-22" target="8JwkAh5fV-CRs9uDr2Kq-48">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="8JwkAh5fV-CRs9uDr2Kq-22" target="8JwkAh5fV-CRs9uDr2Kq-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-22" value="Client" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2624" y="6745" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-27" value="rc_genicam API" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=right;labelPosition=center;verticalLabelPosition=top;verticalAlign=bottom;textDirection=ltr;" vertex="1" parent="1">
+          <mxGeometry x="-2720.5" y="7069" width="313" height="163" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-38" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://zh.docs.baslerweb.com/pylonapi/cpp/pylon3_0_cpp_api.svg;" vertex="1" parent="1">
+          <mxGeometry x="-3650.003333333333" y="7132.996666666667" width="601" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="8JwkAh5fV-CRs9uDr2Kq-48" target="8JwkAh5fV-CRs9uDr2Kq-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-48" value="GUI" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2759" y="6823" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8JwkAh5fV-CRs9uDr2Kq-49" target="8JwkAh5fV-CRs9uDr2Kq-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-49" value="Terminal / Shell" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2525" y="6823" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-26" value="High Level API" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=right;labelPosition=center;verticalLabelPosition=top;verticalAlign=bottom;textDirection=ltr;" vertex="1" parent="1">
+          <mxGeometry x="-2705" y="6931" width="282" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-25" value="Camera" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2593.1982300884956" y="6940.000869565218" width="59.89380530973452" height="43.04347826086956" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-23" value="Frame" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2690.525663716814" y="6940.000869565218" width="59.89380530973452" height="43.04347826086956" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-24" value="System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2497.3681415929204" y="6940.000869565218" width="59.89380530973452" height="43.04347826086956" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="8JwkAh5fV-CRs9uDr2Kq-51" target="8JwkAh5fV-CRs9uDr2Kq-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-51" value="GenIcam Cpp wrapper" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2705.5" y="7075" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="8JwkAh5fV-CRs9uDr2Kq-52" target="8JwkAh5fV-CRs9uDr2Kq-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-52" value="GenTL- Binding" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2553.5" y="7075" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-54" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endSize=2;startSize=2;endArrow=none;startFill=0;" edge="1" parent="1" source="8JwkAh5fV-CRs9uDr2Kq-53">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-2645.5" y="7135" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-53" value="GenICam Reference Implementation" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2705.5" y="7160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-74" value="GenIcam Compliant Cameras" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;labelPosition=center;verticalLabelPosition=top;align=right;verticalAlign=bottom;" vertex="1" parent="1">
+          <mxGeometry x="-2717" y="7259" width="312" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-55" value="Interface Module: GenTL Producer (CTI)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2676" y="7274" width="263" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-77" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startFill=0;" edge="1" parent="1" source="8JwkAh5fV-CRs9uDr2Kq-65" target="8JwkAh5fV-CRs9uDr2Kq-75">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-65" value="Camera Module (Features)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2676" y="7351" width="124" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="8JwkAh5fV-CRs9uDr2Kq-75" value="XML&lt;div&gt;Attributes Description&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2533.3" y="7351" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
