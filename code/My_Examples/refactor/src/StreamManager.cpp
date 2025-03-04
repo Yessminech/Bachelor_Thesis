@@ -1,3 +1,6 @@
+#include "StreamManager.hpp"
+#include "DeviceManager.hpp"
+#include "Camera.hpp"
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
 #include <rc_genicam_api/device.h>
@@ -23,8 +26,32 @@
 #include <vector>
 #include <mutex>
 
+StreamManager::StreamManager()
+{
+    // Constructor implementation
+    stop_streaming = false;
+    startedThreads = 0;
+    // threads.clear();
+    // globalFrames.clear();
+    // globalDevices.clear();
+    // globalFrameMutex = std::mutex();
+}
+
+StreamManager::~StreamManager()
+{
+    // Destructor implementation
+    stop_streaming = true;
+    for (auto &t : threads)
+    {
+        if (t.joinable())
+            t.join();
+    }
+    cv::destroyAllWindows();
+    rcg::System::clearSystems();
+}
+
 // Signal handler: when Ctrl+C is pressed.
-void signalHandler(int signum)
+void StreamManager::signalHandler(int signum)
 {
     std::cout << "\n"
               << YELLOW << "Stopping streaming..." << RESET << std::endl;
@@ -33,7 +60,7 @@ void signalHandler(int signum)
 
 /// Arrange frames into a composite grid. Supports up to 6 cameras.
 /// The grid layout is determined by the number of streams.
-cv::Mat createComposite(const std::vector<cv::Mat> &frames)
+cv::Mat StreamManager::createComposite(const std::vector<cv::Mat> &frames)
 {
     int n = frames.size();
     int rows = 1, cols = 1;
@@ -88,148 +115,8 @@ cv::Mat createComposite(const std::vector<cv::Mat> &frames)
     return composite;
 }
 
-/// Enumerate all devices and launch a streaming thread for each.
-void streamFromAllDevices()
-{
-    std::set<std::string> printedSerialNumbers;
-    std::vector<std::shared_ptr<rcg::System>> systems;
-    try
-    {
-        systems = rcg::System::getSystems();
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "Failed to get systems: " << ex.what() << RESET << std::endl;
-        return;
-    }
-    if (systems.empty())
-    {
-        std::cerr << RED << "Error: No systems found." << RESET << std::endl;
-        return;
-    }
-    for (auto &system : systems)
-    {
-        try
-        {
-            system->open();
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << RED << "[DEBUG] Failed to open system: " << ex.what() << RESET << std::endl;
-            continue;
-        }
-        std::vector<std::shared_ptr<rcg::Interface>> interfaces = system->getInterfaces();
-        if (interfaces.empty())
-            continue;
-        for (auto &interf : interfaces)
-        {
-            try
-            {
-                interf->open();
-            }
-            catch (const std::exception &ex)
-            {
-                std::cerr << RED << "[DEBUG] Failed to open interface: " << ex.what() << RESET << std::endl;
-                continue;
-            }
-            std::vector<std::shared_ptr<rcg::Device>> deviceList = interf->getDevices();
-            for (auto &device : deviceList)
-            {
-                if (device->getID() == "210201103") // Example: skip specific device.
-                    continue;
-                if (device->getVendor() != system->getVendor())
-                    continue;
-                std::string serialNumber = device->getSerialNumber();
-                if (printedSerialNumbers.find(serialNumber) != printedSerialNumbers.end())
-                    continue;
-                printedSerialNumbers.insert(serialNumber);
-                globalDevices.push_back(device);
-                {
-                    std::lock_guard<std::mutex> lock(globalFrameMutex);
-                    globalFrames.push_back(cv::Mat());
-                }
-                int index = static_cast<int>(globalFrames.size()) - 1;
-                if (debug)
-                    std::cout << "[DEBUG] Launching stream thread for camera " << device->getID() << std::endl;
-                threads.emplace_back(displayCameraStream, device, index);
-            }
-            interf->close();
-        }
-        system->close();
-    }
-    try
-    {
-        const char *defaultCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact
-        if (defaultCtiPath == nullptr)
-        {
-            std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
-            return;
-        }
-        rcg::System::setSystemsPath(defaultCtiPath, nullptr);
-        std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
-        if (defaultSystems.empty())
-        {
-            std::cerr << RED << "Error: No systems found." << RESET << std::endl;
-            return;
-        }
-        for (auto &system : defaultSystems)
-        {
-            try
-            {
-                system->open();
-            }
-            catch (const std::exception &ex)
-            {
-                std::cerr << RED << "[DEBUG] Failed to open system: " << ex.what() << RESET << std::endl;
-                continue;
-            }
-            std::vector<std::shared_ptr<rcg::Interface>> interfaces = system->getInterfaces();
-            if (interfaces.empty())
-                continue;
-            for (auto &interf : interfaces)
-            {
-                try
-                {
-                    interf->open();
-                }
-                catch (const std::exception &ex)
-                {
-                    std::cerr << RED << "[DEBUG] Failed to open interface: " << ex.what() << RESET << std::endl;
-                    continue;
-                }
-                std::vector<std::shared_ptr<rcg::Device>> deviceList = interf->getDevices();
-                for (auto &device : deviceList)
-                {
-                    if (device->getID() == "210201103") // Example: skip specific device.
-                        continue;
-                    std::string serialNumber = device->getSerialNumber();
-                    if (printedSerialNumbers.find(serialNumber) != printedSerialNumbers.end())
-                        continue;
-                    printedSerialNumbers.insert(serialNumber);
-                    globalDevices.push_back(device);
-                    {
-                        std::lock_guard<std::mutex> lock(globalFrameMutex);
-                        globalFrames.push_back(cv::Mat());
-                    }
-                    int index = static_cast<int>(globalFrames.size()) - 1;
-                    if (debug)
-                        std::cout << "[DEBUG] Launching stream thread for camera " << device->getID() << std::endl;
-                    threads.emplace_back(displayCameraStream, device, index);
-                }
-                interf->close();
-            }
-            system->close();
-        }
-    }
-    catch (const std::exception &ex)
-    {
-        std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
-        return;
-    }
-}
-
 /// Streams from a specific device identified by deviceID.
-void streamFromDevice(const std::string &deviceID)
+void StreamManager::streamFromDevice(const std::string &deviceID)
 {
     std::set<std::string> printedSerialNumbers;
     std::vector<std::shared_ptr<rcg::System>> systems;
@@ -255,7 +142,7 @@ void streamFromDevice(const std::string &deviceID)
         }
         catch (const std::exception &ex)
         {
-            std::cerr << RED << "[DEBUG] Failed to open system: " << ex.what() << RESET << std::endl;
+            std::cerr << RED << "[Camera::debug] Failed to open system: " << ex.what() << RESET << std::endl;
             continue;
         }
         std::vector<std::shared_ptr<rcg::Interface>> interfaces = system->getInterfaces();
@@ -269,7 +156,7 @@ void streamFromDevice(const std::string &deviceID)
             }
             catch (const std::exception &ex)
             {
-                std::cerr << RED << "[DEBUG] Failed to open interface: " << ex.what() << RESET << std::endl;
+                std::cerr << RED << "[Camera::debug] Failed to open interface: " << ex.what() << RESET << std::endl;
                 continue;
             }
             auto device = interf->getDevice(deviceID.c_str());
@@ -290,15 +177,15 @@ void streamFromDevice(const std::string &deviceID)
                 continue;
             }
             printedSerialNumbers.insert(serialNumber);
-            globalDevices.push_back(device);
+            // globalDevices.push_back(device); // ToDo create DeviceManager
             {
                 std::lock_guard<std::mutex> lock(globalFrameMutex);
                 globalFrames.push_back(cv::Mat());
             }
             int index = static_cast<int>(globalFrames.size()) - 1;
-            if (debug)
-                std::cout << "[DEBUG] Launching stream thread for camera " << device->getID() << std::endl;
-            threads.emplace_back(displayCameraStream, device, index);
+            // if (Camera::debug) // ToDo create Camera object
+                std::cout << "[Camera::debug] Launching stream thread for camera " << device->getID() << std::endl;
+            // threads.emplace_back(startStreaming, device, index); // ToDo create cam object
             interf->close();
         }
         system->close();
@@ -326,7 +213,7 @@ void streamFromDevice(const std::string &deviceID)
             }
             catch (const std::exception &ex)
             {
-                std::cerr << RED << "[DEBUG] Failed to open system: " << ex.what() << RESET << std::endl;
+                std::cerr << RED << "[Camera::debug] Failed to open system: " << ex.what() << RESET << std::endl;
                 continue;
             }
             std::vector<std::shared_ptr<rcg::Interface>> interfaces = system->getInterfaces();
@@ -340,7 +227,7 @@ void streamFromDevice(const std::string &deviceID)
                 }
                 catch (const std::exception &ex)
                 {
-                    std::cerr << RED << "[DEBUG] Failed to open interface: " << ex.what() << RESET << std::endl;
+                    std::cerr << RED << "[Camera::debug] Failed to open interface: " << ex.what() << RESET << std::endl;
                     continue;
                 }
                 auto device = interf->getDevice(deviceID.c_str());
@@ -356,15 +243,15 @@ void streamFromDevice(const std::string &deviceID)
                     continue;
                 }
                 printedSerialNumbers.insert(serialNumber);
-                globalDevices.push_back(device);
+                //globalDevices.push_back(device); // ToDo Create DeviceManager
                 {
                     std::lock_guard<std::mutex> lock(globalFrameMutex);
                     globalFrames.push_back(cv::Mat());
                 }
                 int index = static_cast<int>(globalFrames.size()) - 1;
-                if (debug)
-                    std::cout << "[DEBUG] Launching stream thread for camera " << device->getID() << std::endl;
-                threads.emplace_back(displayCameraStream, device, index);
+                // if (Camera::debug) // ToDo create Camera object
+                std::cout << "[Camera::debug] Launching stream thread for camera " << device->getID() << std::endl;
+                // threads.emplace_back(startStreaming, device, index);  // ToDo Create Camera object
                 interf->close();
             }
             system->close();
@@ -376,288 +263,76 @@ void streamFromDevice(const std::string &deviceID)
     }
 }
 
-bool startStreaming(std::shared_ptr<rcg::Device> device)
+int main(int argc, char **argv) // ToDo change to sync free run
 {
-    try
-    {
-        std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
-        setPTPConfig(nodemap); // ToDo: Extend to multiple cameras
+    // std::signal(SIGINT, signalHandler); // Install signal handler for Ctrl+C.
+    // try
+    // {
+    //     if (argc > 1)
+    //     {
+    //         numCams = argc - 1; // ToDo dynamically
+    //         for (int i = 1; i < argc; ++i)
+    //         {
+    //             streamFromDevice(std::string(argv[i]));
+    //         }
+    //     }
+    //     else
+    //     {
+    //         // ToDo set numCams
+    //         std::cout << GREEN << "No device ID provided. Streaming from all available devices." << RESET << std::endl;
+    //         streamFromAllDevices();
+    //     }
 
-        auto streams = device->getStreams();
-        if (streams.empty())
-        {
-            std::cerr << "No streams found!" << std::endl;
-            return false;
-        }
+    //     // Wait for all threads to start successfully.
+    //     while (startedThreads.load() < globalDevices.size())
+    //     {
+    //         std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    //     }
+    //     std::cout << GREEN << "All threads have started successfully." << RESET << std::endl;
 
-        stream = streams[0];
-        stream->open();
-        stream->startStreaming();
+    //     // Create a composite window that scales nicely.
+    //     const std::string compWindowName = "Composite Stream";
+    //     cv::namedWindow(compWindowName, cv::WINDOW_AUTOSIZE);
+    //     const int compWidth = 1280, compHeight = 720;
+    //     cv::resizeWindow(compWindowName, compWidth, compHeight);
 
-        std::cout << "\033[1;32mStreaming started. Press Ctrl+C to stop.\033[0m" << std::endl;
-        return true;
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << "Error: " << ex.what() << std::endl;
-        return false;
-    }
+    //     // Composite display loop.
+    //     while (!stop_streaming)
+    //     {
+    //         std::vector<cv::Mat> framesCopy;
+    //         {
+    //             std::lock_guard<std::mutex> lock(globalFrameMutex);
+    //             framesCopy = globalFrames;
+    //         }
+    //         if (!framesCopy.empty())
+    //         {
+    //             cv::Mat composite = createComposite(framesCopy);
+    //             cv::imshow(compWindowName, composite);
+    //         }
+    //         int key = cv::waitKey(30);
+    //         if (key == 27)
+    //         { // ESC key
+    //             stop_streaming = true;
+    //         }
+    //     }
+
+    //     // Wait for all camera threads to finish.
+    //     for (auto &t : threads)
+    //     {
+    //         if (t.joinable())
+    //             t.join();
+    //     }
+    //     cv::destroyAllWindows();
+    //     rcg::System::clearSystems();
+    // }
+    // catch (const std::exception &ex)
+    // {
+    //     std::cerr << RED << "Main Exception: " << ex.what() << RESET << std::endl;
+    //     return -1;
+    // }
+    // return 0;
 }
 
-// Function to stop streaming
-void stopStreaming(std::shared_ptr<rcg::Device> device)
-{
-    if (stream)
-    {
-        stream->stopStreaming();
-        stream->close();
-        std::cout << "Streaming stopped." << std::endl;
-    }
-
-    if (device)
-    {
-        device->close();
-        std::cout << "Device closed." << std::endl;
-    }
-
-    rcg::System::clearSystems();
-}
-
-/// Process a raw frame based on the pixel format.
-void processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint64_t pixelFormat)
-{
-    try
-    {
-        switch (pixelFormat)
-        {
-        case BGR8:
-            outputFrame = rawFrame.clone();
-            break;
-        case RGB8:
-            cv::cvtColor(rawFrame, outputFrame, cv::COLOR_RGB2BGR);
-            break;
-        case RGBa8:
-            cv::cvtColor(rawFrame, outputFrame, cv::COLOR_RGBA2BGR);
-            break;
-        case BGRa8:
-            cv::cvtColor(rawFrame, outputFrame, cv::COLOR_BGRA2BGR);
-            break;
-        case Mono8:
-            outputFrame = rawFrame.clone();
-            break;
-        case Mono16:
-            rawFrame.convertTo(outputFrame, CV_8UC1, 1.0 / 256.0);
-            break;
-        case BayerRG8:
-            cv::cvtColor(rawFrame, outputFrame, cv::COLOR_BayerBG2BGR); // ToDo
-            break;
-        case BayerBG8:
-            cv::cvtColor(rawFrame, outputFrame, cv::COLOR_BayerBG2BGR);
-            break;
-        case BayerGB8:
-            cv::cvtColor(rawFrame, outputFrame, cv::COLOR_BayerGB2BGR);
-            break;
-        case BayerGR8:
-            cv::cvtColor(rawFrame, outputFrame, cv::COLOR_BayerGR2BGR);
-            break;
-        case YCbCr422_8:
-            cv::cvtColor(rawFrame, outputFrame, cv::COLOR_YUV2BGR_YUY2);
-            break;
-        case YUV422_8:
-            cv::cvtColor(rawFrame, outputFrame, cv::COLOR_YUV2BGR_UYVY);
-            break;
-        default:
-            std::cerr << RED << "Unsupported pixel format: " << pixelFormat << RESET << std::endl;
-            outputFrame = rawFrame.clone();
-            break;
-        }
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "Exception in processRawFrame: " << ex.what() << RESET << std::endl;
-    }
-}
-
-/// This thread function grabs images from one camera, converts and resizes them,
-/// overlays the device ID, timestamp, and FPS, and updates the shared global frame vector at position 'index'.
-/// Once the stream is successfully started, it increments the global atomic counter.
-void startSyncFreeRun(const std::shared_ptr<rcg::Device> &device, int index)
-{
-    try
-    {
-        if (debug)
-            std::cout << "[DEBUG] Opening device " << device->getID() << std::endl;
-        device->open(rcg::Device::CONTROL);
-        auto nodemap = device->getRemoteNodeMap();
-        //Free run Configuration 
-        if (nodemap)
-        {
-            try
-            {
-                rcg::setEnum(nodemap, "AcquisitionMode", "Continuous");
-                rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
-                rcg::setEnum(nodemap, "TriggerMode", "Off");
-                rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
-                // rcg::setEnum(nodemap, "AcquisitionFrameRateAuto", "Off");
-                double maxFrameRate = 10; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
-                try
-                {
-                    rcg::setFloat(nodemap, "AcquisitionFrameRate", maxFrameRate);
-                }
-                catch (const std::exception &e)
-                {
-                    rcg::setFloat(nodemap, "AcquisitionFrameRateAbs", maxFrameRate);
-                }
-    
-                if (debug)
-                    std::cout << "[DEBUG] Camera " << camID << ": Configured free-run mode" << std::endl;
-            }
-            catch (const std::exception &ex)
-            {
-                std::cerr << RED << "Failed to configure free-run mode for camera " << camID << ": " << ex.what() << RESET << std::endl;
-            }
-        }
-        setBandwidth(device, index);
-        setCameraConfig(nodemap, device->getID());
-        // Get the first available stream.
-        std::vector<std::shared_ptr<rcg::Stream>> streamList = device->getStreams();
-        if (streamList.empty())
-        {
-            std::cerr << RED << "No stream available for camera " << device->getID() << RESET << std::endl;
-            device->close();
-            return;
-        }
-        auto stream = streamList[0];
-        try
-        {
-            stream->open();
-            stream->attachBuffers(true);
-            stream->startStreaming();
-            if (debug)
-                std::cout << "[DEBUG] Stream started for camera " << device->getID() << std::endl;
-            // Signal that this thread has started successfully.
-            startedThreads++;
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << RED << "Failed to start stream for camera " << device->getID()
-                      << ": " << ex.what() << RESET << std::endl;
-
-            return;
-        }
-
-        // Variables for FPS calculation.
-        auto lastTime = std::chrono::steady_clock::now();
-        int frameCount = 0;
-
-        while (!stop_streaming)
-        {
-            const rcg::Buffer *buffer = nullptr;
-            try
-            {
-                buffer = stream->grab(5000);
-            }
-            catch (const std::exception &ex)
-            {
-                std::cerr << RED << "[DEBUG] Exception during buffer grab for camera "
-                          << device->getID() << ": " << ex.what() << RESET << std::endl;
-                continue;
-            }
-            if (buffer && !buffer->getIsIncomplete() && buffer->getImagePresent(0))
-            {
-                rcg::Image image(buffer, 0);
-                cv::Mat outputFrame;
-                uint64_t format = image.getPixelFormat();
-                cv::Mat rawFrame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
-                processRawFrame(rawFrame, outputFrame, format);
-                if (!outputFrame.empty())
-                {
-                    // Resize to a fixed resolution.
-                    cv::Mat resizedFrame;
-                    cv::resize(outputFrame, resizedFrame, cv::Size(640, 480));
-
-                    // Update FPS calculation.
-                    // ToDo is this correct ?
-                    frameCount++;
-                    auto currentTime = std::chrono::steady_clock::now();
-                    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count() / 1000.0;
-                    double fps = (elapsed > 0) ? frameCount / elapsed : 0.0;
-                    if (elapsed >= 1.0)
-                    {
-                        lastTime = currentTime;
-                        frameCount = 0;
-                    }
-
-                    // Prepare overlay text.
-                    uint64_t timestampNS = buffer->getTimestampNS();
-                    double timestampSec = static_cast<double>(timestampNS) / 1e9;
-                    std::ostringstream oss;
-                    oss << "TS: " << std::fixed << std::setprecision(6) << timestampSec << " s"
-                        << " | FPS: " << std::fixed << std::setprecision(2) << fps;
-                    std::ostringstream camOss;
-                    camOss << "Cam: " << device->getID();
-
-                    // Use cv::getTextSize to compute proper placement so text is inside the image.
-                    int baseline = 0;
-                    cv::Size textSize = cv::getTextSize(oss.str(), cv::FONT_HERSHEY_SIMPLEX, 0.6, 2, &baseline);
-                    int textY = resizedFrame.rows - baseline - 5; // 5-pixel margin above bottom.
-                    cv::putText(resizedFrame, oss.str(), cv::Point(10, textY),
-                                cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
-
-                    // Add camera ID in a separate line.
-                    cv::putText(resizedFrame, camOss.str(), cv::Point(10, textY - textSize.height - 10),
-                                cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
-
-                    // Update the global frame for this camera.
-                    {
-                        std::lock_guard<std::mutex> lock(globalFrameMutex);
-                        globalFrames[index] = resizedFrame.clone();
-                    }
-                }
-                else
-                {
-                    if (debug)
-                        std::cerr << "[DEBUG] Empty output frame for camera " << device->getID() << std::endl;
-                }
-            }
-            else
-            {
-                std::cerr << YELLOW << "Camera " << device->getID() << ": Invalid image grabbed." << RESET << std::endl;
-            }
-        }
-
-        // Cleanup.
-        try
-        {
-            stream->stopStreaming();
-            stream->close();
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << RED << "Exception during stream cleanup for camera " << device->getID()
-                      << ": " << ex.what() << RESET << std::endl;
-            return;
-        }
-        device->close();
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "Exception in camera " << device->getID() << " thread: "
-                  << ex.what() << RESET << std::endl;
-        // Cleanup.
-        try
-        {
-            device->close();
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << RED << "Exception during stream cleanup for camera " << device->getID()
-                      << ": " << ex.what() << RESET << std::endl;
-            return;
-        }
-        return;
-    }
-}
 // TODO Add periodic ptp sync
 
 //  make && ./continuous_stream devicemodul00_30_53_37_67_42 devicemodul00_30_53_37_67_41 210200799 devicemodul04_5d_4b_79_71_12

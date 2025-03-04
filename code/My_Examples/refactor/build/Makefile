@@ -129,29 +129,103 @@ camera/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/build
 .PHONY : camera/fast
 
-src/camera.o: src/camera.cpp.o
-.PHONY : src/camera.o
+#=============================================================================
+# Target rules for targets named streamManager
+
+# Build rule for target.
+streamManager: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 streamManager
+.PHONY : streamManager
+
+# fast build rule for target.
+streamManager/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/build
+.PHONY : streamManager/fast
+
+#=============================================================================
+# Target rules for targets named deviceManager
+
+# Build rule for target.
+deviceManager: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 deviceManager
+.PHONY : deviceManager
+
+# fast build rule for target.
+deviceManager/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/build
+.PHONY : deviceManager/fast
+
+src/Camera.o: src/Camera.cpp.o
+.PHONY : src/Camera.o
 
 # target to build an object file
-src/camera.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/src/camera.cpp.o
-.PHONY : src/camera.cpp.o
+src/Camera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/src/Camera.cpp.o
+.PHONY : src/Camera.cpp.o
 
-src/camera.i: src/camera.cpp.i
-.PHONY : src/camera.i
+src/Camera.i: src/Camera.cpp.i
+.PHONY : src/Camera.i
 
 # target to preprocess a source file
-src/camera.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/src/camera.cpp.i
-.PHONY : src/camera.cpp.i
+src/Camera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/src/Camera.cpp.i
+.PHONY : src/Camera.cpp.i
 
-src/camera.s: src/camera.cpp.s
-.PHONY : src/camera.s
+src/Camera.s: src/Camera.cpp.s
+.PHONY : src/Camera.s
 
 # target to generate assembly for a file
-src/camera.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/src/camera.cpp.s
-.PHONY : src/camera.cpp.s
+src/Camera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/src/Camera.cpp.s
+.PHONY : src/Camera.cpp.s
+
+src/DeviceManager.o: src/DeviceManager.cpp.o
+.PHONY : src/DeviceManager.o
+
+# target to build an object file
+src/DeviceManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o
+.PHONY : src/DeviceManager.cpp.o
+
+src/DeviceManager.i: src/DeviceManager.cpp.i
+.PHONY : src/DeviceManager.i
+
+# target to preprocess a source file
+src/DeviceManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.i
+.PHONY : src/DeviceManager.cpp.i
+
+src/DeviceManager.s: src/DeviceManager.cpp.s
+.PHONY : src/DeviceManager.s
+
+# target to generate assembly for a file
+src/DeviceManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.s
+.PHONY : src/DeviceManager.cpp.s
+
+src/StreamManager.o: src/StreamManager.cpp.o
+.PHONY : src/StreamManager.o
+
+# target to build an object file
+src/StreamManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/StreamManager.cpp.o
+.PHONY : src/StreamManager.cpp.o
+
+src/StreamManager.i: src/StreamManager.cpp.i
+.PHONY : src/StreamManager.i
+
+# target to preprocess a source file
+src/StreamManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/StreamManager.cpp.i
+.PHONY : src/StreamManager.cpp.i
+
+src/StreamManager.s: src/StreamManager.cpp.s
+.PHONY : src/StreamManager.s
+
+# target to generate assembly for a file
+src/StreamManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/StreamManager.cpp.s
+.PHONY : src/StreamManager.cpp.s
 
 # Help Target
 help:
@@ -162,9 +236,17 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... camera"
-	@echo "... src/camera.o"
-	@echo "... src/camera.i"
-	@echo "... src/camera.s"
+	@echo "... deviceManager"
+	@echo "... streamManager"
+	@echo "... src/Camera.o"
+	@echo "... src/Camera.i"
+	@echo "... src/Camera.s"
+	@echo "... src/DeviceManager.o"
+	@echo "... src/DeviceManager.i"
+	@echo "... src/DeviceManager.s"
+	@echo "... src/StreamManager.o"
+	@echo "... src/StreamManager.i"
+	@echo "... src/StreamManager.s"
 .PHONY : help
 
 

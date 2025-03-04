@@ -64,6 +64,8 @@ CMAKE_BINARY_DIR = /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refa
 
 # The main recursive "all" target.
 all: CMakeFiles/camera.dir/all
+all: CMakeFiles/streamManager.dir/all
+all: CMakeFiles/deviceManager.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -72,6 +74,8 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/camera.dir/clean
+clean: CMakeFiles/streamManager.dir/clean
+clean: CMakeFiles/deviceManager.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -99,6 +103,58 @@ camera: CMakeFiles/camera.dir/rule
 CMakeFiles/camera.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/clean
 .PHONY : CMakeFiles/camera.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/streamManager.dir
+
+# All Build rule for target.
+CMakeFiles/streamManager.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=5,6 "Built target streamManager"
+.PHONY : CMakeFiles/streamManager.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/streamManager.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/streamManager.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 0
+.PHONY : CMakeFiles/streamManager.dir/rule
+
+# Convenience name for target.
+streamManager: CMakeFiles/streamManager.dir/rule
+.PHONY : streamManager
+
+# clean rule for target.
+CMakeFiles/streamManager.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/clean
+.PHONY : CMakeFiles/streamManager.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/deviceManager.dir
+
+# All Build rule for target.
+CMakeFiles/deviceManager.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=3,4 "Built target deviceManager"
+.PHONY : CMakeFiles/deviceManager.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/deviceManager.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/deviceManager.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 0
+.PHONY : CMakeFiles/deviceManager.dir/rule
+
+# Convenience name for target.
+deviceManager: CMakeFiles/deviceManager.dir/rule
+.PHONY : deviceManager
+
+# clean rule for target.
+CMakeFiles/deviceManager.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/clean
+.PHONY : CMakeFiles/deviceManager.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -15,11 +15,17 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories("/usr/lib/x86_64-linux-gnu")
 link_directories("~/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/lib64")
 # Create the executable
-add_executable(camera src/camera.cpp)
+add_executable(camera src/Camera.cpp)
+add_executable(streamManager src/StreamManager.cpp)
+add_executable(deviceManager src/DeviceManager.cpp)
 
 # Define the symbol to disable automatic import library linking.
 target_compile_definitions(camera PRIVATE GENICAM_NO_AUTO_IMPLIB)
+target_compile_definitions(streamManager PRIVATE GENICAM_NO_AUTO_IMPLIB)
+target_compile_definitions(deviceManager PRIVATE GENICAM_NO_AUTO_IMPLIB)
 
 # Link the executable with the rc_genicam_api library.
 # The installed shared library is located at /usr/lib/x86_64-linux-gnu/librc_genicam_api.so.
-target_link_libraries(camera PRIVATE rc_genicam_api )
+target_link_libraries(camera PRIVATE rc_genicam_api ${OpenCV_LIBS})
+target_link_libraries(streamManager PRIVATE rc_genicam_api ${OpenCV_LIBS})
+target_link_libraries(deviceManager PRIVATE rc_genicam_api ${OpenCV_LIBS})

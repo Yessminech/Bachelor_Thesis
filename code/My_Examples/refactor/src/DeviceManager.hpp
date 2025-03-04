@@ -1,3 +1,6 @@
+#ifndef DEVICEMANAGER_HPP
+#define DEVICEMANAGER_HPP
+
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
 #include <rc_genicam_api/device.h>
@@ -15,15 +18,32 @@
 #define YELLOW "\033[33m"
 #define GREEN "\033[32m"
 
-double numCams; // Todo Correct
-std::vector<std::shared_ptr<rcg::Device>> globalDevices;
+class DeviceManager {
+public:
+    DeviceManager();
+    ~DeviceManager();
+    
+    bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "");
+    bool listDevices();
+    bool listDevicesIDs();
 
-bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "");
-bool listDevices();
-bool listDevicesIDs();
+    // Adds a new camera with configuration
+    void addCamera(const std::string &cameraId, const std::string &config);
 
-// + addCamera(cameraId, config)   // Adds a new camera with configuration
-// + removeCamera(cameraId)        // Removes a camera from the system
-// + getCameraList() : List<Camera> // Returns a list of available cameras
-// + getCameraStatus(cameraId) : CameraStatus // Retrieves the health/status of a specific camera
-// + configureCamera(cameraId, params) // Configures a camera’s settings
+    // Removes a camera from the system
+    void removeCamera(const std::string &cameraId);
+
+    // Returns a list of available cameras
+    std::set<std::string> getCameraList() const;
+
+    // Retrieves the health/status of a specific camera
+    std::string getCameraStatus(const std::string &cameraId) const;
+
+    // Configures a camera’s settings
+    void configureCamera(const std::string &cameraId, const std::string &params);
+
+    double numCams; // Number of cameras
+    std::vector<std::shared_ptr<rcg::Device>> globalDevices;
+};
+
+#endif // DEVICEMANAGER_HPP

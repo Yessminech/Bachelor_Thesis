@@ -69,29 +69,83 @@ include CMakeFiles/camera.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/camera.dir/flags.make
 
-CMakeFiles/camera.dir/src/camera.cpp.o: CMakeFiles/camera.dir/flags.make
-CMakeFiles/camera.dir/src/camera.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/camera.cpp
-CMakeFiles/camera.dir/src/camera.cpp.o: CMakeFiles/camera.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/camera.dir/src/camera.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/camera.dir/src/camera.cpp.o -MF CMakeFiles/camera.dir/src/camera.cpp.o.d -o CMakeFiles/camera.dir/src/camera.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/camera.cpp
+CMakeFiles/camera.dir/src/Camera.cpp.o: CMakeFiles/camera.dir/flags.make
+CMakeFiles/camera.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
+CMakeFiles/camera.dir/src/Camera.cpp.o: CMakeFiles/camera.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/camera.dir/src/Camera.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/camera.dir/src/Camera.cpp.o -MF CMakeFiles/camera.dir/src/Camera.cpp.o.d -o CMakeFiles/camera.dir/src/Camera.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
 
-CMakeFiles/camera.dir/src/camera.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/camera.dir/src/camera.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/camera.cpp > CMakeFiles/camera.dir/src/camera.cpp.i
+CMakeFiles/camera.dir/src/Camera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/camera.dir/src/Camera.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp > CMakeFiles/camera.dir/src/Camera.cpp.i
 
-CMakeFiles/camera.dir/src/camera.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/camera.dir/src/camera.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/camera.cpp -o CMakeFiles/camera.dir/src/camera.cpp.s
+CMakeFiles/camera.dir/src/Camera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/camera.dir/src/Camera.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp -o CMakeFiles/camera.dir/src/Camera.cpp.s
 
 # Object files for target camera
 camera_OBJECTS = \
-"CMakeFiles/camera.dir/src/camera.cpp.o"
+"CMakeFiles/camera.dir/src/Camera.cpp.o"
 
 # External object files for target camera
 camera_EXTERNAL_OBJECTS =
 
-camera: CMakeFiles/camera.dir/src/camera.cpp.o
+camera: CMakeFiles/camera.dir/src/Camera.cpp.o
 camera: CMakeFiles/camera.dir/build.make
+camera: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_alphamat.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_aruco.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_barcode.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_bgsegm.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_bioinspired.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_ccalib.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_dnn_objdetect.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_dnn_superres.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_dpm.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_face.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_freetype.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_fuzzy.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_hdf.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_hfs.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_img_hash.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_intensity_transform.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_line_descriptor.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_mcc.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_quality.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_rapid.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_reg.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_rgbd.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_saliency.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_shape.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_stereo.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_structured_light.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_superres.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_surface_matching.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_tracking.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_videostab.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_viz.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_wechat_qrcode.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_xobjdetect.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_xphoto.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_highgui.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_datasets.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_plot.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_text.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_ml.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_phase_unwrapping.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_optflow.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_ximgproc.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_video.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_videoio.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_imgcodecs.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_objdetect.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_calib3d.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_dnn.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_features2d.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_flann.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.5.4d
+camera: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.5.4d
 camera: CMakeFiles/camera.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable camera"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/camera.dir/link.txt --verbose=$(VERBOSE)

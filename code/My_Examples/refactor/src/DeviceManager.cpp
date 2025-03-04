@@ -1,3 +1,5 @@
+#include "DeviceManager.hpp"
+#include "Camera.hpp"
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
 #include <rc_genicam_api/device.h>
@@ -10,7 +12,17 @@
 #include <iomanip>
 #include <regex>
 
-bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "")
+DeviceManager::DeviceManager()
+{
+  // Constructor implementation
+}
+
+DeviceManager::~DeviceManager()
+{
+  // Destructor implementation
+}
+
+bool DeviceManager::listDevicesByIdOrIP(const std::string &id, const std::string &ip)
 {
   bool ret = true;
   std::set<std::string> printedSerialNumbers;
@@ -125,7 +137,7 @@ bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "")
   return ret;
 }
 
-bool listDevices()
+bool DeviceManager::listDevices()
 { // ToDo: Exceptions handling
   bool ret = true;
   std::set<std::string> printedSerialNumbers;
@@ -237,7 +249,7 @@ bool listDevices()
 }
 
 // Function to list all available devices
-bool listDevicesIDs()
+bool DeviceManager::listDevicesIDs()
 { // ToDo: Exceptions handling
   bool ret = true;
   std::set<std::string> printedSerialNumbers;

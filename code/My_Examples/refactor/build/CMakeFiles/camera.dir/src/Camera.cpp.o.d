@@ -1,7 +1,7 @@
-CMakeFiles/camera.dir/src/camera.cpp.o: \
- /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/camera.cpp \
+CMakeFiles/camera.dir/src/Camera.cpp.o: \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp \
  /usr/include/stdc-predef.h \
- /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/camera.hpp \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
  /usr/local/include/rc_genicam_api/device.h \
  /usr/local/include/rc_genicam_api/interface.h \
  /usr/local/include/rc_genicam_api/system.h \

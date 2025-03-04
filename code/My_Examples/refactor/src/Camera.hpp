@@ -3,17 +3,20 @@
 
 #include <rc_genicam_api/device.h>
 #include <GenApi/GenApi.h>
+#include <opencv2/opencv.hpp>
 
 #include <string>
 #include <memory>
 #include <cstdint>
+#include <mutex>
+#include <vector>
 
 // Todo remove this
 #define RESET "\033[0m"
 #define RED "\033[31m"
 #define YELLOW "\033[33m"
 #define GREEN "\033[32m"
-bool debug = true;
+
 struct DeviceConfig
 {
   std::string id;
@@ -45,7 +48,6 @@ class Camera
 {
 public:
   Camera(std::shared_ptr<rcg::Device> device);
-
   ~Camera();
 
   // Camera Configuration
@@ -61,7 +63,11 @@ public:
   void getTimestamps();
 
   // Streaming Control
-  void startStreaming(); // ToDo
+  void processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint64_t pixelFormat);
+  void startStreaming(bool stop_streaming, std::mutex globalFrameMutex, std::vector<cv::Mat> globalFrames, int index);
+  void stopStreaming(std::shared_ptr<rcg::Stream> stream);
+   
+  bool debug = true;
 
 private:
   std::shared_ptr<rcg::Device> device;
