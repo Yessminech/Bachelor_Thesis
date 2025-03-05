@@ -66,6 +66,8 @@ CMAKE_BINARY_DIR = /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refa
 all: CMakeFiles/camera.dir/all
 all: CMakeFiles/streamManager.dir/all
 all: CMakeFiles/deviceManager.dir/all
+all: CMakeFiles/networkManager.dir/all
+all: CMakeFiles/systemManager.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -76,6 +78,8 @@ preinstall:
 clean: CMakeFiles/camera.dir/clean
 clean: CMakeFiles/streamManager.dir/clean
 clean: CMakeFiles/deviceManager.dir/clean
+clean: CMakeFiles/networkManager.dir/clean
+clean: CMakeFiles/systemManager.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -111,12 +115,12 @@ CMakeFiles/camera.dir/clean:
 CMakeFiles/streamManager.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=5,6 "Built target streamManager"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=15,16,17,18,19,20 "Built target streamManager"
 .PHONY : CMakeFiles/streamManager.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/streamManager.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/streamManager.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 0
 .PHONY : CMakeFiles/streamManager.dir/rule
@@ -137,12 +141,12 @@ CMakeFiles/streamManager.dir/clean:
 CMakeFiles/deviceManager.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=3,4 "Built target deviceManager"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=3,4,5,6,7,8 "Built target deviceManager"
 .PHONY : CMakeFiles/deviceManager.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/deviceManager.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/deviceManager.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 0
 .PHONY : CMakeFiles/deviceManager.dir/rule
@@ -155,6 +159,58 @@ deviceManager: CMakeFiles/deviceManager.dir/rule
 CMakeFiles/deviceManager.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/clean
 .PHONY : CMakeFiles/deviceManager.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/networkManager.dir
+
+# All Build rule for target.
+CMakeFiles/networkManager.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=9,10,11,12,13,14 "Built target networkManager"
+.PHONY : CMakeFiles/networkManager.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/networkManager.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/networkManager.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 0
+.PHONY : CMakeFiles/networkManager.dir/rule
+
+# Convenience name for target.
+networkManager: CMakeFiles/networkManager.dir/rule
+.PHONY : networkManager
+
+# clean rule for target.
+CMakeFiles/networkManager.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/clean
+.PHONY : CMakeFiles/networkManager.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/systemManager.dir
+
+# All Build rule for target.
+CMakeFiles/systemManager.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=21,22,23,24,25,26 "Built target systemManager"
+.PHONY : CMakeFiles/systemManager.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/systemManager.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/systemManager.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles 0
+.PHONY : CMakeFiles/systemManager.dir/rule
+
+# Convenience name for target.
+systemManager: CMakeFiles/systemManager.dir/rule
+.PHONY : systemManager
+
+# clean rule for target.
+CMakeFiles/systemManager.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/clean
+.PHONY : CMakeFiles/systemManager.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

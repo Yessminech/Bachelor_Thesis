@@ -1,5 +1,7 @@
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/camera.dir
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/streamManager.dir
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/deviceManager.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/networkManager.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/systemManager.dir
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/edit_cache.dir
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/rebuild_cache.dir

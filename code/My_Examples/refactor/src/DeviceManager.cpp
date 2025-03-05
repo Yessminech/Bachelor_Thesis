@@ -22,7 +22,7 @@ DeviceManager::~DeviceManager()
   // Destructor implementation
 }
 
-bool DeviceManager::listDevicesByIdOrIP(const std::string &id, const std::string &ip)
+bool DeviceManager::listDevicesByIdOrIP(const std::string &id, const std::string &ip, std::shared_ptr<Camera> camera)
 {
   bool ret = true;
   std::set<std::string> printedSerialNumbers;
@@ -47,13 +47,13 @@ bool DeviceManager::listDevicesByIdOrIP(const std::string &id, const std::string
           {
             auto nodemap = device[j]->getRemoteNodeMap();
             std::string serialNumber = device[j]->getSerialNumber();
-            std::string currentIP = getCurrentIP(device[j]);
+            std::string currentIP = camera->deviceConfig.currentIP;
             if ((id.empty() || device[j]->getID() == id) && (ip.empty() || currentIP == ip))
             {
               if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
               {
                 printedSerialNumbers.insert(serialNumber);
-                DeviceConfig config = getConfig(device[j]);
+                DeviceConfig config = camera->deviceConfig;
                 std::cout << "        Device             " << config.id << std::endl;
                 std::cout << "        Vendor:            " << config.vendor << std::endl;
                 std::cout << "        Model:             " << config.model << std::endl;
@@ -62,9 +62,9 @@ bool DeviceManager::listDevicesByIdOrIP(const std::string &id, const std::string
                 std::cout << "        Access status:     " << config.accessStatus << std::endl;
                 std::cout << "        Serial number:     " << config.serialNumber << std::endl;
                 std::cout << "        Version:           " << config.version << std::endl;
-                std::cout << "        TS Frequency:      " << config.timestampFrequency << std::endl;
                 std::cout << "        Current IP:        " << config.currentIP << std::endl;
                 std::cout << "        MAC:               " << config.MAC << std::endl;
+                std::cout << "        TS Frequency:      " << config.timestampFrequency << std::endl;
                 std::cout << std::endl;
               }
             }
@@ -137,7 +137,7 @@ bool DeviceManager::listDevicesByIdOrIP(const std::string &id, const std::string
   return ret;
 }
 
-bool DeviceManager::listDevices()
+bool DeviceManager::listDevices(std::shared_ptr<Camera> camera)
 { // ToDo: Exceptions handling
   bool ret = true;
   std::set<std::string> printedSerialNumbers;
@@ -164,7 +164,7 @@ bool DeviceManager::listDevices()
             if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
             {
               printedSerialNumbers.insert(serialNumber);
-              DeviceConfig config = getConfig(device[j]);
+              DeviceConfig config = camera->deviceConfig;
               std::cout << "        Device             " << config.id << std::endl;
               std::cout << "        Vendor:            " << config.vendor << std::endl;
               std::cout << "        Model:             " << config.model << std::endl;
@@ -249,7 +249,7 @@ bool DeviceManager::listDevices()
 }
 
 // Function to list all available devices
-bool DeviceManager::listDevicesIDs()
+bool DeviceManager::listDevicesIDs(std::shared_ptr<Camera> camera)
 { // ToDo: Exceptions handling
   bool ret = true;
   std::set<std::string> printedSerialNumbers;
@@ -368,21 +368,21 @@ bool DeviceManager::listDevicesIDs()
   return ret;
 }
 
-int main(int argc, char *argv[])
-{
-  int ret = 0;
+// int main(int argc, char *argv[])
+// {
+//   int ret = 0;
 
-  try
-  {
-    listDevices();
-  }
-  catch (const std::exception &ex)
-  {
-    std::cerr << "Exception: " << ex.what() << std::endl;
-    ret = 2;
-  }
-  return ret;
-}
+//   // try
+//   // {
+//   //   listDevices();
+//   // }
+//   // catch (const std::exception &ex)
+//   // {
+//   //   std::cerr << "Exception: " << ex.what() << std::endl;
+//   //   ret = 2;
+//   // }
+//   return ret;
+// }
 
 // ToDo: Solve bug that cams can't always be listed when the program is run multiple times
 //ToDo: correct default cases 

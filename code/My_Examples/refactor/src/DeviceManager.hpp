@@ -1,6 +1,7 @@
 #ifndef DEVICEMANAGER_HPP
 #define DEVICEMANAGER_HPP
 
+#include "Camera.hpp"
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
 #include <rc_genicam_api/device.h>
@@ -22,10 +23,10 @@ class DeviceManager {
 public:
     DeviceManager();
     ~DeviceManager();
-    
-    bool listDevicesByIdOrIP(const std::string &id = "", const std::string &ip = "");
-    bool listDevices();
-    bool listDevicesIDs();
+
+    bool listDevicesByIdOrIP(const std::string &id, const std::string &ip, std::shared_ptr<Camera> camera);
+    bool listDevices(std::shared_ptr<Camera> camera);
+    bool listDevicesIDs(std::shared_ptr<Camera> camera);
 
     // Adds a new camera with configuration
     void addCamera(const std::string &cameraId, const std::string &config);
@@ -43,6 +44,7 @@ public:
     void configureCamera(const std::string &cameraId, const std::string &params);
 
     double numCams; // Number of cameras
+    bool debug;     // Debug flag
     std::vector<std::shared_ptr<rcg::Device>> globalDevices;
 };
 

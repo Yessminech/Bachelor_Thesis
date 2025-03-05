@@ -69,10 +69,38 @@ include CMakeFiles/deviceManager.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/deviceManager.dir/flags.make
 
+CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o: CMakeFiles/deviceManager.dir/flags.make
+CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp
+CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o: CMakeFiles/deviceManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o -MF CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o.d -o CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp
+
+CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp > CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.i
+
+CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp -o CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.s
+
+CMakeFiles/deviceManager.dir/src/Camera.cpp.o: CMakeFiles/deviceManager.dir/flags.make
+CMakeFiles/deviceManager.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
+CMakeFiles/deviceManager.dir/src/Camera.cpp.o: CMakeFiles/deviceManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/deviceManager.dir/src/Camera.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/deviceManager.dir/src/Camera.cpp.o -MF CMakeFiles/deviceManager.dir/src/Camera.cpp.o.d -o CMakeFiles/deviceManager.dir/src/Camera.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
+
+CMakeFiles/deviceManager.dir/src/Camera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/deviceManager.dir/src/Camera.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp > CMakeFiles/deviceManager.dir/src/Camera.cpp.i
+
+CMakeFiles/deviceManager.dir/src/Camera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/deviceManager.dir/src/Camera.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp -o CMakeFiles/deviceManager.dir/src/Camera.cpp.s
+
 CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: CMakeFiles/deviceManager.dir/flags.make
 CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp
 CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: CMakeFiles/deviceManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o -MF CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o.d -o CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp
 
 CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.i: cmake_force
@@ -83,14 +111,50 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp -o CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.s
 
+CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: CMakeFiles/deviceManager.dir/flags.make
+CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp
+CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: CMakeFiles/deviceManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o -MF CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o.d -o CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp
+
+CMakeFiles/deviceManager.dir/src/StreamManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/deviceManager.dir/src/StreamManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp > CMakeFiles/deviceManager.dir/src/StreamManager.cpp.i
+
+CMakeFiles/deviceManager.dir/src/StreamManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/deviceManager.dir/src/StreamManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp -o CMakeFiles/deviceManager.dir/src/StreamManager.cpp.s
+
+CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o: CMakeFiles/deviceManager.dir/flags.make
+CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp
+CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o: CMakeFiles/deviceManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o -MF CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o.d -o CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp
+
+CMakeFiles/deviceManager.dir/src/SystemManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/deviceManager.dir/src/SystemManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp > CMakeFiles/deviceManager.dir/src/SystemManager.cpp.i
+
+CMakeFiles/deviceManager.dir/src/SystemManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/deviceManager.dir/src/SystemManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp -o CMakeFiles/deviceManager.dir/src/SystemManager.cpp.s
+
 # Object files for target deviceManager
 deviceManager_OBJECTS = \
-"CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o"
+"CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o" \
+"CMakeFiles/deviceManager.dir/src/Camera.cpp.o" \
+"CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o" \
+"CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o" \
+"CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o"
 
 # External object files for target deviceManager
 deviceManager_EXTERNAL_OBJECTS =
 
+deviceManager: CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o
+deviceManager: CMakeFiles/deviceManager.dir/src/Camera.cpp.o
 deviceManager: CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o
+deviceManager: CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o
+deviceManager: CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o
 deviceManager: CMakeFiles/deviceManager.dir/build.make
 deviceManager: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.5.4d
 deviceManager: /usr/lib/x86_64-linux-gnu/libopencv_alphamat.so.4.5.4d
@@ -147,7 +211,7 @@ deviceManager: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.5.4d
 deviceManager: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.5.4d
 deviceManager: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.5.4d
 deviceManager: CMakeFiles/deviceManager.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable deviceManager"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable deviceManager"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/deviceManager.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -2,6 +2,9 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp \
  /usr/include/stdc-predef.h \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
+ /usr/local/include/rc_genicam_api/device.h \
+ /usr/local/include/rc_genicam_api/interface.h \
  /usr/local/include/rc_genicam_api/system.h \
  /usr/include/rc_genicam_api/genicam/GenApi/GenApi.h \
  /usr/include/rc_genicam_api/genicam/Base/GCBase.h \
@@ -243,62 +246,9 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: \
  /usr/include/c++/11/bits/parse_numbers.h \
  /usr/include/c++/11/bits/std_mutex.h \
  /usr/include/c++/11/bits/unique_lock.h \
- /usr/local/include/rc_genicam_api/interface.h \
- /usr/local/include/rc_genicam_api/system.h \
- /usr/local/include/rc_genicam_api/device.h \
- /usr/local/include/rc_genicam_api/interface.h \
  /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h \
  /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h \
  /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h \
- /usr/local/include/rc_genicam_api/nodemap_out.h \
- /usr/local/include/rc_genicam_api/config.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
- /usr/include/c++/11/set /usr/include/c++/11/bits/stl_tree.h \
- /usr/include/c++/11/bits/stl_set.h \
- /usr/include/c++/11/bits/stl_multiset.h \
- /usr/include/c++/11/bits/erase_if.h /usr/include/arpa/inet.h \
- /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/sys/socket.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
- /usr/include/x86_64-linux-gnu/bits/socket.h \
- /usr/include/x86_64-linux-gnu/bits/socket_type.h \
- /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
- /usr/include/x86_64-linux-gnu/asm/socket.h \
- /usr/include/asm-generic/socket.h /usr/include/linux/posix_types.h \
- /usr/include/linux/stddef.h \
- /usr/include/x86_64-linux-gnu/asm/posix_types.h \
- /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
- /usr/include/asm-generic/posix_types.h \
- /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
- /usr/include/asm-generic/bitsperlong.h \
- /usr/include/x86_64-linux-gnu/asm/sockios.h \
- /usr/include/asm-generic/sockios.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
- /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/c++/11/iomanip \
- /usr/include/c++/11/regex /usr/include/c++/11/algorithm \
- /usr/include/c++/11/bits/stl_algo.h \
- /usr/include/c++/11/bits/algorithmfwd.h \
- /usr/include/c++/11/bits/stl_heap.h \
- /usr/include/c++/11/bits/uniform_int_dist.h /usr/include/c++/11/bitset \
- /usr/include/c++/11/iterator /usr/include/c++/11/bits/stream_iterator.h \
- /usr/include/c++/11/stack /usr/include/c++/11/deque \
- /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \
- /usr/include/c++/11/bits/stl_stack.h /usr/include/c++/11/map \
- /usr/include/c++/11/bits/stl_map.h \
- /usr/include/c++/11/bits/stl_multimap.h \
- /usr/include/c++/11/bits/std_function.h \
- /usr/include/c++/11/bits/regex_constants.h \
- /usr/include/c++/11/bits/regex_error.h \
- /usr/include/c++/11/bits/regex_automaton.h \
- /usr/include/c++/11/bits/regex_automaton.tcc \
- /usr/include/c++/11/bits/regex_scanner.h \
- /usr/include/c++/11/bits/regex_scanner.tcc \
- /usr/include/c++/11/bits/regex_compiler.h \
- /usr/include/c++/11/bits/regex_compiler.tcc \
- /usr/include/c++/11/bits/regex.h /usr/include/c++/11/bits/regex.tcc \
- /usr/include/c++/11/bits/regex_executor.h \
- /usr/include/c++/11/bits/regex_executor.tcc \
- /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
  /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \
@@ -320,6 +270,10 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
+ /usr/include/c++/11/algorithm /usr/include/c++/11/bits/stl_algo.h \
+ /usr/include/c++/11/bits/algorithmfwd.h \
+ /usr/include/c++/11/bits/stl_heap.h \
+ /usr/include/c++/11/bits/uniform_int_dist.h \
  /usr/include/opencv4/opencv2/core/cvstd.hpp /usr/include/c++/11/cmath \
  /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
@@ -348,7 +302,7 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: \
  /usr/include/opencv4/opencv2/core/cvstd.inl.hpp \
  /usr/include/c++/11/complex \
  /usr/include/opencv4/opencv2/core/utility.hpp \
- /usr/include/c++/11/functional \
+ /usr/include/c++/11/functional /usr/include/c++/11/bits/std_function.h \
  /usr/include/opencv4/opencv2/core/optim.hpp \
  /usr/include/opencv4/opencv2/core/ovx.hpp \
  /usr/include/opencv4/opencv2/core/cvdef.h \
@@ -362,7 +316,10 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: \
  /usr/include/opencv4/opencv2/dnn/dnn.hpp \
  /usr/include/opencv4/opencv2/core/async.hpp \
  /usr/include/opencv4/opencv2/dnn/version.hpp \
- /usr/include/opencv4/opencv2/dnn/dict.hpp \
+ /usr/include/opencv4/opencv2/dnn/dict.hpp /usr/include/c++/11/map \
+ /usr/include/c++/11/bits/stl_tree.h /usr/include/c++/11/bits/stl_map.h \
+ /usr/include/c++/11/bits/stl_multimap.h \
+ /usr/include/c++/11/bits/erase_if.h \
  /usr/include/opencv4/opencv2/dnn/layer.hpp \
  /usr/include/opencv4/opencv2/dnn/dnn.inl.hpp \
  /usr/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
@@ -376,7 +333,9 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: \
  /usr/include/opencv4/opencv2/flann/defines.h \
  /usr/include/opencv4/opencv2/flann/saving.h \
  /usr/include/opencv4/opencv2/flann/nn_index.h \
- /usr/include/opencv4/opencv2/flann/result_set.h \
+ /usr/include/opencv4/opencv2/flann/result_set.h /usr/include/c++/11/set \
+ /usr/include/c++/11/bits/stl_set.h \
+ /usr/include/c++/11/bits/stl_multiset.h \
  /usr/include/opencv4/opencv2/flann/all_indices.h \
  /usr/include/opencv4/opencv2/flann/kdtree_index.h \
  /usr/include/opencv4/opencv2/flann/dynamic_bitset.h \
@@ -396,7 +355,7 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: \
  /usr/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
  /usr/include/opencv4/opencv2/flann/lsh_index.h \
  /usr/include/opencv4/opencv2/flann/lsh_table.h \
- /usr/include/c++/11/math.h \
+ /usr/include/c++/11/iomanip /usr/include/c++/11/math.h \
  /usr/include/opencv4/opencv2/flann/autotuned_index.h \
  /usr/include/opencv4/opencv2/flann/ground_truth.h \
  /usr/include/opencv4/opencv2/flann/index_testing.h \
@@ -426,7 +385,9 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: \
  /usr/include/opencv4/opencv2/stitching/detail/matchers.hpp \
  /usr/include/opencv4/opencv2/stitching/detail/util.hpp \
  /usr/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
- /usr/include/c++/11/queue /usr/include/c++/11/bits/stl_queue.h \
+ /usr/include/c++/11/queue /usr/include/c++/11/deque \
+ /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \
+ /usr/include/c++/11/bits/stl_queue.h \
  /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
  /usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
  /usr/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
@@ -434,4 +395,42 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: \
  /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
  /usr/include/opencv4/opencv2/video.hpp \
  /usr/include/opencv4/opencv2/video/tracking.hpp \
- /usr/include/opencv4/opencv2/video/background_segm.hpp
+ /usr/include/opencv4/opencv2/video/background_segm.hpp \
+ /usr/local/include/rc_genicam_api/system.h \
+ /usr/local/include/rc_genicam_api/interface.h \
+ /usr/local/include/rc_genicam_api/nodemap_out.h \
+ /usr/local/include/rc_genicam_api/config.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
+ /usr/include/arpa/inet.h /usr/include/netinet/in.h \
+ /usr/include/x86_64-linux-gnu/sys/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
+ /usr/include/x86_64-linux-gnu/bits/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/socket_type.h \
+ /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
+ /usr/include/x86_64-linux-gnu/asm/socket.h \
+ /usr/include/asm-generic/socket.h /usr/include/linux/posix_types.h \
+ /usr/include/linux/stddef.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
+ /usr/include/asm-generic/posix_types.h \
+ /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
+ /usr/include/asm-generic/bitsperlong.h \
+ /usr/include/x86_64-linux-gnu/asm/sockios.h \
+ /usr/include/asm-generic/sockios.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
+ /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/c++/11/regex \
+ /usr/include/c++/11/bitset /usr/include/c++/11/iterator \
+ /usr/include/c++/11/bits/stream_iterator.h /usr/include/c++/11/stack \
+ /usr/include/c++/11/bits/stl_stack.h \
+ /usr/include/c++/11/bits/regex_constants.h \
+ /usr/include/c++/11/bits/regex_error.h \
+ /usr/include/c++/11/bits/regex_automaton.h \
+ /usr/include/c++/11/bits/regex_automaton.tcc \
+ /usr/include/c++/11/bits/regex_scanner.h \
+ /usr/include/c++/11/bits/regex_scanner.tcc \
+ /usr/include/c++/11/bits/regex_compiler.h \
+ /usr/include/c++/11/bits/regex_compiler.tcc \
+ /usr/include/c++/11/bits/regex.h /usr/include/c++/11/bits/regex.tcc \
+ /usr/include/c++/11/bits/regex_executor.h \
+ /usr/include/c++/11/bits/regex_executor.tcc

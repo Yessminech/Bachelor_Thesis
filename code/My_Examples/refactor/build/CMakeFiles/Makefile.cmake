@@ -52,4 +52,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/camera.dir/DependInfo.cmake"
   "CMakeFiles/streamManager.dir/DependInfo.cmake"
   "CMakeFiles/deviceManager.dir/DependInfo.cmake"
+  "CMakeFiles/networkManager.dir/DependInfo.cmake"
+  "CMakeFiles/systemManager.dir/DependInfo.cmake"
   )

@@ -33,7 +33,7 @@ struct DeviceConfig
   bool deprecatedFW;
 };
 
-struct PTPConfig
+struct PtpConfig
 {
   bool enabled;
   std::string status;
@@ -54,11 +54,11 @@ public:
   // ToDo add clear configuration method
   void setCameraConfig();
   void setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1);
-  void setPTPConfig();
+  void setPtpConfig();
 
   // Network Control
   std::string getCurrentIP();
-  void getPTPConfig();
+  void getPtpConfig();
   std::string getMAC();
   void getTimestamps();
 
@@ -68,14 +68,15 @@ public:
   void stopStreaming(std::shared_ptr<rcg::Stream> stream);
    
   bool debug = true;
-
+  DeviceConfig deviceConfig; // ToDo Public?
+  PtpConfig ptpConfig; // ToDo Public?
+  
 private:
   std::shared_ptr<rcg::Device> device;
   std::shared_ptr<GenApi::CNodeMapRef> nodemap;
   float exposure = 222063; // Example: 20 ms
   float gain = 0; // Example: Gain of 10 dB
-  DeviceConfig deviceConfig; // ToDo Public?
-  PTPConfig ptpConfig; // ToDo Public?
+
   std::string decimalToIP(uint32_t decimalIP);
   std::string hexToIP(const std::string &hexIP);
   std::string decimalToMAC(uint64_t decimalMAC);

@@ -263,8 +263,8 @@ void StreamManager::streamFromDevice(const std::string &deviceID)
     }
 }
 
-int main(int argc, char **argv) // ToDo change to sync free run
-{
+// int main(int argc, char **argv) // ToDo change to sync free run
+// {
     // std::signal(SIGINT, signalHandler); // Install signal handler for Ctrl+C.
     // try
     // {
@@ -331,7 +331,7 @@ int main(int argc, char **argv) // ToDo change to sync free run
     //     return -1;
     // }
     // return 0;
-}
+// }
 
 // TODO Add periodic ptp sync
 

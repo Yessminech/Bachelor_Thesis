@@ -1,3 +1,6 @@
+#include "Camera.hpp"
+#include "NetworkManager.hpp"
+#include "DeviceManager.hpp"
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
 #include <rc_genicam_api/device.h>
@@ -15,17 +18,22 @@
 #include <atomic>
 #include <set>
 
-void printPtpConfig(PTPConfig ptpConfig)
+NetworkManager::NetworkManager()
+    : ptp_sync_timeout(800), num_init(0), num_master(0), num_slave(0), master_clock_id(0) {}
+
+NetworkManager::~NetworkManager() {}
+
+void NetworkManager::printPtpConfig(PtpConfig PtpConfig)
 {
     try
     {
 
-        std::cout << "PTP Enabled:                " << (ptpConfig.enabled ? "Yes" : "No") << std::endl;
-        std::cout << "PTP Status:                 " << ptpConfig.status << std::endl;
-        std::cout << "PTP Clock Accuracy:         " << ptpConfig.clockAccuracy << std::endl;
-        std::cout << "PTP Offset From Master:     " << ptpConfig.offsetFromMaster << " ns" << std::endl;
-        std::cout << "Timestamp:                  " << ptpConfig.timestamp_ns << " ns" << std::endl;
-        std::cout << "Timestamp (seconds):        " << ptpConfig.timestamp_s << " s" << std::endl;
+        std::cout << "PTP Enabled:                " << (PtpConfig.enabled ? "Yes" : "No") << std::endl;
+        std::cout << "PTP Status:                 " << PtpConfig.status << std::endl;
+        std::cout << "PTP Clock Accuracy:         " << PtpConfig.clockAccuracy << std::endl;
+        std::cout << "PTP Offset From Master:     " << PtpConfig.offsetFromMaster << " ns" << std::endl;
+        std::cout << "Timestamp:                  " << PtpConfig.timestamp_ns << " ns" << std::endl;
+        std::cout << "Timestamp (seconds):        " << PtpConfig.timestamp_s << " s" << std::endl;
     }
     catch (const std::exception &ex)
     {
@@ -33,13 +41,13 @@ void printPtpConfig(PTPConfig ptpConfig)
     }
 }
 
-void monitorPtpStatus(std::shared_ptr<rcg::Interface> interf, int deviceCount)
+void NetworkManager::monitorPtpStatus(std::shared_ptr<Camera> camera, std::shared_ptr<rcg::Interface> interf, int deviceCount)
 {
     auto start_time = std::chrono::steady_clock::now();
-    while (!stop_signal && num_slave != deviceCount - 1 && num_master != 1)
-    {    int num_init = 0;
-        int num_master = 0;
-        int num_slave = 0;
+    while (num_slave != deviceCount - 1 && num_master != 1)
+    {   num_init = 0;
+        num_master = 0;
+        num_slave = 0;
         for (auto &device : interf->getDevices())
         {
             if (device->getVendor() != interf->getParent()->getVendor())
@@ -47,10 +55,10 @@ void monitorPtpStatus(std::shared_ptr<rcg::Interface> interf, int deviceCount)
                 continue;
             }
             device->open(rcg::Device::CONTROL);
-            PTPConfig ptpConfig;
             std::shared_ptr<GenApi::CNodeMapRef> nodemap = device->getRemoteNodeMap();
-            bool deprecatedFeatures = getGenTLVersion(nodemap);
-            getPTPConfig(nodemap, ptpConfig, deprecatedFeatures);
+            bool deprecatedFeatures = camera->deviceConfig.deprecatedFW;
+            camera->getPtpConfig();
+            PtpConfig ptpConfig = camera->ptpConfig;
             statusCheck(ptpConfig.status);
             device->close();
         }
@@ -60,15 +68,11 @@ void monitorPtpStatus(std::shared_ptr<rcg::Interface> interf, int deviceCount)
             std::cerr << "Timed out waiting for camera clocks to become PTP camera slaves. Current status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
             break;
         }
-        if (stop_signal)
-        {
-            break; //cleanup?
-        }
         std::this_thread::sleep_for(std::chrono::seconds(10));
     }
 }
 
-void configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource = "Action1", uint32_t actionSelector = 1, uint32_t destinationIP = 0xFFFFFFFF)
+void NetworkManager::configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource, uint32_t actionSelector, uint32_t destinationIP)
 {
 
     try
@@ -94,7 +98,7 @@ void configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uin
     }
 }
 
-void sendActionCommand(std::shared_ptr<rcg::System> system)
+void NetworkManager::sendActionCommand(std::shared_ptr<rcg::System> system)
 {
 
     // Fire the Action Command
@@ -113,7 +117,7 @@ void sendActionCommand(std::shared_ptr<rcg::System> system)
 
 }
 
-void statusCheck(const std::string &current_status)
+void NetworkManager::statusCheck(const std::string &current_status)
 {
     if (current_status == "Initializing")
     {
@@ -134,20 +138,20 @@ void statusCheck(const std::string &current_status)
 }
 
 // Calculate packet delay (not used in composite display but provided for completeness).
-double Camera::CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams)
+double NetworkManager::CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams)
 {
     double buffer = (bufferPercent / 100.0) * (packetSizeB * (1e9 / deviceLinkSpeedBps));
     return (((packetSizeB * (1e9 / deviceLinkSpeedBps)) + buffer) * (numCams - 1));
 }
 
 // Calculate packet delay (not used in composite display but provided for completeness).
-double Camera::CalculateTransmissionDelayNs(double packetDelayNs, int camIndex)
+double NetworkManager::CalculateTransmissionDelayNs(double packetDelayNs, int camIndex)
 {
     return packetDelayNs * camIndex;
 }
 
 // Set bandwidth parameters on the device.
-void Camera::setBandwidth(const std::shared_ptr<rcg::Device> &device, double camIndex)
+void NetworkManager::setBandwidth(const std::shared_ptr<rcg::Device> &device, double camIndex, double numCams)
 {
     double deviceLinkSpeedBps = 125000000; // 1 Gbps // ToDo What does this mean and how to define this
     double packetSizeB = 8228;             // ToDo What does this mean and how to define this, jumbo frames?
@@ -193,3 +197,4 @@ void Camera::setBandwidth(const std::shared_ptr<rcg::Device> &device, double cam
         std::cerr << RED << "Failed to set bandwidth for camera " << device->getID() << ": " << ex.what() << RESET << std::endl;
     }
 }
+
