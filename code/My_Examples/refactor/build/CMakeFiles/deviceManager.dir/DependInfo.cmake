@@ -13,6 +13,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp" "CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o.d"
   "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp" "CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o.d"
   "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp" "CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp" "CMakeFiles/deviceManager.dir/src/main.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links.

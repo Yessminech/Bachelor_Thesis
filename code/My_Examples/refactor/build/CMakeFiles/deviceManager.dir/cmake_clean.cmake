@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o.d"
   "CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o"
   "CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o.d"
+  "CMakeFiles/deviceManager.dir/src/main.cpp.o"
+  "CMakeFiles/deviceManager.dir/src/main.cpp.o.d"
   "deviceManager"
   "deviceManager.pdb"
 )

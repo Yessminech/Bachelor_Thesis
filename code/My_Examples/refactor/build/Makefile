@@ -117,19 +117,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named camera
-
-# Build rule for target.
-camera: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 camera
-.PHONY : camera
-
-# fast build rule for target.
-camera/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/build
-.PHONY : camera/fast
-
-#=============================================================================
 # Target rules for targets named streamManager
 
 # Build rule for target.
@@ -181,16 +168,29 @@ systemManager/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/build
 .PHONY : systemManager/fast
 
+#=============================================================================
+# Target rules for targets named main
+
+# Build rule for target.
+main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main
+.PHONY : main
+
+# fast build rule for target.
+main/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
+
 src/Camera.o: src/Camera.cpp.o
 .PHONY : src/Camera.o
 
 # target to build an object file
 src/Camera.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/src/Camera.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/Camera.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/Camera.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/Camera.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/Camera.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Camera.cpp.o
 .PHONY : src/Camera.cpp.o
 
 src/Camera.i: src/Camera.cpp.i
@@ -198,11 +198,11 @@ src/Camera.i: src/Camera.cpp.i
 
 # target to preprocess a source file
 src/Camera.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/src/Camera.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/Camera.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/Camera.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/Camera.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/Camera.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Camera.cpp.i
 .PHONY : src/Camera.cpp.i
 
 src/Camera.s: src/Camera.cpp.s
@@ -210,11 +210,11 @@ src/Camera.s: src/Camera.cpp.s
 
 # target to generate assembly for a file
 src/Camera.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/src/Camera.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/Camera.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/Camera.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/Camera.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/Camera.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Camera.cpp.s
 .PHONY : src/Camera.cpp.s
 
 src/DeviceManager.o: src/DeviceManager.cpp.o
@@ -226,6 +226,7 @@ src/DeviceManager.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/DeviceManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/DeviceManager.cpp.o
 .PHONY : src/DeviceManager.cpp.o
 
 src/DeviceManager.i: src/DeviceManager.cpp.i
@@ -237,6 +238,7 @@ src/DeviceManager.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/DeviceManager.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/DeviceManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/DeviceManager.cpp.i
 .PHONY : src/DeviceManager.cpp.i
 
 src/DeviceManager.s: src/DeviceManager.cpp.s
@@ -248,6 +250,7 @@ src/DeviceManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/DeviceManager.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/DeviceManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/DeviceManager.cpp.s
 .PHONY : src/DeviceManager.cpp.s
 
 src/NetworkManager.o: src/NetworkManager.cpp.o
@@ -259,6 +262,7 @@ src/NetworkManager.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/NetworkManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/NetworkManager.cpp.o
 .PHONY : src/NetworkManager.cpp.o
 
 src/NetworkManager.i: src/NetworkManager.cpp.i
@@ -270,6 +274,7 @@ src/NetworkManager.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/NetworkManager.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/NetworkManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/NetworkManager.cpp.i
 .PHONY : src/NetworkManager.cpp.i
 
 src/NetworkManager.s: src/NetworkManager.cpp.s
@@ -281,6 +286,7 @@ src/NetworkManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/NetworkManager.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/NetworkManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/NetworkManager.cpp.s
 .PHONY : src/NetworkManager.cpp.s
 
 src/StreamManager.o: src/StreamManager.cpp.o
@@ -292,6 +298,7 @@ src/StreamManager.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/StreamManager.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/StreamManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/StreamManager.cpp.o
 .PHONY : src/StreamManager.cpp.o
 
 src/StreamManager.i: src/StreamManager.cpp.i
@@ -303,6 +310,7 @@ src/StreamManager.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/StreamManager.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/StreamManager.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/StreamManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/StreamManager.cpp.i
 .PHONY : src/StreamManager.cpp.i
 
 src/StreamManager.s: src/StreamManager.cpp.s
@@ -314,6 +322,7 @@ src/StreamManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/StreamManager.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/StreamManager.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/StreamManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/StreamManager.cpp.s
 .PHONY : src/StreamManager.cpp.s
 
 src/SystemManager.o: src/SystemManager.cpp.o
@@ -325,6 +334,7 @@ src/SystemManager.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/SystemManager.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/SystemManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/SystemManager.cpp.o
 .PHONY : src/SystemManager.cpp.o
 
 src/SystemManager.i: src/SystemManager.cpp.i
@@ -336,6 +346,7 @@ src/SystemManager.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/SystemManager.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/SystemManager.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/SystemManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/SystemManager.cpp.i
 .PHONY : src/SystemManager.cpp.i
 
 src/SystemManager.s: src/SystemManager.cpp.s
@@ -347,7 +358,44 @@ src/SystemManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/SystemManager.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/SystemManager.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/SystemManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/SystemManager.cpp.s
 .PHONY : src/SystemManager.cpp.s
+
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 # Help Target
 help:
@@ -357,8 +405,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... camera"
 	@echo "... deviceManager"
+	@echo "... main"
 	@echo "... networkManager"
 	@echo "... streamManager"
 	@echo "... systemManager"
@@ -377,6 +425,9 @@ help:
 	@echo "... src/SystemManager.o"
 	@echo "... src/SystemManager.i"
 	@echo "... src/SystemManager.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 .PHONY : help
 
 

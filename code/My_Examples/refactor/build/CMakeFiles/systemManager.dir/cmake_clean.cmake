@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/systemManager.dir/src/StreamManager.cpp.o.d"
   "CMakeFiles/systemManager.dir/src/SystemManager.cpp.o"
   "CMakeFiles/systemManager.dir/src/SystemManager.cpp.o.d"
+  "CMakeFiles/systemManager.dir/src/main.cpp.o"
+  "CMakeFiles/systemManager.dir/src/main.cpp.o.d"
   "systemManager"
   "systemManager.pdb"
 )

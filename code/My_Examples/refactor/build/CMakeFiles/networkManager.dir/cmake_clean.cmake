@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/networkManager.dir/src/StreamManager.cpp.o.d"
   "CMakeFiles/networkManager.dir/src/SystemManager.cpp.o"
   "CMakeFiles/networkManager.dir/src/SystemManager.cpp.o.d"
+  "CMakeFiles/networkManager.dir/src/main.cpp.o"
+  "CMakeFiles/networkManager.dir/src/main.cpp.o.d"
   "networkManager"
   "networkManager.pdb"
 )

@@ -1,4 +1,4 @@
-#ifndef DEVICEMANAGER_HPP
+    #ifndef DEVICEMANAGER_HPP
 #define DEVICEMANAGER_HPP
 
 #include "Camera.hpp"
@@ -24,28 +24,24 @@ public:
     DeviceManager();
     ~DeviceManager();
 
-    bool listDevicesByIdOrIP(const std::string &id, const std::string &ip, std::shared_ptr<Camera> camera);
-    bool listDevices(std::shared_ptr<Camera> camera);
-    bool listDevicesIDs(std::shared_ptr<Camera> camera);
-
-    // Adds a new camera with configuration
-    void addCamera(const std::string &cameraId, const std::string &config);
-
-    // Removes a camera from the system
-    void removeCamera(const std::string &cameraId);
-
-    // Returns a list of available cameras
-    std::set<std::string> getCameraList() const;
-
-    // Retrieves the health/status of a specific camera
-    std::string getCameraStatus(const std::string &cameraId) const;
-
-    // Configures a camera’s settings
     void configureCamera(const std::string &cameraId, const std::string &params);
 
-    double numCams; // Number of cameras
-    bool debug;     // Debug flag
-    std::vector<std::shared_ptr<rcg::Device>> globalDevices;
+    bool getAvailableCameras();
+    std::string getCameraStatus(const std::string &cameraId) const;
+    std::shared_ptr<rcg::Device> getAvailableCameraByID(const std::string &deviceId);
+    std::shared_ptr<Camera> getOpenCameraByID(const std::string &deviceId);
+    bool openCamera(const std::string &deviceId);
+    bool closeCamera(const std::string &deviceId);
+
+    bool listCamera(std::shared_ptr<Camera> camera);
+    bool listAvailableCamerasByID();
+    bool listOpenCameras();
+
+    std::list<std::shared_ptr<Camera>> openCameras; // List of cameras
+
+private:
+    std::set<std::shared_ptr<rcg::Device>> availableCameras; // List of cameras
+    std::string defaultCtiPath;
 };
 
 #endif // DEVICEMANAGER_HPP

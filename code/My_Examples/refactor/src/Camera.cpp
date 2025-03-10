@@ -556,13 +556,13 @@ void stopStreaming(std::shared_ptr<rcg::Stream> stream)
     rcg::System::clearSystems();
 }
 
-// // ToDo: delete -> only for testing
-int main ()
-{
-    std::shared_ptr<rcg::Device> device = rcg::getDevice("file:///home/user/genicam.vin");
-    Camera camera(device);
-    camera.setPtpConfig();
-    camera.getPtpConfig();
-    camera.getTimestamps();
-    return 0;
-}
+// // // ToDo: delete -> only for testing
+// int main ()
+// {
+//     std::shared_ptr<rcg::Device> device = rcg::getDevice("file:///home/user/genicam.vin");
+//     Camera camera(device);
+//     camera.setPtpConfig();
+//     camera.getPtpConfig();
+//     camera.getTimestamps();
+//     return 0;
+// }

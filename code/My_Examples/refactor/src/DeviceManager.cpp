@@ -14,375 +14,280 @@
 
 DeviceManager::DeviceManager()
 {
-  // Constructor implementation
+    availableCameras = {};
+    openCameras = {};
+    defaultCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact?
 }
 
 DeviceManager::~DeviceManager()
 {
-  // Destructor implementation
+    availableCameras = {};
+    for (auto &camera : openCameras)
+    {
+        closeCamera(camera->deviceConfig.id);
+    }
 }
 
-bool DeviceManager::listDevicesByIdOrIP(const std::string &id, const std::string &ip, std::shared_ptr<Camera> camera)
+bool DeviceManager::getAvailableCameras()
 {
-  bool ret = true;
-  std::set<std::string> printedSerialNumbers;
-
-  std::vector<std::shared_ptr<rcg::System>> system = rcg::System::getSystems(); // ToDo skip not gige
-  for (size_t i = 0; i < system.size(); i++)
-  {
+    std::vector<std::shared_ptr<rcg::System>> systems;
     try
     {
-      std::string systemVendor = system[i]->getVendor();
-
-      system[i]->open();
-      std::vector<std::shared_ptr<rcg::Interface>> interf = system[i]->getInterfaces();
-      for (size_t k = 0; k < interf.size(); k++)
-      {
-        interf[k]->open();
-        std::vector<std::shared_ptr<rcg::Device>> device = interf[k]->getDevices();
-        for (size_t j = 0; j < device.size(); j++)
-        {
-          std::string deviceVendor = device[j]->getVendor();
-          if (deviceVendor == systemVendor)
-          {
-            auto nodemap = device[j]->getRemoteNodeMap();
-            std::string serialNumber = device[j]->getSerialNumber();
-            std::string currentIP = camera->deviceConfig.currentIP;
-            if ((id.empty() || device[j]->getID() == id) && (ip.empty() || currentIP == ip))
-            {
-              if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
-              {
-                printedSerialNumbers.insert(serialNumber);
-                DeviceConfig config = camera->deviceConfig;
-                std::cout << "        Device             " << config.id << std::endl;
-                std::cout << "        Vendor:            " << config.vendor << std::endl;
-                std::cout << "        Model:             " << config.model << std::endl;
-                std::cout << "        TL type:           " << config.tlType << std::endl;
-                std::cout << "        Display name:      " << config.displayName << std::endl;
-                std::cout << "        Access status:     " << config.accessStatus << std::endl;
-                std::cout << "        Serial number:     " << config.serialNumber << std::endl;
-                std::cout << "        Version:           " << config.version << std::endl;
-                std::cout << "        Current IP:        " << config.currentIP << std::endl;
-                std::cout << "        MAC:               " << config.MAC << std::endl;
-                std::cout << "        TS Frequency:      " << config.timestampFrequency << std::endl;
-                std::cout << std::endl;
-              }
-            }
-          }
-        }
-        interf[k]->close();
-      }
+        systems = rcg::System::getSystems();
     }
     catch (const std::exception &ex)
     {
-      std::cerr << "Exception: " << ex.what() << std::endl;
-      system[i]->close();
-      return false;
+        std::cerr << RED << "Failed to get systems: " << ex.what() << RESET << std::endl;
+        return false;
     }
-    system[i]->close();
-    system[i]->clearSystems();
-    system[i]->~System();
-  }
-  try
-  {
-    const char *defaultCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact
-    if (defaultCtiPath == nullptr)
+    if (systems.empty())
     {
-      std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
-      return 1;
+        std::cerr << RED << "Error: No systems found." << RESET << std::endl;
+        return false;
     }
-    rcg::System::setSystemsPath(defaultCtiPath, nullptr);
-    std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
-    if (defaultSystems.empty())
+    for (auto &system : systems)
     {
-      std::cerr << RED << "Error: No systems found." << RESET << std::endl;
-      return 1;
-    }
-    for (auto &system : defaultSystems)
-    {
-      system->open();
-      std::vector<std::shared_ptr<rcg::Interface>> interfs = system->getInterfaces();
-      if (interfs.empty())
-      {
-        continue;
-      }
-      for (auto &interf : interfs)
-      {
-        interf->open();
-        std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
-        if (devices.empty())
+        try
         {
-          continue;
+            system->open();
         }
-
-        for (auto &device : devices)
+        catch (const std::exception &ex)
         {
-
-            std::string serialNumber = device->getSerialNumber();
-            if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
+            std::cerr << RED << "[Camera::debug] Failed to open system: " << ex.what() << RESET << std::endl;
+            continue;
+        }
+        std::vector<std::shared_ptr<rcg::Interface>> interfaces = system->getInterfaces();
+        if (interfaces.empty())
+            continue;
+        for (auto &interf : interfaces)
+        {
+            try
             {
-              printedSerialNumbers.insert(serialNumber);
-              std::cout << "Device ID: " << device->getID() << std::endl;
+                interf->open();
             }
-          }
-          interf->close();
+            catch (const std::exception &ex)
+            {
+                std::cerr << RED << "[Camera::debug] Failed to open interface: " << ex.what() << RESET << std::endl;
+                continue;
+            }
+            std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
+            if (devices.empty())
+                continue;
+            for (auto &device : devices)
+            {
+                if (!device || device->getVendor() != system->getVendor())
+                {
+                    interf->close();
+                    continue;
+                }
+                if (getAvailableCameraByID(device->getID()))
+                {
+                    interf->close();
+                    continue;
+                }
+                availableCameras.insert(device);
+            }
+            interf->close();
         }
         system->close();
-      }
-  }
-  catch (const std::exception &ex)
-  {
-    std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
-  }
-  return ret;
-}
+    }
 
-bool DeviceManager::listDevices(std::shared_ptr<Camera> camera)
-{ // ToDo: Exceptions handling
-  bool ret = true;
-  std::set<std::string> printedSerialNumbers;
-
-  std::vector<std::shared_ptr<rcg::System>> system = rcg::System::getSystems();
-  for (size_t i = 0; i < system.size(); i++)
-  {
     try
     {
-      std::string systemVendor = system[i]->getVendor();
-      system[i]->open();
-      std::vector<std::shared_ptr<rcg::Interface>> interf = system[i]->getInterfaces();
-      for (size_t k = 0; k < interf.size(); k++)
-      {
-        interf[k]->open();
-        std::vector<std::shared_ptr<rcg::Device>> device = interf[k]->getDevices();
-        for (size_t j = 0; j < device.size(); j++)
+        if (defaultCtiPath.empty())
         {
-          std::string deviceVendor = device[j]->getVendor();
-          if (deviceVendor == systemVendor)
-          {
-            auto nodemap = device[j]->getRemoteNodeMap();
-            std::string serialNumber = device[j]->getSerialNumber();
-            if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
-            {
-              printedSerialNumbers.insert(serialNumber);
-              DeviceConfig config = camera->deviceConfig;
-              std::cout << "        Device             " << config.id << std::endl;
-              std::cout << "        Vendor:            " << config.vendor << std::endl;
-              std::cout << "        Model:             " << config.model << std::endl;
-              std::cout << "        TL type:           " << config.tlType << std::endl;
-              std::cout << "        Display name:      " << config.displayName << std::endl;
-              std::cout << "        Access status:     " << config.accessStatus << std::endl;
-              std::cout << "        Serial number:     " << config.serialNumber << std::endl;
-              std::cout << "        Version:           " << config.version << std::endl;
-              std::cout << "        TS Frequency:      " << config.timestampFrequency << std::endl;
-              std::cout << "        Current IP:        " << config.currentIP << std::endl;
-              std::cout << "        MAC:               " << config.MAC << std::endl;
-              std::cout << std::endl;
-            }
-          }
+            std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
+            return false;
         }
-        interf[k]->close();
-      }
+        rcg::System::setSystemsPath(defaultCtiPath.c_str(), nullptr);
+        std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
+        if (defaultSystems.empty())
+        {
+            std::cerr << RED << "Error: No systems found." << RESET << std::endl;
+            return false;
+        }
+        for (auto &system : defaultSystems)
+        {
+            try
+            {
+                system->open();
+            }
+            catch (const std::exception &ex)
+            {
+                std::cerr << RED << "[Camera::debug] Failed to open system: " << ex.what() << RESET << std::endl;
+                continue;
+            }
+            std::vector<std::shared_ptr<rcg::Interface>> interfaces = system->getInterfaces();
+            if (interfaces.empty())
+                continue;
+            for (auto &interf : interfaces)
+            {
+                try
+                {
+                    interf->open();
+                }
+                catch (const std::exception &ex)
+                {
+                    std::cerr << RED << "[Camera::debug] Failed to open interface: " << ex.what() << RESET << std::endl;
+                    continue;
+                }
+                
+                std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
+                if (devices.empty())
+                    continue;
+                for (auto &device : devices)
+                {
+                 if (!device)
+                {
+                    interf->close();
+                    continue;
+                }
+                if (getAvailableCameraByID(device->getID()))
+                {
+                    interf->close();
+                    continue;
+                }
+                availableCameras.insert(device);
+            }
+                interf->close();
+            }
+            system->close();
+        }
     }
     catch (const std::exception &ex)
     {
-      std::cerr << "Exception: " << ex.what() << std::endl;
-      system[i]->close();
-      return false;
+        std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
+        return false;
     }
-    system[i]->close();
-    system[i]->clearSystems();
-    system[i]->~System();
-  }
-  try
-  {
-    const char *defaultCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact
-    if (defaultCtiPath == nullptr)
-    {
-      std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
-      return 1;
-    }
-    rcg::System::setSystemsPath(defaultCtiPath, nullptr);
-    std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
-    if (defaultSystems.empty())
-    {
-      std::cerr << RED << "Error: No systems found." << RESET << std::endl;
-      return 1;
-    }
-    for (auto &system : defaultSystems)
-    {
-      system->open();
-      std::vector<std::shared_ptr<rcg::Interface>> interfs = system->getInterfaces();
-      if (interfs.empty())
-      {
-        continue;
-      }
-      for (auto &interf : interfs)
-      {
-        interf->open();
-        std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
-        if (devices.empty())
-        {
-          continue;
-        }
-
-        for (auto &device : devices)
-        {
-
-            std::string serialNumber = device->getSerialNumber();
-            if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
-            {
-              printedSerialNumbers.insert(serialNumber);
-              std::cout << "Device ID: " << device->getID() << std::endl;
-            }
-          device->close();
-        }
-        interf->close();
-      }
-      system->close();
-    }
-  }
-  catch (const std::exception &ex)
-  {
-    std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
-  }
-  return ret;
+    return true;
 }
 
-// Function to list all available devices
-bool DeviceManager::listDevicesIDs(std::shared_ptr<Camera> camera)
-{ // ToDo: Exceptions handling
-  bool ret = true;
-  std::set<std::string> printedSerialNumbers;
-
-  std::vector<std::shared_ptr<rcg::System>> system = rcg::System::getSystems();
-  for (size_t i = 0; i < system.size(); i++)
-  {
+bool DeviceManager::listAvailableCamerasByID()
+{
     try
     {
-      std::string systemVendor = system[i]->getVendor();
-      if (debug)
-      {
-        std::cout << "System Path: " << system[i]->getDisplayName() << std::endl;
-      }
-      system[i]->open();
-      std::vector<std::shared_ptr<rcg::Interface>> interf = system[i]->getInterfaces();
-      for (size_t k = 0; k < interf.size(); k++)
-      {
-        interf[k]->open();
-        std::vector<std::shared_ptr<rcg::Device>> device = interf[k]->getDevices();
-        if (device.empty())
-        {
-          if (debug)
-          {
-            std::cout << "No devices found on this interface. Please try again in a moment." << std::endl;
-          }
-          continue;
-        }
+        std::list<std::string> availableCamerasIds;
 
-        for (size_t j = 0; j < device.size(); j++)
+        for (const auto &device : availableCameras)
         {
-
-          std::string deviceVendor = device[j]->getVendor();
-          if (debug)
-          {
-            std::cout << "System Vendor: " << systemVendor << std::endl;
-            std::cout << "Device Vendor: " << deviceVendor << std::endl;
-          }
-          if (deviceVendor == systemVendor)
-          {
-            std::string serialNumber = device[j]->getSerialNumber();
-            if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
-            {
-              printedSerialNumbers.insert(serialNumber);
-              std::cout << "Device ID: " << device[j]->getID() << std::endl;
-            }
-          }
+            availableCamerasIds.push_back(device->getSerialNumber());
         }
-        interf[k]->close();
-      }
+        std::cout << "  Available Devices IDs:  ";
+        for (const auto &id : availableCamerasIds)
+        {
+            std::cout << id << " ";
+        }
+        std::cout << std::endl;
+        return true;
     }
     catch (const std::exception &ex)
     {
-      std::cerr << "Exception: " << ex.what() << std::endl;
-      system[i]->close();
-      system[i]->~System();
-      return false;
+        std::cerr << RED << "Failed to list devices: " << ex.what() << RESET << std::endl;
+        return false;
     }
-    system[i]->close();
-    system[i]->clearSystems();
-    system[i]->~System();
-  }
-  try
-  {
-    const char *defaultCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact
-    if (defaultCtiPath == nullptr)
-    {
-      std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
-      return 1;
-    }
-    rcg::System::setSystemsPath(defaultCtiPath, nullptr);
-    std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
-    if (defaultSystems.empty())
-    {
-      std::cerr << RED << "Error: No systems found." << RESET << std::endl;
-      return 1;
-    }
-    for (auto &system : defaultSystems)
-    {
-      system->open();
-      std::vector<std::shared_ptr<rcg::Interface>> interfs = system->getInterfaces();
-      if (interfs.empty())
-      {
-        continue;
-      }
-      for (auto &interf : interfs)
-      {
-        interf->open();
-        std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
-        if (devices.empty())
-        {
-          continue;
-        }
-
-        for (auto &device : devices)
-        {
-
-            std::string serialNumber = device->getSerialNumber();
-            if (printedSerialNumbers.find(serialNumber) == printedSerialNumbers.end())
-            {
-              printedSerialNumbers.insert(serialNumber);
-              std::cout << "Device ID: " << device->getID() << std::endl;
-            }
-          }
-          interf->close();
-
-        }
-        system->close();
-
-      }
-  }
-  catch (const std::exception &ex)
-  {
-    std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
-  }
-  return ret;
 }
 
-// int main(int argc, char *argv[])
-// {
-//   int ret = 0;
+std::shared_ptr<rcg::Device> DeviceManager::getAvailableCameraByID(const std::string &deviceId)
+{
+    for (const auto &device : availableCameras)
+    {
+        if (device->getID() == deviceId)
+        {
+            return device;
+        }
+    }
+    return nullptr;
+}
 
-//   // try
-//   // {
-//   //   listDevices();
-//   // }
-//   // catch (const std::exception &ex)
-//   // {
-//   //   std::cerr << "Exception: " << ex.what() << std::endl;
-//   //   ret = 2;
-//   // }
-//   return ret;
-// }
+std::shared_ptr<Camera> DeviceManager::getOpenCameraByID(const std::string &deviceId)
+{
+    for (const auto &camera : openCameras)
+    {
+        DeviceConfig deviceConfig = camera->deviceConfig;
+        if (deviceConfig.id == deviceId)
+        {
+            return camera;
+        }
+    }
+    return nullptr;
+}
 
-// ToDo: Solve bug that cams can't always be listed when the program is run multiple times
-//ToDo: correct default cases 
+bool DeviceManager::openCamera(const std::string &deviceId)
+{
+    try
+    {
+        std::shared_ptr<rcg::Device> device = getAvailableCameraByID(deviceId);
+        if (!device)
+        {
+            std::cerr << RED << "Failed to open camera: " << deviceId << RESET << std::endl;
+            return false;
+        }
+        std::shared_ptr<Camera> newCamera = std::make_shared<Camera>(device);
+        openCameras.push_back(newCamera);
+        return true;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Failed to add camera: " << ex.what() << RESET << std::endl;
+        return false;
+    }
+}
+
+bool DeviceManager::closeCamera(const std::string &deviceId)
+{
+    try
+    {
+        std::shared_ptr<Camera> camera = getOpenCameraByID(deviceId);
+        camera->~Camera();
+        openCameras.remove(camera);
+        return true;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Failed to remove camera: " << ex.what() << RESET << std::endl;
+        return false;
+    }
+}
+
+bool DeviceManager::listCamera(std::shared_ptr<Camera> camera)
+{
+    try
+    {
+        DeviceConfig config = camera->deviceConfig;
+        std::cout << "        Device             " << config.id << std::endl;
+        std::cout << "        Vendor:            " << config.vendor << std::endl;
+        std::cout << "        Model:             " << config.model << std::endl;
+        std::cout << "        TL type:           " << config.tlType << std::endl;
+        std::cout << "        Display name:      " << config.displayName << std::endl;
+        std::cout << "        Access status:     " << config.accessStatus << std::endl;
+        std::cout << "        Serial number:     " << config.serialNumber << std::endl;
+        std::cout << "        Version:           " << config.version << std::endl;
+        std::cout << "        TS Frequency:      " << config.timestampFrequency << std::endl;
+        std::cout << "        Current IP:        " << config.currentIP << std::endl;
+        std::cout << "        MAC:               " << config.MAC << std::endl;
+        std::cout << std::endl;
+        return true;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Failed to list devices: " << ex.what() << RESET << std::endl;
+        return false;
+    }
+}
+
+bool DeviceManager::listOpenCameras()
+{
+    try
+    {
+        for (const auto &camera : openCameras)
+        {
+            listCamera(camera);
+        }
+        return true;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Failed to list devices: " << ex.what() << RESET << std::endl;
+        return false;
+    }
+}

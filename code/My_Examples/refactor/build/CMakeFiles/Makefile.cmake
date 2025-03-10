@@ -49,9 +49,9 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/camera.dir/DependInfo.cmake"
   "CMakeFiles/streamManager.dir/DependInfo.cmake"
   "CMakeFiles/deviceManager.dir/DependInfo.cmake"
   "CMakeFiles/networkManager.dir/DependInfo.cmake"
   "CMakeFiles/systemManager.dir/DependInfo.cmake"
+  "CMakeFiles/main.dir/DependInfo.cmake"
   )
