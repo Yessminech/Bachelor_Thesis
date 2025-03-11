@@ -1,4 +1,4 @@
-    #ifndef DEVICEMANAGER_HPP
+#ifndef DEVICEMANAGER_HPP
 #define DEVICEMANAGER_HPP
 
 #include "Camera.hpp"
@@ -19,29 +19,31 @@
 #define YELLOW "\033[33m"
 #define GREEN "\033[32m"
 
-class DeviceManager {
+class DeviceManager
+{
 public:
     DeviceManager();
     ~DeviceManager();
 
-    void configureCamera(const std::string &cameraId, const std::string &params);
+    // ToDo load Xml // void configureCamera(const std::string &cameraId, const std::string &params);
 
     bool getAvailableCameras();
-    std::string getCameraStatus(const std::string &cameraId) const;
     std::shared_ptr<rcg::Device> getAvailableCameraByID(const std::string &deviceId);
     std::shared_ptr<Camera> getOpenCameraByID(const std::string &deviceId);
+    const std::list<std::shared_ptr<Camera>> &getOpenCameras() const;
     bool openCamera(const std::string &deviceId);
     bool closeCamera(const std::string &deviceId);
 
     bool listCamera(std::shared_ptr<Camera> camera);
     bool listAvailableCamerasByID();
     bool listOpenCameras();
-
-    std::list<std::shared_ptr<Camera>> openCameras; // List of cameras
+    bool debug = true;
 
 private:
+    void enumerateDevicesFromSystems(const std::vector<std::shared_ptr<rcg::System>>& systems);
+    std::list<std::shared_ptr<Camera>> openCameras;          // List of cameras
     std::set<std::shared_ptr<rcg::Device>> availableCameras; // List of cameras
-    std::string defaultCtiPath;
+    std::string defaultCti;
 };
 
 #endif // DEVICEMANAGER_HPP

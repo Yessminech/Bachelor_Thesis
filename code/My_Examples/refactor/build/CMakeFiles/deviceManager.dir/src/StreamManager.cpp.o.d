@@ -331,7 +331,6 @@ CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: \
  /usr/include/opencv4/opencv2/video.hpp \
  /usr/include/opencv4/opencv2/video/tracking.hpp \
  /usr/include/opencv4/opencv2/video/background_segm.hpp \
- /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
  /usr/local/include/rc_genicam_api/device.h \
  /usr/local/include/rc_genicam_api/interface.h \
@@ -396,14 +395,15 @@ CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: \
  /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h \
  /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h \
  /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h \
+ /usr/local/include/rc_genicam_api/buffer.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp \
  /usr/local/include/rc_genicam_api/system.h \
  /usr/local/include/rc_genicam_api/interface.h \
  /usr/local/include/rc_genicam_api/nodemap_out.h \
- /usr/local/include/rc_genicam_api/config.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
- /usr/include/arpa/inet.h /usr/include/netinet/in.h \
- /usr/include/x86_64-linux-gnu/sys/socket.h \
+ /usr/local/include/rc_genicam_api/config.h /usr/include/arpa/inet.h \
+ /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/sys/socket.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/x86_64-linux-gnu/bits/socket.h \
  /usr/include/x86_64-linux-gnu/bits/socket_type.h \
@@ -436,7 +436,6 @@ CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: \
  /usr/include/c++/11/bits/regex_executor.tcc \
  /usr/local/include/rc_genicam_api/stream.h \
  /usr/local/include/rc_genicam_api/device.h \
- /usr/local/include/rc_genicam_api/buffer.h \
  /usr/local/include/rc_genicam_api/buffer.h \
  /usr/local/include/rc_genicam_api/image.h \
  /usr/local/include/rc_genicam_api/image_store.h \

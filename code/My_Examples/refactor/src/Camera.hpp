@@ -2,6 +2,7 @@
 #define CAMERA_HPP
 
 #include <rc_genicam_api/device.h>
+#include <rc_genicam_api/buffer.h>
 #include <GenApi/GenApi.h>
 #include <opencv2/opencv.hpp>
 
@@ -55,6 +56,7 @@ public:
   void setCameraConfig();
   void setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1);
   void setPtpConfig();
+  void setBandwidth(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent);
 
   // Network Control
   std::string getCurrentIP();
@@ -63,20 +65,35 @@ public:
   void getTimestamps();
 
   // Streaming Control
-  void processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint64_t pixelFormat);
-  void startStreaming(bool stop_streaming, std::mutex globalFrameMutex, std::vector<cv::Mat> globalFrames, int index);
+  void startStreaming(bool stop_streaming, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveFootage);
   void stopStreaming(std::shared_ptr<rcg::Stream> stream);
-   
+
   bool debug = true;
   DeviceConfig deviceConfig; // ToDo Public?
-  PtpConfig ptpConfig; // ToDo Public?
-  
-private:
-  std::shared_ptr<rcg::Device> device;
+  PtpConfig ptpConfig;       // ToDo Public?
   std::shared_ptr<GenApi::CNodeMapRef> nodemap;
-  float exposure = 222063; // Example: 20 ms
-  float gain = 0; // Example: Gain of 10 dB
 
+private:
+  cv::VideoWriter videoWriter;        // Used to write frames to a video file
+  bool saveFootage = false;           // Flag to enable/disable saving
+  std::string outputDirectory = "./"; // Default directory
+
+  std::shared_ptr<rcg::Device> device;
+  float exposure = 222063; // Example: 20 ms
+  float gain = 0;          // Example: Gain of 10 dB
+  void initializeVideoWriter(const std::string &directory, int width, int height);
+  void setFreeRunMode();
+  double CalculateTransmissionDelayNs(double packetDelayNs, int camIndex);
+  double CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams);
+  float calculateTransmissionDelay(int cameraId); // Estimates transmission delay
+  void cleanupStream(std::shared_ptr<rcg::Stream> &stream);
+  std::shared_ptr<rcg::Stream> initializeStream();
+  const rcg::Buffer *grabFrame(std::shared_ptr<rcg::Stream> &stream);
+  void processFrame(const rcg::Buffer *buffer, cv::Mat &outputFrame);
+  void processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint64_t pixelFormat);
+  void updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index,
+                         cv::Mat &frame, int &frameCount, std::chrono::steady_clock::time_point &lastTime);
+  void saveFrameToVideo(cv::VideoWriter &videoWriter, const cv::Mat &frame);
   std::string decimalToIP(uint32_t decimalIP);
   std::string hexToIP(const std::string &hexIP);
   std::string decimalToMAC(uint64_t decimalMAC);

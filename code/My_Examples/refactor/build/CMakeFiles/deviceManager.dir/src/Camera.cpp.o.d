@@ -248,6 +248,9 @@ CMakeFiles/deviceManager.dir/src/Camera.cpp.o: \
  /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h \
  /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h \
  /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h \
+ /usr/local/include/rc_genicam_api/buffer.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
  /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \
@@ -400,8 +403,6 @@ CMakeFiles/deviceManager.dir/src/Camera.cpp.o: \
  /usr/local/include/rc_genicam_api/stream.h \
  /usr/local/include/rc_genicam_api/device.h \
  /usr/local/include/rc_genicam_api/buffer.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
  /usr/local/include/rc_genicam_api/image.h \
  /usr/local/include/rc_genicam_api/pixel_formats.h \
  /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \

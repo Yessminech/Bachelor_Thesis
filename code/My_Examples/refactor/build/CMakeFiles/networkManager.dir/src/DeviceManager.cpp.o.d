@@ -249,6 +249,9 @@ CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o: \
  /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h \
  /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h \
  /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h \
+ /usr/local/include/rc_genicam_api/buffer.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
  /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \
@@ -399,11 +402,8 @@ CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o: \
  /usr/local/include/rc_genicam_api/system.h \
  /usr/local/include/rc_genicam_api/interface.h \
  /usr/local/include/rc_genicam_api/nodemap_out.h \
- /usr/local/include/rc_genicam_api/config.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
- /usr/include/arpa/inet.h /usr/include/netinet/in.h \
- /usr/include/x86_64-linux-gnu/sys/socket.h \
+ /usr/local/include/rc_genicam_api/config.h /usr/include/arpa/inet.h \
+ /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/sys/socket.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/x86_64-linux-gnu/bits/socket.h \
  /usr/include/x86_64-linux-gnu/bits/socket_type.h \

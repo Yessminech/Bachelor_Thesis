@@ -16,13 +16,21 @@
 #include <regex>
 #include <vector>
 
-
 Camera::Camera(std::shared_ptr<rcg::Device> device) : device(device)
 {
     if (device)
     {
         device = device;
-        device->open(rcg::Device::CONTROL);
+        try
+        {
+            device->open(rcg::Device::CONTROL);
+            if (debug)
+                std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": Opened successfully" << RESET << std::endl;
+        }
+        catch (const std::exception &ex)
+        {
+            std::cerr << RED << "Error: Failed to open camera " << device->getID() << ": " << ex.what() << RESET << std::endl;
+        }
         nodemap = device->getRemoteNodeMap();
         setCameraConfig();
         deviceConfig.id = device->getID();
@@ -36,7 +44,7 @@ Camera::Camera(std::shared_ptr<rcg::Device> device) : device(device)
         deviceConfig.timestampFrequency = device->getTimestampFrequency();
         deviceConfig.currentIP = getCurrentIP();
         deviceConfig.MAC = getMAC();
-        deviceConfig.deprecatedFW = rcg::getString(nodemap, "PtpEnable").empty(); // ToDo do this in a better way 
+        deviceConfig.deprecatedFW = rcg::getString(nodemap, "PtpEnable").empty(); // ToDo do this in a better way
     }
     else
     {
@@ -59,19 +67,18 @@ void Camera::setCameraConfig()
         rcg::setBoolean(nodemap, "ChunkModeActive", true);
         if (!deviceConfig.deprecatedFW)
         {
-            rcg::setBoolean(nodemap, "ChunkDataControl", true); 
-            rcg::setBoolean(nodemap, "ChunkEnable", true);      
-            rcg::setFloat(nodemap, "ExposureTimeAbs", exposure); 
-
+            rcg::setBoolean(nodemap, "ChunkDataControl", true);
+            rcg::setBoolean(nodemap, "ChunkEnable", true);
+            rcg::setFloat(nodemap, "ExposureTimeAbs", exposure);
         }
         // rcg::setEnum(nodemap, "ExposureAuto","Continuous");
-        rcg::setFloat(nodemap, "ExposureTime", exposure);    // Example: 20 ms
-        rcg::setFloat(nodemap, "Gain", gain);                 // Example: Gain of 10 dB
+        rcg::setFloat(nodemap, "ExposureTime", exposure); // Example: 20 ms
+        rcg::setFloat(nodemap, "Gain", gain);             // Example: Gain of 10 dB
         rcg::setBoolean(nodemap, "AutoFunctionROIUseWhiteBalance", true);
         rcg::setEnum(nodemap, "BalanceWhiteAuto", "Continuous"); // Example: Auto white balance
         if (debug)
         {
-            std::cout << GREEN << "setCameraConfig success" << RESET << std::endl;
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": setCameraConfig success" << RESET << std::endl;
         }
     }
     catch (const std::exception &ex)
@@ -122,7 +129,7 @@ void Camera::setPtpConfig()
         ptpConfig.enabled = rcg::getBoolean(nodemap, feature.c_str());
         if (debug)
         {
-            std::cout << GREEN << "PTP enable success" << RESET << std::endl;
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": setPtpConfig success" << RESET << std::endl;
         }
     }
     catch (const std::exception &ex)
@@ -294,10 +301,10 @@ void Camera::getTimestamps()
         {
             rcg::callCommand(nodemap, "GevTimestampControlLatch");
             ptpConfig.timestamp_ns = rcg::getString(nodemap, "GevTimestampValue");
-            ptpConfig.tickFrequency = rcg::getString(nodemap, "GevTimestampTickFrequency"); 
+            ptpConfig.tickFrequency = rcg::getString(nodemap, "GevTimestampTickFrequency");
         }
         ptpConfig.timestamp_s = std::stoull(ptpConfig.timestamp_ns) / std::stoull(ptpConfig.tickFrequency);
-        
+
         if (debug)
         {
             std::cout << GREEN << "Timestamp success" << RESET << std::endl;
@@ -364,185 +371,254 @@ void Camera::processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint
     }
 }
 
-void Camera::startStreaming(bool stop_streaming, std::mutex globalFrameMutex, std::vector<cv::Mat> globalFrames, int index)
+void Camera::setFreeRunMode()
 {
-/// This thread function grabs images from one camera, converts and resizes them,
-/// overlays the device ID, timestamp, and FPS, and updates the shared global frame vector at position 'index'.
-/// Once the stream is successfully started, it increments the global atomic counter.
-    try
+    if (nodemap)
     {
-        if (debug)
-            std::cout << "[debug] Opening device " << device->getID() << std::endl;
-        device->open(rcg::Device::CONTROL); // ToDo remove?
-        auto nodemap = device->getRemoteNodeMap();
-        //Free run Configuration 
-        if (nodemap)
-        {
-            try
-            {
-                rcg::setEnum(nodemap, "AcquisitionMode", "Continuous");
-                rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
-                rcg::setEnum(nodemap, "TriggerMode", "Off");
-                rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
-                // rcg::setEnum(nodemap, "AcquisitionFrameRateAuto", "Off");
-                double maxFrameRate = 10; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
-                try
-                {
-                    rcg::setFloat(nodemap, "AcquisitionFrameRate", maxFrameRate);
-                }
-                catch (const std::exception &e)
-                {
-                    rcg::setFloat(nodemap, "AcquisitionFrameRateAbs", maxFrameRate);
-                }
-    
-                if (debug)
-                    std::cout << "[debug] Camera " << deviceConfig.id << ": Configured free-run mode" << std::endl;
-            }
-            catch (const std::exception &ex)
-            {
-                std::cerr << RED << "Failed to configure free-run mode for camera " << deviceConfig.id << ": " << ex.what() << RESET << std::endl;
-            }
-        }
-        // Get the first available stream.
-        std::vector<std::shared_ptr<rcg::Stream>> streamList = device->getStreams();
-        if (streamList.empty())
-        {
-            std::cerr << RED << "No stream available for camera " << device->getID() << RESET << std::endl;
-            device->close();
-            return;
-        }
-        auto stream = streamList[0];
         try
         {
-            stream->open();
-            stream->attachBuffers(true);
-            stream->startStreaming();
+            rcg::setEnum(nodemap, "AcquisitionMode", "Continuous");
+            rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
+            rcg::setEnum(nodemap, "TriggerMode", "Off");
+            rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
+            // rcg::setEnum(nodemap, "AcquisitionFrameRateAuto", "Off");
+            double maxFrameRate = 10; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
+            try
+            {
+                rcg::setFloat(nodemap, "AcquisitionFrameRate", maxFrameRate);
+            }
+            catch (const std::exception &e)
+            {
+                rcg::setFloat(nodemap, "AcquisitionFrameRateAbs", maxFrameRate);
+            }
+
             if (debug)
-                std::cout << "[debug] Stream started for camera " << device->getID() << std::endl;
-            // Signal that this thread has started successfully.
-            // ToDo move this somewhere else // startedThreads++;
+                std::cout << GREEN << "[debug] Camera " << deviceConfig.id << ": setFreeRunMode success" << RESET << std::endl;
         }
         catch (const std::exception &ex)
         {
-            std::cerr << RED << "Failed to start stream for camera " << device->getID()
-                      << ": " << ex.what() << RESET << std::endl;
-
-            return;
+            std::cerr << RED << "Failed to configure free-run mode for camera " << deviceConfig.id << ": " << ex.what() << RESET << std::endl;
         }
-
-        // Variables for FPS calculation.
-        auto lastTime = std::chrono::steady_clock::now();
-        int frameCount = 0;
-
-        while (!stop_streaming) 
-        {
-            const rcg::Buffer *buffer = nullptr;
-            try
-            {
-                buffer = stream->grab(5000);
-            }
-            catch (const std::exception &ex)
-            {
-                std::cerr << RED << "[debug] Exception during buffer grab for camera "
-                          << device->getID() << ": " << ex.what() << RESET << std::endl;
-                continue;
-            }
-            if (buffer && !buffer->getIsIncomplete() && buffer->getImagePresent(0))
-            {
-                rcg::Image image(buffer, 0);
-                cv::Mat outputFrame;
-                uint64_t format = image.getPixelFormat();
-                cv::Mat rawFrame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
-                Camera::processRawFrame(rawFrame, outputFrame, format);
-                if (!outputFrame.empty())
-                {
-                    // Resize to a fixed resolution.
-                    cv::Mat resizedFrame;
-                    cv::resize(outputFrame, resizedFrame, cv::Size(640, 480));
-
-                    // Update FPS calculation.
-                    // ToDo is this correct ?
-                    frameCount++;
-                    auto currentTime = std::chrono::steady_clock::now();
-                    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count() / 1000.0;
-                    double fps = (elapsed > 0) ? frameCount / elapsed : 0.0;
-                    if (elapsed >= 1.0)
-                    {
-                        lastTime = currentTime;
-                        frameCount = 0;
-                    }
-
-                    // Prepare overlay text.
-                    uint64_t timestampNS = buffer->getTimestampNS();
-                    double timestampSec = static_cast<double>(timestampNS) / 1e9;
-                    std::ostringstream oss;
-                    oss << "TS: " << std::fixed << std::setprecision(6) << timestampSec << " s"
-                        << " | FPS: " << std::fixed << std::setprecision(2) << fps;
-                    std::ostringstream camOss;
-                    camOss << "Cam: " << device->getID();
-
-                    // Use cv::getTextSize to compute proper placement so text is inside the image.
-                    int baseline = 0;
-                    cv::Size textSize = cv::getTextSize(oss.str(), cv::FONT_HERSHEY_SIMPLEX, 0.6, 2, &baseline);
-                    int textY = resizedFrame.rows - baseline - 5; // 5-pixel margin above bottom.
-                    cv::putText(resizedFrame, oss.str(), cv::Point(10, textY),
-                                cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
-
-                    // Add camera ID in a separate line.
-                    cv::putText(resizedFrame, camOss.str(), cv::Point(10, textY - textSize.height - 10),
-                                cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
-
-                    // Update the global frame for this camera.
-                    {
-                        std::lock_guard<std::mutex> lock(globalFrameMutex);
-                        globalFrames[index] = resizedFrame.clone();
-                    }
-                }
-                else
-                {
-                    if (debug)
-                        std::cerr << "[debug] Empty output frame for camera " << device->getID() << std::endl;
-                }
-            }
-            else
-            {
-                std::cerr << YELLOW << "Camera " << device->getID() << ": Invalid image grabbed." << RESET << std::endl;
-            }
-        }
-
-        // Cleanup.
-        try
-        {
-            stream->stopStreaming();
-            stream->close();
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << RED << "Exception during stream cleanup for camera " << device->getID()
-                      << ": " << ex.what() << RESET << std::endl;
-            return;
-        }
-        device->close();
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "Exception in camera " << device->getID() << " thread: "
-                  << ex.what() << RESET << std::endl;
-        // Cleanup.
-        try
-        {
-            device->close();
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << RED << "Exception during stream cleanup for camera " << device->getID()
-                      << ": " << ex.what() << RESET << std::endl;
-            return;
-        }
-        return;
     }
 }
 
+void Camera::updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index,
+                               cv::Mat &frame, int &frameCount, std::chrono::steady_clock::time_point &lastTime)
+{
+    // Update FPS calculation
+    frameCount++;
+    auto currentTime = std::chrono::steady_clock::now();
+    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count() / 1000.0;
+    double fps = (elapsed > 0) ? frameCount / elapsed : 0.0;
+
+    if (elapsed >= 1.0)
+    {
+        lastTime = currentTime;
+        frameCount = 0;
+    }
+
+    // Prepare overlay text
+    uint64_t timestampNS = std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime.time_since_epoch()).count();
+    double timestampSec = static_cast<double>(timestampNS) / 1e9;
+
+    std::ostringstream overlayText;
+    overlayText << "TS: " << std::fixed << std::setprecision(6) << timestampSec << " s"
+                << " | FPS: " << std::fixed << std::setprecision(2) << fps;
+
+    std::ostringstream camText;
+    camText << "Cam: " << device->getID();
+
+    // Overlay text on frame
+    int baseline = 0;
+    cv::Size textSize = cv::getTextSize(overlayText.str(), cv::FONT_HERSHEY_SIMPLEX, 0.6, 2, &baseline);
+    int textY = frame.rows - baseline - 5;
+    cv::putText(frame, overlayText.str(), cv::Point(10, textY), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
+    cv::putText(frame, camText.str(), cv::Point(10, textY - textSize.height - 10), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
+
+    // Update global frame
+    {
+        std::lock_guard<std::mutex> lock(globalFrameMutex);
+        globalFrames[index] = frame.clone();
+    }
+}
+
+void Camera::processFrame(const rcg::Buffer *buffer, cv::Mat &outputFrame)
+{
+    if (!buffer || buffer->getIsIncomplete() || !buffer->getImagePresent(0))
+    {
+        std::cerr << YELLOW << "Camera " << device->getID() << ": Invalid image grabbed." << RESET << std::endl;
+        return;
+    }
+
+    rcg::Image image(buffer, 0);
+    cv::Mat rawFrame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
+    uint64_t format = image.getPixelFormat();
+
+    Camera::processRawFrame(rawFrame, outputFrame, format);
+
+    // Resize the frame to a fixed resolution
+    if (!outputFrame.empty())
+    {
+        cv::resize(outputFrame, outputFrame, cv::Size(640, 480));
+    }
+}
+
+const rcg::Buffer *Camera::grabFrame(std::shared_ptr<rcg::Stream> &stream)
+{
+    try
+    {
+        return stream->grab(5000);
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "[debug] Exception during buffer grab for camera "
+                  << device->getID() << ": " << ex.what() << RESET << std::endl;
+        return nullptr;
+    }
+}
+
+void Camera::cleanupStream(std::shared_ptr<rcg::Stream> &stream)
+{
+    try
+    {
+        stream->stopStreaming();
+        stream->close();
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Exception during stream cleanup for camera " << device->getID()
+                  << ": " << ex.what() << RESET << std::endl;
+    }
+}
+
+std::shared_ptr<rcg::Stream> Camera::initializeStream()
+{
+    auto streamList = device->getStreams();
+    if (streamList.empty())
+    {
+        std::cerr << RED << "No stream available for camera " << device->getID() << RESET << std::endl;
+        device->close();
+        return nullptr;
+    }
+
+    auto stream = streamList[0];
+    try
+    {
+        stream->open();
+        stream->attachBuffers(true);
+        stream->startStreaming();
+        if (debug)
+            std::cout << "[debug] Stream started for camera " << device->getID() << std::endl;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Failed to start stream for camera " << device->getID()
+                  << ": " << ex.what() << RESET << std::endl;
+        return nullptr;
+    }
+
+    return stream;
+}
+
+void Camera::initializeVideoWriter(const std::string &directory, int width, int height)
+{
+    // Get current timestamp in seconds
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+    std::tm tm = *std::localtime(&now_time_t);
+
+    // Format the timestamp as a string
+    std::ostringstream timestampStream;
+    timestampStream << std::put_time(&tm, "%Y%m%d_%H%M%S");
+
+    // Generate the output filename using the timestamp
+    std::string outputFilename = "camera_footage_" + timestampStream.str() + ".avi";
+
+    // Generate the full output path
+    std::string outputPath = directory + "/" + outputFilename;
+
+    // Open the video writer
+    videoWriter.open(outputPath, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 30.0, cv::Size(width, height), true);
+
+    if (!videoWriter.isOpened())
+    {
+        std::cerr << "Error: Unable to open video writer for " << outputPath << std::endl;
+    }
+    else
+    {
+        std::cout << "Video recording started at: " << outputPath << std::endl;
+        saveFootage = true;
+    }
+}
+
+void Camera::saveFrameToVideo(cv::VideoWriter &videoWriter, const cv::Mat &frame)
+{
+    if (videoWriter.isOpened())
+    {
+        videoWriter.write(frame);
+    }
+    else
+    {
+        std::cerr << "Error: Video writer is not opened." << std::endl;
+    }
+}
+
+void Camera::startStreaming(bool stop_streaming, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveFootage)
+{
+    // Set camera to free-run mode
+    Camera::setFreeRunMode();
+
+    // Initialize and open the camera stream
+    auto stream = initializeStream();
+    if (!stream)
+        return;
+
+    // Optionally initialize video writer if saving footage is enabled
+    if (saveFootage)
+    {
+        initializeVideoWriter("./output", 640, 480); // Set output directory and resolution
+    }
+
+    // Variables for FPS calculation
+    auto lastTime = std::chrono::steady_clock::now();
+    int frameCount = 0;
+
+    while (!stop_streaming)
+    {
+        // Grab a frame from the stream
+        auto buffer = grabFrame(stream);
+        if (!buffer)
+            continue;
+
+        // Process the frame
+        cv::Mat outputFrame;
+        processFrame(buffer, outputFrame);
+
+        if (!outputFrame.empty())
+        {
+            // Update the global frame
+            updateGlobalFrame(globalFrameMutex, globalFrames, index, outputFrame, frameCount, lastTime);
+
+            // If saving footage, write the frame to the video file
+            if (saveFootage)
+            {
+                saveFrameToVideo(videoWriter, outputFrame);
+            }
+        }
+        else if (debug)
+        {
+            std::cerr << "[debug] Empty output frame for camera " << device->getID() << std::endl;
+        }
+    }
+
+    // Clean up the stream and release the video writer if necessary
+    cleanupStream(stream);
+    if (saveFootage)
+    {
+        videoWriter.release();
+        std::cout << "Footage saved successfully!" << std::endl;
+    }
+}
 
 // Function to stop streaming
 void stopStreaming(std::shared_ptr<rcg::Stream> stream)
@@ -556,13 +632,47 @@ void stopStreaming(std::shared_ptr<rcg::Stream> stream)
     rcg::System::clearSystems();
 }
 
-// // // ToDo: delete -> only for testing
-// int main ()
-// {
-//     std::shared_ptr<rcg::Device> device = rcg::getDevice("file:///home/user/genicam.vin");
-//     Camera camera(device);
-//     camera.setPtpConfig();
-//     camera.getPtpConfig();
-//     camera.getTimestamps();
-//     return 0;
-// }
+double Camera::CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams)
+{
+    double buffer = (bufferPercent / 100.0) * (packetSizeB * (1e9 / deviceLinkSpeedBps));
+    return (((packetSizeB * (1e9 / deviceLinkSpeedBps)) + buffer) * (numCams - 1));
+}
+
+double Camera::CalculateTransmissionDelayNs(double packetDelayNs, int camIndex)
+{
+    return packetDelayNs * camIndex;
+}
+
+// Set bandwidth parameters on the device.
+void Camera::setBandwidth(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent)
+{
+    try
+    {
+        double packetDelay = CalculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
+        double transmissionDelay = CalculateTransmissionDelayNs(packetDelay, camIndex);
+        int64_t gevSCPDValue = static_cast<int64_t>(packetDelay);
+        double gevSCPDValueMs = gevSCPDValue / 1e6;
+        rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue);
+        int64_t gevSCFTDValue = static_cast<int64_t>(transmissionDelay);
+        double gevSCFTDValueMs = gevSCFTDValue / 1e6;
+        rcg::setInteger(camera->nodemap, "GevSCFTD", gevSCFTDValue);
+
+        if (debug)
+            std::cout << "[DEBUG] numCams and CamIndex: " << numCams << " " << camIndex << std::endl;
+        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << packetDelay << " ns" << std::endl;
+        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated transmission delay: " << transmissionDelay << " ns" << std::endl;
+        std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPD set to: " << rcg::getInteger(nodemap, "GevSCPD") << " ns" << std::endl;
+        std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCFTD in seconds: " << gevSCFTDValueMs << " s" << std::endl;
+        std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": setBandwidth sucess" << std::endl;
+
+        // if (device->getID() == "devicemodul04_5d_4b_79_71_12") // Example: skip specific device.
+        // {
+        //     rcg::setEnum(camera->nodemap, "ImageTransferDelayMode", "On");
+        //     rcg::setFloat(camera->nodemap, "ImageTransferDelayValue", gevSCFTDValueMs);
+        // }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Failed to set bandwidth for camera " << device->getID() << ": " << ex.what() << RESET << std::endl;
+    }
+}

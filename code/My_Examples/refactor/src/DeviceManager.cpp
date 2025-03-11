@@ -16,7 +16,7 @@ DeviceManager::DeviceManager()
 {
     availableCameras = {};
     openCameras = {};
-    defaultCtiPath = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact?
+    defaultCti = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact?
 }
 
 DeviceManager::~DeviceManager()
@@ -25,11 +25,17 @@ DeviceManager::~DeviceManager()
     for (auto &camera : openCameras)
     {
         closeCamera(camera->deviceConfig.id);
+        if (debug)
+            std::cout << GREEN << "[DEBUG] Camera " << camera->deviceConfig.id << ": Closed successfully" << RESET << std::endl;
     }
 }
 
 bool DeviceManager::getAvailableCameras()
 {
+    // Clear existing available cameras
+    availableCameras.clear();
+    
+    // First try with system-provided paths
     std::vector<std::shared_ptr<rcg::System>> systems;
     try
     {
@@ -40,126 +46,96 @@ bool DeviceManager::getAvailableCameras()
         std::cerr << RED << "Failed to get systems: " << ex.what() << RESET << std::endl;
         return false;
     }
-    if (systems.empty())
+    
+    if (!systems.empty())
     {
-        std::cerr << RED << "Error: No systems found." << RESET << std::endl;
-        return false;
+        enumerateDevicesFromSystems(systems);
     }
+    else
+    {
+        std::cerr << RED << "No systems found from default paths." << RESET << std::endl;
+    }
+
+    // Then try with the custom path
+    try
+    {
+        if (!defaultCti.empty())
+        {
+            rcg::System::setSystemsPath(defaultCti.c_str(), nullptr);
+            std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
+            if (!defaultSystems.empty())
+            {
+                enumerateDevicesFromSystems(defaultSystems);
+            }
+            else
+            {
+                std::cerr << RED << "No systems found from custom path." << RESET << std::endl;
+            }
+        }
+        else
+        {
+            std::cerr << RED << "Custom CTI path is empty." << RESET << std::endl;
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Error enumerating with custom path: " << ex.what() << RESET << std::endl;
+    }
+
+    return !availableCameras.empty();
+}
+
+// Helper method to enumerate devices from a list of systems
+void DeviceManager::enumerateDevicesFromSystems(const std::vector<std::shared_ptr<rcg::System>>& systems)
+{
     for (auto &system : systems)
     {
         try
         {
             system->open();
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << RED << "[Camera::debug] Failed to open system: " << ex.what() << RESET << std::endl;
-            continue;
-        }
-        std::vector<std::shared_ptr<rcg::Interface>> interfaces = system->getInterfaces();
-        if (interfaces.empty())
-            continue;
-        for (auto &interf : interfaces)
-        {
-            try
-            {
-                interf->open();
-            }
-            catch (const std::exception &ex)
-            {
-                std::cerr << RED << "[Camera::debug] Failed to open interface: " << ex.what() << RESET << std::endl;
-                continue;
-            }
-            std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
-            if (devices.empty())
-                continue;
-            for (auto &device : devices)
-            {
-                if (!device || device->getVendor() != system->getVendor())
-                {
-                    interf->close();
-                    continue;
-                }
-                if (getAvailableCameraByID(device->getID()))
-                {
-                    interf->close();
-                    continue;
-                }
-                availableCameras.insert(device);
-            }
-            interf->close();
-        }
-        system->close();
-    }
-
-    try
-    {
-        if (defaultCtiPath.empty())
-        {
-            std::cerr << RED << "Environment variable GENICAM_GENTL64_PATH is not set." << RESET << std::endl;
-            return false;
-        }
-        rcg::System::setSystemsPath(defaultCtiPath.c_str(), nullptr);
-        std::vector<std::shared_ptr<rcg::System>> defaultSystems = rcg::System::getSystems();
-        if (defaultSystems.empty())
-        {
-            std::cerr << RED << "Error: No systems found." << RESET << std::endl;
-            return false;
-        }
-        for (auto &system : defaultSystems)
-        {
-            try
-            {
-                system->open();
-            }
-            catch (const std::exception &ex)
-            {
-                std::cerr << RED << "[Camera::debug] Failed to open system: " << ex.what() << RESET << std::endl;
-                continue;
-            }
+            
             std::vector<std::shared_ptr<rcg::Interface>> interfaces = system->getInterfaces();
             if (interfaces.empty())
+            {
+                system->close();
                 continue;
+            }
+            
             for (auto &interf : interfaces)
             {
                 try
                 {
                     interf->open();
+                    
+                    std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
+                    for (auto &device : devices)
+                    {
+                        // Only process valid devices that match the vendor
+                        if (device && device->getVendor() == system->getVendor())
+                        {
+                            // Check if we already have this device ID
+                            if (!getAvailableCameraByID(device->getID()))
+                            {
+                                availableCameras.insert(device);
+                            }
+                        }
+                    }
+                    
+                    interf->close();
                 }
                 catch (const std::exception &ex)
                 {
-                    std::cerr << RED << "[Camera::debug] Failed to open interface: " << ex.what() << RESET << std::endl;
-                    continue;
+                    std::cerr << RED << "Failed to process interface: " << ex.what() << RESET << std::endl;
                 }
-                
-                std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
-                if (devices.empty())
-                    continue;
-                for (auto &device : devices)
-                {
-                 if (!device)
-                {
-                    interf->close();
-                    continue;
-                }
-                if (getAvailableCameraByID(device->getID()))
-                {
-                    interf->close();
-                    continue;
-                }
-                availableCameras.insert(device);
             }
-                interf->close();
-            }
+            
             system->close();
         }
+        catch (const std::exception &ex)
+        {
+            std::cerr << RED << "Failed to open system: " << ex.what() << RESET << std::endl;
+        }
     }
-    catch (const std::exception &ex)
-    {
-        std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
-        return false;
-    }
-    return true;
 }
 
 bool DeviceManager::listAvailableCamerasByID()
@@ -167,15 +143,14 @@ bool DeviceManager::listAvailableCamerasByID()
     try
     {
         std::list<std::string> availableCamerasIds;
-
-        for (const auto &device : availableCameras)
+        for (const std::shared_ptr<rcg::Device> &device : availableCameras)
         {
-            availableCamerasIds.push_back(device->getSerialNumber());
+            availableCamerasIds.push_back(device->getID());
         }
         std::cout << "  Available Devices IDs:  ";
         for (const auto &id : availableCamerasIds)
         {
-            std::cout << id << " ";
+            std::cout << "\"" << id << "\" ";
         }
         std::cout << std::endl;
         return true;
@@ -197,6 +172,11 @@ std::shared_ptr<rcg::Device> DeviceManager::getAvailableCameraByID(const std::st
         }
     }
     return nullptr;
+}
+
+const std::list<std::shared_ptr<Camera>> &DeviceManager::getOpenCameras() const
+{
+    return openCameras;
 }
 
 std::shared_ptr<Camera> DeviceManager::getOpenCameraByID(const std::string &deviceId)
