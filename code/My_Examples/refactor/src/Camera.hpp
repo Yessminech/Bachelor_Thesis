@@ -77,8 +77,10 @@ public:
 
 private:
   cv::VideoWriter videoWriter;        // Used to write frames to a video file
-  bool saveStream = false;           // Flag to enable/disable saving
-  std::string outputDirectory = "./"; // Default directory
+  int videoWidth = 640;
+  int videoHeight = 480;
+  unsigned long frameCounter = 0;
+  std::string videoOutputPath = "output/"; // Default directory
 
   std::shared_ptr<rcg::Device> device;
   float exposure = 222063; // Example: 20 ms

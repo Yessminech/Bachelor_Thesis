@@ -15,8 +15,11 @@
 #include <iomanip>
 #include <regex>
 #include <vector>
-#include <atomic>  
-
+#include <atomic>
+#include <thread>
+#include <sys/stat.h>
+#include <chrono>
+#include <ctime>
 
 Camera::Camera(std::shared_ptr<rcg::Device> device) : device(device)
 {
@@ -133,7 +136,7 @@ void Camera::setPtpConfig()
         ptpConfig.deviceLinkSpeed = rcg::getInteger(nodemap, "DeviceLinkSpeed");
         if (debug)
         {
-            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << ", DeviceLinkSpeed is set to "<< ptpConfig.deviceLinkSpeed << RESET << std::endl;
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << ", DeviceLinkSpeed is set to " << ptpConfig.deviceLinkSpeed << RESET << std::endl;
         }
     }
     catch (const std::exception &ex)
@@ -501,108 +504,237 @@ std::shared_ptr<rcg::Stream> Camera::initializeStream()
     }
 }
 
-
-#include <sys/stat.h> // For mkdir()
-#include <sys/types.h>
-
 void Camera::initializeVideoWriter(const std::string &directory, int width, int height)
 {
-    // Ensure the output directory exists
+    // Store the dimensions we want to use
+    videoWidth = width;
+    videoHeight = height;
+
+    // Ensure even dimensions (required by many codecs)
+    videoWidth += (videoWidth % 2);
+    videoHeight += (videoHeight % 2);
+
+    // Create output directory
     struct stat st;
     if (stat(directory.c_str(), &st) != 0)
     {
         if (mkdir(directory.c_str(), 0777) != 0)
         {
-            std::cerr << "Error: Unable to create output directory " << directory << std::endl;
+            std::cerr << RED << "Error: Unable to create output directory " << directory << RESET << std::endl;
             return;
         }
     }
 
-    // Get current timestamp in seconds
+    // Generate filename with timestamp
     auto now = std::chrono::system_clock::now();
     std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
     std::tm tm = *std::localtime(&now_time_t);
-
-    // Format the timestamp as a string
     std::ostringstream timestampStream;
     timestampStream << std::put_time(&tm, "%Y%m%d_%H%M%S");
 
-    // Generate the output filename using the timestamp
-    std::string outputFilename = "camera_footage_" + timestampStream.str() + ".avi";
-    std::string outputPath = directory + "/" + outputFilename;
-
-    // Open the video writer
-    videoWriter.open(outputPath, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 30.0, cv::Size(width, height), true);
-
-    if (!videoWriter.isOpened())
-    {
-        std::cerr << "Error: Unable to open video writer for " << outputPath << std::endl;
+    std::string sanitizedId = deviceConfig.id;
+    // Remove any characters that might be problematic in filenames
+    std::replace(sanitizedId.begin(), sanitizedId.end(), '(', '_');
+    std::replace(sanitizedId.begin(), sanitizedId.end(), ')', '_');
+    std::replace(sanitizedId.begin(), sanitizedId.end(), ' ', '_');
+    
+    std::string outputPath;
+    bool videoOpened = false;
+    
+    // Try different codecs in order of preference
+    std::vector<std::pair<std::string, int>> codecOptions = {
+        {".mp4", cv::VideoWriter::fourcc('a', 'v', 'c', '1')},   // H.264
+        {".avi", cv::VideoWriter::fourcc('X', 'V', 'I', 'D')},   // XVID
+        {".avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G')},   // MJPG
+        {".avi", cv::VideoWriter::fourcc('D', 'I', 'V', 'X')}    // DIVX
+    };
+    
+    double fps = 30.0; // ToDo make this configurable
+    
+    for (const auto& codecOption : codecOptions) {
+        std::string extension = codecOption.first;
+        int codec = codecOption.second;
+        
+        std::string outputFilename = "camera_" + sanitizedId + "_" + timestampStream.str() + extension;
+        outputPath = directory + "/" + outputFilename;
+        
+        if (debug)
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ":Trying codec: " << ((char)(codec & 0xFF)) 
+                     << ((char)((codec >> 8) & 0xFF)) 
+                     << ((char)((codec >> 16) & 0xFF)) 
+                     << ((char)((codec >> 24) & 0xFF)) 
+                     << " for file: " << outputPath << RESET << std::endl;
+        
+        videoWriter.open(outputPath, codec, fps, cv::Size(videoWidth, videoHeight), true);
+        
+        if (videoWriter.isOpened()) {
+            videoOpened = true;
+            break;
+        } else {
+            std::cerr << RED << "Failed to open video with codec: " << ((char)(codec & 0xFF)) 
+                     << ((char)((codec >> 8) & 0xFF)) 
+                     << ((char)((codec >> 16) & 0xFF)) 
+                     << ((char)((codec >> 24) & 0xFF)) 
+                     << RESET << std::endl;
+        }
     }
-    else
-    {
-        std::cout << "Video recording started at: " << outputPath << std::endl;
-        saveStream = true;
+    
+    if (!videoOpened) {
+        std::cerr << RED << "Error: All codecs failed. Video recording disabled." << RESET << std::endl;
+        return;
     }
+
+    if (debug) {
+        // Write a test frame to ensure the writer actually works
+        cv::Mat testFrame(videoHeight, videoWidth, CV_8UC3, cv::Scalar(0, 255, 0));
+        std::string text = "Camera: " + deviceConfig.id;
+        cv::putText(testFrame, text, cv::Point(30, 30), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(255, 255, 255), 2);
+        videoWriter.write(testFrame);
+    }
+
+    videoOutputPath = outputPath;
+    std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": Video recording started at: " << outputPath << RESET << std::endl;
 }
 
 void Camera::saveFrameToVideo(cv::VideoWriter &videoWriter, const cv::Mat &frame)
 {
-    if (videoWriter.isOpened())
-    {
-        videoWriter.write(frame);
+    if (!videoWriter.isOpened()) {
+        std::cerr << RED << "Error: Video writer is not opened." << RESET << std::endl;
+        return;
     }
-    else
-    {
-        std::cerr << "Error: Video writer is not opened." << std::endl;
+
+    // Ensure frame is not empty and is a valid image format
+    if (frame.empty()) {
+        std::cerr << RED << "Error: Cannot save empty frame to video." << RESET << std::endl;
+        return;
+    }
+
+    // Check if frame is grayscale and convert to color if needed
+    cv::Mat colorFrame;
+    if (frame.channels() == 1) {
+        cv::cvtColor(frame, colorFrame, cv::COLOR_GRAY2BGR);
+    } else {
+        colorFrame = frame;
+    }
+
+    // Ensure frame has the correct size
+    cv::Mat resizedFrame;
+    if (colorFrame.cols != videoWidth || colorFrame.rows != videoHeight) {
+        try {
+            cv::resize(colorFrame, resizedFrame, cv::Size(videoWidth, videoHeight));
+        } catch (const std::exception &ex) {
+            std::cerr << RED << "Failed to resize frame for video: " << ex.what() << RESET << std::endl;
+            return;
+        }
+    } else {
+        resizedFrame = colorFrame;
+    }
+    
+    // Write frame to video
+    try {
+        videoWriter.write(resizedFrame);
+        frameCounter++;
+    } catch (const std::exception &ex) {
+        std::cerr << RED << "Exception writing to video: " << ex.what() << RESET << std::endl;
     }
 }
 
 void Camera::startStreaming(std::atomic<bool> &stopStream, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveStream)
 {
     setFreeRunMode();
-    setFps(30.0);
+    setFps(30.0); // ToDo make this configurable
     auto stream = initializeStream();
-    if (!stream) return;
+    if (!stream)
+        return;
 
     if (saveStream)
     {
-        initializeVideoWriter("./output", 640, 480);
+        initializeVideoWriter(videoOutputPath, 640, 480);
     }
 
     auto lastTime = std::chrono::steady_clock::now();
     int frameCount = 0;
-    int consecutiveFailures = 0;  // Count failed grabs
+    int consecutiveFailures = 0; // Count failed grabs
 
     while (!stopStream.load())
     {
         const rcg::Buffer *buffer = nullptr;
-        buffer = stream->grab(500);
-        if (!buffer)
+        try
         {
-            consecutiveFailures++;
-            if (consecutiveFailures > 10)
+            buffer = stream->grab(500);
+            if (!buffer)
             {
-                std::cerr << "Error: Too many failed frame grabs for camera " << device->getID() << ". Stopping stream..." << std::endl;
-                break; // Exit loop if grabbing fails too often
+                consecutiveFailures++;
+                if (consecutiveFailures > 10)
+                {
+                    std::cerr << RED << "Error: Too many failed frame grabs for camera " << device->getID()
+                              << ". Stopping stream..." << RESET << std::endl;
+                    break; // Exit loop if grabbing fails too often
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Avoid tight loop
+                continue;
             }
+        }
+        catch (const std::exception &ex)
+        {
+            std::cerr << RED << "Exception during grab: " << ex.what() << RESET << std::endl;
+            if (stopStream.load())
+                break;
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
             continue;
         }
-        consecutiveFailures = 0;  // Reset failure count
+
+        consecutiveFailures = 0; // Reset failure count
         cv::Mat outputFrame;
-        processFrame(buffer, outputFrame);
+        try
+        {
+            processFrame(buffer, outputFrame);
+        }
+        catch (const std::exception &ex)
+        {
+            std::cerr << RED << "Exception during frame processing: " << ex.what() << RESET << std::endl;
+            continue;
+        }
 
         if (!outputFrame.empty())
         {
             updateGlobalFrame(globalFrameMutex, globalFrames, index, outputFrame, frameCount, lastTime);
-            if (saveStream)
+            if (saveStream && videoWriter.isOpened())
             {
-                saveFrameToVideo(videoWriter, outputFrame);
+                try
+                {
+                    saveFrameToVideo(videoWriter, outputFrame);
+                }
+                catch (const std::exception &ex)
+                {
+                    std::cerr << RED << "Exception during video writing: " << ex.what() << RESET << std::endl;
+                }
             }
         }
     }
 
-    cleanupStream(stream);
-    if (saveStream) videoWriter.release();
+    // Clean up
+    try
+    {
+        cleanupStream(stream);
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Exception during stream cleanup: " << ex.what() << RESET << std::endl;
+    }
+
+    if (saveStream && videoWriter.isOpened())
+    {
+        try
+        {
+            videoWriter.release();
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": saveStream success" << RESET << std::endl;
+        }
+        catch (const std::exception &ex)
+        {
+            std::cerr << RED << "Exception during video writer release: " << ex.what() << RESET << std::endl;
+        }
+    }
 }
 
 // Function to stopStream streaming
@@ -636,13 +768,13 @@ void Camera::setBandwidth(const std::shared_ptr<Camera> &camera, double camIndex
         double packetDelay = CalculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
         double transmissionDelay = CalculateTransmissionDelayNs(packetDelay, camIndex);
         int64_t gevSCPDValue = static_cast<int64_t>(packetDelay);
-        rcg::setInteger(camera->nodemap, "GevSCPSPacketSize", packetSizeB); 
+        rcg::setInteger(camera->nodemap, "GevSCPSPacketSize", packetSizeB);
         rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue); // in counter units, 1ns resolution if ptp is enabled
         int64_t gevSCFTDValue = static_cast<int64_t>(transmissionDelay);
         rcg::setInteger(camera->nodemap, "GevSCFTD", gevSCFTDValue); // in counter units, 1ns resolution if ptp is enabled
 
         if (debug)
-            std::cout << "[DEBUG] numCams and CamIndex: " << numCams-1 << " " << camIndex << std::endl;
+            std::cout << "[DEBUG] numCams and CamIndex: " << numCams - 1 << " " << camIndex << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << packetDelay << " ns" << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated transmission delay: " << transmissionDelay << " ns" << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPSPacketSize set to: " << rcg::getInteger(nodemap, "GevSCPSPacketSize") << " bytes" << std::endl;
@@ -669,5 +801,5 @@ void Camera::setFps(double maxFrameRate)
     }
 
     if (debug)
-        std::cout << GREEN <<  "[DEBUG] Camera " << deviceConfig.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << maxFrameRate << std::endl;
+        std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << maxFrameRate << std::endl;
 }
