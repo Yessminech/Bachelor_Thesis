@@ -18,10 +18,9 @@
 #include <atomic>
 #include <set>
 
-std::list<std::shared_ptr<Camera>> openCameras; // ToDo import from Device manager and add to constructor
 
 NetworkManager::NetworkManager()
-    : ptp_sync_timeout(800), num_init(0), num_master(0), num_slave(0), master_clock_id(0) {}
+    : ptpSyncTimeout(800), numInit(0), numMaster(0), numSlave(0), masterClockId(0) {}
 
 NetworkManager::~NetworkManager() {}
 
@@ -43,23 +42,23 @@ void NetworkManager::printPtpConfig(std::shared_ptr<Camera> camera)
     }
 }
 
-void NetworkManager::monitorPtpStatus(std::shared_ptr<Camera> camera, std::shared_ptr<rcg::Interface> interf, int deviceCount)
+void NetworkManager::monitorPtpStatus(std::shared_ptr<Camera> camera, std::shared_ptr<rcg::Interface> interf, int deviceCount, std::list<std::shared_ptr<Camera>> &openCamerasList)
 {
     auto start_time = std::chrono::steady_clock::now();
-    while (num_slave != deviceCount - 1 && num_master != 1)
-    {   num_init = 0;
-        num_master = 0;
-        num_slave = 0;
-        for (auto &camera : openCameras)
+    while (numSlave != deviceCount - 1 && numMaster != 1)
+    {   numInit = 0;
+        numMaster = 0;
+        numSlave = 0;
+        for (auto &camera : openCamerasList)
         {
             camera->getPtpConfig();
             PtpConfig ptpConfig = camera->ptpConfig;
             statusCheck(ptpConfig.status);
         }
-        // std::cout << "Camera PTP status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
-        // if (std::chrono::steady_clock::now() - start_time > std::chrono::seconds(ptp_sync_timeout))
+        // std::cout << "Camera PTP status: " << numInit << " initializing, " << numMaster << " masters, " << numSlave << " slaves" << std::endl;
+        // if (std::chrono::steady_clock::now() - start_time > std::chrono::seconds(ptpSyncTimeout))
         // {
-        //     std::cerr << "Timed out waiting for camera clocks to become PTP camera slaves. Current status: " << num_init << " initializing, " << num_master << " masters, " << num_slave << " slaves" << std::endl;
+        //     std::cerr << "Timed out waiting for camera clocks to become PTP camera slaves. Current status: " << numInit << " initializing, " << numMaster << " masters, " << numSlave << " slaves" << std::endl;
         //     break;
         // }
         std::this_thread::sleep_for(std::chrono::seconds(10));
@@ -115,15 +114,15 @@ void NetworkManager::statusCheck(const std::string &current_status)
 {
     if (current_status == "Initializing")
     {
-        num_init++;
+        numInit++;
     }
     else if (current_status == "Master")
     {
-        num_master++;
+        numMaster++;
     }
     else if (current_status == "Slave")
     {
-        num_slave++;
+        numSlave++;
     }
     else
     {
@@ -135,6 +134,7 @@ void NetworkManager::configureNetworkFroSyncFreeRun(const std::list<std::shared_
 {
     for (const auto &camera : OpenCameras)
     {
+        // camera->setFps(maxFrameRate);
         camera->setPtpConfig();
         double camIndex = std::distance(OpenCameras.begin(), std::find(OpenCameras.begin(), OpenCameras.end(), camera)); 
         double numCams = OpenCameras.size();

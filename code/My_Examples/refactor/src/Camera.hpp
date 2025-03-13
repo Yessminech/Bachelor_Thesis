@@ -43,6 +43,7 @@ struct PtpConfig
   uint64_t timestamp_s;
   std::string clockAccuracy;
   int offsetFromMaster;
+  double deviceLinkSpeed;
 };
 
 class Camera
@@ -57,6 +58,7 @@ public:
   void setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1);
   void setPtpConfig();
   void setBandwidth(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent);
+  void setFps(double maxFrameRate);
 
   // Network Control
   std::string getCurrentIP();
@@ -65,7 +67,7 @@ public:
   void getTimestamps();
 
   // Streaming Control
-  void startStreaming(bool stop_streaming, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveFootage);
+  void startStreaming(std::atomic<bool> &stopStream, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveStream);
   void stopStreaming(std::shared_ptr<rcg::Stream> stream);
 
   bool debug = true;
@@ -75,7 +77,7 @@ public:
 
 private:
   cv::VideoWriter videoWriter;        // Used to write frames to a video file
-  bool saveFootage = false;           // Flag to enable/disable saving
+  bool saveStream = false;           // Flag to enable/disable saving
   std::string outputDirectory = "./"; // Default directory
 
   std::shared_ptr<rcg::Device> device;

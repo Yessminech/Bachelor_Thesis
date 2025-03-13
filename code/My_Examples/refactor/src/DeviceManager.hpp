@@ -31,18 +31,21 @@ public:
     std::shared_ptr<rcg::Device> getAvailableCameraByID(const std::string &deviceId);
     std::shared_ptr<Camera> getOpenCameraByID(const std::string &deviceId);
     const std::list<std::shared_ptr<Camera>> &getOpenCameras() const;
-    bool openCamera(const std::string &deviceId);
-    bool closeCamera(const std::string &deviceId);
+    void openCameras(std::list<std::string> deviceIds);
+    // +closeCameras()  
 
-    bool listCamera(std::shared_ptr<Camera> camera);
     bool listAvailableCamerasByID();
     bool listOpenCameras();
     bool debug = true;
 
 private:
     void enumerateDevicesFromSystems(const std::vector<std::shared_ptr<rcg::System>>& systems);
-    std::list<std::shared_ptr<Camera>> openCameras;          // List of cameras
-    std::set<std::shared_ptr<rcg::Device>> availableCameras; // List of cameras
+    bool openCamera(const std::string &deviceId);
+    bool closeCamera(const std::string &deviceId);
+    bool listCamera(std::shared_ptr<Camera> camera);
+
+    std::list<std::shared_ptr<Camera>> openCamerasList;          // List of cameras
+    std::set<std::shared_ptr<rcg::Device>> availableCamerasList; // List of cameras
     std::string defaultCti;
 };
 

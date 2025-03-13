@@ -28,61 +28,31 @@
 
 StreamManager::StreamManager()
 {
-    // Constructor implementation
-    stop_streaming = false;
     startedThreads = 0;
-    // threads.clear();
-    // globalFrames.clear();
-    // globalDevices.clear();
 }
 
 StreamManager::~StreamManager()
 {
-    // Destructor implementation
-    stop_streaming = true;
     for (auto &t : threads)
     {
         if (t.joinable())
             t.join();
     }
+    globalFrames.clear();
     cv::destroyAllWindows();
     rcg::System::clearSystems();
 }
 
-// Signal handler: when Ctrl+C is pressed.
-void StreamManager::signalHandler(int signum)
-{
-    std::cout << "\n"
-              << YELLOW << "Stopping streaming..." << RESET << std::endl;
-    stop_streaming = true;
-}
-
 /// Arrange frames into a composite grid. Supports up to 6 cameras.
-/// The grid layout is determined by the number of streams.
 cv::Mat StreamManager::createComposite(const std::vector<cv::Mat> &frames)
 {
     int n = frames.size();
     int rows = 1, cols = 1;
-    if (n == 1)
-    {
-        rows = 1;
-        cols = 1;
-    }
-    else if (n == 2)
-    {
-        rows = 1;
-        cols = 2;
-    }
-    else if (n <= 4)
-    {
-        rows = 2;
-        cols = 2;
-    }
-    else if (n <= 6)
-    {
-        rows = 2;
-        cols = 3;
-    }
+    if (n == 1) { rows = 1; cols = 1; }
+    else if (n == 2) { rows = 1; cols = 2; }
+    else if (n <= 4) { rows = 2; cols = 2; }
+    else if (n <= 6) { rows = 2; cols = 3; }
+
     int compWidth = 1280, compHeight = 720;
     int cellWidth = compWidth / cols;
     int cellHeight = compHeight / rows;
@@ -114,32 +84,107 @@ cv::Mat StreamManager::createComposite(const std::vector<cv::Mat> &frames)
     return composite;
 }
 
-// ToDo Save images
-
-/// Streams from a specific device identified by deviceID.
-void StreamManager::streamFromDevice(std::shared_ptr<Camera> camera, bool save_footage)
+// Stream from a specific camera
+void StreamManager::streamFromDevice(std::shared_ptr<Camera> camera, std::atomic<bool>& stopStream, bool saveStream)
 {
     try
     {
         std::lock_guard<std::mutex> lock(globalFrameMutex);
         globalFrames.push_back(cv::Mat());
         int index = static_cast<int>(globalFrames.size()) - 1;
-        // if (camera->debug)
-        // std::cout << "[Camera::debug] Launching stream thread for camera " << camera->getID() << std::endl;
-        threads.emplace_back(&Camera::startStreaming, camera.get(), false, std::ref(globalFrameMutex), std::ref(globalFrames), index, save_footage);
-        // Join all threads // ToDo Why this
+
+        if (camera)
+        {
+            std::cout << "[DEBUG] Launching stream thread for camera " << camera->deviceConfig.id << std::endl;
+        }
+        else
+        {
+            std::cerr << RED << "Error: Camera is null" << RESET << std::endl;
+            return;
+        }
+
+        // Corrected std::thread parameter passing
+        threads.emplace_back([camera, &stopStream, this, index, saveStream]() {
+            camera->startStreaming(stopStream, this->globalFrameMutex, this->globalFrames, index, saveStream);
+        });
+        startedThreads++;
     }
     catch (const std::exception &ex)
     {
-        std::cout << RED << "Error: Exception: " << ex.what() << RESET << std::endl;
+        std::cerr << RED << "Error: Exception during streaming: " << ex.what() << RESET << std::endl;
     }
 }
 
-void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &OpenCameras, bool save_footage)
+void StreamManager::stopStreaming() {
+  
+    // Wait for all threads to finish
+    for (auto& t : threads) {
+        if (t.joinable()) {
+            t.join();
+        }
+    }
+    
+    // Clear resources
+    threads.clear();
+    globalFrames.clear();
+    
+    // Close any OpenCV windows
+    cv::destroyAllWindows();
+}
+
+// Start synchronized free-run mode
+void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &OpenCameras, std::atomic<bool>& stopStream, bool saveStream)
 {
     for (const auto &camera : OpenCameras)
     {
-        streamFromDevice(camera, save_footage);
+        streamFromDevice(camera, stopStream, saveStream);
     }
-    return;
+
+    // Wait for all threads to start successfully.
+    while (startedThreads.load() < OpenCameras.size())
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
+    std::cout << GREEN << "All threads have started successfully." << RESET << std::endl;
+
+    // Create a composite window that scales nicely.
+    const std::string compWindowName = "Composite Stream";
+    cv::namedWindow(compWindowName, cv::WINDOW_AUTOSIZE);
+    const int compWidth = 1280, compHeight = 720;
+    cv::resizeWindow(compWindowName, compWidth, compHeight);
+
+    // Composite display loop.
+    while (!stopStream)
+    {
+        std::vector<cv::Mat> framesCopy;
+        {
+            std::lock_guard<std::mutex> lock(globalFrameMutex);
+            framesCopy = globalFrames;
+        }
+        if (!framesCopy.empty())
+        {
+            cv::Mat composite = createComposite(framesCopy);
+            cv::imshow(compWindowName, composite);
+                        // Print a message to remind the user how to exit
+                        static bool messageShown = false;
+                        if (!messageShown) {
+                            std::cout << "Press 'q' on the OpenCV window to exit the stream.\n";
+                            messageShown = true;
+                        }
+                    
+        }
+    // Process keyboard input - check for specific keys
+    int key = cv::waitKey(30);
+    if (key >= 0) {
+        std::cout << "Key pressed: " << static_cast<char>(key) << " (code: " << key << ")\n";
+        
+        // Check for common exit keys
+        if (key == 27 || key == 'q' || key == 'Q') {  // ESC, q, or Q
+            std::cout << "Exit key pressed. Stopping stream...\n";
+            stopStream = true;
+            break;
+        }
+    }    }
+    stopStreaming();
 }
+

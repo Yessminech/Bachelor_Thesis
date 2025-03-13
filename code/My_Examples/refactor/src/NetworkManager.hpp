@@ -22,26 +22,27 @@ public:
     NetworkManager();
     ~NetworkManager();
 
-    void statusCheck(const std::string &current_status);
     void printPtpConfig(std::shared_ptr<Camera> camera);
-    void monitorPtpStatus(std::shared_ptr<Camera> camera, std::shared_ptr<rcg::Interface> interf, int deviceCount);
+    void monitorPtpStatus(std::shared_ptr<Camera> camera, std::shared_ptr<rcg::Interface> interf, int deviceCount, std::list<std::shared_ptr<Camera>> &openCamerasList);
     void configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource = "Action1", uint32_t actionSelector = 1, uint32_t destinationIP = 0xFFFFFFFF);
     void sendActionCommand(std::shared_ptr<rcg::System> system);
     void configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &OpenCameras);
 
     // Additional methods
-    void disablePTP();                                                                              // Disables PTP sync
+   // void disablePTP();                                                                              // Disables PTP sync
     // NetworkStatus getNetworkStatus();      // Returns network status
-    std::string monitorPtpStatus();                                                                 // Checks PTP synchronization health
     bool debug = true;
 
 private:
-    double deviceLinkSpeedBps = 125000000; // 1 Gbps // ToDo What does this mean and how to define this
-    double packetSizeB = 8228;             // ToDo What does this mean and how to define this, jumbo frames?
+    double maxFrameRate = 10; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
+    double deviceLinkSpeedBps = 1250000000; // 1 Gbps // ToDo What does this mean and how to define this
+    double packetSizeB = 9012;             // ToDo What does this mean and how to define this, jumbo frames?
     double bufferPercent = 15;             // 10.93;
-    int ptp_sync_timeout;
-    int num_init;
-    int num_master;
-    int num_slave;
-    int64_t master_clock_id;
+    int ptpSyncTimeout;
+    int numInit;
+    int numMaster;
+    int numSlave;
+    int64_t masterClockId;
+
+    void statusCheck(const std::string &current_status);
 };

@@ -14,15 +14,15 @@
 
 DeviceManager::DeviceManager()
 {
-    availableCameras = {};
-    openCameras = {};
+    availableCamerasList = {};
+    openCamerasList = {};
     defaultCti = "/home/test/Downloads/Baumer_GAPI_SDK_2.15.2_lin_x86_64_cpp/lib"; // ToDo add other path mvImpact?
 }
 
 DeviceManager::~DeviceManager()
 {
-    availableCameras = {};
-    for (auto &camera : openCameras)
+    availableCamerasList = {};
+    for (auto &camera : openCamerasList)
     {
         closeCamera(camera->deviceConfig.id);
         if (debug)
@@ -33,7 +33,7 @@ DeviceManager::~DeviceManager()
 bool DeviceManager::getAvailableCameras()
 {
     // Clear existing available cameras
-    availableCameras.clear();
+    availableCamerasList.clear();
     
     // First try with system-provided paths
     std::vector<std::shared_ptr<rcg::System>> systems;
@@ -82,7 +82,15 @@ bool DeviceManager::getAvailableCameras()
         std::cerr << RED << "Error enumerating with custom path: " << ex.what() << RESET << std::endl;
     }
 
-    return !availableCameras.empty();
+    return !availableCamerasList.empty();
+}
+
+void DeviceManager::openCameras(std::list<std::string> deviceIds){
+    // device enumeration 
+    for (const auto &deviceId : deviceIds){
+        openCamera(deviceId);
+    }
+    return;
 }
 
 // Helper method to enumerate devices from a list of systems
@@ -116,7 +124,7 @@ void DeviceManager::enumerateDevicesFromSystems(const std::vector<std::shared_pt
                             // Check if we already have this device ID
                             if (!getAvailableCameraByID(device->getID()))
                             {
-                                availableCameras.insert(device);
+                                availableCamerasList.insert(device);
                             }
                         }
                     }
@@ -143,7 +151,7 @@ bool DeviceManager::listAvailableCamerasByID()
     try
     {
         std::list<std::string> availableCamerasIds;
-        for (const std::shared_ptr<rcg::Device> &device : availableCameras)
+        for (const std::shared_ptr<rcg::Device> &device : availableCamerasList)
         {
             availableCamerasIds.push_back(device->getID());
         }
@@ -164,7 +172,7 @@ bool DeviceManager::listAvailableCamerasByID()
 
 std::shared_ptr<rcg::Device> DeviceManager::getAvailableCameraByID(const std::string &deviceId)
 {
-    for (const auto &device : availableCameras)
+    for (const auto &device : availableCamerasList)
     {
         if (device->getID() == deviceId)
         {
@@ -176,12 +184,12 @@ std::shared_ptr<rcg::Device> DeviceManager::getAvailableCameraByID(const std::st
 
 const std::list<std::shared_ptr<Camera>> &DeviceManager::getOpenCameras() const
 {
-    return openCameras;
+    return openCamerasList;
 }
 
 std::shared_ptr<Camera> DeviceManager::getOpenCameraByID(const std::string &deviceId)
 {
-    for (const auto &camera : openCameras)
+    for (const auto &camera : openCamerasList)
     {
         DeviceConfig deviceConfig = camera->deviceConfig;
         if (deviceConfig.id == deviceId)
@@ -203,7 +211,7 @@ bool DeviceManager::openCamera(const std::string &deviceId)
             return false;
         }
         std::shared_ptr<Camera> newCamera = std::make_shared<Camera>(device);
-        openCameras.push_back(newCamera);
+        openCamerasList.push_back(newCamera);
         return true;
     }
     catch (const std::exception &ex)
@@ -219,7 +227,7 @@ bool DeviceManager::closeCamera(const std::string &deviceId)
     {
         std::shared_ptr<Camera> camera = getOpenCameraByID(deviceId);
         camera->~Camera();
-        openCameras.remove(camera);
+        openCamerasList.remove(camera);
         return true;
     }
     catch (const std::exception &ex)
@@ -245,6 +253,7 @@ bool DeviceManager::listCamera(std::shared_ptr<Camera> camera)
         std::cout << "        TS Frequency:      " << config.timestampFrequency << std::endl;
         std::cout << "        Current IP:        " << config.currentIP << std::endl;
         std::cout << "        MAC:               " << config.MAC << std::endl;
+        std::cout << "        Deprecated FW:     " << (config.deprecatedFW ? "Yes" : "No") << std::endl;
         std::cout << std::endl;
         return true;
     }
@@ -259,7 +268,7 @@ bool DeviceManager::listOpenCameras()
 {
     try
     {
-        for (const auto &camera : openCameras)
+        for (const auto &camera : openCamerasList)
         {
             listCamera(camera);
         }

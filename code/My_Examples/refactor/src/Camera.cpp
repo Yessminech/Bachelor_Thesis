@@ -15,12 +15,14 @@
 #include <iomanip>
 #include <regex>
 #include <vector>
+#include <atomic>  
+
 
 Camera::Camera(std::shared_ptr<rcg::Device> device) : device(device)
 {
     if (device)
     {
-        device = device;
+        this->device = device;
         try
         {
             device->open(rcg::Device::CONTROL);
@@ -126,10 +128,12 @@ void Camera::setPtpConfig()
     try
     {
         rcg::setString(nodemap, feature.c_str(), "true", true);
+        rcg::setInteger(nodemap, "DeviceLinkSpeed", 1250000000);
         ptpConfig.enabled = rcg::getBoolean(nodemap, feature.c_str());
+        ptpConfig.deviceLinkSpeed = rcg::getInteger(nodemap, "DeviceLinkSpeed");
         if (debug)
         {
-            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": setPtpConfig success" << RESET << std::endl;
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << ", DeviceLinkSpeed is set to "<< ptpConfig.deviceLinkSpeed << RESET << std::endl;
         }
     }
     catch (const std::exception &ex)
@@ -381,19 +385,9 @@ void Camera::setFreeRunMode()
             rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
             rcg::setEnum(nodemap, "TriggerMode", "Off");
             rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
-            // rcg::setEnum(nodemap, "AcquisitionFrameRateAuto", "Off");
-            double maxFrameRate = 10; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
-            try
-            {
-                rcg::setFloat(nodemap, "AcquisitionFrameRate", maxFrameRate);
-            }
-            catch (const std::exception &e)
-            {
-                rcg::setFloat(nodemap, "AcquisitionFrameRateAbs", maxFrameRate);
-            }
 
             if (debug)
-                std::cout << GREEN << "[debug] Camera " << deviceConfig.id << ": setFreeRunMode success" << RESET << std::endl;
+                std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << ": AcquisitionMode:" << rcg::getEnum(nodemap, "AcquisitionMode") << ": TriggerSelector:" << rcg::getEnum(nodemap, "TriggerSelector") << ": AcquisitionFrameRateEnable:" << rcg::getBoolean(nodemap, "AcquisitionFrameRateEnable") << RESET << std::endl;
         }
         catch (const std::exception &ex)
         {
@@ -419,7 +413,7 @@ void Camera::updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat
 
     // Prepare overlay text
     uint64_t timestampNS = std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime.time_since_epoch()).count();
-    double timestampSec = static_cast<double>(timestampNS) / 1e9;
+    double timestampSec = static_cast<double>(timestampNS) / 1e9; // ToDo double Check
 
     std::ostringstream overlayText;
     overlayText << "TS: " << std::fixed << std::setprecision(6) << timestampSec << " s"
@@ -444,36 +438,24 @@ void Camera::updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat
 
 void Camera::processFrame(const rcg::Buffer *buffer, cv::Mat &outputFrame)
 {
-    if (!buffer || buffer->getIsIncomplete() || !buffer->getImagePresent(0))
+    if (buffer && !buffer->getIsIncomplete() && buffer->getImagePresent(0))
+    {
+        rcg::Image image(buffer, 0);
+        cv::Mat rawFrame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
+        uint64_t format = image.getPixelFormat();
+
+        Camera::processRawFrame(rawFrame, outputFrame, format);
+
+        // Resize the frame to a fixed resolution
+        if (!outputFrame.empty())
+        {
+            cv::resize(outputFrame, outputFrame, cv::Size(640, 480));
+        }
+    }
+    else
     {
         std::cerr << YELLOW << "Camera " << device->getID() << ": Invalid image grabbed." << RESET << std::endl;
         return;
-    }
-
-    rcg::Image image(buffer, 0);
-    cv::Mat rawFrame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
-    uint64_t format = image.getPixelFormat();
-
-    Camera::processRawFrame(rawFrame, outputFrame, format);
-
-    // Resize the frame to a fixed resolution
-    if (!outputFrame.empty())
-    {
-        cv::resize(outputFrame, outputFrame, cv::Size(640, 480));
-    }
-}
-
-const rcg::Buffer *Camera::grabFrame(std::shared_ptr<rcg::Stream> &stream)
-{
-    try
-    {
-        return stream->grab(5000);
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "[debug] Exception during buffer grab for camera "
-                  << device->getID() << ": " << ex.what() << RESET << std::endl;
-        return nullptr;
     }
 }
 
@@ -497,31 +479,45 @@ std::shared_ptr<rcg::Stream> Camera::initializeStream()
     if (streamList.empty())
     {
         std::cerr << RED << "No stream available for camera " << device->getID() << RESET << std::endl;
-        device->close();
         return nullptr;
     }
 
-    auto stream = streamList[0];
+    auto stream = streamList[0]; // Select the first available stream
     try
     {
         stream->open();
         stream->attachBuffers(true);
         stream->startStreaming();
+
         if (debug)
-            std::cout << "[debug] Stream started for camera " << device->getID() << std::endl;
+            std::cout << GREEN << "[DEBUG] Stream started for camera " << device->getID() << RESET << std::endl;
+
+        return stream;
     }
     catch (const std::exception &ex)
     {
-        std::cerr << RED << "Failed to start stream for camera " << device->getID()
-                  << ": " << ex.what() << RESET << std::endl;
+        std::cerr << RED << "Failed to start stream for camera " << device->getID() << ": " << ex.what() << RESET << std::endl;
         return nullptr;
     }
-
-    return stream;
 }
+
+
+#include <sys/stat.h> // For mkdir()
+#include <sys/types.h>
 
 void Camera::initializeVideoWriter(const std::string &directory, int width, int height)
 {
+    // Ensure the output directory exists
+    struct stat st;
+    if (stat(directory.c_str(), &st) != 0)
+    {
+        if (mkdir(directory.c_str(), 0777) != 0)
+        {
+            std::cerr << "Error: Unable to create output directory " << directory << std::endl;
+            return;
+        }
+    }
+
     // Get current timestamp in seconds
     auto now = std::chrono::system_clock::now();
     std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
@@ -533,8 +529,6 @@ void Camera::initializeVideoWriter(const std::string &directory, int width, int 
 
     // Generate the output filename using the timestamp
     std::string outputFilename = "camera_footage_" + timestampStream.str() + ".avi";
-
-    // Generate the full output path
     std::string outputPath = directory + "/" + outputFilename;
 
     // Open the video writer
@@ -547,7 +541,7 @@ void Camera::initializeVideoWriter(const std::string &directory, int width, int 
     else
     {
         std::cout << "Video recording started at: " << outputPath << std::endl;
-        saveFootage = true;
+        saveStream = true;
     }
 }
 
@@ -563,64 +557,55 @@ void Camera::saveFrameToVideo(cv::VideoWriter &videoWriter, const cv::Mat &frame
     }
 }
 
-void Camera::startStreaming(bool stop_streaming, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveFootage)
+void Camera::startStreaming(std::atomic<bool> &stopStream, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveStream)
 {
-    // Set camera to free-run mode
-    Camera::setFreeRunMode();
-
-    // Initialize and open the camera stream
+    setFreeRunMode();
+    setFps(30.0);
     auto stream = initializeStream();
-    if (!stream)
-        return;
+    if (!stream) return;
 
-    // Optionally initialize video writer if saving footage is enabled
-    if (saveFootage)
+    if (saveStream)
     {
-        initializeVideoWriter("./output", 640, 480); // Set output directory and resolution
+        initializeVideoWriter("./output", 640, 480);
     }
 
-    // Variables for FPS calculation
     auto lastTime = std::chrono::steady_clock::now();
     int frameCount = 0;
+    int consecutiveFailures = 0;  // Count failed grabs
 
-    while (!stop_streaming)
+    while (!stopStream.load())
     {
-        // Grab a frame from the stream
-        auto buffer = grabFrame(stream);
+        const rcg::Buffer *buffer = nullptr;
+        buffer = stream->grab(500);
         if (!buffer)
+        {
+            consecutiveFailures++;
+            if (consecutiveFailures > 10)
+            {
+                std::cerr << "Error: Too many failed frame grabs for camera " << device->getID() << ". Stopping stream..." << std::endl;
+                break; // Exit loop if grabbing fails too often
+            }
             continue;
-
-        // Process the frame
+        }
+        consecutiveFailures = 0;  // Reset failure count
         cv::Mat outputFrame;
         processFrame(buffer, outputFrame);
 
         if (!outputFrame.empty())
         {
-            // Update the global frame
             updateGlobalFrame(globalFrameMutex, globalFrames, index, outputFrame, frameCount, lastTime);
-
-            // If saving footage, write the frame to the video file
-            if (saveFootage)
+            if (saveStream)
             {
                 saveFrameToVideo(videoWriter, outputFrame);
             }
         }
-        else if (debug)
-        {
-            std::cerr << "[debug] Empty output frame for camera " << device->getID() << std::endl;
-        }
     }
 
-    // Clean up the stream and release the video writer if necessary
     cleanupStream(stream);
-    if (saveFootage)
-    {
-        videoWriter.release();
-        std::cout << "Footage saved successfully!" << std::endl;
-    }
+    if (saveStream) videoWriter.release();
 }
 
-// Function to stop streaming
+// Function to stopStream streaming
 void stopStreaming(std::shared_ptr<rcg::Stream> stream)
 {
     if (stream)
@@ -651,28 +636,38 @@ void Camera::setBandwidth(const std::shared_ptr<Camera> &camera, double camIndex
         double packetDelay = CalculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
         double transmissionDelay = CalculateTransmissionDelayNs(packetDelay, camIndex);
         int64_t gevSCPDValue = static_cast<int64_t>(packetDelay);
-        double gevSCPDValueMs = gevSCPDValue / 1e6;
-        rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue);
+        rcg::setInteger(camera->nodemap, "GevSCPSPacketSize", packetSizeB); 
+        rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue); // in counter units, 1ns resolution if ptp is enabled
         int64_t gevSCFTDValue = static_cast<int64_t>(transmissionDelay);
-        double gevSCFTDValueMs = gevSCFTDValue / 1e6;
-        rcg::setInteger(camera->nodemap, "GevSCFTD", gevSCFTDValue);
+        rcg::setInteger(camera->nodemap, "GevSCFTD", gevSCFTDValue); // in counter units, 1ns resolution if ptp is enabled
 
         if (debug)
-            std::cout << "[DEBUG] numCams and CamIndex: " << numCams << " " << camIndex << std::endl;
+            std::cout << "[DEBUG] numCams and CamIndex: " << numCams-1 << " " << camIndex << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << packetDelay << " ns" << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated transmission delay: " << transmissionDelay << " ns" << std::endl;
+        std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPSPacketSize set to: " << rcg::getInteger(nodemap, "GevSCPSPacketSize") << " bytes" << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPD set to: " << rcg::getInteger(nodemap, "GevSCPD") << " ns" << std::endl;
-        std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCFTD in seconds: " << gevSCFTDValueMs << " s" << std::endl;
+        std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCFTD set to: " << rcg::getInteger(nodemap, "GevSCFTD") << " ns" << std::endl;
         std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": setBandwidth sucess" << std::endl;
-
-        // if (device->getID() == "devicemodul04_5d_4b_79_71_12") // Example: skip specific device.
-        // {
-        //     rcg::setEnum(camera->nodemap, "ImageTransferDelayMode", "On");
-        //     rcg::setFloat(camera->nodemap, "ImageTransferDelayValue", gevSCFTDValueMs);
-        // }
     }
     catch (const std::exception &ex)
     {
         std::cerr << RED << "Failed to set bandwidth for camera " << device->getID() << ": " << ex.what() << RESET << std::endl;
     }
+}
+
+void Camera::setFps(double maxFrameRate)
+{
+    try
+    {
+        rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
+        rcg::setFloat(nodemap, "AcquisitionFrameRate", maxFrameRate);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Failed to set frame rate for camera " << deviceConfig.id << ": " << e.what() << std::endl;
+    }
+
+    if (debug)
+        std::cout << GREEN <<  "[DEBUG] Camera " << deviceConfig.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << maxFrameRate << std::endl;
 }
