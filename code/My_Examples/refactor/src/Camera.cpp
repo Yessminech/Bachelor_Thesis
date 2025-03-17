@@ -74,6 +74,12 @@ Camera::Camera(std::shared_ptr<rcg::Device> device) : device(device)
         deviceConfig.currentIP = getCurrentIP();
         deviceConfig.MAC = getMAC();
         deviceConfig.deprecatedFW = rcg::getString(nodemap, "PtpEnable").empty(); // ToDo do this in a better way
+        if (deviceConfig.deprecatedFW){
+            exposure =  rcg::getInteger(nodemap, "ExposureTimeAbs");
+        }
+        else{
+            exposure =  rcg::getInteger(nodemap, "ExposureTime");
+        }
         width = rcg::getInteger(nodemap, "Width");
         height = rcg::getInteger(nodemap, "Height");
         std::string formatString = rcg::getEnum(nodemap, "PixelFormat");
@@ -108,8 +114,6 @@ void Camera::setCameraConfig()
             rcg::setBoolean(nodemap, "ChunkEnable", true);
             //rcg::setFloat(nodemap, "ExposureTimeAbs", exposure); // ToDo for all or only deprecated ? 
         }
-        // rcg::setEnum(nodemap, "ExposureAuto","Continuous");
-        // rcg::setFloat(nodemap, "ExposureTime", exposure); // Example: 20 ms
         rcg::setFloat(nodemap, "Gain", gain);             // Example: Gain of 10 dB
         rcg::setBoolean(nodemap, "AutoFunctionROIUseWhiteBalance", true);
         rcg::setEnum(nodemap, "BalanceWhiteAuto", "Continuous"); // Example: Auto white balance
@@ -279,7 +283,9 @@ std::string Camera::getCurrentIP()
     }
 }
 
-
+double Camera::getExposure(){
+    return exposure;
+}
 
 void Camera::getPtpConfig()
 {
@@ -951,8 +957,8 @@ void Camera::setBandwidthDelays(const std::shared_ptr<Camera> &camera, double ca
         std::cout << "[DEBUG] Camera " << "packetSizeB: " << packetSizeB << " deviceLinkSpeedBps: " << deviceLinkSpeedBps << " bufferPercent: " << bufferPercent << " numCams: " << numCams << std::endl;
         packetDelayNs = calculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
         std::cout << "[DEBUG] Camera " << "packetDelayNs: " << packetDelayNs << std::endl;
-        transmissionDelayNs = packetDelayNs * camIndex;
-        int64_t gevSCPDValue = 8* static_cast<int64_t>((packetDelayNs + 7) / 8) * 8; // Ensure multiple of 8
+        transmissionDelayNs = packetDelayNs * (numCams-1-camIndex);
+        int64_t gevSCPDValue = static_cast<int64_t>((packetDelayNs + 7) / 8) * 8; // Ensure multiple of 8
         std::cout << "[DEBUG] Camera " << "gevSCPDValue: " << gevSCPDValue << std::endl;
         rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue); // in counter units, 1ns resolution if ptp is enabled
         int64_t gevSCFTDValue = static_cast<int64_t>((transmissionDelayNs + 7) / 8) * 8;
@@ -960,7 +966,7 @@ void Camera::setBandwidthDelays(const std::shared_ptr<Camera> &camera, double ca
         
 
         if (debug)
-            std::cout << "[DEBUG] numCams and CamIndex: " << numCams - 1 << " " << camIndex << std::endl;
+            std::cout << "[DEBUG] numCams and CamIndex: " << numCams << " " << camIndex << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << packetDelayNs << " ns" << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated transmission delay: " << transmissionDelayNs << " ns" << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPD set to: " << rcg::getInteger(nodemap, "GevSCPD") << " ns" << std::endl;
@@ -973,24 +979,28 @@ void Camera::setBandwidthDelays(const std::shared_ptr<Camera> &camera, double ca
     }
 }
 
-void Camera::setFps(double maxFps)
+void Camera::setFps(double fps)
 {
     try
     {
         rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
-        // if(!camera->deviceConfig.deprecatedFW)
-            rcg::setEnum(nodemap, "AcquisitionFrameRate", "FrameRate");
-        // else{
-            rcg::setEnum(nodemap, "AcquisitionFrameRateAbs", "FrameRate"); // ToDo for all or only deprecated ? 
-        // }
+        if(!deviceConfig.deprecatedFW)
+            rcg::setFloat(nodemap, "AcquisitionFrameRate", fps);
+            if (debug)
+            std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << std::endl;
+
+        else{
+            rcg::setFloat(nodemap, "AcquisitionFrameRateAbs", fps); 
+            if (debug)
+            std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRateAbs") << std::endl;
+        }
     }
     catch (const std::exception &e)
     {
         std::cerr << "Failed to set frame rate for camera " << deviceConfig.id << ": " << e.what() << std::endl;
     }
 
-    if (debug)
-        std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << maxFps << std::endl;
+
 }
 
 void Camera::setExposureTime(double exposureTime) // ToDo correct this
@@ -998,13 +1008,22 @@ void Camera::setExposureTime(double exposureTime) // ToDo correct this
     try
     {
         rcg::setEnum(nodemap, "ExposureMode", "Timed");
-        rcg::setEnum(nodemap, "ExposureAuto", "Off");
-        rcg::setFloat(nodemap, "ExposureTime", exposureTime);
-        rcg::setFloat(nodemap, "ExposureTimeAbs", exposureTime); // ToDo for all or only deprecated ? 
+        rcg::setEnum(nodemap, "ExposureAuto", "Off"); //         // rcg::setEnum(nodemap, "ExposureAuto","Continuous");
+        if (deviceConfig.deprecatedFW){
+            rcg::setFloat(nodemap, "ExposureTimeAbs", exposureTime); // ToDo for all or only deprecated ? 
+        }
+        else{
+            rcg::setFloat(nodemap, "ExposureTime", exposureTime); // ToDo for all or only deprecated ? 
+        }
 
         if (debug)
+        if (deviceConfig.deprecatedFW){
             std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << "ExposureTime set to:" << rcg::getFloat(nodemap, "ExposureTimeAbs") << std::endl; //ExposureTime // ToDo for all or only deprecated ? 
+        }
+        else{
+            std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << "ExposureTime set to:" << rcg::getFloat(nodemap, "ExposureTime") << std::endl; //ExposureTime // ToDo for all or only deprecated ? 
     }
+}
     catch (const std::exception &e)
     {
         std::cerr << "Failed to set exposure time for camera " << deviceConfig.id << ": " << e.what() << std::endl;

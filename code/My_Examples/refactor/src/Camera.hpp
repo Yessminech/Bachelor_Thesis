@@ -69,7 +69,7 @@ public:
   void setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1);
   void setPtpConfig(bool enable = true);
   void setBandwidthDelays(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent);
-  void setFps(double maxFps);
+  void setFps(double fpsUpperBound);
   void resetTimestamp();
   // Network Control
   std::string getCurrentIP();
@@ -77,6 +77,8 @@ public:
   std::string getMAC();
   void getTimestamps();
   int getBitsPerPixel(PfncFormat_ pixelFormat); 
+  double getExposure();
+
   double calculateRawFrameSizeB(int width, int height, PfncFormat_ pixelFormat);
   double calculateFrameTransmissionCycle(double deviceLinkSpeedBps, double packetSizeB);
   double calculateFps(double deviceLinkSpeedBps, double packetSizeB);
@@ -104,7 +106,6 @@ private:
   double transmissionDelayNs = 0;
 
   std::shared_ptr<rcg::Device> device;
-  float exposure = 222063; // Example: 20 ms
   float gain = 10;          // Example: Gain of 10 dB
   void initializeVideoWriter(const std::string &directory, int width, int height);
   void setFreeRunMode();
@@ -121,6 +122,7 @@ private:
   std::string hexToIP(const std::string &hexIP);
   std::string decimalToMAC(uint64_t decimalMAC);
   std::string hexToMAC(const std::string &hexMAC);
+  double exposure;
   double width;
   double height;
   PfncFormat_ pixelFormat;

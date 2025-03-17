@@ -85,14 +85,18 @@ cv::Mat StreamManager::createComposite(const std::vector<cv::Mat> &frames)
 }
 
 // Stream from a specific camera
-void StreamManager::streamFromDevice(std::shared_ptr<Camera> camera, std::atomic<bool>& stopStream, bool saveStream)
+void StreamManager::streamFromDevice(std::shared_ptr<Camera> camera, std::atomic<bool>& stopStream, bool saveStream, int threadIndex)
 {
     try
     {
         std::lock_guard<std::mutex> lock(globalFrameMutex);
         globalFrames.push_back(cv::Mat());
-        int index = static_cast<int>(globalFrames.size()) - 1;
-
+       // Normal iteration int index = static_cast<int>(globalFrames.size()) - 1;
+        // Ensure the globalFrames vector is large enough
+        if (threadIndex >= globalFrames.size()) {
+            globalFrames.resize(threadIndex + 1);
+        }
+        
         if (camera)
         {
             std::cout << "[DEBUG] Launching stream thread for camera " << camera->deviceConfig.id << std::endl;
@@ -104,8 +108,9 @@ void StreamManager::streamFromDevice(std::shared_ptr<Camera> camera, std::atomic
         }
 
         // Corrected std::thread parameter passing
-        threads.emplace_back([camera, &stopStream, this, index, saveStream]() {
-            camera->startStreaming(stopStream, this->globalFrameMutex, this->globalFrames, index, saveStream);
+        //threads.emplace_back([camera, &stopStream, this, index, saveStream]() {
+            threads.emplace_back([camera, &stopStream, this, threadIndex, saveStream]() {
+            camera->startStreaming(stopStream, this->globalFrameMutex, this->globalFrames, threadIndex, saveStream); // normal iteraion index
         });
         startedThreads++;
     }
@@ -135,11 +140,26 @@ void StreamManager::stopStreaming() {
 // Start synchronized free-run mode
 void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras, std::atomic<bool>& stopStream, bool saveStream)
 {
-    for (const auto &camera : openCameras)
-    {
-        streamFromDevice(camera, stopStream, saveStream);
-    }
+    // for (auto it = openCameras.rbegin(); it != openCameras.rend(); ++it)
+    // {
+    //     const auto &camera = *it;
 
+    //     streamFromDevice(camera, stopStream, saveStream);
+    // }
+    // Reset the counters
+    startedThreads = 0;
+    
+    // Convert list to vector for easier indexed access
+    std::vector<std::shared_ptr<Camera>> cameraVec(openCameras.begin(), openCameras.end());
+    
+    // Start cameras in the desired order
+    for (int i = 0; i < cameraVec.size(); i++) {
+        // Pass the index explicitly to control frame placement
+        streamFromDevice(cameraVec[i], stopStream, saveStream, i);
+        
+        // Add a small delay to ensure cameras start in the correct order
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
     // Wait for all threads to start successfully.
     while (startedThreads.load() < openCameras.size())
     {

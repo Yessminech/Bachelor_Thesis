@@ -288,71 +288,127 @@ void NetworkManager::disablePtp(const std::list<std::shared_ptr<Camera>> &openCa
         camera->setPtpConfig(false);
     }
 }
+
 void NetworkManager::calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay)
 {
     for (const auto &camera : openCameras)
     {
         double deviceLinkSpeedBps = camera->ptpConfig.deviceLinkSpeed;
         double calculatedFps = camera->calculateFps(deviceLinkSpeedBps, packetSizeB);
-        if (calculatedFps < maxFps)
+        if (calculatedFps < fpsUpperBound)
         {
-            maxFps = calculatedFps;
+            fpsUpperBound = calculatedFps;
         }
     }
 }
 
-
-void NetworkManager::configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras)
+double NetworkManager::calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras)
 {
-    for (auto it = openCameras.rbegin(); it != openCameras.rend(); ++it)
+    double fpsFromExposure =  fpsUpperBound;
+    double currentMaxFps = fpsUpperBound;
+    for (const auto &camera : openCameras)
     {
-        const auto &camera = *it;
-        double deviceLinkSpeedBps = camera->ptpConfig.deviceLinkSpeed;
-        camera->setDeviceLinkThroughput(deviceLinkSpeedBps);
-        camera->setPacketSizeB(packetSizeB);
-        double camIndex = std::distance(openCameras.begin(), std::find(openCameras.begin(), openCameras.end(), camera)); 
-        double numCams = openCameras.size();
-        camera->setBandwidthDelays(camera, camIndex, numCams, packetSizeB, deviceLinkSpeedBps, bufferPercent);
-        double packetDelayNs = camera->getPacketDelayNs();
-        calculateMaxFps(openCameras, packetDelayNs);
-        std::cout << "Calculated max Fps " << maxFps << std::endl;
-        camera->setFps(maxFps);
-        double exposureTimeMicros =  1000000/maxFps;
+        double exposure = camera->getExposure();
+        double fpsFromExposure = 1/(exposure*10-6); //ToDo check Units 
+        if ((fpsLowerBound <= fpsFromExposure && fpsFromExposure <= fpsUpperBound) && (fpsFromExposure >= currentMaxFps)) {
+            currentMaxFps = fpsFromExposure;
+        }
+    }
+    return currentMaxFps;
+}
+
+void NetworkManager::setExposureAndFps(const std::list<std::shared_ptr<Camera>> &openCameras){
+
+    double fpsFromExposure = calculateMaxFpsFromExposure(openCameras);
+    for (const auto &camera : openCameras){
+        camera->setFps(fpsFromExposure);
+        double exposureTimeMicros =  1000000/fpsFromExposure;
         camera->setExposureTime(exposureTimeMicros); // time in microseconds
     }
 }
 
 
 
+void NetworkManager::configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras)
+{
+    double packetDelayNs;
+    for (auto it = openCameras.rbegin(); it != openCameras.rend(); ++it)
+    {
+        const auto &camera = *it;
+        //double deviceLinkSpeedBps = camera->ptpConfig.deviceLinkSpeed;
+        double deviceLinkSpeedBps = 1000000000; // 1 Gbps
+        camera->setDeviceLinkThroughput(deviceLinkSpeedBps);
+        camera->setPacketSizeB(packetSizeB);
+        double camIndex = std::distance(openCameras.begin(), std::find(openCameras.begin(), openCameras.end(), camera)); 
+        double numCams = openCameras.size();
+        camera->setBandwidthDelays(camera, camIndex, numCams, packetSizeB, deviceLinkSpeedBps, bufferPercent);
+        packetDelayNs = camera->getPacketDelayNs();
+    }
+    calculateMaxFps(openCameras, packetDelayNs);
+    std::cout << "Calculated max Fps " << fpsUpperBound << std::endl;
+    setExposureAndFps(openCameras);
+}
 
-// void NetworkManager::configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource, uint32_t actionSelector, uint32_t destinationIP)
-// {
 
-//     try
-//     {
-//         auto nodemap = interf->getNodeMap();
-//         rcg::setInteger(nodemap, "GevActionDestinationIPAddress", destinationIP);
-//         // Set Action Device Key, Group Key, and Group Mask
-//         rcg::setInteger(nodemap, "ActionDeviceKey", actionDeviceKey);
-//         rcg::setInteger(nodemap, "ActionGroupKey", groupKey);
-//         rcg::setInteger(nodemap, "ActionGroupMask", groupMask);
-//         rcg::setBoolean(nodemap, "ActionScheduledTimeEnable", true);
-//         // ✅ Calculate the execution time (e.g., 5 seconds from now)
-//         auto now = std::chrono::system_clock::now().time_since_epoch();
-//         uint64_t currTimeNs = std::chrono::duration_cast<std::chrono::nanoseconds>(now).count();
-//         uint64_t executeTime = currTimeNs + 5000000000ULL; // 5 seconds later
-//         rcg::setInteger(nodemap, "ActionScheduledTime", executeTime);
+uint32_t ipToDecimal(std::string ip)
+{
+    std::vector<std::string> octets;
+    std::stringstream ss(ip);
+    std::string octet;
+    while (std::getline(ss, octet, '.'))
+    {
+        octets.push_back(octet);
+    }
+    uint32_t decimal = (std::stoi(octets[0]) << 24) + (std::stoi(octets[1]) << 16) + (std::stoi(octets[2]) << 8) + std::stoi(octets[3]);
+    return decimal;
+}
 
-//         std::cout << "✅ Interface configured to start acquisition on Action Command.\n";
-//     }
-//     catch (const std::exception &e)
-//     {
-//         std::cerr << "⚠️ Failed to configure Action Command Interface: " << e.what() << std::endl;
-//     }
-// }
+void NetworkManager::configureActionCommandInterface(const std::list<std::shared_ptr<Camera>> &openCameras, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource, uint32_t actionSelector, uint64_t scheduledDelay)
+{
+    for (const auto &camera : openCameras)
+    {
+        try
+        {
+            auto nodemap = camera->nodemap;
+            auto destinationIP = ipToDecimal(camera->deviceConfig.currentIP);
+            rcg::setInteger(nodemap, "GevActionDestinationIPAddress", destinationIP);
+            rcg::setInteger(nodemap, "ActionDeviceKey", actionDeviceKey);
+            rcg::setInteger(nodemap, "ActionGroupKey", groupKey);
+            rcg::setInteger(nodemap, "ActionGroupMask", groupMask);
+            rcg::setBoolean(nodemap, "ActionScheduledTimeEnable", true);
 
-// void NetworkManager::sendActionCommand(std::shared_ptr<rcg::System> system)
-// {
+            // Calculate the execution time
+            auto now = std::chrono::system_clock::now().time_since_epoch();
+            uint64_t currTimeNs = std::chrono::duration_cast<std::chrono::nanoseconds>(now).count();
+            uint64_t executeTime = currTimeNs + scheduledDelay;
+            rcg::setInteger(nodemap, "ActionScheduledTime", executeTime);
 
-//     // Fire the Action Command
-//  
+            std::cout << "Interface configured to start acquisition on Action Command for Camera ID: " 
+                      << camera->deviceConfig.id << std::endl;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "⚠️ Failed to configure Action Command Interface for Camera ID: " 
+                      << camera->deviceConfig.id << ": " << e.what() << std::endl;
+        }
+    }
+}
+
+
+void NetworkManager::sendActionCommand(const std::list<std::shared_ptr<Camera>> &openCameras)
+{
+    for (const auto &camera : openCameras)
+    {
+        try
+        {
+            auto nodemap = camera->nodemap;
+            rcg::callCommand(nodemap, "ActionCommand");
+            std::cout << "Action Command sent to Camera ID: " << camera->deviceConfig.id << std::endl;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "⚠️ Failed to send Action Command to Camera ID: " 
+                      << camera->deviceConfig.id << ": " << e.what() << std::endl;
+        }
+    }
+} 

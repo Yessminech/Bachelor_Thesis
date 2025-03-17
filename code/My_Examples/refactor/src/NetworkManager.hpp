@@ -35,16 +35,19 @@ NetworkManager(
     void configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras);
     void logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset);
     void setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, std::shared_ptr<Camera> camera);
-    void setBandwidthDelaysSharing(const std::list<std::shared_ptr<Camera>> &openCameras);
-    void sendActionCommand(std::shared_ptr<rcg::System> system);
+    void setExposureAndFps(const std::list<std::shared_ptr<Camera>> &openCameras);
+    void configureActionCommandInterface(const std::list<std::shared_ptr<Camera>> &openCameras, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource, uint32_t actionSelector, uint64_t scheduledDelay);
+    void sendActionCommand(const std::list<std::shared_ptr<Camera>> &openCameras);
     void calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay);
+    double calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras);
 
     bool debug = true;
 
 private:
-    double maxFps = 1000; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
+    double fpsUpperBound = 1000; // ToDo
+    double fpsLowerBound = 3; // ToDo
     double packetSizeB = 9000; // Jumbo frames defined on hardaware (Todo check max)
-    double bufferPercent = 15; // 10.93; // ToDo How to set this value 
+    double bufferPercent = 200; // 10.93; // ToDo How to set this value 
     int ptpSyncTimeout = 800; // 800 ms
     int ptpMaxCheck = 10; // 10 checks
     int ptpOffsetThresholdNs = 1000; // 1 us
