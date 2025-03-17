@@ -43,9 +43,8 @@ NetworkManager(
 
 private:
     double maxFps = 1000; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
-    double deviceLinkSpeedBps = 1250000000; // 1 Gbps
-    double packetSizeB = 9012; // Jumbo frames defined on hardaware
-    double bufferPercent = 15; // 10.93;
+    double packetSizeB = 9000; // Jumbo frames defined on hardaware (Todo check max)
+    double bufferPercent = 15; // 10.93; // ToDo How to set this value 
     int ptpSyncTimeout = 800; // 800 ms
     int ptpMaxCheck = 10; // 10 checks
     int ptpOffsetThresholdNs = 1000; // 1 us

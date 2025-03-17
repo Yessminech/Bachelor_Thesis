@@ -105,7 +105,7 @@ private:
 
   std::shared_ptr<rcg::Device> device;
   float exposure = 222063; // Example: 20 ms
-  float gain = 0;          // Example: Gain of 10 dB
+  float gain = 10;          // Example: Gain of 10 dB
   void initializeVideoWriter(const std::string &directory, int width, int height);
   void setFreeRunMode();
   double calculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams);

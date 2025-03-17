@@ -292,6 +292,7 @@ void NetworkManager::calculateMaxFps(const std::list<std::shared_ptr<Camera>> &o
 {
     for (const auto &camera : openCameras)
     {
+        double deviceLinkSpeedBps = camera->ptpConfig.deviceLinkSpeed;
         double calculatedFps = camera->calculateFps(deviceLinkSpeedBps, packetSizeB);
         if (calculatedFps < maxFps)
         {
@@ -303,18 +304,21 @@ void NetworkManager::calculateMaxFps(const std::list<std::shared_ptr<Camera>> &o
 
 void NetworkManager::configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras)
 {
-    for (const auto &camera : openCameras)
+    for (auto it = openCameras.rbegin(); it != openCameras.rend(); ++it)
     {
+        const auto &camera = *it;
+        double deviceLinkSpeedBps = camera->ptpConfig.deviceLinkSpeed;
         camera->setDeviceLinkThroughput(deviceLinkSpeedBps);
         camera->setPacketSizeB(packetSizeB);
         double camIndex = std::distance(openCameras.begin(), std::find(openCameras.begin(), openCameras.end(), camera)); 
         double numCams = openCameras.size();
-        camera->setBandwidthDelays(camera, camIndex, numCams, deviceLinkSpeedBps, packetSizeB, bufferPercent);
+        camera->setBandwidthDelays(camera, camIndex, numCams, packetSizeB, deviceLinkSpeedBps, bufferPercent);
         double packetDelayNs = camera->getPacketDelayNs();
         calculateMaxFps(openCameras, packetDelayNs);
         std::cout << "Calculated max Fps " << maxFps << std::endl;
         camera->setFps(maxFps);
-        camera->setExposureTime(1000/maxFps); // time in ms
+        double exposureTimeMicros =  1000000/maxFps;
+        camera->setExposureTime(exposureTimeMicros); // time in microseconds
     }
 }
 

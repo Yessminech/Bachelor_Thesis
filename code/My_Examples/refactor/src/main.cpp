@@ -35,10 +35,10 @@ void enumerateDevices(){
 }
 
 void ptpSyncFreeRun(const std::list<std::shared_ptr<Camera>>& openCamerasList){
+    networkManager.enablePtp(openCamerasList); // Should be before configureNetworkFroSyncFreeRun
     networkManager.configureNetworkFroSyncFreeRun(openCamerasList);
-    networkManager.enablePtp(openCamerasList);
-   // networkManager.monitorPtpStatus(openCamerasList, stopStream);
-   // networkManager.monitorPtpOffset(openCamerasList, stopStream);
+   networkManager.monitorPtpStatus(openCamerasList, stopStream);
+   networkManager.monitorPtpOffset(openCamerasList, stopStream);
     return;
 }
 
@@ -54,8 +54,8 @@ int main()
 {
     std::signal(SIGINT, handleSignal);
     enumerateDevices();
-    deviceManager.openCameras({"Basler acA2500-14gm (21639790)"});     //home-camera
-    //deviceManager.openCameras({"Basler acA2440-20gc (23630914)", "Basler acA2440-20gc (23630913)", "210200799"}); // ToDo, read from terminal 
+    //deviceManager.openCameras({"Basler acA2500-14gm (21639790)"});     //home-camera
+    deviceManager.openCameras({"Basler acA2440-20gc (23630914)", "Basler acA2440-20gc (23630913)", "210200799"}); // ToDo, read from terminal 
     //deviceManager.openDevices({"Basler acA2440-20gc (23630914)"}); // ToDo, read from terminal 
     deviceManager.listopenCameras();
     ptpSyncFreeRun(deviceManager.getopenCameras());

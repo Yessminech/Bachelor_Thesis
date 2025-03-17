@@ -1,0 +1,192 @@
+[DEBUG] Camera Basler acA2440-20gc (23630914): DeviceLinkThroughputLimit set to:0
+[DEBUG] Camera Basler acA2440-20gc (23630914): GevSCPSPacketSize set to:9012
+[DEBUG] numCams and CamIndex: 1 0
+[DEBUG] Camera Basler acA2440-20gc (23630914): Calculated packet delay: 1.5951e+14 ns
+[DEBUG] Camera Basler acA2440-20gc (23630914): Calculated transmission delay: 0 ns
+[DEBUG] Camera Basler acA2440-20gc (23630914): GevSCPD set to: 9076 ns
+[DEBUG] Camera Basler acA2440-20gc (23630914): GevSCFTD set to: 0 ns
+[DEBUG] Camera Basler acA2440-20gc (23630914): setBandwidthDelays sucess
+Calculated max Fps 0
+[DEBUG] Camera Basler acA2440-20gc (23630914)fps set to:00
+[DEBUG] Camera Basler acA2440-20gc (23630914)ExposureTime set to:45000
+[DEBUG] Camera Basler acA2440-20gc (23630913): DeviceLinkThroughputLimit set to:0
+[DEBUG] Camera Basler acA2440-20gc (23630913): GevSCPSPacketSize set to:9012
+[DEBUG] numCams and CamIndex: 1 1
+[DEBUG] Camera Basler acA2440-20gc (23630913): Calculated packet delay: 1.5951e+14 ns
+[DEBUG] Camera Basler acA2440-20gc (23630913): Calculated transmission delay: 1.5951e+14 ns
+[DEBUG] Camera Basler acA2440-20gc (23630913): GevSCPD set to: 9090 ns
+[DEBUG] Camera Basler acA2440-20gc (23630913): GevSCFTD set to: 0 ns
+[DEBUG] Camera Basler acA2440-20gc (23630913): setBandwidthDelays sucess
+Calculated max Fps 0
+[DEBUG] Camera Basler acA2440-20gc (23630913)fps set to:00
+[DEBUG] Camera Basler acA2440-20gc (23630913)ExposureTime set to:30000
+[DEBUG] Camera Basler acA2440-20gc (23630914)GevIEEE1588 set to:1, DeviceLinkSpeed is set to 0
+[DEBUG] Camera Basler acA2440-20gc (23630913)GevIEEE1588 set to:1, DeviceLinkSpeed is set to 0
+Starting PTP synchronization monitoring...
+PTP Parameters success 
+Camera Basler acA2440-20gc (23630914): Listening (Clock ID: )
+PTP Parameters success 
+Camera Basler acA2440-20gc (23630913): Listening (Clock ID: )
+Camera PTP status: 2 initializing, 0 masters, 0 slaves
+Waiting for PTP synchronization...
+PTP Parameters success 
+Camera Basler acA2440-20gc (23630914): Slave (Clock ID: )
+PTP Parameters success 
+Camera Basler acA2440-20gc (23630913): Master (Clock ID: Basler acA2440-20gc (23630913))
+Camera PTP status: 0 initializing, 1 masters, 1 slaves
+Master Camera Clock ID: Basler acA2440-20gc (23630913)
+[DEBUG] PTP synchronization successful!
+PTP synchronized with 1 slave cameras and 1 master
+Monitoring PTP offset synchronization...
+PTP Parameters success 
+PTP Parameters success 
+Found master camera: Basler acA2440-20gc (23630913)
+PTP offset check #1
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: 129165864 ns
+Camera Basler acA2440-20gc (23630914) offset (22351176 ns) exceeds threshold (1000 ns)
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1118304 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1118304 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+Not all cameras are within offset threshold. Waiting before next check...
+PTP offset check #2
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: 44351832 ns
+Camera Basler acA2440-20gc (23630914) offset (28036184 ns) exceeds threshold (1000 ns)
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1110240 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1110240 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+Not all cameras are within offset threshold. Waiting before next check...
+PTP offset check #3
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: 9006680 ns
+Camera Basler acA2440-20gc (23630914) offset (30094936 ns) exceeds threshold (1000 ns)
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1112944 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1112944 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+Not all cameras are within offset threshold. Waiting before next check...
+PTP offset check #4
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: -3501480 ns
+Camera Basler acA2440-20gc (23630914) offset (4143720 ns) exceeds threshold (1000 ns)
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1242560 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1242560 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+Not all cameras are within offset threshold. Waiting before next check...
+PTP offset check #5
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: -2658312 ns
+Camera Basler acA2440-20gc (23630914) offset (1291904 ns) exceeds threshold (1000 ns)
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1144784 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1144784 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+Not all cameras are within offset threshold. Waiting before next check...
+PTP offset check #6
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: -1778760 ns
+Camera Basler acA2440-20gc (23630914) offset (375320 ns) exceeds threshold (1000 ns)
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1123184 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1123184 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+Not all cameras are within offset threshold. Waiting before next check...
+PTP offset check #7
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: -1274520 ns
+Camera Basler acA2440-20gc (23630914) offset (28360 ns) exceeds threshold (1000 ns)
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1138320 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1138320 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+Not all cameras are within offset threshold. Waiting before next check...
+PTP offset check #8
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: -1090328 ns
+Camera Basler acA2440-20gc (23630914) offset (37560 ns) exceeds threshold (1000 ns)
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1101104 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1101104 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+Not all cameras are within offset threshold. Waiting before next check...
+PTP offset check #9
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: -1135064 ns
+Camera Basler acA2440-20gc (23630914) offset (15560 ns) exceeds threshold (1000 ns)
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1265200 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1265200 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+Not all cameras are within offset threshold. Waiting before next check...
+PTP offset check #10
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630914): Offset from master: -1165496 ns
+Camera Basler acA2440-20gc (23630914) offset (304 ns) within threshold
+PTP Parameters success 
+Timestamp success
+Timestamp success
+Camera Basler acA2440-20gc (23630913): Offset from master: -1046480 ns
+Camera Basler acA2440-20gc (23630913): Offset set to -1046480 ns
+Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+All cameras are within PTP offset threshold. Network is properly synchronized.
+[DEBUG] Launching stream thread for camera Basler acA2440-20gc (23630914)
+[DEBUG] Launching stream thread for camera Basler acA2440-20gc (23630913)
+All threads have started successfully.
+[DEBUG] Camera Basler acA2440-20gc (23630913): AcquisitionMode:[DEBUG] Camera Basler acA2440-20gc (23630914): AcquisitionMode:Continuous: TriggerSelector:Continuous: TriggerSelector:FrameStart
+FrameStart
+[DEBUG] Stream started for camera Basler acA2440-20gc (23630913)
+[DEBUG] Stream started for camera Basler acA2440-20gc (23630914)
+[DEBUG] Camera Basler acA2440-20gc (23630913):Trying codec: avc1 for file: output//camera_Basler_acA2440-20gc__23630913__20250317_170548.mp4[DEBUG] Camera Basler acA2440-20gc (23630914)
+:Trying codec: avc1 for file: output//camera_Basler_acA2440-20gc__23630914__20250317_170548.mp4
+[DEBUG] Camera Basler acA2440-20gc (23630913): Video recording started at: output//camera_Basler_acA2440-20gc__23630913__20250317_170548.mp4
+[DEBUG] Camera Basler acA2440-20gc (23630914): Video recording started at: output//camera_Basler_acA2440-20gc__23630914__20250317_170548.mp4
+Press 'q' on the OpenCV window to exit the stream.
+Key pressed: ode: 27)
+Exit key pressed. Stopping stream...
+[DEBUG] Camera Basler acA2440-20gc (23630914): saveStream success
+[DEBUG] Camera Basler acA2440-20gc (23630913): saveStream success
+[DEBUG] Camera �M"pWcA2440-20gc (23630914): Closed successfully
+Segmentation fault (core dumped)
+test@Yessmine-Ubuntu:~/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build$ make && ./main 

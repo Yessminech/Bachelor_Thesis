@@ -93,6 +93,10 @@ Camera::~Camera()
     }
 }
 
+/***********************************************************************/
+/***********************         SetSettings     *************************/
+/***********************************************************************/
+
 void Camera::setCameraConfig()
 {
     try
@@ -120,6 +124,60 @@ void Camera::setCameraConfig()
     }
 }
 
+void Camera::setPtpConfig(bool enable)
+{
+    std::string feature = deviceConfig.deprecatedFW ? "GevIEEE1588" : "PtpEnable";
+
+    try
+    {
+        if (enable)
+        {rcg::setString(nodemap, feature.c_str(), "true", enable);
+        ptpConfig.enabled = rcg::getBoolean(nodemap, feature.c_str());
+        ptpConfig.deviceLinkSpeed = rcg::getInteger(nodemap, "DeviceLinkSpeed"); //Bps
+        if(deviceConfig.deprecatedFW){
+            ptpConfig.deviceLinkSpeed = rcg::getInteger(nodemap, "GevLinkSpeed") * 1000000; //MBps
+        }
+        if (debug)
+        {
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << ", DeviceLinkSpeed is set to " << ptpConfig.deviceLinkSpeed << RESET << std::endl;
+
+        }
+    }
+    else
+    {
+        rcg::setString(nodemap, feature.c_str(), "false", enable);
+        ptpConfig.enabled = rcg::getBoolean(nodemap, feature.c_str());
+        if (debug)
+        {
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << RESET << std::endl;
+        }
+    }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Error: Failed to set PTP: " << ex.what() << RESET << std::endl;
+    }
+}
+
+void Camera::setFreeRunMode()
+{
+    if (nodemap)
+    {
+        try
+        {
+            rcg::setEnum(nodemap, "AcquisitionMode", "Continuous");
+            rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
+            rcg::setEnum(nodemap, "TriggerMode", "Off");
+
+            if (debug)
+                std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << ": AcquisitionMode:" << rcg::getEnum(nodemap, "AcquisitionMode") << ": TriggerSelector:" << rcg::getEnum(nodemap, "TriggerSelector") << RESET << std::endl;
+        }
+        catch (const std::exception &ex)
+        {
+            std::cerr << RED << "Failed to configure free-run mode for camera " << deviceConfig.id << ": " << ex.what() << RESET << std::endl;
+        }
+    }
+}
 
 // ToDo: Implement
 void Camera::setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource, uint32_t actionSelector)
@@ -153,37 +211,9 @@ void Camera::setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, u
     }
 }
 
-void Camera::setPtpConfig(bool enable)
-{
-    std::string feature = deviceConfig.deprecatedFW ? "GevIEEE1588" : "PtpEnable";
-
-    try
-    {
-        if (enable)
-        {rcg::setString(nodemap, feature.c_str(), "true", enable);
-        rcg::setInteger(nodemap, "DeviceLinkSpeed", 1250000000);
-        ptpConfig.enabled = rcg::getBoolean(nodemap, feature.c_str());
-        ptpConfig.deviceLinkSpeed = rcg::getInteger(nodemap, "DeviceLinkSpeed");
-        if (debug)
-        {
-            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << ", DeviceLinkSpeed is set to " << ptpConfig.deviceLinkSpeed << RESET << std::endl;
-        }
-    }
-    else
-    {
-        rcg::setString(nodemap, feature.c_str(), "false", enable);
-        ptpConfig.enabled = rcg::getBoolean(nodemap, feature.c_str());
-        if (debug)
-        {
-            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << RESET << std::endl;
-        }
-    }
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "Error: Failed to set PTP: " << ex.what() << RESET << std::endl;
-    }
-}
+/***********************************************************************/
+/***********************         GetSettings     *************************/
+/***********************************************************************/
 
 bool isDottedIP(const std::string &ip)
 {
@@ -393,6 +423,10 @@ void Camera::getTimestamps()
     }
 }
 
+/***********************************************************************/
+/***********************         Streaming     *************************/
+/***********************************************************************/
+
 /// Process a raw frame based on the pixel format.
 void Camera::processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint64_t pixelFormat)
 {
@@ -448,26 +482,6 @@ void Camera::processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint
     }
 }
 
-void Camera::setFreeRunMode()
-{
-    if (nodemap)
-    {
-        try
-        {
-            rcg::setEnum(nodemap, "AcquisitionMode", "Continuous");
-            rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
-            rcg::setEnum(nodemap, "TriggerMode", "Off");
-
-            if (debug)
-                std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << ": AcquisitionMode:" << rcg::getEnum(nodemap, "AcquisitionMode") << ": TriggerSelector:" << rcg::getEnum(nodemap, "TriggerSelector") << RESET << std::endl;
-        }
-        catch (const std::exception &ex)
-        {
-            std::cerr << RED << "Failed to configure free-run mode for camera " << deviceConfig.id << ": " << ex.what() << RESET << std::endl;
-        }
-    }
-}
-
 void Camera::updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index,
                                cv::Mat &frame, int &frameCount, std::chrono::steady_clock::time_point &lastTime)
 {
@@ -512,6 +526,7 @@ void Camera::processFrame(const rcg::Buffer *buffer, cv::Mat &outputFrame)
 {
     if (buffer && !buffer->getIsIncomplete() && buffer->getImagePresent(0))
     {
+        //getIsIncomplete for no errors 
         rcg::Image image(buffer, 0);
         cv::Mat rawFrame(image.getHeight(), image.getWidth(), CV_8UC1, (void *)image.getPixels());
         uint64_t format = image.getPixelFormat();
@@ -729,7 +744,7 @@ void Camera::startStreaming(std::atomic<bool> &stopStream, std::mutex &globalFra
         const rcg::Buffer *buffer = nullptr;
         try
         {
-            buffer = stream->grab(500);
+            buffer = stream->grab(5000); //ToDo set this delay in a better way
             if (!buffer)
             {
                 consecutiveFailures++;
@@ -817,6 +832,11 @@ void stopStreaming(std::shared_ptr<rcg::Stream> stream)
     rcg::System::clearSystems();
 }
 
+/***********************************************************************/
+/***********************         Network     *************************/
+/***********************************************************************/
+
+
 double Camera::calculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams) // ToDo for chunkdata
 {
     double buffer = (bufferPercent / 100.0) * (packetSizeB * (1e9 / deviceLinkSpeedBps));
@@ -865,6 +885,7 @@ int Camera::getBitsPerPixel(PfncFormat_ pixelFormat)
     }
 }
 
+
 double Camera::calculateRawFrameSizeB(int width, int height, PfncFormat_ pixelFormat) {
     int bitsPerPixel = getBitsPerPixel(pixelFormat);
     int totalPixels = width * height;
@@ -890,12 +911,14 @@ double Camera::calculateFps(double deviceLinkSpeedBps, double packetSizeB)
 void Camera::setDeviceLinkThroughput(double deviceLinkSpeedBps)
 {
     try
-    {
-        rcg::setEnum(nodemap, "DeviceLinkThroughputLimitMode", "On");
+    { 
+        rcg::setEnum(nodemap, "DeviceLinkThroughputLimitMode", "Off"); // ToDo if on no delays 
         rcg::setInteger(nodemap, "DeviceLinkThroughputLimit", deviceLinkSpeedBps);
         if (debug)
         {
             std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": DeviceLinkThroughputLimit set to:" << rcg::getInteger(nodemap, "DeviceLinkThroughputLimit") << RESET << std::endl;
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": DeviceLinkThroughputLimit set to:" << rcg::getInteger(nodemap, "GevSCDMT") << RESET << std::endl;
+
         }
     }
     catch (const std::exception &ex)
@@ -921,16 +944,18 @@ void Camera::setPacketSizeB(double packetSizeB){
 }
 
 
-// Set bandwidth parameters on the device.
 void Camera::setBandwidthDelays(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent)
 {
     try
     {
+        std::cout << "[DEBUG] Camera " << "packetSizeB: " << packetSizeB << " deviceLinkSpeedBps: " << deviceLinkSpeedBps << " bufferPercent: " << bufferPercent << " numCams: " << numCams << std::endl;
         packetDelayNs = calculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
+        std::cout << "[DEBUG] Camera " << "packetDelayNs: " << packetDelayNs << std::endl;
         transmissionDelayNs = packetDelayNs * camIndex;
-        int64_t gevSCPDValue = static_cast<int64_t>(packetDelayNs);
+        int64_t gevSCPDValue = 8* static_cast<int64_t>((packetDelayNs + 7) / 8) * 8; // Ensure multiple of 8
+        std::cout << "[DEBUG] Camera " << "gevSCPDValue: " << gevSCPDValue << std::endl;
         rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue); // in counter units, 1ns resolution if ptp is enabled
-        int64_t gevSCFTDValue = static_cast<int64_t>(transmissionDelayNs);
+        int64_t gevSCFTDValue = static_cast<int64_t>((transmissionDelayNs + 7) / 8) * 8;
         rcg::setInteger(camera->nodemap, "GevSCFTD", gevSCFTDValue); // in counter units, 1ns resolution if ptp is enabled
         
 
