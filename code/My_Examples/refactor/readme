@@ -1,0 +1,39 @@
+## PTP ##
+If no device in the network is synchronized to a coordinated world time (e.g., TAI or UTC), the network will operate in the arbitrary timescale mode (ARB). In this mode, the epoch is arbitrary, as it is not bound to an absolute time. The timescale is relative and only valid in this network.
+
+A PTP-enabled device that operates in a network with no other PTP-enabled devices does not discipline its local clock. The precision of its local clock is identical to a non-PTP-enabled device.
+
+GevIEEE1588StatusLatched: If this parameter is available, Basler recommends using it instead of the GevIEEE1588Status parameter. This is because the GevIEEE1588Status parameter is not tied to the GevIEEE1588DataSetLatch command. Therefore, if you read multiple PTP-related values from a device, the device state will not relate to the same point in time as the other values.
+Resetting the Timestamp Value#
+To reset the timestamp value to 0:
+
+If the PTP feature is available, make sure it is disabled.
+Execute the TimestampReset command.
+
+## Bandwidthsharing ##
+- GigE Iterfaces = Gigabit Ethernet => One connection can maximal 125MB (Throughput) else packets are dropped
+- Hardwaree Requirement: switch with 10 GigE uplink
+- PD ↗ -> TD ↗ -> Throughput↘, Fps↘
+- Dynamic Bandwidth allocation:
+bandwidth = 125MB
+bandwidthPerDevice = bandwidth / nCams
+bandwidthNeeded = bandwidthPerDevice
+While (bandwidthNeeded <= bandwidthNeeded)
+    bandwidthPerDevice = bandwidth / nCams
+    for each device:
+        bandwidthNeeded=bandwidthNeeded(settings)
+    for each device:
+        if (bandwidthNeeded < bandwidthPerDevice)
+            bandwidth -= (bandwidthNeeded + buffer) 
+            nCams--
+for each device:
+    calculateFps()
+for each device:
+    setFpsToMin()
+
+calculatFps():
+    nPackets = bandwidth/packetSize
+    packetDelay = packetSize * (10**9/deviceLinkSpeed) (nCams-1) + buffer
+    transmissionDelay = packetDelay * camIndex
+    nPacketsperFrame = ??
+    fps = nPackets

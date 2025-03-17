@@ -133,15 +133,15 @@ void StreamManager::stopStreaming() {
 }
 
 // Start synchronized free-run mode
-void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &OpenCameras, std::atomic<bool>& stopStream, bool saveStream)
+void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras, std::atomic<bool>& stopStream, bool saveStream)
 {
-    for (const auto &camera : OpenCameras)
+    for (const auto &camera : openCameras)
     {
         streamFromDevice(camera, stopStream, saveStream);
     }
 
     // Wait for all threads to start successfully.
-    while (startedThreads.load() < OpenCameras.size())
+    while (startedThreads.load() < openCameras.size())
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }

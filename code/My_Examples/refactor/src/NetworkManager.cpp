@@ -17,10 +17,19 @@
 #include <signal.h>
 #include <atomic>
 #include <set>
+#include <fstream>   // Add this for std::ofstream
+#include <algorithm>  // Add this for std::find
 
+NetworkManager::NetworkManager(
+    bool debug,
+    int ptpSyncTimeout,
+    int ptpOffsetThresholdNs,
+    int ptpMaxCheck)
+    : debug(debug),
+      ptpSyncTimeout(ptpSyncTimeout),
+      ptpOffsetThresholdNs(ptpOffsetThresholdNs),
+      ptpMaxCheck(ptpMaxCheck) {}
 
-NetworkManager::NetworkManager()
-    : ptpSyncTimeout(800), numInit(0), numMaster(0), numSlave(0), masterClockId(0) {}
 
 NetworkManager::~NetworkManager() {}
 
@@ -42,28 +51,275 @@ void NetworkManager::printPtpConfig(std::shared_ptr<Camera> camera)
     }
 }
 
-void NetworkManager::monitorPtpStatus(std::shared_ptr<Camera> camera, std::shared_ptr<rcg::Interface> interf, int deviceCount, std::list<std::shared_ptr<Camera>> &openCamerasList)
+void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::atomic<bool>& stopStream)
 {
     auto start_time = std::chrono::steady_clock::now();
-    while (numSlave != deviceCount - 1 && numMaster != 1)
-    {   numInit = 0;
+    bool synchronized = false;
+    int numInit = 0;
+    int numMaster = 0;
+    int numSlave = 0;
+    
+    std::cout << "Starting PTP synchronization monitoring..." << std::endl;
+    
+    // Continue until synchronized, timed out, or stopStream is true
+    while (!synchronized && !stopStream.load())
+    {
+        // Reset counters for each check
+        numInit = 0;
         numMaster = 0;
         numSlave = 0;
+        
+        // Check all cameras
         for (auto &camera : openCamerasList)
         {
-            camera->getPtpConfig();
-            PtpConfig ptpConfig = camera->ptpConfig;
-            statusCheck(ptpConfig.status);
+            try {
+                camera->getPtpConfig();
+                PtpConfig ptpConfig = camera->ptpConfig;
+                
+                // Update status counters
+                if (ptpConfig.status == "Master") {
+                    numMaster++;
+                    masterClockId = camera->deviceConfig.id; // Store the master clock ID
+                } else if (ptpConfig.status == "Slave") {
+                    numSlave++;
+                } else {
+                    numInit++;
+                }
+                
+                // Print individual camera status if in debug mode
+                if (debug) {
+                    std::cout << "Camera " << camera->deviceConfig.id << ": " 
+                              << ptpConfig.status << " (Clock ID: " << masterClockId << ")" << std::endl;
+                }
+            } catch (const std::exception &ex) {
+                std::cerr << RED << "Error checking PTP status for camera " 
+                          << camera->deviceConfig.id << ": " << ex.what() << RESET << std::endl;
+                numInit++; // Count as initializing if there's an error
+            }
         }
-        // std::cout << "Camera PTP status: " << numInit << " initializing, " << numMaster << " masters, " << numSlave << " slaves" << std::endl;
-        // if (std::chrono::steady_clock::now() - start_time > std::chrono::seconds(ptpSyncTimeout))
-        // {
-        //     std::cerr << "Timed out waiting for camera clocks to become PTP camera slaves. Current status: " << numInit << " initializing, " << numMaster << " masters, " << numSlave << " slaves" << std::endl;
-        //     break;
-        // }
-        std::this_thread::sleep_for(std::chrono::seconds(10));
+        
+        // Print the overall status
+        std::cout << "Camera PTP status: " << numInit << " initializing, " 
+              << numMaster << " masters, " << numSlave << " slaves" << std::endl;
+        if (numMaster == 1) {
+            std::cout << "Master Camera Clock ID: " << masterClockId << std::endl;
+        }
+        // Check if we have a valid synchronization state:
+        // - One master and all others are slaves (normal case)
+        // - All slaves and master is external (external clock source)
+        if (numMaster == 1 && numSlave == openCamerasList.size() - 1 && numInit == 0) {
+            std::cout << GREEN << "[DEBUG] PTP synchronization successful!" << RESET << std::endl;
+            synchronized = true;
+        }
+        
+        // Check for timeout
+        if (std::chrono::steady_clock::now() - start_time > std::chrono::seconds(ptpSyncTimeout))
+        {
+            std::cerr << RED << "PTP synchronization timed out after " << ptpSyncTimeout 
+                      << " seconds. Current status: " << numInit << " initializing, " 
+                      << numMaster << " masters, " << numSlave << " slaves" << RESET << std::endl;
+            break;
+        }
+        
+        // If not synchronized yet, wait before checking again
+        if (!synchronized) {
+            std::cout << "Waiting for PTP synchronization..." << std::endl;
+            std::this_thread::sleep_for(std::chrono::seconds(10));
+        }
+    }
+    
+    // Print final synchronization information
+    if (synchronized) {
+        std::cout << GREEN << "PTP synchronized with " << numSlave 
+                  << " slave cameras and " << numMaster << " master" << RESET << std::endl;
     }
 }
+
+void NetworkManager::logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset)
+{
+    PtpConfig ptpConfig = camera->ptpConfig;
+    std::ofstream logFile("ptp_offsets.log", std::ios_base::app);
+    if (logFile.is_open())
+    {
+        logFile << "Camera ID: " << camera->deviceConfig.id 
+                << ", Offset: " << offset 
+                << " ns, Timestamp: " << ptpConfig.timestamp_ns 
+                << " ns" << std::endl;
+        logFile.close();
+    }
+    else
+    {
+        std::cerr << "Unable to open log file to save PTP offset data." << std::endl;
+    }
+}
+
+void NetworkManager::setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, std::shared_ptr<Camera> camera)
+{
+    // Get the master camera's timestamp
+    masterCamera->getTimestamps();
+    uint64_t masterTimestamp = std::stoull(masterCamera->ptpConfig.timestamp_ns);
+    
+    // Get the camera's timestamp
+    camera->getTimestamps();
+    uint64_t cameraTimestamp = std::stoull(camera->ptpConfig.timestamp_ns);
+    
+    // Calculate the offset
+    int64_t offset = masterTimestamp - cameraTimestamp;
+    std::cout << "Camera " << camera->deviceConfig.id << ": Offset from master: " << offset << " ns" << std::endl;
+    
+    // Set the offset
+    try
+    {
+        if (camera->ptpConfig.offsetFromMaster == 0)
+        {
+            auto nodemap = camera->nodemap;
+            rcg::setInteger(nodemap, "PtpOffsetFromMaster", offset);
+            std::cout << "Camera " << camera->deviceConfig.id << ": Offset set to " << offset << " ns" << std::endl;
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Error setting offset for camera " << camera->deviceConfig.id << ": " << ex.what() << RESET << std::endl;
+    }
+}
+
+void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::atomic<bool>& stopStream)
+{
+    // Define threshold for acceptable PTP offset
+    bool allSynced = false;
+    int checkCount = 0;
+    
+    std::cout << "Monitoring PTP offset synchronization..." << std::endl;
+    
+    // First, find the master camera from the list based on the masterClockId
+    std::shared_ptr<Camera> masterCamera = nullptr;
+    for (auto& cam : openCamerasList) {
+        cam->getPtpConfig();
+        if (cam->ptpConfig.status == "Master") {
+            masterCamera = cam;
+            masterClockId = cam->deviceConfig.id;
+            std::cout << "Found master camera: " << masterClockId << std::endl;
+            break;
+        }
+    }
+    
+    if (!masterCamera) {
+        std::cerr << RED << "Error: No master camera found in the camera list" << RESET << std::endl;
+        return;
+    }
+    
+    while (!allSynced && checkCount < ptpMaxCheck && !stopStream.load())
+    {
+        allSynced = true; // Assume all cameras are in sync until proven otherwise
+        checkCount++;
+        
+        std::cout << "PTP offset check #" << checkCount << std::endl;
+        
+        for (auto &camera : openCamerasList)
+        {
+            try {
+                // Update PTP configuration
+                camera->getPtpConfig();
+                setOffsetfromMaster(masterCamera, camera);
+                // Get offset from master
+                PtpConfig ptpConfig = camera->ptpConfig;
+                int64_t offset = std::abs(ptpConfig.offsetFromMaster); // Use absolute value
+                
+                // Log the offset
+                logPtpOffset(camera, offset);
+                
+                // Check if this camera's offset exceeds the threshold
+                if (offset > ptpOffsetThresholdNs)
+                {
+                    allSynced = false;
+                    std::cout << RED << "Camera " << camera->deviceConfig.id 
+                              << " offset (" << offset << " ns) exceeds threshold (" 
+                              << ptpOffsetThresholdNs << " ns)" << RESET << std::endl;
+                }
+                else
+                {
+                    std::cout << GREEN << "Camera " << camera->deviceConfig.id 
+                              << " offset (" << offset << " ns) within threshold" << RESET << std::endl;
+                }
+            }
+            catch (const std::exception &ex)
+            {
+                std::cerr << RED << "Error checking PTP offset for camera " 
+                          << camera->deviceConfig.id << ": " << ex.what() << RESET << std::endl;
+                allSynced = false; // Consider failed checks as not synced
+            }
+        }
+        
+        // If not all cameras are in sync, wait before checking again
+        if (!allSynced && checkCount < ptpMaxCheck && !stopStream.load())
+        {
+            std::cout << YELLOW << "Not all cameras are within offset threshold. "
+                      << "Waiting before next check..." << RESET << std::endl;
+            std::this_thread::sleep_for(std::chrono::seconds(3));
+        }
+    }
+    
+    // Report final status
+    if (allSynced)
+    {
+        std::cout << GREEN << "All cameras are within PTP offset threshold. "
+                  << "Network is properly synchronized." << RESET << std::endl;
+    }
+    else
+    {
+        std::cerr << RED << "Warning: Not all cameras could achieve "
+                  << "synchronization within the offset threshold after " 
+                  << ptpMaxCheck << " attempts." << RESET << std::endl;
+    }
+}
+
+void NetworkManager::enablePtp(const std::list<std::shared_ptr<Camera>> &openCameras)
+{
+    for (const auto &camera : openCameras)
+    {
+        camera->setPtpConfig(true);
+    }
+}
+
+void NetworkManager::disablePtp(const std::list<std::shared_ptr<Camera>> &openCameras)
+{
+    for (const auto &camera : openCameras)
+    {
+        camera->setPtpConfig(false);
+    }
+}
+void NetworkManager::calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay)
+{
+    for (const auto &camera : openCameras)
+    {
+        double calculatedFps = camera->calculateFps(deviceLinkSpeedBps, packetSizeB);
+        if (calculatedFps < maxFps)
+        {
+            maxFps = calculatedFps;
+        }
+    }
+}
+
+
+void NetworkManager::configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras)
+{
+    for (const auto &camera : openCameras)
+    {
+        camera->setDeviceLinkThroughput(deviceLinkSpeedBps);
+        camera->setPacketSizeB(packetSizeB);
+        double camIndex = std::distance(openCameras.begin(), std::find(openCameras.begin(), openCameras.end(), camera)); 
+        double numCams = openCameras.size();
+        camera->setBandwidthDelays(camera, camIndex, numCams, deviceLinkSpeedBps, packetSizeB, bufferPercent);
+        double packetDelayNs = camera->getPacketDelayNs();
+        calculateMaxFps(openCameras, packetDelayNs);
+        std::cout << "Calculated max Fps " << maxFps << std::endl;
+        camera->setFps(maxFps);
+        camera->setExposureTime(1000/maxFps); // time in ms
+    }
+}
+
+
+
 
 // void NetworkManager::configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource, uint32_t actionSelector, uint32_t destinationIP)
 // {
@@ -95,49 +351,4 @@ void NetworkManager::monitorPtpStatus(std::shared_ptr<Camera> camera, std::share
 // {
 
 //     // Fire the Action Command
-//     try
-//     {
-//         auto nodemap = system->getNodeMap();
-
-//         rcg::callCommand(nodemap, "ActionCommand");
-//             std::cout << "✅ Action Command scheduled \n"; // for execution at: " << executeTime << " ns.
-
-//     }
-//     catch (const std::exception &e)
-//     {
-//         std::cerr << "⚠️ Failed to send Action Command: " << e.what() << std::endl;
-//     }
-
-// }
-
-void NetworkManager::statusCheck(const std::string &current_status)
-{
-    if (current_status == "Initializing")
-    {
-        numInit++;
-    }
-    else if (current_status == "Master")
-    {
-        numMaster++;
-    }
-    else if (current_status == "Slave")
-    {
-        numSlave++;
-    }
-    else
-    {
-        std::cerr << RED << "Unknown PTP status: " << current_status << RESET << std::endl;
-    }
-}
-
-void NetworkManager::configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &OpenCameras)
-{
-    for (const auto &camera : OpenCameras)
-    {
-        // camera->setFps(maxFrameRate);
-        camera->setPtpConfig();
-        double camIndex = std::distance(OpenCameras.begin(), std::find(OpenCameras.begin(), OpenCameras.end(), camera)); 
-        double numCams = OpenCameras.size();
-        camera->setBandwidth(camera, camIndex, numCams, deviceLinkSpeedBps, packetSizeB, bufferPercent);
-    }
-}
+//  

@@ -19,8 +19,31 @@
 #include <thread>
 #include <sys/stat.h>
 #include <chrono>
-#include <ctime>
+#include <unordered_map>
+#include <stdexcept>
 
+#include <ctime>
+// Add this helper function to convert string to enum
+PfncFormat_ Camera::stringToPixelFormat(const std::string& format)
+{
+    // Map common format strings to enum values
+    if (format == "BGR8") return BGR8;
+    if (format == "RGB8") return RGB8;
+    if (format == "RGBa8") return RGBa8;
+    if (format == "BGRa8") return BGRa8;
+    if (format == "Mono8") return Mono8;
+    if (format == "Mono16") return Mono16;
+    if (format == "BayerRG8") return BayerRG8;
+    if (format == "BayerBG8") return BayerBG8;
+    if (format == "BayerGB8") return BayerGB8;
+    if (format == "BayerGR8") return BayerGR8;
+    if (format == "YCbCr422_8") return YCbCr422_8;
+    if (format == "YUV422_8") return YUV422_8;
+    
+    // Default case if no match found
+    std::cerr << RED << "Unknown pixel format string: " << format << RESET << std::endl;
+    return Mono8; // Return a default format as fallback
+}
 Camera::Camera(std::shared_ptr<rcg::Device> device) : device(device)
 {
     if (device)
@@ -38,6 +61,7 @@ Camera::Camera(std::shared_ptr<rcg::Device> device) : device(device)
         }
         nodemap = device->getRemoteNodeMap();
         setCameraConfig();
+        resetTimestamp();
         deviceConfig.id = device->getID();
         deviceConfig.vendor = device->getVendor();
         deviceConfig.model = device->getModel();
@@ -50,7 +74,11 @@ Camera::Camera(std::shared_ptr<rcg::Device> device) : device(device)
         deviceConfig.currentIP = getCurrentIP();
         deviceConfig.MAC = getMAC();
         deviceConfig.deprecatedFW = rcg::getString(nodemap, "PtpEnable").empty(); // ToDo do this in a better way
-    }
+        width = rcg::getInteger(nodemap, "Width");
+        height = rcg::getInteger(nodemap, "Height");
+        std::string formatString = rcg::getEnum(nodemap, "PixelFormat");
+        pixelFormat = stringToPixelFormat(formatString);
+        }
     else
     {
         std::cerr << "Error: No valid device provided.\n";
@@ -74,10 +102,10 @@ void Camera::setCameraConfig()
         {
             rcg::setBoolean(nodemap, "ChunkDataControl", true);
             rcg::setBoolean(nodemap, "ChunkEnable", true);
-            rcg::setFloat(nodemap, "ExposureTimeAbs", exposure);
+            //rcg::setFloat(nodemap, "ExposureTimeAbs", exposure); // ToDo for all or only deprecated ? 
         }
         // rcg::setEnum(nodemap, "ExposureAuto","Continuous");
-        rcg::setFloat(nodemap, "ExposureTime", exposure); // Example: 20 ms
+        // rcg::setFloat(nodemap, "ExposureTime", exposure); // Example: 20 ms
         rcg::setFloat(nodemap, "Gain", gain);             // Example: Gain of 10 dB
         rcg::setBoolean(nodemap, "AutoFunctionROIUseWhiteBalance", true);
         rcg::setEnum(nodemap, "BalanceWhiteAuto", "Continuous"); // Example: Auto white balance
@@ -91,6 +119,7 @@ void Camera::setCameraConfig()
         std::cerr << RED << "Failed to set camera settings for camera " << deviceConfig.id << ": " << ex.what() << RESET << std::endl;
     }
 }
+
 
 // ToDo: Implement
 void Camera::setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource, uint32_t actionSelector)
@@ -124,13 +153,14 @@ void Camera::setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, u
     }
 }
 
-void Camera::setPtpConfig()
+void Camera::setPtpConfig(bool enable)
 {
     std::string feature = deviceConfig.deprecatedFW ? "GevIEEE1588" : "PtpEnable";
 
     try
     {
-        rcg::setString(nodemap, feature.c_str(), "true", true);
+        if (enable)
+        {rcg::setString(nodemap, feature.c_str(), "true", enable);
         rcg::setInteger(nodemap, "DeviceLinkSpeed", 1250000000);
         ptpConfig.enabled = rcg::getBoolean(nodemap, feature.c_str());
         ptpConfig.deviceLinkSpeed = rcg::getInteger(nodemap, "DeviceLinkSpeed");
@@ -139,9 +169,19 @@ void Camera::setPtpConfig()
             std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << ", DeviceLinkSpeed is set to " << ptpConfig.deviceLinkSpeed << RESET << std::endl;
         }
     }
+    else
+    {
+        rcg::setString(nodemap, feature.c_str(), "false", enable);
+        ptpConfig.enabled = rcg::getBoolean(nodemap, feature.c_str());
+        if (debug)
+        {
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << RESET << std::endl;
+        }
+    }
+    }
     catch (const std::exception &ex)
     {
-        std::cerr << RED << "Error: Failed to enable PTP: " << ex.what() << RESET << std::endl;
+        std::cerr << RED << "Error: Failed to set PTP: " << ex.what() << RESET << std::endl;
     }
 }
 
@@ -209,13 +249,14 @@ std::string Camera::getCurrentIP()
     }
 }
 
+
+
 void Camera::getPtpConfig()
 {
     try
     {
         if (!deviceConfig.deprecatedFW)
         {
-            rcg::callCommand(nodemap, "TimestampLatch");
             rcg::callCommand(nodemap, "PtpDataSetLatch");
             ptpConfig.enabled = rcg::getBoolean(nodemap, "PtpEnable");
             ptpConfig.status = rcg::getString(nodemap, "PtpStatus");
@@ -224,11 +265,16 @@ void Camera::getPtpConfig()
         }
         else
         {
-            rcg::callCommand(nodemap, "GevIEEE1588");
+            rcg::callCommand(nodemap, "GevIEEE1588DataSetLatch");
             ptpConfig.enabled = rcg::getBoolean(nodemap, "GevIEEE1588");
             ptpConfig.status = rcg::getString(nodemap, "GevIEEE1588Status");
             ptpConfig.clockAccuracy = "Unavailable";
-            ptpConfig.offsetFromMaster = -1;
+            try {
+                // Basler Cameras 
+                ptpConfig.offsetFromMaster = rcg::getInteger(nodemap, "GevIEEE1588OffsetFromMaster");
+            } catch (const std::exception &ex) {
+                ptpConfig.offsetFromMaster = 0; // Unavailable
+            }
         }
         if (debug)
         {
@@ -294,6 +340,32 @@ std::string Camera::getMAC()
     }
 }
 
+
+
+void Camera::resetTimestamp(){
+
+    try
+    {
+        setPtpConfig(false);
+        if (!deviceConfig.deprecatedFW)
+        {
+            rcg::callCommand(nodemap, "TimestampReset");
+        }
+        else
+        {
+            rcg::callCommand(nodemap, "GevTimestampControlReset");
+        }
+        if (debug)
+        {
+            std::cout << GREEN << "Timestamp reset success" << RESET << std::endl;
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Error: Failed to reset timestamp: " << ex.what() << RESET << std::endl;
+    }
+}
+
 void Camera::getTimestamps()
 {
     try
@@ -302,15 +374,13 @@ void Camera::getTimestamps()
         {
             rcg::callCommand(nodemap, "TimestampLatch");
             ptpConfig.timestamp_ns = rcg::getString(nodemap, "TimestampLatchValue");
-            ptpConfig.tickFrequency = ptpConfig.enabled ? "1000000000" : "8000000000"; // 1 GHz for PTP, 8 GHz else.
         }
         else
         {
             rcg::callCommand(nodemap, "GevTimestampControlLatch");
             ptpConfig.timestamp_ns = rcg::getString(nodemap, "GevTimestampValue");
-            ptpConfig.tickFrequency = rcg::getString(nodemap, "GevTimestampTickFrequency");
         }
-        ptpConfig.timestamp_s = std::stoull(ptpConfig.timestamp_ns) / std::stoull(ptpConfig.tickFrequency);
+        ptpConfig.timestamp_s = std::stod(ptpConfig.timestamp_ns) / 1e9;
 
         if (debug)
         {
@@ -387,10 +457,9 @@ void Camera::setFreeRunMode()
             rcg::setEnum(nodemap, "AcquisitionMode", "Continuous");
             rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
             rcg::setEnum(nodemap, "TriggerMode", "Off");
-            rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
 
             if (debug)
-                std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << ": AcquisitionMode:" << rcg::getEnum(nodemap, "AcquisitionMode") << ": TriggerSelector:" << rcg::getEnum(nodemap, "TriggerSelector") << ": AcquisitionFrameRateEnable:" << rcg::getBoolean(nodemap, "AcquisitionFrameRateEnable") << RESET << std::endl;
+                std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << ": AcquisitionMode:" << rcg::getEnum(nodemap, "AcquisitionMode") << ": TriggerSelector:" << rcg::getEnum(nodemap, "TriggerSelector") << RESET << std::endl;
         }
         catch (const std::exception &ex)
         {
@@ -642,7 +711,6 @@ void Camera::saveFrameToVideo(cv::VideoWriter &videoWriter, const cv::Mat &frame
 void Camera::startStreaming(std::atomic<bool> &stopStream, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveStream)
 {
     setFreeRunMode();
-    setFps(30.0); // ToDo make this configurable
     auto stream = initializeStream();
     if (!stream)
         return;
@@ -749,38 +817,130 @@ void stopStreaming(std::shared_ptr<rcg::Stream> stream)
     rcg::System::clearSystems();
 }
 
-double Camera::CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams)
+double Camera::calculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams) // ToDo for chunkdata
 {
     double buffer = (bufferPercent / 100.0) * (packetSizeB * (1e9 / deviceLinkSpeedBps));
     return (((packetSizeB * (1e9 / deviceLinkSpeedBps)) + buffer) * (numCams - 1));
 }
 
-double Camera::CalculateTransmissionDelayNs(double packetDelayNs, int camIndex)
+double Camera::getPacketDelayNs()
 {
-    return packetDelayNs * camIndex;
+    return packetDelayNs;
 }
 
-// Set bandwidth parameters on the device.
-void Camera::setBandwidth(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent)
+int Camera::getBitsPerPixel(PfncFormat_ pixelFormat) 
+{
+    switch (pixelFormat)
+    {
+    // 24-bit formats (3 channels × 8 bits)
+    case BGR8:
+    case RGB8:
+        return 24;
+        
+    // 32-bit formats (4 channels × 8 bits)
+    case RGBa8:
+    case BGRa8:
+        return 32;
+        
+    // 8-bit formats (1 channel × 8 bits)
+    case Mono8:
+    case BayerRG8:
+    case BayerBG8:
+    case BayerGB8:
+    case BayerGR8:
+        return 8;
+        
+    // 16-bit formats (1 channel × 16 bits)
+    case Mono16:
+        return 16;
+        
+    // YUV/YCbCr formats (typically 16 bits per pixel for YUY2/UYVY)
+    case YCbCr422_8:
+    case YUV422_8:
+        return 16;  // 4:2:2 subsampling means 16 bits per pixel
+        
+    default:
+        std::cerr << RED << "Unknown pixel format: " << pixelFormat << RESET << std::endl;
+        return 0;
+    }
+}
+
+double Camera::calculateRawFrameSizeB(int width, int height, PfncFormat_ pixelFormat) {
+    int bitsPerPixel = getBitsPerPixel(pixelFormat);
+    int totalPixels = width * height;
+    int totalBits = totalPixels * bitsPerPixel;
+
+    return static_cast<double>(totalBits) / 8.0;  // Convert bits to bytes
+}
+
+double Camera::calculateFrameTransmissionCycle(double deviceLinkSpeedBps, double packetSizeB)
+{
+    double RawFrameSizeBytes = calculateRawFrameSizeB(width, height, pixelFormat);
+    double numPacketPerFrameB = RawFrameSizeBytes / packetSizeB;
+    double frameTransmissionCycle = RawFrameSizeBytes / deviceLinkSpeedBps;
+    return frameTransmissionCycle + numPacketPerFrameB * packetDelayNs * 1e-9; // ToDo check if correct
+}
+
+double Camera::calculateFps(double deviceLinkSpeedBps, double packetSizeB)
+{
+    double frameTransmissionCycle = calculateFrameTransmissionCycle(deviceLinkSpeedBps, packetSizeB);
+    return std::floor(1 / frameTransmissionCycle);
+}
+
+void Camera::setDeviceLinkThroughput(double deviceLinkSpeedBps)
 {
     try
     {
-        double packetDelay = CalculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
-        double transmissionDelay = CalculateTransmissionDelayNs(packetDelay, camIndex);
-        int64_t gevSCPDValue = static_cast<int64_t>(packetDelay);
-        rcg::setInteger(camera->nodemap, "GevSCPSPacketSize", packetSizeB);
+        rcg::setEnum(nodemap, "DeviceLinkThroughputLimitMode", "On");
+        rcg::setInteger(nodemap, "DeviceLinkThroughputLimit", deviceLinkSpeedBps);
+        if (debug)
+        {
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": DeviceLinkThroughputLimit set to:" << rcg::getInteger(nodemap, "DeviceLinkThroughputLimit") << RESET << std::endl;
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Error: Failed to set DeviceLinkThroughputLimit: " << ex.what() << RESET << std::endl;
+    }
+}
+
+void Camera::setPacketSizeB(double packetSizeB){
+    try
+    {
+        packetSizeB = std::ceil(packetSizeB / 4.0) * 4; // Ensure packet size is a multiple of 4
+        rcg::setInteger(nodemap, "GevSCPSPacketSize", packetSizeB); 
+        if (debug)
+        {
+            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": GevSCPSPacketSize set to:" << rcg::getInteger(nodemap, "GevSCPSPacketSize") << RESET << std::endl;
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Error: Failed to set GevSCPSPacketSize: " << ex.what() << RESET << std::endl;
+    }
+}
+
+
+// Set bandwidth parameters on the device.
+void Camera::setBandwidthDelays(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent)
+{
+    try
+    {
+        packetDelayNs = calculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
+        transmissionDelayNs = packetDelayNs * camIndex;
+        int64_t gevSCPDValue = static_cast<int64_t>(packetDelayNs);
         rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue); // in counter units, 1ns resolution if ptp is enabled
-        int64_t gevSCFTDValue = static_cast<int64_t>(transmissionDelay);
+        int64_t gevSCFTDValue = static_cast<int64_t>(transmissionDelayNs);
         rcg::setInteger(camera->nodemap, "GevSCFTD", gevSCFTDValue); // in counter units, 1ns resolution if ptp is enabled
+        
 
         if (debug)
             std::cout << "[DEBUG] numCams and CamIndex: " << numCams - 1 << " " << camIndex << std::endl;
-        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << packetDelay << " ns" << std::endl;
-        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated transmission delay: " << transmissionDelay << " ns" << std::endl;
-        std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPSPacketSize set to: " << rcg::getInteger(nodemap, "GevSCPSPacketSize") << " bytes" << std::endl;
+        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << packetDelayNs << " ns" << std::endl;
+        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated transmission delay: " << transmissionDelayNs << " ns" << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPD set to: " << rcg::getInteger(nodemap, "GevSCPD") << " ns" << std::endl;
         std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCFTD set to: " << rcg::getInteger(nodemap, "GevSCFTD") << " ns" << std::endl;
-        std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": setBandwidth sucess" << std::endl;
+        std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": setBandwidthDelays sucess" << std::endl;
     }
     catch (const std::exception &ex)
     {
@@ -788,12 +948,16 @@ void Camera::setBandwidth(const std::shared_ptr<Camera> &camera, double camIndex
     }
 }
 
-void Camera::setFps(double maxFrameRate)
+void Camera::setFps(double maxFps)
 {
     try
     {
         rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
-        rcg::setFloat(nodemap, "AcquisitionFrameRate", maxFrameRate);
+        // if(!camera->deviceConfig.deprecatedFW)
+            rcg::setEnum(nodemap, "AcquisitionFrameRate", "FrameRate");
+        // else{
+            rcg::setEnum(nodemap, "AcquisitionFrameRateAbs", "FrameRate"); // ToDo for all or only deprecated ? 
+        // }
     }
     catch (const std::exception &e)
     {
@@ -801,5 +965,23 @@ void Camera::setFps(double maxFrameRate)
     }
 
     if (debug)
-        std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << maxFrameRate << std::endl;
+        std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << maxFps << std::endl;
+}
+
+void Camera::setExposureTime(double exposureTime) // ToDo correct this
+{
+    try
+    {
+        rcg::setEnum(nodemap, "ExposureMode", "Timed");
+        rcg::setEnum(nodemap, "ExposureAuto", "Off");
+        rcg::setFloat(nodemap, "ExposureTime", exposureTime);
+        rcg::setFloat(nodemap, "ExposureTimeAbs", exposureTime); // ToDo for all or only deprecated ? 
+
+        if (debug)
+            std::cout << GREEN << "[DEBUG] Camera " << deviceConfig.id << "ExposureTime set to:" << rcg::getFloat(nodemap, "ExposureTimeAbs") << std::endl; //ExposureTime // ToDo for all or only deprecated ? 
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Failed to set exposure time for camera " << deviceConfig.id << ": " << e.what() << std::endl;
+    }
 }

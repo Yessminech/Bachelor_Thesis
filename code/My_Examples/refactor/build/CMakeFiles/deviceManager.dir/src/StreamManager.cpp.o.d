@@ -330,6 +330,8 @@ CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: \
  /usr/include/opencv4/opencv2/video/tracking.hpp \
  /usr/include/opencv4/opencv2/video/background_segm.hpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
+ /usr/local/include/rc_genicam_api/pixel_formats.h \
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
  /usr/local/include/rc_genicam_api/device.h \
  /usr/local/include/rc_genicam_api/interface.h \
  /usr/local/include/rc_genicam_api/system.h \
@@ -469,6 +471,4 @@ CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: \
  /usr/local/include/rc_genicam_api/buffer.h \
  /usr/local/include/rc_genicam_api/image.h \
  /usr/local/include/rc_genicam_api/image_store.h \
- /usr/local/include/rc_genicam_api/image.h \
- /usr/local/include/rc_genicam_api/pixel_formats.h \
- /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h
+ /usr/local/include/rc_genicam_api/image.h

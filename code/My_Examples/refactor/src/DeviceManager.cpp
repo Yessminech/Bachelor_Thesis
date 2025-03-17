@@ -182,7 +182,7 @@ std::shared_ptr<rcg::Device> DeviceManager::getAvailableCameraByID(const std::st
     return nullptr;
 }
 
-const std::list<std::shared_ptr<Camera>> &DeviceManager::getOpenCameras() const
+const std::list<std::shared_ptr<Camera>> &DeviceManager::getopenCameras() const
 {
     return openCamerasList;
 }
@@ -264,7 +264,7 @@ bool DeviceManager::listCamera(std::shared_ptr<Camera> camera)
     }
 }
 
-bool DeviceManager::listOpenCameras()
+bool DeviceManager::listopenCameras()
 {
     try
     {

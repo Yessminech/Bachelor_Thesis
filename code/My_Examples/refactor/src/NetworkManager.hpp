@@ -19,30 +19,35 @@
 class NetworkManager
 {
 public:
-    NetworkManager();
+NetworkManager(
+    bool debug,
+    int ptpSyncTimeout,
+    int ptpOffsetThresholdNs,
+    int ptpMaxCheck);
     ~NetworkManager();
 
-    void printPtpConfig(std::shared_ptr<Camera> camera);
-    void monitorPtpStatus(std::shared_ptr<Camera> camera, std::shared_ptr<rcg::Interface> interf, int deviceCount, std::list<std::shared_ptr<Camera>> &openCamerasList);
-    void configureActionCommandInterface(std::shared_ptr<rcg::Interface> interf, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource = "Action1", uint32_t actionSelector = 1, uint32_t destinationIP = 0xFFFFFFFF);
-    void sendActionCommand(std::shared_ptr<rcg::System> system);
-    void configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &OpenCameras);
+    void enablePtp(const std::list<std::shared_ptr<Camera>> &openCameras);
+    void disablePtp(const std::list<std::shared_ptr<Camera>> &openCameras);
 
-    // Additional methods
-   // void disablePTP();                                                                              // Disables PTP sync
-    // NetworkStatus getNetworkStatus();      // Returns network status
+    void printPtpConfig(std::shared_ptr<Camera> camera);
+    void monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &openCamerasList,  std::atomic<bool>& stopStream);
+    void monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList,  std::atomic<bool>& stopStream);
+    void configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras);
+    void logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset);
+    void setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, std::shared_ptr<Camera> camera);
+    void setBandwidthDelaysSharing(const std::list<std::shared_ptr<Camera>> &openCameras);
+    void sendActionCommand(std::shared_ptr<rcg::System> system);
+    void calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay);
+
     bool debug = true;
 
 private:
-    double maxFrameRate = 10; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
-    double deviceLinkSpeedBps = 1250000000; // 1 Gbps // ToDo What does this mean and how to define this
-    double packetSizeB = 9012;             // ToDo What does this mean and how to define this, jumbo frames?
-    double bufferPercent = 15;             // 10.93;
-    int ptpSyncTimeout;
-    int numInit;
-    int numMaster;
-    int numSlave;
-    int64_t masterClockId;
-
-    void statusCheck(const std::string &current_status);
+    double maxFps = 1000; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
+    double deviceLinkSpeedBps = 1250000000; // 1 Gbps
+    double packetSizeB = 9012; // Jumbo frames defined on hardaware
+    double bufferPercent = 15; // 10.93;
+    int ptpSyncTimeout = 800; // 800 ms
+    int ptpMaxCheck = 10; // 10 checks
+    int ptpOffsetThresholdNs = 1000; // 1 us
+    std::string masterClockId;
 };

@@ -30,12 +30,12 @@ public:
     bool getAvailableCameras();
     std::shared_ptr<rcg::Device> getAvailableCameraByID(const std::string &deviceId);
     std::shared_ptr<Camera> getOpenCameraByID(const std::string &deviceId);
-    const std::list<std::shared_ptr<Camera>> &getOpenCameras() const;
+    const std::list<std::shared_ptr<Camera>> &getopenCameras() const;
     void openCameras(std::list<std::string> deviceIds);
     // +closeCameras()  
 
     bool listAvailableCamerasByID();
-    bool listOpenCameras();
+    bool listopenCameras();
     bool debug = true;
 
 private:

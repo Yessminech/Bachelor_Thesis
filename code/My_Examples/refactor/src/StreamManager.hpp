@@ -24,7 +24,7 @@ public:
 
     cv::Mat createComposite(const std::vector<cv::Mat> &frames);
     void streamFromDevice(std::shared_ptr<Camera> camera, std::atomic<bool>& stopStream, bool saveStream);
-    void startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &OpenCameras, std::atomic<bool>& stopStream, bool saveStream);
+    void startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras, std::atomic<bool>& stopStream, bool saveStream);
 
 private:
     // std::atomic<bool> stopStream;  // Atomic flag to signal all threads to stopStream.

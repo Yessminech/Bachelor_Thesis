@@ -1,6 +1,7 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
+#include "rc_genicam_api/pixel_formats.h"
 #include <rc_genicam_api/device.h>
 #include <rc_genicam_api/buffer.h>
 #include <GenApi/GenApi.h>
@@ -46,6 +47,15 @@ struct PtpConfig
   double deviceLinkSpeed;
 };
 
+struct networkConfig // ToDo
+{
+  double deviceLinkSpeedBps;
+  double packetSizeB;
+  double bufferPercent;
+  double packetDelayNs;
+};
+
+
 class Camera
 {
 public:
@@ -54,17 +64,26 @@ public:
 
   // Camera Configuration
   // ToDo add clear configuration method
+  PfncFormat_ stringToPixelFormat(const std::string& format);
   void setCameraConfig();
   void setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1);
-  void setPtpConfig();
-  void setBandwidth(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent);
-  void setFps(double maxFrameRate);
-
+  void setPtpConfig(bool enable = true);
+  void setBandwidthDelays(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent);
+  void setFps(double maxFps);
+  void resetTimestamp();
   // Network Control
   std::string getCurrentIP();
   void getPtpConfig();
   std::string getMAC();
   void getTimestamps();
+  int getBitsPerPixel(PfncFormat_ pixelFormat); 
+  double calculateRawFrameSizeB(int width, int height, PfncFormat_ pixelFormat);
+  double calculateFrameTransmissionCycle(double deviceLinkSpeedBps, double packetSizeB);
+  double calculateFps(double deviceLinkSpeedBps, double packetSizeB);
+  void setDeviceLinkThroughput(double deviceLinkSpeedBps);
+  void setPacketSizeB(double packetSizeB);
+  double getPacketDelayNs();
+  void setExposureTime(double exposureTime);
 
   // Streaming Control
   void startStreaming(std::atomic<bool> &stopStream, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveStream);
@@ -81,15 +100,15 @@ private:
   int videoHeight = 480;
   unsigned long frameCounter = 0;
   std::string videoOutputPath = "output/"; // Default directory
+  double packetDelayNs = 0;
+  double transmissionDelayNs = 0;
 
   std::shared_ptr<rcg::Device> device;
   float exposure = 222063; // Example: 20 ms
   float gain = 0;          // Example: Gain of 10 dB
   void initializeVideoWriter(const std::string &directory, int width, int height);
   void setFreeRunMode();
-  double CalculateTransmissionDelayNs(double packetDelayNs, int camIndex);
-  double CalculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams);
-  float calculateTransmissionDelay(int cameraId); // Estimates transmission delay
+  double calculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams);
   void cleanupStream(std::shared_ptr<rcg::Stream> &stream);
   std::shared_ptr<rcg::Stream> initializeStream();
   const rcg::Buffer *grabFrame(std::shared_ptr<rcg::Stream> &stream);
@@ -102,6 +121,9 @@ private:
   std::string hexToIP(const std::string &hexIP);
   std::string decimalToMAC(uint64_t decimalMAC);
   std::string hexToMAC(const std::string &hexMAC);
+  double width;
+  double height;
+  PfncFormat_ pixelFormat;
 };
 
 #endif // CAMERA_HPP

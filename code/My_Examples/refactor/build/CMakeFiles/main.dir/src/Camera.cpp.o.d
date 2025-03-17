@@ -2,6 +2,8 @@ CMakeFiles/main.dir/src/Camera.cpp.o: \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp \
  /usr/include/stdc-predef.h \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
+ /usr/local/include/rc_genicam_api/pixel_formats.h \
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
  /usr/local/include/rc_genicam_api/device.h \
  /usr/local/include/rc_genicam_api/interface.h \
  /usr/local/include/rc_genicam_api/system.h \
@@ -404,8 +406,6 @@ CMakeFiles/main.dir/src/Camera.cpp.o: \
  /usr/local/include/rc_genicam_api/device.h \
  /usr/local/include/rc_genicam_api/buffer.h \
  /usr/local/include/rc_genicam_api/image.h \
- /usr/local/include/rc_genicam_api/pixel_formats.h \
- /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
  /usr/local/include/rc_genicam_api/nodemap_out.h \
  /usr/local/include/rc_genicam_api/config.h /usr/include/arpa/inet.h \
  /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/sys/socket.h \

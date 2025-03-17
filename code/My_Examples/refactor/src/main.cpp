@@ -17,8 +17,8 @@
 #include <csignal>
 
 std::atomic<bool> stopStream(false);
-DeviceManager deviceManager;
-NetworkManager networkManager;
+DeviceManager deviceManager ;
+NetworkManager networkManager = NetworkManager(true, 800, 1000, 10);
 StreamManager streamManager;
 
 void handleSignal(int signal) {
@@ -29,16 +29,22 @@ void handleSignal(int signal) {
 }
 
 void enumerateDevices(){
-    // device enumeration 
     deviceManager.getAvailableCameras();
     deviceManager.listAvailableCamerasByID();
     return;
 }
 
-void startSyncFreeRunStream(){
-    const std::list<std::shared_ptr<Camera>>& openCamerasList = deviceManager.getOpenCameras();
-    bool saveStream = true;
+void ptpSyncFreeRun(const std::list<std::shared_ptr<Camera>>& openCamerasList){
     networkManager.configureNetworkFroSyncFreeRun(openCamerasList);
+    networkManager.enablePtp(openCamerasList);
+   // networkManager.monitorPtpStatus(openCamerasList, stopStream);
+   // networkManager.monitorPtpOffset(openCamerasList, stopStream);
+    return;
+}
+
+void startSyncFreeRunStream(){
+    const std::list<std::shared_ptr<Camera>>& openCamerasList = deviceManager.getopenCameras();
+    bool saveStream = true;
     streamManager.startSyncFreeRun(openCamerasList, stopStream, saveStream);
     return;
 }
@@ -48,11 +54,11 @@ int main()
 {
     std::signal(SIGINT, handleSignal);
     enumerateDevices();
-    //home-cam
-    deviceManager.openCameras({"Basler acA2500-14gm (21639790)"}); 
+    deviceManager.openCameras({"Basler acA2500-14gm (21639790)"});     //home-camera
     //deviceManager.openCameras({"Basler acA2440-20gc (23630914)", "Basler acA2440-20gc (23630913)", "210200799"}); // ToDo, read from terminal 
     //deviceManager.openDevices({"Basler acA2440-20gc (23630914)"}); // ToDo, read from terminal 
-    deviceManager.listOpenCameras();
+    deviceManager.listopenCameras();
+    ptpSyncFreeRun(deviceManager.getopenCameras());
     startSyncFreeRunStream();
     // Clean up
     rcg::System::clearSystems();

@@ -4,6 +4,8 @@
 CMakeFiles/deviceManager.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp \
   /usr/include/stdc-predef.h \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
+  /usr/local/include/rc_genicam_api/pixel_formats.h \
+  /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
   /usr/local/include/rc_genicam_api/device.h \
   /usr/local/include/rc_genicam_api/interface.h \
   /usr/local/include/rc_genicam_api/system.h \
@@ -466,8 +468,6 @@ CMakeFiles/deviceManager.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor_
   /usr/local/include/rc_genicam_api/device.h \
   /usr/local/include/rc_genicam_api/buffer.h \
   /usr/local/include/rc_genicam_api/image.h \
-  /usr/local/include/rc_genicam_api/pixel_formats.h \
-  /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
   /usr/local/include/rc_genicam_api/nodemap_out.h \
   /usr/local/include/rc_genicam_api/config.h \
   /usr/include/arpa/inet.h \
@@ -529,6 +529,8 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: /home/test/Documents/ba/Ba
   /usr/include/stdc-predef.h \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
+  /usr/local/include/rc_genicam_api/pixel_formats.h \
+  /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
   /usr/local/include/rc_genicam_api/device.h \
   /usr/local/include/rc_genicam_api/interface.h \
   /usr/local/include/rc_genicam_api/system.h \
@@ -1031,6 +1033,8 @@ CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o: /home/test/Documents/ba/Ba
 CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp \
   /usr/include/stdc-predef.h \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
+  /usr/local/include/rc_genicam_api/pixel_formats.h \
+  /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
   /usr/local/include/rc_genicam_api/device.h \
   /usr/local/include/rc_genicam_api/interface.h \
   /usr/local/include/rc_genicam_api/system.h \
@@ -1564,7 +1568,11 @@ CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/B
   /usr/include/c++/11/bits/regex.h \
   /usr/include/c++/11/bits/regex.tcc \
   /usr/include/c++/11/bits/regex_executor.h \
-  /usr/include/c++/11/bits/regex_executor.tcc
+  /usr/include/c++/11/bits/regex_executor.tcc \
+  /usr/include/c++/11/fstream \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+  /usr/include/c++/11/bits/fstream.tcc
 
 CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp \
   /usr/include/stdc-predef.h \
@@ -1959,6 +1967,8 @@ CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: /home/test/Documents/ba/Ba
   /usr/include/opencv4/opencv2/video/tracking.hpp \
   /usr/include/opencv4/opencv2/video/background_segm.hpp \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
+  /usr/local/include/rc_genicam_api/pixel_formats.h \
+  /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
   /usr/local/include/rc_genicam_api/device.h \
   /usr/local/include/rc_genicam_api/interface.h \
   /usr/local/include/rc_genicam_api/system.h \
@@ -2109,9 +2119,7 @@ CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o: /home/test/Documents/ba/Ba
   /usr/local/include/rc_genicam_api/buffer.h \
   /usr/local/include/rc_genicam_api/image.h \
   /usr/local/include/rc_genicam_api/image_store.h \
-  /usr/local/include/rc_genicam_api/image.h \
-  /usr/local/include/rc_genicam_api/pixel_formats.h \
-  /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h
+  /usr/local/include/rc_genicam_api/image.h
 
 CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp \
   /usr/include/stdc-predef.h \
@@ -2413,6 +2421,8 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
   /usr/include/stdc-predef.h \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
+  /usr/local/include/rc_genicam_api/pixel_formats.h \
+  /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
   /usr/local/include/rc_genicam_api/device.h \
   /usr/local/include/rc_genicam_api/interface.h \
   /usr/local/include/rc_genicam_api/system.h \
@@ -2960,6 +2970,12 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp:
 
+/usr/include/c++/11/bits/fstream.tcc:
+
+/usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h:
+
+/usr/include/c++/11/fstream:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
 
 /usr/include/x86_64-linux-gnu/bits/ss_flags.h:
@@ -3144,9 +3160,9 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/c++/11/ext/aligned_buffer.h:
 
-/usr/include/c++/11/type_traits:
-
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+
+/usr/include/c++/11/type_traits:
 
 /usr/include/stdint.h:
 
@@ -3166,9 +3182,9 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/stdlib.h:
 
-/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+/usr/include/c++/11/bits/regex_automaton.tcc:
 
-/usr/include/rc_genicam_api/genicam/GenApi/IFloat.h:
+/usr/include/c++/11/bits/shared_ptr.h:
 
 /usr/include/c++/11/bits/ostream.tcc:
 
@@ -3242,6 +3258,10 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
+/usr/include/c++/11/bits/stl_construct.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h:
+
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
@@ -3270,10 +3290,6 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/c++/11/iomanip:
 
-/usr/include/x86_64-linux-gnu/bits/floatn.h:
-
-/usr/include/c++/11/iterator:
-
 /usr/include/rc_genicam_api/genicam/GenApi/ConcatenatedWrite.h:
 
 /usr/include/c++/11/bits/istream.tcc:
@@ -3286,11 +3302,19 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/local/include/rc_genicam_api/device.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h:
+/usr/include/rc_genicam_api/genicam/GenApi/IPortStacked.h:
 
-/usr/include/c++/11/tuple:
+/usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+/usr/include/c++/11/bits/regex.tcc:
+
+/usr/include/c++/11/initializer_list:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h:
+
+/usr/include/x86_64-linux-gnu/bits/time64.h:
+
+/usr/include/c++/11/bits/regex_executor.tcc:
 
 /usr/local/include/rc_genicam_api/interface.h:
 
@@ -3314,11 +3338,43 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/features.h:
 
+/usr/include/rc_genicam_api/genicam/GenTL/PFNC.h:
+
+/usr/include/opencv4/opencv2/core/vsx_utils.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/sigstack.h:
 
 /usr/include/c++/11/ext/numeric_traits.h:
 
 /usr/include/opencv4/opencv2/ml.hpp:
+
+/usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/rc_genicam_api/genicam/GenApi/IRegister.h:
+
+/usr/include/x86_64-linux-gnu/sys/select.h:
+
+/usr/include/opencv4/opencv2/flann/kdtree_single_index.h:
+
+/usr/include/c++/11/regex:
+
+/usr/include/x86_64-linux-gnu/asm/socket.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h:
+
+/usr/include/c++/11/iosfwd:
+
+/usr/include/opencv4/opencv2/stitching/detail/util_inl.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/floatn.h:
+
+/usr/include/c++/11/iterator:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
 /usr/include/rc_genicam_api/genicam/GenApi/Pointer.h:
 
@@ -3352,6 +3408,36 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/c++/11/chrono:
 
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+
+/usr/include/x86_64-linux-gnu/c++/11/bits/c++locale.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/c++/11/functional:
+
+/usr/include/rc_genicam_api/genicam/GenApi/NodeMapFactory.h:
+
+/usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h:
+
+/usr/include/x86_64-linux-gnu/bits/timesize.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/x86_64-linux-gnu/asm/errno.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
+
+/usr/include/c++/11/bits/range_access.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
+
+/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
+
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/usr/include/rc_genicam_api/genicam/GenApi/IFloat.h:
+
 /usr/include/c++/11/cstdint:
 
 /usr/include/opencv4/opencv2/core/mat.hpp:
@@ -3367,70 +3453,6 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 /usr/include/x86_64-linux-gnu/bits/timex.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
-
-/usr/include/c++/11/bits/regex_automaton.tcc:
-
-/usr/include/c++/11/functional:
-
-/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
-
-/usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:
-
-/usr/include/rc_genicam_api/genicam/GenApi/NodeMapFactory.h:
-
-/usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h:
-
-/usr/include/x86_64-linux-gnu/bits/timesize.h:
-
-/usr/include/rc_genicam_api/genicam/GenApi/IRegister.h:
-
-/usr/include/x86_64-linux-gnu/sys/select.h:
-
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
-
-/usr/include/x86_64-linux-gnu/asm/socket.h:
-
-/usr/include/opencv4/opencv2/flann/kdtree_single_index.h:
-
-/usr/include/c++/11/regex:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/usr/include/x86_64-linux-gnu/asm/errno.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
-
-/usr/include/rc_genicam_api/genicam/GenApi/IPortStacked.h:
-
-/usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp:
-
-/usr/include/linux/errno.h:
-
-/usr/include/x86_64-linux-gnu/c++/11/bits/c++locale.h:
-
-/usr/include/c++/11/bits/regex.tcc:
-
-/usr/include/c++/11/initializer_list:
-
-/usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h:
-
-/usr/include/opencv4/opencv2/stitching/detail/util_inl.hpp:
-
-/usr/include/c++/11/iosfwd:
-
-/usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h:
-
-/usr/include/x86_64-linux-gnu/bits/time64.h:
-
-/usr/include/c++/11/bits/regex_executor.tcc:
-
-/usr/include/c++/11/bits/range_access.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
-
-/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
 
@@ -3578,9 +3600,9 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/c++/11/ext/new_allocator.h:
 
-/usr/include/c++/11/bits/char_traits.h:
-
 /usr/include/libintl.h:
+
+/usr/include/c++/11/bits/char_traits.h:
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
@@ -3594,11 +3616,9 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/rc_genicam_api/genicam/GenApi/GenApiDll.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h:
+/usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h:
 
-/usr/include/c++/11/bits/stl_construct.h:
-
-/usr/include/c++/11/bits/shared_ptr.h:
+/usr/include/c++/11/tuple:
 
 /usr/include/c++/11/bits/invoke.h:
 
@@ -3776,10 +3796,6 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/opencv4/opencv2/core/neon_utils.hpp:
 
-/usr/include/opencv4/opencv2/core/vsx_utils.hpp:
-
-/usr/include/rc_genicam_api/genicam/GenTL/PFNC.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
 
 /usr/include/opencv4/opencv2/core/check.hpp:
@@ -3838,6 +3854,8 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/opencv4/opencv2/core/async.hpp:
 
+/usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h:
+
 /usr/include/rc_genicam_api/genicam/GenApi/IDeviceInfo.h:
 
 /usr/include/opencv4/opencv2/dnn/version.hpp:
@@ -3854,9 +3872,9 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/c++/11/bits/charconv.h:
 
-/usr/include/math.h:
-
 /usr/include/c++/11/bits/exception_ptr.h:
+
+/usr/include/math.h:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/c++allocator.h:
 
@@ -3916,9 +3934,9 @@ CMakeFiles/deviceManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Th
 
 /usr/include/c++/11/bits/unordered_map.h:
 
-/usr/include/c++/11/array:
-
 /usr/include/opencv4/opencv2/flann/autotuned_index.h:
+
+/usr/include/c++/11/array:
 
 /usr/include/opencv4/opencv2/flann/random.h:
 

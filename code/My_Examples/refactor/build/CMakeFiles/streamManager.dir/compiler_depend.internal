@@ -5,6 +5,8 @@ CMakeFiles/streamManager.dir/src/Camera.cpp.o
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
  /usr/include/stdc-predef.h
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp
+ /usr/local/include/rc_genicam_api/pixel_formats.h
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h
  /usr/local/include/rc_genicam_api/device.h
  /usr/local/include/rc_genicam_api/interface.h
  /usr/local/include/rc_genicam_api/system.h
@@ -467,8 +469,6 @@ CMakeFiles/streamManager.dir/src/Camera.cpp.o
  /usr/local/include/rc_genicam_api/device.h
  /usr/local/include/rc_genicam_api/buffer.h
  /usr/local/include/rc_genicam_api/image.h
- /usr/local/include/rc_genicam_api/pixel_formats.h
- /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h
  /usr/local/include/rc_genicam_api/nodemap_out.h
  /usr/local/include/rc_genicam_api/config.h
  /usr/include/arpa/inet.h
@@ -531,6 +531,8 @@ CMakeFiles/streamManager.dir/src/DeviceManager.cpp.o
  /usr/include/stdc-predef.h
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp
+ /usr/local/include/rc_genicam_api/pixel_formats.h
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h
  /usr/local/include/rc_genicam_api/device.h
  /usr/local/include/rc_genicam_api/interface.h
  /usr/local/include/rc_genicam_api/system.h
@@ -1034,6 +1036,8 @@ CMakeFiles/streamManager.dir/src/NetworkManager.cpp.o
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp
  /usr/include/stdc-predef.h
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp
+ /usr/local/include/rc_genicam_api/pixel_formats.h
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h
  /usr/local/include/rc_genicam_api/device.h
  /usr/local/include/rc_genicam_api/interface.h
  /usr/local/include/rc_genicam_api/system.h
@@ -1568,6 +1572,10 @@ CMakeFiles/streamManager.dir/src/NetworkManager.cpp.o
  /usr/include/c++/11/bits/regex.tcc
  /usr/include/c++/11/bits/regex_executor.h
  /usr/include/c++/11/bits/regex_executor.tcc
+ /usr/include/c++/11/fstream
+ /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h
+ /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h
+ /usr/include/c++/11/bits/fstream.tcc
 
 CMakeFiles/streamManager.dir/src/StreamManager.cpp.o
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp
@@ -1963,6 +1971,8 @@ CMakeFiles/streamManager.dir/src/StreamManager.cpp.o
  /usr/include/opencv4/opencv2/video/tracking.hpp
  /usr/include/opencv4/opencv2/video/background_segm.hpp
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp
+ /usr/local/include/rc_genicam_api/pixel_formats.h
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h
  /usr/local/include/rc_genicam_api/device.h
  /usr/local/include/rc_genicam_api/interface.h
  /usr/local/include/rc_genicam_api/system.h
@@ -2114,8 +2124,6 @@ CMakeFiles/streamManager.dir/src/StreamManager.cpp.o
  /usr/local/include/rc_genicam_api/image.h
  /usr/local/include/rc_genicam_api/image_store.h
  /usr/local/include/rc_genicam_api/image.h
- /usr/local/include/rc_genicam_api/pixel_formats.h
- /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h
 
 CMakeFiles/streamManager.dir/src/SystemManager.cpp.o
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp
@@ -2419,6 +2427,8 @@ CMakeFiles/streamManager.dir/src/main.cpp.o
  /usr/include/stdc-predef.h
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp
+ /usr/local/include/rc_genicam_api/pixel_formats.h
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h
  /usr/local/include/rc_genicam_api/device.h
  /usr/local/include/rc_genicam_api/interface.h
  /usr/local/include/rc_genicam_api/system.h
