@@ -140,20 +140,14 @@ void StreamManager::stopStreaming() {
 // Start synchronized free-run mode
 void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras, std::atomic<bool>& stopStream, bool saveStream)
 {
-    // for (auto it = openCameras.rbegin(); it != openCameras.rend(); ++it)
-    // {
-    //     const auto &camera = *it;
-
-    //     streamFromDevice(camera, stopStream, saveStream);
-    // }
     // Reset the counters
     startedThreads = 0;
     
     // Convert list to vector for easier indexed access
     std::vector<std::shared_ptr<Camera>> cameraVec(openCameras.begin(), openCameras.end());
     
-    // Start cameras in the desired order
-    for (int i = 0; i < cameraVec.size(); i++) {
+    // Start cameras in reverse order (last to first)
+    for (int i = cameraVec.size() - 1; i >= 0; i--) {
         // Pass the index explicitly to control frame placement
         streamFromDevice(cameraVec[i], stopStream, saveStream, i);
         
@@ -207,4 +201,3 @@ void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &o
     }    }
     stopStreaming();
 }
-

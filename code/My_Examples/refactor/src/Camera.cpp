@@ -326,7 +326,7 @@ void Camera::getPtpConfig()
         }
         if (debug)
         {
-            std::cout << GREEN << "PTP Parameters success " << RESET << std::endl;
+            // std::cout << GREEN << "PTP Parameters success " << RESET << std::endl;
         }
     }
     catch (const std::exception &ex)
@@ -353,7 +353,7 @@ void Camera::getTimestamps()
 
         if (debug)
         {
-            std::cout << GREEN << "Timestamp success" << RESET << std::endl;
+            // std::cout << GREEN << "Timestamp success" << RESET << std::endl;
         }
     }
     catch (const std::exception &ex)
@@ -898,7 +898,7 @@ void Camera::setPtpConfig(bool enable)
             }
             if (debug)
             {
-                std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << ", DeviceLinkSpeed is set to " << networkConfig.deviceLinkSpeedBps << RESET << std::endl;
+                // std::cout << GREEN << "[DEBUG] Camera " << device->getID() << feature << " set to:" << ptpConfig.enabled << ", DeviceLinkSpeed is set to " << networkConfig.deviceLinkSpeedBps << RESET << std::endl;
             }
         }
         else
@@ -927,8 +927,8 @@ void Camera::setFreeRunMode()
             rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
             rcg::setEnum(nodemap, "TriggerMode", "Off");
 
-            if (debug)
-                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << ": AcquisitionMode:" << rcg::getEnum(nodemap, "AcquisitionMode") << ": TriggerSelector:" << rcg::getEnum(nodemap, "TriggerSelector") << RESET << std::endl;
+            // if (debug)
+                // std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << ": AcquisitionMode:" << rcg::getEnum(nodemap, "AcquisitionMode") << ": TriggerSelector:" << rcg::getEnum(nodemap, "TriggerSelector") << RESET << std::endl;
         }
         catch (const std::exception &ex)
         {
@@ -977,8 +977,8 @@ void Camera::setDeviceLinkThroughput(double deviceLinkSpeedBps)
                                                                        // rcg::setInteger(nodemap, "DeviceLinkThroughputLimit", deviceLinkSpeedBps);
         if (debug)
         {
-            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": DeviceLinkThroughputLimit set to:" << rcg::getInteger(nodemap, "DeviceLinkThroughputLimit") << RESET << std::endl;
-            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": DeviceLinkThroughputLimit set to:" << rcg::getInteger(nodemap, "GevSCDMT") << RESET << std::endl;
+            // std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": DeviceLinkThroughputLimit set to:" << rcg::getInteger(nodemap, "DeviceLinkThroughputLimit") << RESET << std::endl;
+            // std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": DeviceLinkThroughputLimit set to:" << rcg::getInteger(nodemap, "GevSCDMT") << RESET << std::endl;
         }
     }
     catch (const std::exception &ex)
@@ -995,7 +995,7 @@ void Camera::setPacketSizeB(double packetSizeB)
         rcg::setInteger(nodemap, "GevSCPSPacketSize", packetSizeB);
         if (debug)
         {
-            std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": GevSCPSPacketSize set to:" << rcg::getInteger(nodemap, "GevSCPSPacketSize") << RESET << std::endl;
+            // std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": GevSCPSPacketSize set to:" << rcg::getInteger(nodemap, "GevSCPSPacketSize") << RESET << std::endl;
         }
     }
     catch (const std::exception &ex)
@@ -1008,23 +1008,20 @@ void Camera::setBandwidthDelays(const std::shared_ptr<Camera> &camera, double ca
 {
     try
     {
-        std::cout << "[DEBUG] Camera " << "packetSizeB: " << packetSizeB << " deviceLinkSpeedBps: " << deviceLinkSpeedBps << " bufferPercent: " << bufferPercent << " numCams: " << numCams << std::endl;
+
         networkConfig.packetDelayNs = calculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
-        std::cout << "[DEBUG] Camera " << "packetDelayNs: " << networkConfig.packetDelayNs << std::endl;
         networkConfig.transmissionDelayNs = networkConfig.packetDelayNs * (numCams - 1 - camIndex);
         int64_t gevSCPDValue = static_cast<int64_t>((networkConfig.packetDelayNs + 7) / 8) * 8; // Ensure multiple of 8
-        std::cout << "[DEBUG] Camera " << "gevSCPDValue: " << gevSCPDValue << std::endl;
         rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue); // in counter units, 1ns resolution if ptp is enabled
         int64_t gevSCFTDValue = static_cast<int64_t>((networkConfig.transmissionDelayNs + 7) / 8) * 8;
         rcg::setInteger(camera->nodemap, "GevSCFTD", gevSCFTDValue); // in counter units, 1ns resolution if ptp is enabled
 
         if (debug)
-            std::cout << "[DEBUG] numCams and CamIndex: " << numCams << " " << camIndex << std::endl;
-        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << networkConfig.packetDelayNs << " ns" << std::endl;
-        std::cout << "[DEBUG] Camera " << device->getID() << ": Calculated transmission delay: " << networkConfig.transmissionDelayNs << " ns" << std::endl;
-        std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCPD set to: " << rcg::getInteger(nodemap, "GevSCPD") << " ns" << std::endl;
-        std::cout << "[DEBUG] Camera " << device->getID() << ": GevSCFTD set to: " << rcg::getInteger(nodemap, "GevSCFTD") << " ns" << std::endl;
-        std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": setBandwidthDelays sucess" << std::endl;
+        std::cout << YELLOW << "[DEBUG] Camera " << device->getID() << " numCams: " << numCams << " | CamIndex: " << camIndex
+              << " | packetSizeB: " << packetSizeB << " | deviceLinkSpeedBps: " << deviceLinkSpeedBps
+              << " | bufferPercent: " << bufferPercent << std::endl;
+        std::cout << YELLOW << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << networkConfig.packetDelayNs << " ns, Calculated transmission delay: " << networkConfig.transmissionDelayNs << " ns" << RESET << std::endl;
+        std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": GevSCPD set to: " << rcg::getInteger(nodemap, "GevSCPD") << " ns, GevSCFTD set to: " << rcg::getInteger(nodemap, "GevSCFTD") << " ns" << RESET << std::endl;
     }
     catch (const std::exception &ex)
     {
@@ -1038,15 +1035,16 @@ void Camera::setFps(double fps)
     {
         rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
         if (!deviceInfos.deprecatedFW)
+        {
             rcg::setFloat(nodemap, "AcquisitionFrameRate", fps);
         if (debug)
-            std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << std::endl;
-
+           { std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << " fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << RESET << std::endl;
+    }}
         else
         {
             rcg::setFloat(nodemap, "AcquisitionFrameRateAbs", fps);
             if (debug)
-                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << "fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRateAbs") << std::endl;
+                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << " fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRateAbs") << RESET <<std::endl;
         }
     }
     catch (const std::exception &e)
@@ -1073,11 +1071,11 @@ void Camera::setExposureTime(double exposureTime) // ToDo correct this
         if (debug)
             if (deviceInfos.deprecatedFW)
             {
-                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << "ExposureTime set to:" << rcg::getFloat(nodemap, "ExposureTimeAbs") << std::endl; // ExposureTime // ToDo for all or only deprecated ?
+                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << " ExposureTime set to:" << rcg::getFloat(nodemap, "ExposureTimeAbs") << RESET << std::endl; // ExposureTime // ToDo for all or only deprecated ?
             }
             else
             {
-                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << "ExposureTime set to:" << rcg::getFloat(nodemap, "ExposureTime") << std::endl; // ExposureTime // ToDo for all or only deprecated ?
+                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << " ExposureTime set to:" << rcg::getFloat(nodemap, "ExposureTime") << RESET << std::endl; // ExposureTime // ToDo for all or only deprecated ?
             }
     }
     catch (const std::exception &e)

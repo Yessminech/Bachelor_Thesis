@@ -44,7 +44,7 @@ void ptpSyncFreeRun(const std::list<std::shared_ptr<Camera>>& openCamerasList){
 
 void startSyncFreeRunStream(){
     const std::list<std::shared_ptr<Camera>>& openCamerasList = deviceManager.getopenCameras();
-    bool saveStream = true;
+    bool saveStream = false;
     streamManager.startSyncFreeRun(openCamerasList, stopStream, saveStream);
     return;
 }

@@ -16,6 +16,11 @@
 #include <atomic>
 #include <set>
 
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define YELLOW "\033[33m"
+#define GREEN "\033[32m"
+
 class NetworkManager
 {
 public:
@@ -39,17 +44,17 @@ NetworkManager(
     void configureActionCommandInterface(const std::list<std::shared_ptr<Camera>> &openCameras, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource, uint32_t actionSelector, uint64_t scheduledDelay);
     void sendActionCommand(const std::list<std::shared_ptr<Camera>> &openCameras);
     void calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay);
-    double calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras);
+    void calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras);
 
     bool debug = true;
 
 private:
-    double fpsUpperBound = 1000; // ToDo
-    double fpsLowerBound = 3; // ToDo
+    double fpsUpperBound = 30; // Lucid max Fps
+    double fpsLowerBound = 3; 
     double packetSizeB = 9000; // Jumbo frames defined on hardaware (Todo check max)
-    double bufferPercent = 200; // 10.93; // ToDo How to set this value 
+    double bufferPercent = 9; // 10.93; // ToDo How to set this value 
     int ptpSyncTimeout = 800; // 800 ms
-    int ptpMaxCheck = 10; // 10 checks
-    int ptpOffsetThresholdNs = 1000; // 1 us
+    int ptpMaxCheck = 20; // 10 checks
+    int ptpOffsetThresholdNs = 250; // 0.25 us
     std::string masterClockId;
 };
