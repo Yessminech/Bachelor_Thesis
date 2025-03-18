@@ -99,7 +99,7 @@ void StreamManager::streamFromDevice(std::shared_ptr<Camera> camera, std::atomic
         
         if (camera)
         {
-            std::cout << "[DEBUG] Launching stream thread for camera " << camera->deviceConfig.id << std::endl;
+            std::cout << "[DEBUG] Launching stream thread for camera " << camera->deviceInfos.id << std::endl;
         }
         else
         {

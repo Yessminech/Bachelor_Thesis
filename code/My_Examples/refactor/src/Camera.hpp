@@ -13,13 +13,14 @@
 #include <mutex>
 #include <vector>
 
-// Todo remove this
+// Color definitions (consider removing if not needed)
 #define RESET "\033[0m"
 #define RED "\033[31m"
 #define YELLOW "\033[33m"
 #define GREEN "\033[32m"
 
-struct DeviceConfig
+// Structs for configuration and device information
+struct DeviceInfos
 {
   std::string id;
   std::string vendor;
@@ -44,72 +45,89 @@ struct PtpConfig
   uint64_t timestamp_s;
   std::string clockAccuracy;
   int offsetFromMaster;
-  double deviceLinkSpeed;
 };
 
-struct networkConfig // ToDo
+struct NetworkConfig
 {
   double deviceLinkSpeedBps;
   double packetSizeB;
   double bufferPercent;
-  double packetDelayNs;
+  double packetDelayNs = 0;
+  double transmissionDelayNs = 0;
+  double fps;
 };
 
+struct StreamConfig
+{
+  int videoWidth = 640;
+  int videoHeight = 480;
+  std::string videoOutputPath = "output/"; // Default directory
+};
 
+struct CameraConfig
+{
+  double exposure;
+  float gain;
+  double width;
+  double height;
+  PfncFormat_ pixelFormat;
+};
+
+// Camera class definition
 class Camera
 {
 public:
-  Camera(std::shared_ptr<rcg::Device> device);
+  // Constructor and Destructor
+  Camera(std::shared_ptr<rcg::Device> device, bool debug = true,
+         CameraConfig cameraConfig = {}, StreamConfig streamConfig = {}, NetworkConfig networkConfig = {});
   ~Camera();
 
-  // Camera Configuration
-  // ToDo add clear configuration method
-  PfncFormat_ stringToPixelFormat(const std::string& format);
-  void setCameraConfig();
-  void setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1);
-  void setPtpConfig(bool enable = true);
-  void setBandwidthDelays(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent);
-  void setFps(double fpsUpperBound);
-  void resetTimestamp();
-  // Network Control
-  std::string getCurrentIP();
-  void getPtpConfig();
-  std::string getMAC();
-  void getTimestamps();
-  int getBitsPerPixel(PfncFormat_ pixelFormat); 
-  double getExposure();
-
-  double calculateRawFrameSizeB(int width, int height, PfncFormat_ pixelFormat);
+  // Calculations
+  double calculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams);
   double calculateFrameTransmissionCycle(double deviceLinkSpeedBps, double packetSizeB);
+  double calculateRawFrameSizeB(int width, int height, PfncFormat_ pixelFormat);
   double calculateFps(double deviceLinkSpeedBps, double packetSizeB);
-  void setDeviceLinkThroughput(double deviceLinkSpeedBps);
-  void setPacketSizeB(double packetSizeB);
-  double getPacketDelayNs();
-  void setExposureTime(double exposureTime);
 
   // Streaming Control
   void startStreaming(std::atomic<bool> &stopStream, std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index, bool saveStream);
   void stopStreaming(std::shared_ptr<rcg::Stream> stream);
 
-  bool debug = true;
-  DeviceConfig deviceConfig; // ToDo Public?
-  PtpConfig ptpConfig;       // ToDo Public?
+  // Getters
+  std::string getCurrentIP();
+  std::string getMAC();
+  void getPtpConfig();
+  void getTimestamps();
+
+  // Setters
+  void resetTimestamp();
+  void setDeviceInfos();
+  void setPtpConfig(bool enable = true);
+  void setDeviceLinkThroughput(double deviceLinkSpeedBps);
+  void setPacketSizeB(double packetSizeB);
+  void setBandwidthDelays(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent);
+  void setFps(double fpsUpperBound);
+  void setExposureTime(double exposureTime);
+
+  void setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1);
+
+  // Public Members
+  DeviceInfos deviceInfos;
+  PtpConfig ptpConfig;
+  NetworkConfig networkConfig;
+  StreamConfig streamConfig;
+  CameraConfig cameraConfig;
   std::shared_ptr<GenApi::CNodeMapRef> nodemap;
 
 private:
-  cv::VideoWriter videoWriter;        // Used to write frames to a video file
-  int videoWidth = 640;
-  int videoHeight = 480;
-  unsigned long frameCounter = 0;
-  std::string videoOutputPath = "output/"; // Default directory
-  double packetDelayNs = 0;
-  double transmissionDelayNs = 0;
-
+  // Private Members
   std::shared_ptr<rcg::Device> device;
-  float gain = 10;          // Example: Gain of 10 dB
+  bool debug = true;
+  unsigned long frameCounter = 0;
+  cv::VideoWriter videoWriter; // Used to write frames to a video file
+
+  // Private Methods
   void initializeVideoWriter(const std::string &directory, int width, int height);
   void setFreeRunMode();
-  double calculatePacketDelayNs(double packetSizeB, double deviceLinkSpeedBps, double bufferPercent, double numCams);
   void cleanupStream(std::shared_ptr<rcg::Stream> &stream);
   std::shared_ptr<rcg::Stream> initializeStream();
   const rcg::Buffer *grabFrame(std::shared_ptr<rcg::Stream> &stream);
@@ -118,14 +136,14 @@ private:
   void updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index,
                          cv::Mat &frame, int &frameCount, std::chrono::steady_clock::time_point &lastTime);
   void saveFrameToVideo(cv::VideoWriter &videoWriter, const cv::Mat &frame);
+
+  // Utility Methods
   std::string decimalToIP(uint32_t decimalIP);
   std::string hexToIP(const std::string &hexIP);
   std::string decimalToMAC(uint64_t decimalMAC);
   std::string hexToMAC(const std::string &hexMAC);
-  double exposure;
-  double width;
-  double height;
-  PfncFormat_ pixelFormat;
+  PfncFormat_ getPixelFormat(const std::string &format);
+  int getBitsPerPixel(PfncFormat_ pixelFormat);
 };
 
 #endif // CAMERA_HPP

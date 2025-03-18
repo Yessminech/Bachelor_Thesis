@@ -24,9 +24,9 @@ DeviceManager::~DeviceManager()
     availableCamerasList = {};
     for (auto &camera : openCamerasList)
     {
-        closeCamera(camera->deviceConfig.id);
+        closeCamera(camera->deviceInfos.id);
         if (debug)
-            std::cout << GREEN << "[DEBUG] Camera " << camera->deviceConfig.id << ": Closed successfully" << RESET << std::endl;
+            std::cout << GREEN << "[DEBUG] Camera " << camera->deviceInfos.id << ": Closed successfully" << RESET << std::endl;
     }
 }
 
@@ -191,8 +191,8 @@ std::shared_ptr<Camera> DeviceManager::getOpenCameraByID(const std::string &devi
 {
     for (const auto &camera : openCamerasList)
     {
-        DeviceConfig deviceConfig = camera->deviceConfig;
-        if (deviceConfig.id == deviceId)
+        DeviceInfos deviceInfos = camera->deviceInfos;
+        if (deviceInfos.id == deviceId)
         {
             return camera;
         }
@@ -210,7 +210,8 @@ bool DeviceManager::openCamera(const std::string &deviceId)
             std::cerr << RED << "Failed to open camera: " << deviceId << RESET << std::endl;
             return false;
         }
-        std::shared_ptr<Camera> newCamera = std::make_shared<Camera>(device);
+    
+        std::shared_ptr<Camera> newCamera = std::make_shared<Camera>(device, true);
         openCamerasList.push_back(newCamera);
         return true;
     }
@@ -241,7 +242,7 @@ bool DeviceManager::listCamera(std::shared_ptr<Camera> camera)
 {
     try
     {
-        DeviceConfig config = camera->deviceConfig;
+        DeviceInfos config = camera->deviceInfos;
         std::cout << "        Device             " << config.id << std::endl;
         std::cout << "        Vendor:            " << config.vendor << std::endl;
         std::cout << "        Model:             " << config.model << std::endl;
