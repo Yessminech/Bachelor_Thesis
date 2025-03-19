@@ -93,6 +93,8 @@ public:
   void stopStreaming(std::shared_ptr<rcg::Stream> stream);
 
   // Getters
+  double getExposureTime();
+  double getFps();
   std::string getCurrentIP();
   std::string getMAC();
   void getPtpConfig();

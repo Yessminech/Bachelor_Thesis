@@ -1,3 +1,6 @@
+#ifndef NETWORKMANAGER_HPP
+#define NETWORKMANAGER_HPP
+
 #include "Camera.hpp"
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
@@ -20,6 +23,7 @@
 #define RED "\033[31m"
 #define YELLOW "\033[33m"
 #define GREEN "\033[32m"
+
 
 class NetworkManager
 {
@@ -44,17 +48,17 @@ NetworkManager(
     void configureActionCommandInterface(const std::list<std::shared_ptr<Camera>> &openCameras, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource, uint32_t actionSelector, uint64_t scheduledDelay);
     void sendActionCommand(const std::list<std::shared_ptr<Camera>> &openCameras);
     void calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay);
-    void calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras);
-
+    // void calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras);
+    void getMinimumExposure (const std::list<std::shared_ptr<Camera>> &openCameras);
     bool debug = true;
 
 private:
-    double fpsUpperBound = 30; // Lucid max Fps
-    double fpsLowerBound = 3; 
+    double exposureTimeMicros = 100000;
     double packetSizeB = 9000; // Jumbo frames defined on hardaware (Todo check max)
     double bufferPercent = 9; // 10.93; // ToDo How to set this value 
     int ptpSyncTimeout = 800; // 800 ms
     int ptpMaxCheck = 20; // 10 checks
-    int ptpOffsetThresholdNs = 250; // 0.25 us
+    int ptpOffsetThresholdNs = 500; // 0.5 us
     std::string masterClockId;
 };
+#endif // NETWORKMANAGER_HPP

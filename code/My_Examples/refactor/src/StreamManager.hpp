@@ -2,6 +2,7 @@
 #define STREAMMANAGER_HPP
 #include <opencv2/opencv.hpp>
 #include "Camera.hpp"
+#include "NetworkManager.hpp"
 
 #include <atomic>
 #include <vector>

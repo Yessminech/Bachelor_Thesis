@@ -1,0 +1,133 @@
+test@Yessmine-Ubuntu:~/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build$ make && ./main 
+[  2%] Building CXX object CMakeFiles/streamManager.dir/src/Camera.cpp.o
+[  5%] Linking CXX executable streamManager
+[ 20%] Built target streamManager
+[ 22%] Building CXX object CMakeFiles/deviceManager.dir/src/Camera.cpp.o
+[ 25%] Linking CXX executable deviceManager
+[ 40%] Built target deviceManager
+[ 42%] Building CXX object CMakeFiles/networkManager.dir/src/Camera.cpp.o
+[ 45%] Linking CXX executable networkManager
+[ 60%] Built target networkManager
+[ 62%] Building CXX object CMakeFiles/systemManager.dir/src/Camera.cpp.o
+[ 65%] Linking CXX executable systemManager
+[ 80%] Built target systemManager
+[ 82%] Building CXX object CMakeFiles/main.dir/src/Camera.cpp.o
+[ 85%] Linking CXX executable main
+[100%] Built target main
+  Available Devices IDs:  "Basler acA2440-20gc (23630913)" "210200799" "Basler acA2440-20gc (23630914)" 
+[DEBUG] Camera Basler acA2440-20gc (23630914): Opened successfully
+[DEBUG] Camera Basler acA2440-20gc (23630914): setDeviceInfos success
+[DEBUG] Camera Basler acA2440-20gc (23630914)GevIEEE1588 set to:0
+Timestamp reset success
+[DEBUG] Camera Basler acA2440-20gc (23630913): Opened successfully
+[DEBUG] Camera Basler acA2440-20gc (23630913): setDeviceInfos success
+[DEBUG] Camera Basler acA2440-20gc (23630913)GevIEEE1588 set to:0
+Timestamp reset success
+[DEBUG] Camera 210200799: Opened successfully
+[DEBUG] Camera 210200799: setDeviceInfos success
+[DEBUG] Camera 210200799GevIEEE1588 set to:0
+Timestamp reset success
+        Device             Basler acA2440-20gc (23630914)
+        Vendor:            Basler
+        Model:             acA2440-20gc
+        TL type:           GEV
+        Display name:      1
+        Access status:     OpenReadWrite
+        Serial number:     23630914
+        Version:           107213-17
+        TS Frequency:      0
+        Current IP:        192.168.3.103
+        MAC:               00:00:b5:fe:d4:e6
+        Deprecated FW:     Yes
+
+        Device             Basler acA2440-20gc (23630913)
+        Vendor:            Basler
+        Model:             acA2440-20gc
+        TL type:           GEV
+        Display name:      0
+        Access status:     OpenReadWrite
+        Serial number:     23630913
+        Version:           107213-17
+        TS Frequency:      0
+        Current IP:        192.168.3.103
+        MAC:               00:00:b5:fe:d4:e5
+        Deprecated FW:     Yes
+
+        Device             210200799
+        Vendor:            Lucid Vision Labs
+        Model:             TRI032S-C
+        TL type:           GEV
+        Display name:      TRI032S-C ( 210200799 ) 
+        Access status:     ReadWrite
+        Serial number:     210200799
+        Version:           1.55.18.6
+        TS Frequency:      1e+09
+        Current IP:        169.254.173.31
+        MAC:               1c:0f:af:ad:1f:ac
+        Deprecated FW:     No
+
+[DEBUG] Camera 210200799 numCams: 3 | CamIndex: 2 | packetSizeB: 9000 | deviceLinkSpeedBps: 1.25e+08 | bufferPercent: 9
+[DEBUG] Camera 210200799: Calculated packet delay: 156960 ns, Calculated transmission delay: 0 ns
+[DEBUG] Camera 210200799: GevSCPD set to: 156960 ns, GevSCFTD set to: 0 ns
+[DEBUG] Camera Basler acA2440-20gc (23630913) numCams: 3 | CamIndex: 1 | packetSizeB: 9000 | deviceLinkSpeedBps: 1.25e+08 | bufferPercent: 9
+[DEBUG] Camera Basler acA2440-20gc (23630913): Calculated packet delay: 156960 ns, Calculated transmission delay: 156960 ns
+[DEBUG] Camera Basler acA2440-20gc (23630913): GevSCPD set to: 156960 ns, GevSCFTD set to: 156960 ns
+[DEBUG] Camera Basler acA2440-20gc (23630914) numCams: 3 | CamIndex: 0 | packetSizeB: 9000 | deviceLinkSpeedBps: 1.25e+08 | bufferPercent: 9
+[DEBUG] Camera Basler acA2440-20gc (23630914): Calculated packet delay: 156960 ns, Calculated transmission delay: 313920 ns
+[DEBUG] Camera Basler acA2440-20gc (23630914): GevSCPD set to: 156960 ns, GevSCFTD set to: 313920 ns
+Setting exposure to 100000 microseconds and FPS to 7
+[DEBUG] Camera Basler acA2440-20gc (23630914) fps set to:7.00001
+[DEBUG] Camera Basler acA2440-20gc (23630914) ExposureTime set to:100000
+[DEBUG] Camera Basler acA2440-20gc (23630913) fps set to:7.00001
+[DEBUG] Camera Basler acA2440-20gc (23630913) ExposureTime set to:100000
+[DEBUG] Camera 210200799 fps set to:7.00001
+[DEBUG] Camera 210200799 ExposureTime set to:100008
+[DEBUG] Starting PTP synchronization monitoring...
+[DEBUG] Waiting for PTP synchronization...
+[DEBUG] Waiting for PTP synchronization...
+[DEBUG] Waiting for PTP synchronization...
+[DEBUG] Waiting for PTP synchronization...
+[DEBUG] Waiting for PTP synchronization...
+[DEBUG] PTP synchronization successful!
+[DEBUG] PTP synchronized with 2 slave cameras and 1 master
+[DEBUG] Monitoring PTP offset synchronization...
+[DEBUG] PTP offset check #1
+[DEBUG] Camera Basler acA2440-20gc (23630914) offset (1414 ns) exceeds threshold (1000 ns)
+[DEBUG] Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+[DEBUG] Camera 210200799 offset (410 ns) within threshold
+[DEBUG] Not all cameras are within offset threshold. Waiting before next check...
+[DEBUG] PTP offset check #2
+[DEBUG] Camera Basler acA2440-20gc (23630914) offset (86 ns) within threshold
+[DEBUG] Camera Basler acA2440-20gc (23630913) offset (0 ns) within threshold
+[DEBUG] Camera 210200799 offset (377 ns) within threshold
+[DEBUG] All cameras are within PTP offset threshold. Network is properly synchronized.
+PTP Enabled:                Yes
+PTP Status:                 Slave
+PTP Clock Accuracy:         Unavailable
+PTP Offset From Master:     86 ns
+Timestamp:                  12054078428688 ns
+Timestamp (seconds):        12054 s
+PTP Enabled:                Yes
+PTP Status:                 Master
+PTP Clock Accuracy:         Unavailable
+PTP Offset From Master:     0 ns
+Timestamp:                  12054082079442 ns
+Timestamp (seconds):        12054 s
+PTP Enabled:                Yes
+PTP Status:                 Slave
+PTP Clock Accuracy:         GreaterThan10s
+PTP Offset From Master:     377 ns
+Timestamp:                  52910599840 ns
+Timestamp (seconds):        52 s
+[DEBUG] Launching stream thread for camera 210200799
+[DEBUG] Launching stream thread for camera Basler acA2440-20gc (23630913)
+[DEBUG] Stream started for camera Basler acA2440-20gc (23630913)
+[DEBUG] Launching stream thread for camera Basler acA2440-20gc (23630914)
+[DEBUG] Stream started for camera Basler acA2440-20gc (23630914)
+All threads have started successfully.
+Press 'q' on the OpenCV window to exit the stream.
+[DEBUG] Stream started for camera 210200799
+Key pressed: q (code: 113)
+Exit key pressed. Stopping stream...
+[DEBUG] Camera ��a}LacA2440-20gc (23630914): Closed successfully
+Segmentation fault (core dumped)

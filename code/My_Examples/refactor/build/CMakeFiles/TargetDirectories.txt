@@ -1,3 +1,4 @@
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/globalSettings.dir
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/streamManager.dir
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/deviceManager.dir
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles/networkManager.dir

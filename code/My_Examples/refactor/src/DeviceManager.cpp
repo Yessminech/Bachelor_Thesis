@@ -251,7 +251,6 @@ bool DeviceManager::listCamera(std::shared_ptr<Camera> camera)
         std::cout << "        Access status:     " << config.accessStatus << std::endl;
         std::cout << "        Serial number:     " << config.serialNumber << std::endl;
         std::cout << "        Version:           " << config.version << std::endl;
-        std::cout << "        TS Frequency:      " << config.timestampFrequency << std::endl;
         std::cout << "        Current IP:        " << config.currentIP << std::endl;
         std::cout << "        MAC:               " << config.MAC << std::endl;
         std::cout << "        Deprecated FW:     " << (config.deprecatedFW ? "Yes" : "No") << std::endl;

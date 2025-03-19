@@ -27,8 +27,8 @@
 #include <mutex>
 
 StreamManager::StreamManager()
+    : startedThreads(0)
 {
-    startedThreads = 0;
 }
 
 StreamManager::~StreamManager()
@@ -160,7 +160,6 @@ void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &o
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     std::cout << GREEN << "All threads have started successfully." << RESET << std::endl;
-
     // Create a composite window that scales nicely.
     const std::string compWindowName = "Composite Stream";
     cv::namedWindow(compWindowName, cv::WINDOW_AUTOSIZE);

@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/deviceManager.dir/src/Camera.cpp.o.d"
   "CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o"
   "CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o.d"
+  "CMakeFiles/deviceManager.dir/src/GlobalSettings.cpp.o"
+  "CMakeFiles/deviceManager.dir/src/GlobalSettings.cpp.o.d"
   "CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o"
   "CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o.d"
   "CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o"

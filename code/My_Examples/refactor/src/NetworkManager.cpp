@@ -1,6 +1,8 @@
 #include "Camera.hpp"
 #include "NetworkManager.hpp"
 #include "DeviceManager.hpp"
+#include "GlobalSettings.hpp"
+
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
 #include <rc_genicam_api/device.h>
@@ -20,6 +22,9 @@
 #include <fstream>   // Add this for std::ofstream
 #include <algorithm> // Add this for std::find
 
+double fpsUpperBound = getGlobalFpsUpperBound();
+double fpsLowerBound = getGlobalFpsLowerBound();
+
 NetworkManager::NetworkManager(
     bool debug,
     int ptpSyncTimeout,
@@ -37,6 +42,7 @@ void NetworkManager::printPtpConfig(std::shared_ptr<Camera> camera)
     try
     {
         PtpConfig ptpConfig = camera->ptpConfig;
+        std::cout << GREEN << "Camera ID:                  " << camera->deviceInfos.id << RESET << std::endl;
         std::cout << "PTP Enabled:                " << (ptpConfig.enabled ? "Yes" : "No") << std::endl;
         std::cout << "PTP Status:                 " << ptpConfig.status << std::endl;
         std::cout << "PTP Clock Accuracy:         " << ptpConfig.clockAccuracy << std::endl;
@@ -113,27 +119,6 @@ void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &
             std::cout << GREEN << "[DEBUG] PTP synchronization successful!" << RESET << std::endl;
             synchronized = true;
         }
-        // Print the overall status
-        std::cout << YELLOW << "[DEBUG] Camera PTP status: " << numInit << " initializing, "
-                  << numMaster << " masters, " << numSlave << " slaves" << RESET << std::endl;
-                // Print camera ID, status, and timestamp
-                for (auto &camera : openCamerasList)
-                {
-                    try
-                    {
-                    camera->getPtpConfig();
-                    PtpConfig ptpConfig = camera->ptpConfig;
-                    std::cout << GREEN << "[DEBUG] Camera ID: " << camera->deviceInfos.id
-                          << ", Status: " << ptpConfig.status
-                          << ", Timestamp: " << ptpConfig.timestamp_ns << " ns" << RESET << std::endl;
-                    }
-                    catch (const std::exception &ex)
-                    {
-                    std::cerr << RED << "[DEBUG] Error retrieving PTP config for camera "
-                          << camera->deviceInfos.id << ": " << ex.what() << RESET << std::endl;
-                    }
-                }
-
 
         // Check for timeout
         if (std::chrono::steady_clock::now() - start_time > std::chrono::seconds(ptpSyncTimeout))
@@ -312,7 +297,13 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
         {
             std::cout << GREEN << "[DEBUG] All cameras are within PTP offset threshold. "
                       << "Network is properly synchronized." << RESET << std::endl;
+        for (auto &camera : openCamerasList)
+        {
+            camera->getPtpConfig();
+            camera->getTimestamps();
+            printPtpConfig(camera);
         }
+    }
         else
         {
             std::cerr << RED << "[DEBUG] Warning: Not all cameras could achieve "
@@ -350,34 +341,58 @@ void NetworkManager::calculateMaxFps(const std::list<std::shared_ptr<Camera>> &o
             currentMinFps = clampedFps;
         }
     }
-    fpsUpperBound = currentMinFps;
+    setGlobalFpsUpperBound(currentMinFps);
 }
 
-void NetworkManager::calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras)
+// void NetworkManager::calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras)
+// {
+//     double currentMinFps = fpsUpperBound;
+//     for (const auto &camera : openCameras)
+//     {
+//         double exposure = camera->cameraConfig.exposure;
+//         double fpsFromExposure = 1 / (exposure * 1e-6); // Corrected units: exposure in microseconds
+//         double clampedFps = std::max(fpsLowerBound, std::min(fpsFromExposure, fpsUpperBound));
+//         if (clampedFps < currentMinFps) {
+//             currentMinFps = clampedFps;
+//         }
+//     }
+//     fpsUpperBound = currentMinFps;
+// }
+
+void NetworkManager::getMinimumExposure (const std::list<std::shared_ptr<Camera>> &openCameras)
 {
-    double currentMinFps = fpsUpperBound;
     for (const auto &camera : openCameras)
     {
-        double exposure = camera->cameraConfig.exposure;
-        double fpsFromExposure = 1 / (exposure * 1e-6); // Corrected units: exposure in microseconds
-        double clampedFps = std::max(fpsLowerBound, std::min(fpsFromExposure, fpsUpperBound));
-        if (clampedFps < currentMinFps) {
-            currentMinFps = clampedFps;
+        camera->setExposureTime(exposureTimeMicros); 
+    }
+    double currentMinExposure = exposureTimeMicros;
+    for (const auto &camera : openCameras)
+    {
+        double exposure = camera->getExposureTime();
+        if (exposure < currentMinExposure) {
+            currentMinExposure = exposure;
         }
     }
-    fpsUpperBound = currentMinFps;
+    exposureTimeMicros = currentMinExposure;
 }
 
 void NetworkManager::setExposureAndFps(const std::list<std::shared_ptr<Camera>> &openCameras)
 {
-    //double exposureTimeMicros =  std::min(1000000 / fpsUpperBound, exposureTimeUpperBound);
-    double exposureTimeMicros = 1000000 / fpsUpperBound;
-    fpsUpperBound = fpsUpperBound-fpsUpperBound*0.3;
-    std::cout << "Setting exposure to " << exposureTimeMicros << " microseconds and FPS to " << fpsUpperBound << std::endl;
+    fpsUpperBound = getGlobalFpsUpperBound();
+    getMinimumExposure(openCameras);
+    std::cout << "Setting exposure to " << exposureTimeMicros << " and fps to:" << fpsUpperBound << " accross all cameras." << std::endl;
     for (const auto &camera : openCameras)
     {
         camera->setFps(fpsUpperBound);
-        camera->setExposureTime(exposureTimeMicros); // time in microseconds
+        if (exposureTimeMicros <= 1000000/fpsUpperBound)
+        {
+            camera->setExposureTime(exposureTimeMicros); // time in microseconds
+        }
+        else
+        {
+            std::cout << "Exposure Time" << exposureTimeMicros << "exceeds maximal exposure: " << 1000000/fpsUpperBound << std::endl;
+            camera->setExposureTime(1000000/fpsUpperBound); // time in microseconds
+        }
     }
 }
 
@@ -397,7 +412,6 @@ void NetworkManager::configureNetworkFroSyncFreeRun(const std::list<std::shared_
         packetDelayNs = camera->networkConfig.packetDelayNs;
     }
     calculateMaxFps(openCameras, packetDelayNs);
-    calculateMaxFpsFromExposure(openCameras);
     setExposureAndFps(openCameras);
 }
 

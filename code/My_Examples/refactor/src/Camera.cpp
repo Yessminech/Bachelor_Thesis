@@ -1,4 +1,5 @@
 #include "Camera.hpp"
+#include "GlobalSettings.hpp"
 #include <rc_genicam_api/system.h>
 #include <rc_genicam_api/interface.h>
 #include <rc_genicam_api/device.h>
@@ -22,6 +23,7 @@
 #include <unordered_map>
 #include <stdexcept>
 #include <ctime>
+#include <numeric>
 
 Camera::Camera(std::shared_ptr<rcg::Device> device, bool debug, CameraConfig cameraConfig, StreamConfig streamConfig, NetworkConfig networkConfig)
     : device(device), debug(debug), cameraConfig(cameraConfig), streamConfig(streamConfig), networkConfig(networkConfig)
@@ -86,7 +88,7 @@ Camera::Camera(std::shared_ptr<rcg::Device> device, bool debug, CameraConfig cam
         // Assign Network Config
         this->networkConfig.deviceLinkSpeedBps = networkConfig.deviceLinkSpeedBps;
         this->networkConfig.packetSizeB = rcg::getInteger(nodemap, "GevSCPSPacketSize");
-        this->networkConfig.bufferPercent = 20.0;
+        this->networkConfig.bufferPercent = 20.0; //ToDo
     }
     else
     {
@@ -228,6 +230,49 @@ bool isDottedIP(const std::string &ip)
 /***********************************************************************/
 /***********************         Getters     *************************/
 /***********************************************************************/
+
+double Camera::getExposureTime() 
+{
+    double exposure = 0.0;
+    try
+    {
+        if (deviceInfos.deprecatedFW)
+        {
+         exposure = rcg::getFloat(nodemap, "ExposureTimeAbs"); 
+        }
+        else
+        {
+            exposure = rcg::getFloat(nodemap, "ExposureTime");
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Failed to set exposure time for camera " << deviceInfos.id << ": " << e.what() << std::endl;
+    }
+    return exposure;
+}
+
+
+double Camera::getFps()
+{
+    double fps = 0.0; // Create a double to receive the value
+    try
+    {
+        if (!deviceInfos.deprecatedFW)
+        {
+            fps = rcg::getFloat(nodemap, "AcquisitionFrameRate");
+        }
+        else
+        {
+            fps = rcg::getFloat(nodemap, "AcquisitionFrameRateAbs");
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Failed to get frame rate for camera " << deviceInfos.id << ": " << e.what() << std::endl;
+    }
+    return fps;
+}
 
 std::string Camera::getCurrentIP()
 {
@@ -422,44 +467,78 @@ void Camera::processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint
 }
 
 void Camera::updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index,
-                               cv::Mat &frame, int &frameCount, std::chrono::steady_clock::time_point &lastTime)
+    cv::Mat &frame, int &frameCount, std::chrono::steady_clock::time_point &lastTime)
 {
-    // Update FPS calculation
-    frameCount++;
-    auto currentTime = std::chrono::steady_clock::now();
-    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count() / 1000.0;
-    double fps = (elapsed > 0) ? frameCount / elapsed : 0.0;
+static std::deque<double> fpsHistory; // Store last few FPS values
+constexpr int maxHistorySize = 20; // Average FPS over last 20 frames
 
-    if (elapsed >= 1.0)
-    {
-        lastTime = currentTime;
-        frameCount = 0;
-    }
+// Frame count and time calculation
+frameCount++;
+auto currentTime = std::chrono::steady_clock::now();
+double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count() / 1000.0;
 
-    // Prepare overlay text
-    uint64_t timestampNS = std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime.time_since_epoch()).count();
-    double timestampSec = static_cast<double>(timestampNS) / 1e9; // ToDo double Check
+// Compute FPS
+double fps = (elapsed > 0) ? frameCount / elapsed : 0.0;
+fpsHistory.push_back(fps);
 
-    std::ostringstream overlayText;
-    overlayText << "TS: " << std::fixed << std::setprecision(6) << timestampSec << " s"
-                << " | FPS: " << std::fixed << std::setprecision(2) << fps;
-
-    std::ostringstream camText;
-    camText << "Cam: " << device->getID();
-
-    // Overlay text on frame
-    int baseline = 0;
-    cv::Size textSize = cv::getTextSize(overlayText.str(), cv::FONT_HERSHEY_SIMPLEX, 0.6, 2, &baseline);
-    int textY = frame.rows - baseline - 5;
-    cv::putText(frame, overlayText.str(), cv::Point(10, textY), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
-    cv::putText(frame, camText.str(), cv::Point(10, textY - textSize.height - 10), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
-
-    // Update global frame
-    {
-        std::lock_guard<std::mutex> lock(globalFrameMutex);
-        globalFrames[index] = frame.clone();
-    }
+// Maintain the history size
+if (fpsHistory.size() > maxHistorySize) {
+fpsHistory.pop_front();
 }
+
+// Compute the rolling mean FPS
+double sumFps = std::accumulate(fpsHistory.begin(), fpsHistory.end(), 0.0);
+double meanFps = sumFps / fpsHistory.size();
+
+double currentFps = getFps();
+double globalMaxFps = getGlobalFpsUpperBound();
+
+// Debug prints
+// std::cout << "[DEBUG] Camera ID: " << device->getID() << std::endl;
+// std::cout << "[DEBUG] Instantaneous FPS: " << fps << " | Rolling Mean FPS: " << meanFps << std::endl;
+// std::cout << "[DEBUG] Current FPS Setting: " << currentFps << " | Global Max FPS: " << globalMaxFps << std::endl;
+
+// **Smart FPS Adjustments Based on Stability**
+static double lastFpsAdjustment = globalMaxFps; // Track last set FPS
+if (std::abs(meanFps - lastFpsAdjustment) > 1.0) { // Adjust only when deviation is significant
+double newFps = lastFpsAdjustment * 0.98; // Adjust dynamically based on rolling mean
+setGlobalFpsUpperBound(newFps);
+setFps(newFps);
+lastFpsAdjustment = newFps; // Store the new adjustment
+std::cout << "[DEBUG] FPS dynamically adjusted to: " << newFps << std::endl;
+}
+
+// Reset frame count every second
+if (elapsed >= 1.0) {
+lastTime = currentTime;
+frameCount = 0;
+}
+
+// Generate overlay text with timestamps
+this->getTimestamps();
+uint64_t timestampNS = std::stoull(ptpConfig.timestamp_ns);
+
+std::ostringstream overlayText;
+// overlayText << "TS: " << std::fixed << std::setprecision(6) << timestampNS << " ns"
+overlayText << "FPS: " << std::fixed << std::setprecision(2) << meanFps;
+
+std::ostringstream camText;
+camText << "Cam: " << device->getID();
+
+// Overlay text on frame
+int baseline = 0;
+cv::Size textSize = cv::getTextSize(overlayText.str(), cv::FONT_HERSHEY_SIMPLEX, 0.6, 2, &baseline);
+int textY = frame.rows - baseline - 5;
+cv::putText(frame, overlayText.str(), cv::Point(10, textY), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 0, 255), 2);
+cv::putText(frame, camText.str(), cv::Point(10, textY - textSize.height - 10), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 255), 2);
+
+// Safely update global frame
+{
+std::lock_guard<std::mutex> lock(globalFrameMutex);
+globalFrames[index] = frame.clone();
+}
+}
+
 
 void Camera::processFrame(const rcg::Buffer *buffer, cv::Mat &outputFrame)
 {
@@ -514,7 +593,6 @@ std::shared_ptr<rcg::Stream> Camera::initializeStream()
         stream->open();
         stream->attachBuffers(true);
         stream->startStreaming();
-
         if (debug)
             std::cout << GREEN << "[DEBUG] Stream started for camera " << device->getID() << RESET << std::endl;
 
@@ -572,7 +650,7 @@ void Camera::initializeVideoWriter(const std::string &directory, int width, int 
         {".avi", cv::VideoWriter::fourcc('D', 'I', 'V', 'X')}  // DIVX
     };
 
-    double fps = 30.0; // ToDo make this configurable
+    double fps = getGlobalFpsUpperBound();
 
     for (const auto &codecOption : codecOptions)
     {
@@ -1052,6 +1130,7 @@ void Camera::setFps(double fps)
         std::cerr << "Failed to set frame rate for camera " << deviceInfos.id << ": " << e.what() << std::endl;
     }
 }
+
 
 void Camera::setExposureTime(double exposureTime) // ToDo correct this
 {
