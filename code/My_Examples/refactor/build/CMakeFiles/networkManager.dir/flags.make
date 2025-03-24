@@ -6,5 +6,5 @@ CXX_DEFINES = -DGENICAM_NO_AUTO_IMPLIB
 
 CXX_INCLUDES = -I/usr/include/rc_genicam_api -I/usr/include/rc_genicam_api/genicam -I/home/test/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/include -isystem /usr/include/opencv4
 
-CXX_FLAGS = -std=gnu++11
+CXX_FLAGS = -std=gnu++17
 

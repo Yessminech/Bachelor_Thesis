@@ -19,8 +19,9 @@
 #include <signal.h>
 #include <atomic>
 #include <set>
-#include <fstream>   // Add this for std::ofstream
-#include <algorithm> // Add this for std::find
+#include <fstream>   
+#include <algorithm> 
+#include <deque>    
 
 double fpsUpperBound = getGlobalFpsUpperBound();
 double fpsLowerBound = getGlobalFpsLowerBound();
@@ -142,8 +143,9 @@ void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &
     {
         if (debug)
         {
-        std::cout << GREEN << "[DEBUG] PTP synchronized with " << numSlave
-                  << " slave cameras and " << numMaster << " master" << RESET << std::endl;}
+            std::cout << GREEN << "[DEBUG] PTP synchronized with " << numSlave
+                      << " slave cameras and " << numMaster << " master" << RESET << std::endl;
+        }
     }
 }
 
@@ -193,9 +195,53 @@ void NetworkManager::setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, s
     }
 }
 
+void NetworkManager::writeOffsetHistoryToCsv(
+    const std::unordered_map<std::string, std::deque<int64_t>> &offsetHistory)
+{
+    const std::string filename = "ptp_offset_history.csv";
+    std::ofstream outFile(filename);
+
+    if (!outFile.is_open())
+    {
+        std::cerr << RED << "[DEBUG] Failed to open CSV file for writing: " << filename << RESET << std::endl;
+        return;
+    }
+
+    // Write CSV header
+    outFile << "Sample";
+    for (const auto &[camId, _] : offsetHistory)
+    {
+        outFile << "," << camId;
+    }
+    outFile << "\n";
+
+    // Write offset values row-by-row (assumes equal history size for all cameras)
+    size_t maxLength = 0;
+    for (const auto &[_, history] : offsetHistory)
+    {
+        maxLength = std::max(maxLength, history.size());
+    }
+
+    for (size_t i = 0; i < maxLength; ++i)
+    {
+        outFile << i;
+        for (const auto &[_, history] : offsetHistory)
+        {
+            if (i < history.size())
+                outFile << "," << history[i];
+            else
+                outFile << ",";
+        }
+        outFile << "\n";
+    }
+
+    outFile.close();
+    std::cout << CYAN << "[DEBUG] Offset history written to " << filename << RESET << std::endl;
+}
+
+
 void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::atomic<bool> &stopStream)
 {
-    // Define threshold for acceptable PTP offset
     bool allSynced = false;
     int checkCount = 0;
 
@@ -204,7 +250,6 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
         std::cout << YELLOW << "[DEBUG] Monitoring PTP offset synchronization..." << RESET << std::endl;
     }
 
-    // First, find the master camera from the list based on the masterClockId
     std::shared_ptr<Camera> masterCamera = nullptr;
     for (auto &cam : openCamerasList)
     {
@@ -223,9 +268,12 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
         return;
     }
 
+    // Map from camera ID to a deque of offset values
+    std::unordered_map<std::string, std::deque<int64_t>> offsetHistory;
+
     while (!allSynced && checkCount < ptpMaxCheck && !stopStream.load())
     {
-        allSynced = true; // Assume all cameras are in sync until proven otherwise
+        allSynced = true;
         checkCount++;
 
         if (debug)
@@ -237,78 +285,77 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
         {
             try
             {
-                // Update PTP configuration
                 camera->getPtpConfig();
-                setOffsetfromMaster(masterCamera, camera);
-                // Get offset from master
-                PtpConfig ptpConfig = camera->ptpConfig;
-                int64_t offset = std::abs(ptpConfig.offsetFromMaster); // Use absolute value
+                int64_t offset = std::abs(camera->ptpConfig.offsetFromMaster);
 
-                // Log the offset
                 logPtpOffset(camera, offset);
+                std::string camId = camera->deviceInfos.id;
 
-                // Check if this camera's offset exceeds the threshold
-                if (offset > ptpOffsetThresholdNs)
+                // Maintain fixed-size offset window
+                auto &history = offsetHistory[camId];
+                if (history.size() >= timeWindowSize)
                 {
-                    allSynced = false;
-                    if (debug)
+                    history.pop_front();
+                }
+                history.push_back(offset);
+
+                // Only check stability if we have a full window
+                if (history.size() == timeWindowSize)
+                {
+                    bool inWindow = std::all_of(history.begin(), history.end(),
+                        [&](int64_t v) { return v <= ptpOffsetThresholdNs; });
+
+                    if (!inWindow)
                     {
-                        std::cout << RED << "[DEBUG] Camera " << camera->deviceInfos.id
-                                  << " offset (" << offset << " ns) exceeds threshold ("
-                                  << ptpOffsetThresholdNs << " ns)" << RESET << std::endl;
+                        allSynced = false;
+                        if (debug)
+                        {
+                            std::cout << RED << "[DEBUG] Camera " << camId
+                                      << " not stable within time window. Recent offsets exceed threshold." << RESET << std::endl;
+                        }
+                    }
+                    else if (debug)
+                    {
+                        std::cout << GREEN << "[DEBUG] Camera " << camId
+                                  << " stable within time window. All offsets within threshold." << RESET << std::endl;
                     }
                 }
                 else
                 {
+                    allSynced = false;
                     if (debug)
                     {
-                        std::cout << GREEN << "[DEBUG] Camera " << camera->deviceInfos.id
-                                  << " offset (" << offset << " ns) within threshold" << RESET << std::endl;
+                        std::cout << YELLOW << "[DEBUG] Camera " << camId
+                                  << " waiting to accumulate enough samples ("
+                                  << history.size() << "/" << timeWindowSize << ")" << RESET << std::endl;
                     }
                 }
             }
             catch (const std::exception &ex)
             {
-                if (debug)
-                {
-                    std::cerr << RED << "[DEBUG] Error checking PTP offset for camera "
-                              << camera->deviceInfos.id << ": " << ex.what() << RESET << std::endl;
-                }
-                allSynced = false; // Consider failed checks as not synced
+                std::cerr << RED << "[DEBUG] Error checking PTP offset for camera "
+                          << camera->deviceInfos.id << ": " << ex.what() << RESET << std::endl;
+                allSynced = false;
             }
         }
 
-        // If not all cameras are in sync, wait before checking again
         if (!allSynced && checkCount < ptpMaxCheck && !stopStream.load())
         {
-            if (debug)
-            {
-                std::cout << YELLOW << "[DEBUG] Not all cameras are within offset threshold. "
-                          << "Waiting before next check..." << RESET << std::endl;
-            }
             std::this_thread::sleep_for(std::chrono::seconds(3));
         }
     }
+    writeOffsetHistoryToCsv(offsetHistory);
 
-    // Report final status
     if (debug)
     {
         if (allSynced)
         {
-            std::cout << GREEN << "[DEBUG] All cameras are within PTP offset threshold. "
-                      << "Network is properly synchronized." << RESET << std::endl;
-        for (auto &camera : openCamerasList)
-        {
-            camera->getPtpConfig();
-            camera->getTimestamps();
-            printPtpConfig(camera);
+            std::cout << GREEN << "[DEBUG] All cameras are stable and synchronized within the time window." << RESET << std::endl;
         }
-    }
         else
         {
-            std::cerr << RED << "[DEBUG] Warning: Not all cameras could achieve "
-                      << "synchronization within the offset threshold after "
-                      << ptpMaxCheck << " attempts." << RESET << std::endl;
+            std::cerr << RED << "[DEBUG] Synchronization failed: not all cameras were stable within threshold over "
+                      << timeWindowSize << " consecutive samples." << RESET << std::endl;
         }
     }
 }
@@ -337,7 +384,8 @@ void NetworkManager::calculateMaxFps(const std::list<std::shared_ptr<Camera>> &o
         double deviceLinkSpeedBps = camera->networkConfig.deviceLinkSpeedBps;
         double calculatedFps = camera->calculateFps(deviceLinkSpeedBps, packetSizeB);
         double clampedFps = std::max(fpsLowerBound, std::min(calculatedFps, fpsUpperBound));
-        if (clampedFps < currentMinFps) {
+        if (clampedFps < currentMinFps)
+        {
             currentMinFps = clampedFps;
         }
     }
@@ -359,17 +407,18 @@ void NetworkManager::calculateMaxFps(const std::list<std::shared_ptr<Camera>> &o
 //     fpsUpperBound = currentMinFps;
 // }
 
-void NetworkManager::getMinimumExposure (const std::list<std::shared_ptr<Camera>> &openCameras)
+void NetworkManager::getMinimumExposure(const std::list<std::shared_ptr<Camera>> &openCameras)
 {
     for (const auto &camera : openCameras)
     {
-        camera->setExposureTime(exposureTimeMicros); 
+        camera->setExposureTime(exposureTimeMicros);
     }
     double currentMinExposure = exposureTimeMicros;
     for (const auto &camera : openCameras)
     {
         double exposure = camera->getExposureTime();
-        if (exposure < currentMinExposure) {
+        if (exposure < currentMinExposure)
+        {
             currentMinExposure = exposure;
         }
     }
@@ -384,14 +433,14 @@ void NetworkManager::setExposureAndFps(const std::list<std::shared_ptr<Camera>> 
     for (const auto &camera : openCameras)
     {
         camera->setFps(fpsUpperBound);
-        if (exposureTimeMicros <= 1000000/fpsUpperBound)
+        if (exposureTimeMicros <= 1000000 / fpsUpperBound)
         {
             camera->setExposureTime(exposureTimeMicros); // time in microseconds
         }
         else
         {
-            std::cout << "Exposure Time" << exposureTimeMicros << "exceeds maximal exposure: " << 1000000/fpsUpperBound << std::endl;
-            camera->setExposureTime(1000000/fpsUpperBound); // time in microseconds
+            std::cout << "Exposure Time" << exposureTimeMicros << "exceeds maximal exposure: " << 1000000 / fpsUpperBound << std::endl;
+            camera->setExposureTime(1000000 / fpsUpperBound); // time in microseconds
         }
     }
 }
@@ -403,7 +452,7 @@ void NetworkManager::configureNetworkFroSyncFreeRun(const std::list<std::shared_
     {
         const auto &camera = *it;
         // double deviceLinkSpeedBps = camera->networkConfig.deviceLinkSpeedBps;
-        double deviceLinkSpeedBps = 125000000;              //  125000000 Lucid and 100000000 for Basler
+        double deviceLinkSpeedBps = 125000000;               //  125000000 Lucid and 100000000 for Basler
         camera->setDeviceLinkThroughput(deviceLinkSpeedBps); // ToDo check if correct
         camera->setPacketSizeB(packetSizeB);
         double camIndex = std::distance(openCameras.begin(), std::find(openCameras.begin(), openCameras.end(), camera));
@@ -428,51 +477,31 @@ uint32_t ipToDecimal(std::string ip)
     return decimal;
 }
 
-void NetworkManager::configureActionCommandInterface(const std::list<std::shared_ptr<Camera>> &openCameras, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource, uint32_t actionSelector, uint64_t scheduledDelay)
-{
-    for (const auto &camera : openCameras)
-    {
-        try
-        {
-            auto nodemap = camera->nodemap;
-            auto destinationIP = ipToDecimal(camera->deviceInfos.currentIP);
-            rcg::setInteger(nodemap, "GevActionDestinationIPAddress", destinationIP);
-            rcg::setInteger(nodemap, "ActionDeviceKey", actionDeviceKey);
-            rcg::setInteger(nodemap, "ActionGroupKey", groupKey);
-            rcg::setInteger(nodemap, "ActionGroupMask", groupMask);
-            rcg::setBoolean(nodemap, "ActionScheduledTimeEnable", true);
+// void NetworkManager::sendActionCommand(const std::list<std::shared_ptr<Camera>> &openCameras)
+// {
+//     openCameras[masterClockId]->getTimestamps();
+//     int64_t currentTimestamp = openCameras[masterClockId]->ptpConfig.timestamp_ns;
+//     int64_t actionTime = currentTimestamp + scheduledDelay;
+//     rcg::setInteger(nodemap, "ActionScheduledTime", executeTime);
+//     uint32_t actionDeviceKey = 4711;
+//     uint32_t groupKey = 1;
+//     uint32_t groupMask = 0xffffffff;
+//     TriggerSource triggerSource = TriggerSource_Action1;
+//     uint32_t actionSelector = 0;
 
-            // Calculate the execution time
-            auto now = std::chrono::system_clock::now().time_since_epoch();
-            uint64_t currTimeNs = std::chrono::duration_cast<std::chrono::nanoseconds>(now).count();
-            uint64_t executeTime = currTimeNs + scheduledDelay;
-            rcg::setInteger(nodemap, "ActionScheduledTime", executeTime);
+//     for (const auto &camera : openCameras){
+//         camera->setActionCommandDeviceConfig(camera->device, actionDeviceKey, groupKey, groupMask, triggerSource, actionSelector);
+//     }
+//     try
+//     {
+//         // ToDo
+//         GigeTL->IssueScheduledActionCommand(4711, 1, 0xffffffff, actionTime, "192.168.1.255");
 
-            std::cout << "Interface configured to start acquisition on Action Command for Camera ID: "
-                      << camera->deviceInfos.id << std::endl;
-        }
-        catch (const std::exception &e)
-        {
-            std::cerr << "⚠️ Failed to configure Action Command Interface for Camera ID: "
-                      << camera->deviceInfos.id << ": " << e.what() << std::endl;
-        }
-    }
-}
-
-void NetworkManager::sendActionCommand(const std::list<std::shared_ptr<Camera>> &openCameras)
-{
-    for (const auto &camera : openCameras)
-    {
-        try
-        {
-            auto nodemap = camera->nodemap;
-            rcg::callCommand(nodemap, "ActionCommand");
-            std::cout << "Action Command sent to Camera ID: " << camera->deviceInfos.id << std::endl;
-        }
-        catch (const std::exception &e)
-        {
-            std::cerr << "⚠️ Failed to send Action Command to Camera ID: "
-                      << camera->deviceInfos.id << ": " << e.what() << std::endl;
-        }
-    }
-}
+//         std::cout << "Action Command sent to Camera ID: " << camera->deviceInfos.id << std::endl;
+//     }
+//     catch (const std::exception &e)
+//     {
+//         std::cerr << "⚠️ Failed to send Action Command to Camera ID: "
+//                   << camera->deviceInfos.id << ": " << e.what() << std::endl;
+//     }
+// }

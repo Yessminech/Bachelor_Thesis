@@ -938,13 +938,10 @@ void Camera::setDeviceInfos()
 {
     try
     {
-        rcg::setBoolean(nodemap, "ChunkModeActive", true);
-        if (!deviceInfos.deprecatedFW)
-        {
-            rcg::setBoolean(nodemap, "ChunkDataControl", true);
-            rcg::setBoolean(nodemap, "ChunkEnable", true);
-            // rcg::setFloat(nodemap, "ExposureTimeAbs", exposure); // ToDo for all or only deprecated ?
-        }
+        // rcg::setBoolean(nodemap, "ChunkModeActive", true);
+        // rcg::setBoolean(nodemap, "ChunkDataControl", true);
+        // rcg::setBoolean(nodemap, "ChunkEnable", true);
+     
         rcg::setFloat(nodemap, "Gain", cameraConfig.gain); // Example: Gain of 10 dB
         rcg::setBoolean(nodemap, "AutoFunctionROIUseWhiteBalance", true);
         rcg::setEnum(nodemap, "BalanceWhiteAuto", "Continuous"); // Example: Auto white balance
@@ -1016,36 +1013,32 @@ void Camera::setFreeRunMode()
 }
 
 // ToDo: Implement
-void Camera::setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource, uint32_t actionSelector)
-{
-    try
-    {
-        auto nodemap = device->getRemoteNodeMap();
+// void Camera::setActionCommandDeviceConfig(uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource, uint32_t actionSelector)
+// {
+//     try
+//     {
+//         // Configure Triggering
+//         rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
+//         rcg::setEnum(nodemap, "TriggerMode", "On");
+//         rcg::setEnum(nodemap, "TriggerSource", triggerSource); // Triggersource?
+//         rcg::setString(nodemap, "ActionUnconditionalMode", "On"); // For Lucid
 
-        rcg::setString(nodemap, "ActionUnconditionalMode", "On");
+//         // Set Action Device Key, Group Key, and Group Mask
+//         rcg::setInteger(nodemap, "ActionDeviceKey", actionDeviceKey);
+//         rcg::setInteger(nodemap, "ActionGroupKey", groupKey);
+//         rcg::setInteger(nodemap, "ActionGroupMask", groupMask);
+//         rcg::setInteger(nodemap, "ActionSelector", actionSelector); // For Lucid
 
-        // Set Action Device Key, Group Key, and Group Mask
-        rcg::setInteger(nodemap, "ActionDeviceKey", actionDeviceKey);
-        rcg::setInteger(nodemap, "ActionGroupKey", groupKey);
-        rcg::setInteger(nodemap, "ActionGroupMask", groupMask);
-        rcg::setInteger(nodemap, "ActionSelector", actionSelector);
-
-        // Configure Triggering
-        rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
-        rcg::setEnum(nodemap, "TriggerMode", "On");
-        rcg::setEnum(nodemap, "TriggerSource", triggerSource);
-        std::cout << "✅ Camera " << device->getID() << " configured to start acquisition on Action Command.\n";
-        std::cout << "✅ Action Device Key: " << rcg::getInteger(nodemap, "ActionDeviceKey") << ", Group Key: " << rcg::getInteger(nodemap, "ActionGroupKey") << ", Group Mask: " << rcg::getInteger(nodemap, "ActionGroupMask") << ", ActionSelector: " << rcg::getInteger(nodemap, "ActionSelector") << std::endl;
-        if (debug)
-        {
-            std::cout << GREEN << "setActionCommandDeviceConfig success" << RESET << std::endl;
-        }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "⚠️ Failed to configure Action Command Device: " << e.what() << std::endl;
-    }
-}
+//         if (debug)
+//         {
+//             std::cout << GREEN << "setActionCommandDeviceConfig success" << RESET << std::endl;
+//         }
+//     }
+//     catch (const std::exception &e)
+//     {
+//         std::cerr << "⚠️ Failed to configure Action Command Device: " << e.what() << std::endl;
+//     }
+// }
 
 void Camera::setDeviceLinkThroughput(double deviceLinkSpeedBps)
 {

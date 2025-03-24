@@ -23,6 +23,7 @@
 #define RED "\033[31m"
 #define YELLOW "\033[33m"
 #define GREEN "\033[32m"
+#define CYAN "\033[36m"
 
 
 class NetworkManager
@@ -50,6 +51,7 @@ NetworkManager(
     void calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay);
     // void calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras);
     void getMinimumExposure (const std::list<std::shared_ptr<Camera>> &openCameras);
+    void writeOffsetHistoryToCsv(const std::unordered_map<std::string, std::deque<int64_t>> &offsetHistory);
     bool debug = true;
 
 private:
@@ -58,7 +60,9 @@ private:
     double bufferPercent = 9; // 10.93; // ToDo How to set this value 
     int ptpSyncTimeout = 800; // 800 ms
     int ptpMaxCheck = 20; // 10 checks
+    const int timeWindowSize = 10; // 10 seconds //ToDo check unit
     int ptpOffsetThresholdNs = 500; // 0.5 us
     std::string masterClockId;
+    int64_t scheduledDelay = 30000000000; // 30 seconds
 };
 #endif // NETWORKMANAGER_HPP

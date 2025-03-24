@@ -39,6 +39,7 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h \
+  /usr/include/c++/11/pstl/pstl_config.h \
   /usr/include/c++/11/bits/exception.h \
   /usr/include/c++/11/string \
   /usr/include/c++/11/bits/stringfwd.h \
@@ -129,6 +130,10 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/c++/11/ext/alloc_traits.h \
   /usr/include/c++/11/bits/alloc_traits.h \
   /usr/include/c++/11/bits/stl_construct.h \
+  /usr/include/c++/11/string_view \
+  /usr/include/c++/11/bits/functional_hash.h \
+  /usr/include/c++/11/bits/hash_bytes.h \
+  /usr/include/c++/11/bits/string_view.tcc \
   /usr/include/c++/11/ext/string_conversions.h \
   /usr/include/c++/11/cstdlib \
   /usr/include/stdlib.h \
@@ -160,8 +165,6 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/asm-generic/errno-base.h \
   /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
   /usr/include/c++/11/bits/charconv.h \
-  /usr/include/c++/11/bits/functional_hash.h \
-  /usr/include/c++/11/bits/hash_bytes.h \
   /usr/include/c++/11/bits/basic_string.tcc \
   /usr/include/c++/11/iostream \
   /usr/include/c++/11/ostream \
@@ -269,6 +272,8 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/c++/11/bits/atomic_base.h \
   /usr/include/c++/11/bits/atomic_lockfree_defines.h \
   /usr/include/c++/11/backward/auto_ptr.h \
+  /usr/include/c++/11/pstl/glue_memory_defs.h \
+  /usr/include/c++/11/pstl/execution_defs.h \
   /usr/include/rc_genicam_api/genicam/GenApi/NodeCallback.h \
   /usr/include/rc_genicam_api/genicam/GenApi/Persistence.h \
   /usr/include/rc_genicam_api/genicam/GenApi/SelectorSet.h \
@@ -329,6 +334,16 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/c++/11/bits/algorithmfwd.h \
   /usr/include/c++/11/bits/stl_heap.h \
   /usr/include/c++/11/bits/uniform_int_dist.h \
+  /usr/include/c++/11/pstl/glue_algorithm_defs.h \
+  /usr/include/c++/11/functional \
+  /usr/include/c++/11/bits/std_function.h \
+  /usr/include/c++/11/unordered_map \
+  /usr/include/c++/11/bits/hashtable.h \
+  /usr/include/c++/11/bits/hashtable_policy.h \
+  /usr/include/c++/11/bits/enable_special_members.h \
+  /usr/include/c++/11/bits/node_handle.h \
+  /usr/include/c++/11/bits/unordered_map.h \
+  /usr/include/c++/11/bits/erase_if.h \
   /usr/include/opencv4/opencv2/core/cvstd.hpp \
   /usr/include/c++/11/cmath \
   /usr/include/math.h \
@@ -341,6 +356,19 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
   /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/c++/11/bits/specfun.h \
+  /usr/include/c++/11/tr1/gamma.tcc \
+  /usr/include/c++/11/tr1/special_function_util.h \
+  /usr/include/c++/11/tr1/bessel_function.tcc \
+  /usr/include/c++/11/tr1/beta_function.tcc \
+  /usr/include/c++/11/tr1/ell_integral.tcc \
+  /usr/include/c++/11/tr1/exp_integral.tcc \
+  /usr/include/c++/11/tr1/hypergeometric.tcc \
+  /usr/include/c++/11/tr1/legendre_function.tcc \
+  /usr/include/c++/11/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/11/tr1/poly_hermite.tcc \
+  /usr/include/c++/11/tr1/poly_laguerre.tcc \
+  /usr/include/c++/11/tr1/riemann_zeta.tcc \
   /usr/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
   /usr/include/opencv4/opencv2/core/neon_utils.hpp \
   /usr/include/opencv4/opencv2/core/vsx_utils.hpp \
@@ -360,8 +388,6 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/opencv4/opencv2/core/cvstd.inl.hpp \
   /usr/include/c++/11/complex \
   /usr/include/opencv4/opencv2/core/utility.hpp \
-  /usr/include/c++/11/functional \
-  /usr/include/c++/11/bits/std_function.h \
   /usr/include/opencv4/opencv2/core/optim.hpp \
   /usr/include/opencv4/opencv2/core/ovx.hpp \
   /usr/include/opencv4/opencv2/core/cvdef.h \
@@ -380,7 +406,6 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/c++/11/bits/stl_tree.h \
   /usr/include/c++/11/bits/stl_map.h \
   /usr/include/c++/11/bits/stl_multimap.h \
-  /usr/include/c++/11/bits/erase_if.h \
   /usr/include/opencv4/opencv2/dnn/layer.hpp \
   /usr/include/opencv4/opencv2/dnn/dnn.inl.hpp \
   /usr/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
@@ -403,11 +428,6 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/opencv4/opencv2/flann/dynamic_bitset.h \
   /usr/include/opencv4/opencv2/flann/dist.h \
   /usr/include/opencv4/opencv2/flann/heap.h \
-  /usr/include/c++/11/unordered_map \
-  /usr/include/c++/11/bits/hashtable.h \
-  /usr/include/c++/11/bits/hashtable_policy.h \
-  /usr/include/c++/11/bits/enable_special_members.h \
-  /usr/include/c++/11/bits/unordered_map.h \
   /usr/include/opencv4/opencv2/flann/allocator.h \
   /usr/include/opencv4/opencv2/flann/random.h \
   /usr/include/opencv4/opencv2/flann/kdtree_single_index.h \
@@ -419,6 +439,7 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/opencv4/opencv2/flann/lsh_index.h \
   /usr/include/opencv4/opencv2/flann/lsh_table.h \
   /usr/include/c++/11/iomanip \
+  /usr/include/c++/11/bits/quoted_string.h \
   /usr/include/c++/11/math.h \
   /usr/include/opencv4/opencv2/flann/autotuned_index.h \
   /usr/include/opencv4/opencv2/flann/ground_truth.h \
@@ -526,7 +547,8 @@ CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor
   /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h \
   /usr/include/c++/11/numeric \
-  /usr/include/c++/11/bits/stl_numeric.h
+  /usr/include/c++/11/bits/stl_numeric.h \
+  /usr/include/c++/11/pstl/glue_numeric_defs.h
 
 CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp \
   /usr/include/stdc-predef.h \
@@ -1049,6 +1071,7 @@ CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o: /home/test/Documents/ba/
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h \
+  /usr/include/c++/11/pstl/pstl_config.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1180,6 +1203,9 @@ CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o: /home/test/Documents/ba/
   /usr/include/c++/11/ext/alloc_traits.h \
   /usr/include/c++/11/bits/alloc_traits.h \
   /usr/include/c++/11/bits/stl_construct.h \
+  /usr/include/c++/11/string_view \
+  /usr/include/c++/11/bits/functional_hash.h \
+  /usr/include/c++/11/bits/string_view.tcc \
   /usr/include/c++/11/ext/string_conversions.h \
   /usr/include/c++/11/cstdlib \
   /usr/include/stdlib.h \
@@ -1203,7 +1229,6 @@ CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o: /home/test/Documents/ba/
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
   /usr/include/c++/11/bits/charconv.h \
-  /usr/include/c++/11/bits/functional_hash.h \
   /usr/include/c++/11/bits/basic_string.tcc \
   /usr/include/c++/11/bits/std_mutex.h \
   /usr/include/c++/11/bits/unique_lock.h
@@ -1246,6 +1271,7 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h \
+  /usr/include/c++/11/pstl/pstl_config.h \
   /usr/include/c++/11/bits/exception.h \
   /usr/include/c++/11/string \
   /usr/include/c++/11/bits/stringfwd.h \
@@ -1336,6 +1362,10 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/c++/11/ext/alloc_traits.h \
   /usr/include/c++/11/bits/alloc_traits.h \
   /usr/include/c++/11/bits/stl_construct.h \
+  /usr/include/c++/11/string_view \
+  /usr/include/c++/11/bits/functional_hash.h \
+  /usr/include/c++/11/bits/hash_bytes.h \
+  /usr/include/c++/11/bits/string_view.tcc \
   /usr/include/c++/11/ext/string_conversions.h \
   /usr/include/c++/11/cstdlib \
   /usr/include/stdlib.h \
@@ -1367,8 +1397,6 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/asm-generic/errno-base.h \
   /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
   /usr/include/c++/11/bits/charconv.h \
-  /usr/include/c++/11/bits/functional_hash.h \
-  /usr/include/c++/11/bits/hash_bytes.h \
   /usr/include/c++/11/bits/basic_string.tcc \
   /usr/include/c++/11/iostream \
   /usr/include/c++/11/ostream \
@@ -1476,6 +1504,8 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/c++/11/bits/atomic_base.h \
   /usr/include/c++/11/bits/atomic_lockfree_defines.h \
   /usr/include/c++/11/backward/auto_ptr.h \
+  /usr/include/c++/11/pstl/glue_memory_defs.h \
+  /usr/include/c++/11/pstl/execution_defs.h \
   /usr/include/rc_genicam_api/genicam/GenApi/NodeCallback.h \
   /usr/include/rc_genicam_api/genicam/GenApi/Persistence.h \
   /usr/include/rc_genicam_api/genicam/GenApi/SelectorSet.h \
@@ -1536,6 +1566,16 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/c++/11/bits/algorithmfwd.h \
   /usr/include/c++/11/bits/stl_heap.h \
   /usr/include/c++/11/bits/uniform_int_dist.h \
+  /usr/include/c++/11/pstl/glue_algorithm_defs.h \
+  /usr/include/c++/11/functional \
+  /usr/include/c++/11/bits/std_function.h \
+  /usr/include/c++/11/unordered_map \
+  /usr/include/c++/11/bits/hashtable.h \
+  /usr/include/c++/11/bits/hashtable_policy.h \
+  /usr/include/c++/11/bits/enable_special_members.h \
+  /usr/include/c++/11/bits/node_handle.h \
+  /usr/include/c++/11/bits/unordered_map.h \
+  /usr/include/c++/11/bits/erase_if.h \
   /usr/include/opencv4/opencv2/core/cvstd.hpp \
   /usr/include/c++/11/cmath \
   /usr/include/math.h \
@@ -1548,6 +1588,19 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
   /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/c++/11/bits/specfun.h \
+  /usr/include/c++/11/tr1/gamma.tcc \
+  /usr/include/c++/11/tr1/special_function_util.h \
+  /usr/include/c++/11/tr1/bessel_function.tcc \
+  /usr/include/c++/11/tr1/beta_function.tcc \
+  /usr/include/c++/11/tr1/ell_integral.tcc \
+  /usr/include/c++/11/tr1/exp_integral.tcc \
+  /usr/include/c++/11/tr1/hypergeometric.tcc \
+  /usr/include/c++/11/tr1/legendre_function.tcc \
+  /usr/include/c++/11/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/11/tr1/poly_hermite.tcc \
+  /usr/include/c++/11/tr1/poly_laguerre.tcc \
+  /usr/include/c++/11/tr1/riemann_zeta.tcc \
   /usr/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
   /usr/include/opencv4/opencv2/core/neon_utils.hpp \
   /usr/include/opencv4/opencv2/core/vsx_utils.hpp \
@@ -1567,8 +1620,6 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/opencv4/opencv2/core/cvstd.inl.hpp \
   /usr/include/c++/11/complex \
   /usr/include/opencv4/opencv2/core/utility.hpp \
-  /usr/include/c++/11/functional \
-  /usr/include/c++/11/bits/std_function.h \
   /usr/include/opencv4/opencv2/core/optim.hpp \
   /usr/include/opencv4/opencv2/core/ovx.hpp \
   /usr/include/opencv4/opencv2/core/cvdef.h \
@@ -1587,7 +1638,6 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/c++/11/bits/stl_tree.h \
   /usr/include/c++/11/bits/stl_map.h \
   /usr/include/c++/11/bits/stl_multimap.h \
-  /usr/include/c++/11/bits/erase_if.h \
   /usr/include/opencv4/opencv2/dnn/layer.hpp \
   /usr/include/opencv4/opencv2/dnn/dnn.inl.hpp \
   /usr/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
@@ -1610,11 +1660,6 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/opencv4/opencv2/flann/dynamic_bitset.h \
   /usr/include/opencv4/opencv2/flann/dist.h \
   /usr/include/opencv4/opencv2/flann/heap.h \
-  /usr/include/c++/11/unordered_map \
-  /usr/include/c++/11/bits/hashtable.h \
-  /usr/include/c++/11/bits/hashtable_policy.h \
-  /usr/include/c++/11/bits/enable_special_members.h \
-  /usr/include/c++/11/bits/unordered_map.h \
   /usr/include/opencv4/opencv2/flann/allocator.h \
   /usr/include/opencv4/opencv2/flann/random.h \
   /usr/include/opencv4/opencv2/flann/kdtree_single_index.h \
@@ -1626,6 +1671,7 @@ CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/
   /usr/include/opencv4/opencv2/flann/lsh_index.h \
   /usr/include/opencv4/opencv2/flann/lsh_table.h \
   /usr/include/c++/11/iomanip \
+  /usr/include/c++/11/bits/quoted_string.h \
   /usr/include/c++/11/math.h \
   /usr/include/opencv4/opencv2/flann/autotuned_index.h \
   /usr/include/opencv4/opencv2/flann/ground_truth.h \
@@ -3170,9 +3216,29 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/x86_64-linux-gnu/bits/environments.h:
 
-/usr/include/limits.h:
+/usr/include/unistd.h:
 
-/usr/include/c++/11/bits/regex_compiler.tcc:
+/usr/include/x86_64-linux-gnu/bits/sigstksz.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigevent-consts.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/siginfo-arch.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/signum-arch.h:
+
+/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
+
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.hpp:
+
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp:
 
 /usr/include/c++/11/bits/uses_allocator.h:
 
@@ -3181,8 +3247,6 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/c++/11/bits/unique_lock.h:
 
 /usr/include/c++/11/bits/stl_raw_storage_iter.h:
-
-/usr/include/opencv4/opencv2/objdetect.hpp:
 
 /usr/include/c++/11/memory:
 
@@ -3274,15 +3338,19 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/c++/11/stdexcept:
 
-/usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h:
-
-/usr/include/c++/11/utility:
+/usr/include/c++/11/pstl/glue_algorithm_defs.h:
 
 /usr/include/c++/11/ios:
+
+/usr/include/c++/11/utility:
 
 /usr/include/c++/11/bits/stl_vector.h:
 
 /usr/include/c++/11/cstddef:
+
+/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h:
+
+/usr/include/rc_genicam_api/genicam/_GenICamVersion.h:
 
 /usr/include/rc_genicam_api/genicam/GenApi/IChunkPort.h:
 
@@ -3296,17 +3364,9 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/c++/11/exception:
 
-/usr/include/c++/11/bits/unique_ptr.h:
-
 /usr/include/c++/11/ostream:
 
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp:
-
-/usr/include/c++/11/bits/hash_bytes.h:
-
-/usr/include/c++/11/bits/move.h:
-
-/usr/include/c++/11/bits/functional_hash.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
@@ -3321,8 +3381,6 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/sched.h:
 
 /usr/include/x86_64-linux-gnu/bits/errno.h:
-
-/usr/include/x86_64-linux-gnu/bits/signum-arch.h:
 
 /usr/include/c++/11/cerrno:
 
@@ -3370,7 +3428,35 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/c++/11/bits/regex_automaton.tcc:
 
+/usr/include/c++/11/bits/string_view.tcc:
+
+/usr/include/c++/11/bits/hash_bytes.h:
+
+/usr/include/c++/11/bits/move.h:
+
+/usr/include/c++/11/bits/functional_hash.h:
+
+/usr/include/c++/11/string_view:
+
+/usr/include/c++/11/cstdarg:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
+
+/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h:
+
+/usr/include/c++/11/bits/stl_construct.h:
+
 /usr/include/c++/11/bits/shared_ptr.h:
+
+/usr/include/rc_genicam_api/genicam/GenApi/GenApiDll.h:
+
+/usr/include/errno.h:
+
+/usr/include/c++/11/bits/alloc_traits.h:
+
+/usr/include/stdc-predef.h:
 
 /usr/include/c++/11/bits/ostream.tcc:
 
@@ -3436,21 +3522,9 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/rc_genicam_api/genicam/GenApi/NodeMapRef.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
-
 /usr/include/c++/11/bits/list.tcc:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/gthr.h:
-
-/usr/include/c++/11/cstdarg:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
-
-/usr/include/c++/11/bits/stl_construct.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h:
-
-/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 
@@ -3474,6 +3548,10 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/rc_genicam_api/genicam/Base/GCException.h:
 
+/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
+
+/usr/local/include/rc_genicam_api/pixel_formats.h:
+
 /usr/include/opencv4/opencv2/flann/linear_index.h:
 
 /usr/include/c++/11/iomanip:
@@ -3483,6 +3561,10 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/c++/11/bits/istream.tcc:
 
 /usr/include/c++/11/limits:
+
+/usr/include/c++/11/numeric:
+
+/usr/include/x86_64-linux-gnu/asm/sockios.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
@@ -3512,6 +3594,8 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/asm-generic/errno-base.h:
 
+/usr/include/c++/11/pstl/pstl_config.h:
+
 /usr/include/c++/11/bits/allocator.h:
 
 /usr/include/c++/11/cmath:
@@ -3519,8 +3603,6 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/rc_genicam_api/genicam/GenApi/IEnumeration.h:
 
 /usr/include/features.h:
-
-/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp:
 
 /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h:
 
@@ -3535,6 +3617,8 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/c++/11/tr1/legendre_function.tcc:
 
 /usr/include/rc_genicam_api/genicam/GenApi/IRegister.h:
 
@@ -3560,6 +3644,8 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
+/usr/include/c++/11/tr1/gamma.tcc:
+
 /usr/include/rc_genicam_api/genicam/GenApi/Pointer.h:
 
 /usr/include/rc_genicam_api/genicam/Base/GCTypes.h:
@@ -3572,11 +3658,9 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/x86_64-linux-gnu/sys/socket.h:
 
-/usr/include/stdc-predef.h:
+/usr/include/x86_64-linux-gnu/sys/ucontext.h:
 
-/usr/include/errno.h:
-
-/usr/include/c++/11/bits/alloc_traits.h:
+/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h:
 
 /usr/include/inttypes.h:
 
@@ -3632,7 +3716,11 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/x86_64-linux-gnu/bits/in.h:
 
-/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.hpp:
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
+
+/usr/include/rc_genicam_api/genicam/Base/GCBase.h:
+
+/usr/include/rc_genicam_api/genicam/GenApi/GenApiNamespace.h:
 
 /usr/include/x86_64-linux-gnu/bits/timex.h:
 
@@ -3643,8 +3731,6 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/c++/11/bits/stl_algobase.h:
 
 /usr/include/x86_64-linux-gnu/bits/statx.h:
-
-/usr/include/unistd.h:
 
 /usr/include/c++/11/cwchar:
 
@@ -3702,6 +3788,10 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/c++/11/iostream:
 
+/usr/include/opencv4/opencv2/objdetect.hpp:
+
+/usr/include/c++/11/bits/node_handle.h:
+
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
@@ -3744,10 +3834,6 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp:
 
-/usr/include/c++/11/bits/stl_relops.h:
-
-/usr/include/rc_genicam_api/genicam/Base/GCString.h:
-
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/cpu-set.h:
@@ -3767,6 +3853,8 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/c++/11/bits/stl_pair.h:
 
 /usr/include/c++/11/ext/atomicity.h:
+
+/usr/include/c++/11/pstl/glue_numeric_defs.h:
 
 /usr/include/opencv4/opencv2/stitching/detail/blenders.hpp:
 
@@ -3798,15 +3886,21 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
-/usr/include/rc_genicam_api/genicam/GenApi/GenApiDll.h:
+/usr/include/c++/11/bits/unique_ptr.h:
 
-/usr/include/x86_64-linux-gnu/asm/sockios.h:
+/usr/include/rc_genicam_api/genicam/Base/GCString.h:
 
-/usr/include/c++/11/numeric:
+/usr/include/c++/11/bits/stl_relops.h:
+
+/usr/include/limits.h:
+
+/usr/include/c++/11/bits/regex_compiler.tcc:
 
 /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h:
 
 /usr/include/c++/11/tuple:
+
+/usr/include/c++/11/tr1/beta_function.tcc:
 
 /usr/include/c++/11/bits/invoke.h:
 
@@ -3836,7 +3930,17 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/c++/11/backward/auto_ptr.h:
 
+/usr/include/opencv4/opencv2/flann/all_indices.h:
+
+/usr/include/c++/11/pstl/execution_defs.h:
+
+/usr/include/c++/11/bits/cxxabi_forced.h:
+
+/usr/include/c++/11/bits/algorithmfwd.h:
+
 /usr/include/rc_genicam_api/genicam/GenApi/NodeCallback.h:
+
+/usr/include/c++/11/tr1/exp_integral.tcc:
 
 /usr/include/c++/11/vector:
 
@@ -3900,13 +4004,15 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h:
 
+/usr/include/c++/11/tr1/poly_laguerre.tcc:
+
 /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h:
 
 /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h:
 
 /usr/local/include/rc_genicam_api/buffer.h:
 
-/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
+/usr/include/c++/11/bits/quoted_string.h:
 
 /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h:
 
@@ -3960,9 +4066,15 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/c++/11/algorithm:
 
-/usr/include/c++/11/bits/cxxabi_forced.h:
+/usr/include/c++/11/unordered_map:
 
-/usr/include/c++/11/bits/algorithmfwd.h:
+/usr/include/c++/11/bits/hashtable_policy.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/wchar.h:
+
+/usr/include/x86_64-linux-gnu/bits/statx-generic.h:
 
 /usr/include/c++/11/complex:
 
@@ -3977,6 +4089,26 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/rc_genicam_api/genicam/Base/GCUtilities.h:
 
 /usr/include/opencv4/opencv2/core/utility.hpp:
+
+/usr/include/c++/11/bits/specfun.h:
+
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp:
+
+/usr/include/c++/11/tr1/special_function_util.h:
+
+/usr/include/c++/11/tr1/bessel_function.tcc:
+
+/usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h:
+
+/usr/include/c++/11/tr1/ell_integral.tcc:
+
+/usr/include/c++/11/tr1/hypergeometric.tcc:
+
+/usr/include/c++/11/tr1/modified_bessel_func.tcc:
+
+/usr/include/c++/11/tr1/poly_hermite.tcc:
+
+/usr/include/c++/11/tr1/riemann_zeta.tcc:
 
 /usr/include/opencv4/opencv2/core/cvstd_wrapper.hpp:
 
@@ -4018,8 +4150,6 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/opencv4/opencv2/core/optim.hpp:
 
-/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp:
-
 /usr/include/opencv4/opencv2/features2d.hpp:
 
 /usr/include/opencv4/opencv2/flann/defines.h:
@@ -4027,6 +4157,10 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
 
 /usr/include/opencv4/opencv2/flann/config.h:
+
+/usr/include/c++/11/bits/unordered_map.h:
+
+/usr/include/opencv4/opencv2/imgproc.hpp:
 
 /usr/include/c++/11/cstring:
 
@@ -4086,13 +4220,11 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/c++/11/bits/stl_set.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
-
 /usr/include/signal.h:
 
-/usr/include/x86_64-linux-gnu/bits/struct_stat.h:
+/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
-/usr/include/opencv4/opencv2/flann/all_indices.h:
+/usr/include/x86_64-linux-gnu/bits/struct_stat.h:
 
 /usr/include/x86_64-linux-gnu/bits/iscanonical.h:
 
@@ -4108,19 +4240,11 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/opencv4/opencv2/flann/heap.h:
 
-/usr/include/c++/11/unordered_map:
+/usr/include/x86_64-linux-gnu/bits/siginfo-consts-arch.h:
 
-/usr/include/c++/11/bits/hashtable_policy.h:
+/usr/include/rc_genicam_api/genicam/Base/GCArray.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
-
-/usr/include/wchar.h:
-
-/usr/include/x86_64-linux-gnu/bits/statx-generic.h:
-
-/usr/include/opencv4/opencv2/imgproc.hpp:
-
-/usr/include/c++/11/bits/unordered_map.h:
+/usr/include/opencv4/opencv2/flann/allocator.h:
 
 /usr/include/opencv4/opencv2/flann/autotuned_index.h:
 
@@ -4150,10 +4274,6 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/opencv4/opencv2/imgcodecs.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h:
-
-/usr/include/x86_64-linux-gnu/sys/ucontext.h:
-
 /usr/include/opencv4/opencv2/imgproc/segmentation.hpp:
 
 /usr/include/opencv4/opencv2/objdetect/face.hpp:
@@ -4163,6 +4283,8 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 /usr/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp:
 
 /usr/include/c++/11/deque:
+
+/usr/include/c++/11/pstl/glue_memory_defs.h:
 
 /usr/include/linux/stat.h:
 
@@ -4206,8 +4328,6 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
-
 /usr/include/c++/11/bitset:
 
 /usr/include/c++/11/stack:
@@ -4228,38 +4348,8 @@ CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_T
 
 /usr/include/x86_64-linux-gnu/bits/stat.h:
 
-/usr/include/x86_64-linux-gnu/bits/sigstksz.h:
-
 /usr/include/x86_64-linux-gnu/asm/types.h:
 
 /usr/include/linux/close_range.h:
 
 /usr/include/c++/11/bits/stl_numeric.h:
-
-/usr/include/x86_64-linux-gnu/bits/siginfo-arch.h:
-
-/usr/include/rc_genicam_api/genicam/_GenICamVersion.h:
-
-/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h:
-
-/usr/include/rc_genicam_api/genicam/Base/GCArray.h:
-
-/usr/include/opencv4/opencv2/flann/allocator.h:
-
-/usr/include/x86_64-linux-gnu/bits/siginfo-consts-arch.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/sigevent-consts.h:
-
-/usr/local/include/rc_genicam_api/pixel_formats.h:
-
-/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
-
-/usr/include/rc_genicam_api/genicam/Base/GCBase.h:
-
-/usr/include/rc_genicam_api/genicam/GenApi/GenApiNamespace.h:
-
-/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
