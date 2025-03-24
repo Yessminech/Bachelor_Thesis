@@ -42,7 +42,7 @@ NetworkManager(
     void printPtpConfig(std::shared_ptr<Camera> camera);
     void monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &openCamerasList,  std::atomic<bool>& stopStream);
     void monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList,  std::atomic<bool>& stopStream);
-    void configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras);
+    void configureMultiCamerasNetwork(const std::list<std::shared_ptr<Camera>> &openCameras);
     void logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset);
     void setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, std::shared_ptr<Camera> camera);
     void setExposureAndFps(const std::list<std::shared_ptr<Camera>> &openCameras);
@@ -63,6 +63,6 @@ private:
     const int timeWindowSize = 10; // 10 seconds //ToDo check unit
     int ptpOffsetThresholdNs = 500; // 0.5 us
     std::string masterClockId;
-    int64_t scheduledDelay = 30000000000; // 30 seconds
+    int64_t scheduledDelayS = 1; // 1 second
 };
 #endif // NETWORKMANAGER_HPP

@@ -109,8 +109,11 @@ public:
   void setBandwidthDelays(const std::shared_ptr<Camera> &camera, double camIndex, double numCams, double packetSizeB, double deviceLinkSpeedBps, double bufferPercent);
   void setFps(double fpsUpperBound);
   void setExposureTime(double exposureTime);
+  void storeTriggeredFrames(const std::string& baseDir, int numFrames);
 
-  void setActionCommandDeviceConfig(std::shared_ptr<rcg::Device> device, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource = "Action1", uint32_t actionSelector = 1);
+  void setScheduledActionCommand(uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask);
+  void issueScheduledActionCommand(uint32_t actionDeviceKey, uint32_t actionGroupKey, uint32_t actionGroupMask, int64_t scheduledDelayS, const std::string &targetIP = "255.255.255.255");
+  void callSoftwareTrigger(int64_t scheduledDelayNs=0);
 
   // Public Members
   DeviceInfos deviceInfos;

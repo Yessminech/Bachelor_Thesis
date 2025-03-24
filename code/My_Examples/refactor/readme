@@ -37,3 +37,61 @@ calculatFps():
     transmissionDelay = packetDelay * camIndex
     nPacketsperFrame = ??
     fps = nPackets
+
+
+
+
+
+
+#########
+## Setting Scheduled Action Commands ##
+### Lucid ###
+1. Enable PTP (Master/ Slaves and Offset)
+2. Set TransferControlMode to UserControlled
+Arena::SetNodeValue(pDevice->GetNodeMap(), "TransferControlMode", "UserControlled");
+Arena::SetNodeValue(pDevice->GetNodeMap(), "TransferOperationMode", "Continuous");
+Arena::ExecuteNode(pDevice->GetNodeMap(), "TransferStop");
+3. Configure Triggering 
+Arena::SetNodeValue(pDevice->GetNodeMap(), "TriggerSelector", "FrameStart");
+Arena::SetNodeValue(pDevice->GetNodeMap(), "TriggerMode", "On");
+Arena::SetNodeValue(pDevice->GetNodeMap(), "TriggerSource", "Action0");
+4. Configure Settings for Scheduled Action Command
+Arena::SetNodeValue(pDevice->GetNodeMap(), "ActionUnconditionalMode", "On");
+Arena::SetNodeValue(pDevice->GetNodeMap(), "ActionSelector", 0);
+Arena::SetNodeValue(pDevice->GetNodeMap(), "ActionDeviceKey", g_action_device_key);
+Arena::SetNodeValue(pDevice->GetNodeMap(), "ActionGroupKey", g_action_group_key);
+Arena::SetNodeValue(pDevice->GetNodeMap(), "ActionGroupMask", g_action_device_key);
+5. Fire Action
+// Get the current PTP timestamp from the Master camera
+Arena::ExecuteNode(g_camEntries[0]->pCam->GetNodeMap(), "PtpDataSetLatch");
+int64_t curr_ptp = Arena::GetNodeValue(g_camEntries[0]->pCam->GetNodeMap(), "PtpDataSetLatchValue");
+
+// Round up to the nearest second
+if (g_round_up_action_time)
+{
+	curr_ptp /= 1000000000;
+	curr_ptp += static_cast(g_action_delta_time) + 1;
+	curr_ptp *= 1000000000;
+}
+else
+{
+	curr_ptp += static_cast(g_action_delta_time) * 1000000000;
+}
+
+// Fire an Action Command g_action_delta_time seconds from now
+std::cout << TAB2 << "Scheduled Action Command set for time: " << curr_ptp << " ns" << std::endl;
+
+Arena::SetNodeValue(pSystem->GetTLSystemNodeMap(), "ActionCommandTargetIP", 0xFFFFFFFF);
+
+Arena::SetNodeValue(pSystem->GetTLSystemNodeMap(), "ActionCommandExecuteTime", curr_ptp);
+
+Arena::ExecuteNode(pSystem->GetTLSystemNodeMap(), "ActionCommandFireCommand");
+6. Transfer grabbed images to the host
+// Transfer images to host
+	Arena::ExecuteNode(g_camEntries[x]->pCam->GetNodeMap(), "TransferStart");
+
+	// Wait for 2 * g_action_delta_time in seconds
+	pImage = g_camEntries[x]->pCam->GetImage(g_action_delta_time * 1000 * 2);
+
+	Arena::ExecuteNode(g_camEntries[x]->pCam->GetNodeMap(), "TransferStop");
+### Basler ###

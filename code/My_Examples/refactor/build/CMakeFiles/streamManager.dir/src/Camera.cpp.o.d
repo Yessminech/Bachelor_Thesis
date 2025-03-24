@@ -427,7 +427,10 @@ CMakeFiles/streamManager.dir/src/Camera.cpp.o: \
  /usr/local/include/rc_genicam_api/buffer.h \
  /usr/local/include/rc_genicam_api/image.h \
  /usr/local/include/rc_genicam_api/nodemap_out.h \
- /usr/local/include/rc_genicam_api/config.h /usr/include/arpa/inet.h \
+ /usr/local/include/rc_genicam_api/config.h /usr/include/c++/11/fstream \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+ /usr/include/c++/11/bits/fstream.tcc /usr/include/arpa/inet.h \
  /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/sys/socket.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/x86_64-linux-gnu/bits/socket.h \

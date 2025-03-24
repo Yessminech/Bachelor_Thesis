@@ -11,6 +11,7 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <set>
 #include <arpa/inet.h>
 #include <iomanip>
@@ -24,6 +25,15 @@
 #include <stdexcept>
 #include <ctime>
 #include <numeric>
+#include <sys/stat.h>  // for mkdir
+#include <sys/types.h>
+
+// #include <pylon/PylonIncludes.h>
+// #include <pylon/gige/GigETransportLayer.h>
+// #include <algorithm>
+// #include <iostream>
+// #include <cctype> 
+
 
 Camera::Camera(std::shared_ptr<rcg::Device> device, bool debug, CameraConfig cameraConfig, StreamConfig streamConfig, NetworkConfig networkConfig)
     : device(device), debug(debug), cameraConfig(cameraConfig), streamConfig(streamConfig), networkConfig(networkConfig)
@@ -88,7 +98,7 @@ Camera::Camera(std::shared_ptr<rcg::Device> device, bool debug, CameraConfig cam
         // Assign Network Config
         this->networkConfig.deviceLinkSpeedBps = networkConfig.deviceLinkSpeedBps;
         this->networkConfig.packetSizeB = rcg::getInteger(nodemap, "GevSCPSPacketSize");
-        this->networkConfig.bufferPercent = 20.0; //ToDo
+        this->networkConfig.bufferPercent = 20.0; // ToDo
     }
     else
     {
@@ -231,14 +241,14 @@ bool isDottedIP(const std::string &ip)
 /***********************         Getters     *************************/
 /***********************************************************************/
 
-double Camera::getExposureTime() 
+double Camera::getExposureTime()
 {
     double exposure = 0.0;
     try
     {
         if (deviceInfos.deprecatedFW)
         {
-         exposure = rcg::getFloat(nodemap, "ExposureTimeAbs"); 
+            exposure = rcg::getFloat(nodemap, "ExposureTimeAbs");
         }
         else
         {
@@ -251,7 +261,6 @@ double Camera::getExposureTime()
     }
     return exposure;
 }
-
 
 double Camera::getFps()
 {
@@ -467,78 +476,80 @@ void Camera::processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint
 }
 
 void Camera::updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index,
-    cv::Mat &frame, int &frameCount, std::chrono::steady_clock::time_point &lastTime)
+                               cv::Mat &frame, int &frameCount, std::chrono::steady_clock::time_point &lastTime)
 {
-static std::deque<double> fpsHistory; // Store last few FPS values
-constexpr int maxHistorySize = 20; // Average FPS over last 20 frames
+    static std::deque<double> fpsHistory; // Store last few FPS values
+    constexpr int maxHistorySize = 20;    // Average FPS over last 20 frames
 
-// Frame count and time calculation
-frameCount++;
-auto currentTime = std::chrono::steady_clock::now();
-double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count() / 1000.0;
+    // Frame count and time calculation
+    frameCount++;
+    auto currentTime = std::chrono::steady_clock::now();
+    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count() / 1000.0;
 
-// Compute FPS
-double fps = (elapsed > 0) ? frameCount / elapsed : 0.0;
-fpsHistory.push_back(fps);
+    // Compute FPS
+    double fps = (elapsed > 0) ? frameCount / elapsed : 0.0;
+    fpsHistory.push_back(fps);
 
-// Maintain the history size
-if (fpsHistory.size() > maxHistorySize) {
-fpsHistory.pop_front();
+    // Maintain the history size
+    if (fpsHistory.size() > maxHistorySize)
+    {
+        fpsHistory.pop_front();
+    }
+
+    // Compute the rolling mean FPS
+    double sumFps = std::accumulate(fpsHistory.begin(), fpsHistory.end(), 0.0);
+    double meanFps = sumFps / fpsHistory.size();
+
+    double currentFps = getFps();
+    double globalMaxFps = getGlobalFpsUpperBound();
+
+    // Debug prints
+    // std::cout << "[DEBUG] Camera ID: " << device->getID() << std::endl;
+    // std::cout << "[DEBUG] Instantaneous FPS: " << fps << " | Rolling Mean FPS: " << meanFps << std::endl;
+    // std::cout << "[DEBUG] Current FPS Setting: " << currentFps << " | Global Max FPS: " << globalMaxFps << std::endl;
+
+    // **Smart FPS Adjustments Based on Stability**
+    static double lastFpsAdjustment = globalMaxFps; // Track last set FPS
+    if (std::abs(meanFps - lastFpsAdjustment) > 1.0)
+    {                                             // Adjust only when deviation is significant
+        double newFps = lastFpsAdjustment * 0.98; // Adjust dynamically based on rolling mean
+        setGlobalFpsUpperBound(newFps);
+        setFps(newFps);
+        lastFpsAdjustment = newFps; // Store the new adjustment
+        std::cout << "[DEBUG] FPS dynamically adjusted to: " << newFps << std::endl;
+    }
+
+    // Reset frame count every second
+    if (elapsed >= 1.0)
+    {
+        lastTime = currentTime;
+        frameCount = 0;
+    }
+
+    // Generate overlay text with timestamps
+    this->getTimestamps();
+    uint64_t timestampNS = std::stoull(ptpConfig.timestamp_ns);
+
+    std::ostringstream overlayText;
+    // overlayText << "TS: " << std::fixed << std::setprecision(6) << timestampNS << " ns"
+    overlayText << "FPS: " << std::fixed << std::setprecision(2) << meanFps;
+
+    std::ostringstream camText;
+    camText << "Cam: " << device->getID();
+
+    // Overlay text on frame
+    int baseline = 0;
+    cv::Size textSize = cv::getTextSize(overlayText.str(), cv::FONT_HERSHEY_SIMPLEX, 0.6, 2, &baseline);
+    int textY = frame.rows - baseline - 5;
+    cv::putText(frame, overlayText.str(), cv::Point(10, textY), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 0, 255), 2);
+    cv::putText(frame, camText.str(), cv::Point(10, textY - textSize.height - 10), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 255), 2);
+
+    // Safely update global frame
+    {
+        std::lock_guard<std::mutex> lock(globalFrameMutex);
+        globalFrames[index] = frame.clone();
+    }
 }
-
-// Compute the rolling mean FPS
-double sumFps = std::accumulate(fpsHistory.begin(), fpsHistory.end(), 0.0);
-double meanFps = sumFps / fpsHistory.size();
-
-double currentFps = getFps();
-double globalMaxFps = getGlobalFpsUpperBound();
-
-// Debug prints
-// std::cout << "[DEBUG] Camera ID: " << device->getID() << std::endl;
-// std::cout << "[DEBUG] Instantaneous FPS: " << fps << " | Rolling Mean FPS: " << meanFps << std::endl;
-// std::cout << "[DEBUG] Current FPS Setting: " << currentFps << " | Global Max FPS: " << globalMaxFps << std::endl;
-
-// **Smart FPS Adjustments Based on Stability**
-static double lastFpsAdjustment = globalMaxFps; // Track last set FPS
-if (std::abs(meanFps - lastFpsAdjustment) > 1.0) { // Adjust only when deviation is significant
-double newFps = lastFpsAdjustment * 0.98; // Adjust dynamically based on rolling mean
-setGlobalFpsUpperBound(newFps);
-setFps(newFps);
-lastFpsAdjustment = newFps; // Store the new adjustment
-std::cout << "[DEBUG] FPS dynamically adjusted to: " << newFps << std::endl;
-}
-
-// Reset frame count every second
-if (elapsed >= 1.0) {
-lastTime = currentTime;
-frameCount = 0;
-}
-
-// Generate overlay text with timestamps
-this->getTimestamps();
-uint64_t timestampNS = std::stoull(ptpConfig.timestamp_ns);
-
-std::ostringstream overlayText;
-// overlayText << "TS: " << std::fixed << std::setprecision(6) << timestampNS << " ns"
-overlayText << "FPS: " << std::fixed << std::setprecision(2) << meanFps;
-
-std::ostringstream camText;
-camText << "Cam: " << device->getID();
-
-// Overlay text on frame
-int baseline = 0;
-cv::Size textSize = cv::getTextSize(overlayText.str(), cv::FONT_HERSHEY_SIMPLEX, 0.6, 2, &baseline);
-int textY = frame.rows - baseline - 5;
-cv::putText(frame, overlayText.str(), cv::Point(10, textY), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 0, 255), 2);
-cv::putText(frame, camText.str(), cv::Point(10, textY - textSize.height - 10), cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 255), 2);
-
-// Safely update global frame
-{
-std::lock_guard<std::mutex> lock(globalFrameMutex);
-globalFrames[index] = frame.clone();
-}
-}
-
 
 void Camera::processFrame(const rcg::Buffer *buffer, cv::Mat &outputFrame)
 {
@@ -941,7 +952,7 @@ void Camera::setDeviceInfos()
         // rcg::setBoolean(nodemap, "ChunkModeActive", true);
         // rcg::setBoolean(nodemap, "ChunkDataControl", true);
         // rcg::setBoolean(nodemap, "ChunkEnable", true);
-     
+
         rcg::setFloat(nodemap, "Gain", cameraConfig.gain); // Example: Gain of 10 dB
         rcg::setBoolean(nodemap, "AutoFunctionROIUseWhiteBalance", true);
         rcg::setEnum(nodemap, "BalanceWhiteAuto", "Continuous"); // Example: Auto white balance
@@ -1003,7 +1014,7 @@ void Camera::setFreeRunMode()
             rcg::setEnum(nodemap, "TriggerMode", "Off");
 
             // if (debug)
-                // std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << ": AcquisitionMode:" << rcg::getEnum(nodemap, "AcquisitionMode") << ": TriggerSelector:" << rcg::getEnum(nodemap, "TriggerSelector") << RESET << std::endl;
+            // std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << ": AcquisitionMode:" << rcg::getEnum(nodemap, "AcquisitionMode") << ": TriggerSelector:" << rcg::getEnum(nodemap, "TriggerSelector") << RESET << std::endl;
         }
         catch (const std::exception &ex)
         {
@@ -1012,33 +1023,164 @@ void Camera::setFreeRunMode()
     }
 }
 
-// ToDo: Implement
-// void Camera::setActionCommandDeviceConfig(uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, const char *triggerSource, uint32_t actionSelector)
-// {
-//     try
-//     {
-//         // Configure Triggering
-//         rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
-//         rcg::setEnum(nodemap, "TriggerMode", "On");
-//         rcg::setEnum(nodemap, "TriggerSource", triggerSource); // Triggersource?
-//         rcg::setString(nodemap, "ActionUnconditionalMode", "On"); // For Lucid
+void Camera::callSoftwareTrigger(int64_t scheduledDelayNs)
+{
+    try
+    {
+        rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
+        rcg::setEnum(nodemap, "TriggerMode", "On");
+        rcg::setEnum(nodemap, "TriggerSource", "Software");
 
-//         // Set Action Device Key, Group Key, and Group Mask
-//         rcg::setInteger(nodemap, "ActionDeviceKey", actionDeviceKey);
-//         rcg::setInteger(nodemap, "ActionGroupKey", groupKey);
-//         rcg::setInteger(nodemap, "ActionGroupMask", groupMask);
-//         rcg::setInteger(nodemap, "ActionSelector", actionSelector); // For Lucid
+        if(scheduledDelayNs > 0)
+        {
+            rcg::setInteger(nodemap, "TriggerDelay", scheduledDelayNs);
+        }
+        rcg::callCommand(nodemap, "TriggerSoftware");
 
-//         if (debug)
-//         {
-//             std::cout << GREEN << "setActionCommandDeviceConfig success" << RESET << std::endl;
-//         }
-//     }
-//     catch (const std::exception &e)
-//     {
-//         std::cerr << "⚠️ Failed to configure Action Command Device: " << e.what() << std::endl;
-//     }
-// }
+        if (debug)
+        {
+            std::cout << GREEN << "Software trigger success" << RESET << std::endl;
+        }
+        rcg::setEnum(nodemap, "ActionUnconditionalMode", "On");
+        rcg::setEnum(nodemap, "TransferControlMode", "Uncontrolled");
+        rcg::setEnum(nodemap, "TransferOperationMode", "Continuous");
+        rcg::callCommand(nodemap, "TransferStop");
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Error: Failed to call software trigger: " << ex.what() << RESET << std::endl;
+    }
+}
+
+void Camera::setScheduledActionCommand(uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask)
+{
+    try
+    {
+        rcg::setInteger(nodemap, "ActionSelector", 0);
+        if (this->deviceInfos.vendor == "Lucid") // ToDo Lucid or lucid visions lab
+        {
+            rcg::setEnum(nodemap, "ActionUnconditionalMode", "On");
+            rcg::setEnum(nodemap, "TransferControlMode", "Uncontrolled");
+            rcg::setEnum(nodemap, "TransferOperationMode", "Continuous");
+            rcg::callCommand(nodemap, "TransferStop");
+        }
+        rcg::setInteger(nodemap, "ActionDeviceKey", actionDeviceKey);
+        rcg::setInteger(nodemap, "ActionGroupKey", groupKey);
+        rcg::setInteger(nodemap, "ActionGroupMask", groupMask);
+
+        rcg::setEnum(nodemap, "TriggerSelector", "FrameStart");
+        rcg::setEnum(nodemap, "TriggerMode", "On");
+        rcg::setEnum(nodemap, "TriggerSource", "Action0");
+
+
+
+        rcg::callCommand(nodemap, "AcquisitionStart");
+        if (debug)
+        {
+            std::cout << GREEN << "setActionCommandDeviceConfig success" << RESET << std::endl;
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << RED << "Error: Failed to set scheduled action command: " << e.what() << RESET << std::endl;
+    }
+}
+
+void Camera::issueScheduledActionCommand(uint32_t actionDeviceKey, uint32_t actionGroupKey, uint32_t actionGroupMask, int64_t scheduledDelayS, const std::string &targetIP )
+{
+    try
+    {
+
+            if (this->deviceInfos.vendor == "Lucid") // ToDo Lucid or lucid visions lab
+            {
+                rcg::setString(nodemap, "ActionCommandTargetIP", targetIP.c_str());
+                rcg::setInteger(nodemap, "ActionCommandExecuteTime", scheduledDelayS);
+
+                rcg::callCommand(nodemap, "ActionCommandFireCommand");
+            }
+            // else if (this->deviceInfos.vendor == "Basler") // ToDo Lucid or lucid visions lab
+            // {
+            // PylonAutoInitTerm autoInitTerm;
+            // CTlFactory& TlFactory = CTlFactory::GetInstance();
+            // IGigETransportLayer* pTl = dynamic_cast<IGigETransportLayer*>(TlFactory.CreateTl( Pylon::BaslerGigEDeviceClass ));
+            // if (pTl == NULL)
+            // {
+            //     cerr << "Error: No GigE transport layer installed." << endl;
+            //     cerr << "       Please install GigE support as it is required for this sample." << endl;
+            //     return 1;
+            // }
+            // int64_t scheduledTimeNs = scheduledDelayS * 1e9;
+            // pTL->IssueScheduledActionCommand(actionDeviceKey, actionGroupKey, actionGroupMask, scheduledTimeNs, "255.255.255.255");       
+                     //}
+        
+
+
+        if (debug)
+        {
+            std::cout << GREEN << "issueScheduledActionCommand success" << RESET << std::endl;
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << RED << "Error: Failed to issue scheduled action command: " << e.what() << RESET << std::endl;
+    }
+}
+
+
+void Camera::storeTriggeredFrames(const std::string& baseDir, int numFrames)
+{
+    try
+    {
+        auto streams = device->getStreams();
+        if (streams.empty()) throw std::runtime_error("No stream available.");
+
+        auto stream = streams[0];
+        stream->open();
+        stream->startStreaming();
+
+        std::string camDir = baseDir + "/" + deviceInfos.id;
+        if (mkdir(camDir.c_str(), 0775) != 0 && errno != EEXIST) // Create directory if it doesn't exist
+        {
+            throw std::runtime_error("Failed to create directory: " + camDir);
+        }
+
+        for (int i = 0; i < numFrames; ++i)
+        {
+            const rcg::Buffer* buffer = stream->grab(5000); // ToDo set this delay in a better way
+            if (!buffer || buffer->getIsIncomplete()) {
+                throw std::runtime_error("Failed to grab complete frame.");
+            }
+
+            std::string filename = camDir + "/frame_" + std::to_string(buffer->getTimestampNS()) + ".raw";
+            std::ofstream outFile(filename.c_str(), std::ios::binary);
+            if (!outFile)
+            {
+                throw std::runtime_error("Failed to open file for writing: " + filename);
+            }
+            
+            // Fix getBase() and getSize() calls by providing the part number (typically 0)
+            const uint32_t partIndex = 0;
+            outFile.write(
+                reinterpret_cast<const char*>(buffer->getBase(partIndex)), 
+                buffer->getSize(partIndex)
+            );
+            outFile.close();
+
+            if (debug)
+            {
+                std::cout << GREEN << "Stored frame [" << i+1 << "/" << numFrames 
+                          << "] at: " << filename << RESET << std::endl;
+            }
+        }
+
+        stream->stopStreaming();
+        stream->close();
+    }
+    catch (const std::exception& ex)
+    {
+        std::cerr << RED << "Error storing triggered frames: " << ex.what() << RESET << std::endl;
+    }
+}
 
 void Camera::setDeviceLinkThroughput(double deviceLinkSpeedBps)
 {
@@ -1083,14 +1225,14 @@ void Camera::setBandwidthDelays(const std::shared_ptr<Camera> &camera, double ca
         networkConfig.packetDelayNs = calculatePacketDelayNs(packetSizeB, deviceLinkSpeedBps, bufferPercent, numCams);
         networkConfig.transmissionDelayNs = networkConfig.packetDelayNs * (numCams - 1 - camIndex);
         int64_t gevSCPDValue = static_cast<int64_t>((networkConfig.packetDelayNs + 7) / 8) * 8; // Ensure multiple of 8
-        rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue); // in counter units, 1ns resolution if ptp is enabled
+        rcg::setInteger(camera->nodemap, "GevSCPD", gevSCPDValue);                              // in counter units, 1ns resolution if ptp is enabled
         int64_t gevSCFTDValue = static_cast<int64_t>((networkConfig.transmissionDelayNs + 7) / 8) * 8;
         rcg::setInteger(camera->nodemap, "GevSCFTD", gevSCFTDValue); // in counter units, 1ns resolution if ptp is enabled
 
         if (debug)
-        std::cout << YELLOW << "[DEBUG] Camera " << device->getID() << " numCams: " << numCams << " | CamIndex: " << camIndex
-              << " | packetSizeB: " << packetSizeB << " | deviceLinkSpeedBps: " << deviceLinkSpeedBps
-              << " | bufferPercent: " << bufferPercent << std::endl;
+            std::cout << YELLOW << "[DEBUG] Camera " << device->getID() << " numCams: " << numCams << " | CamIndex: " << camIndex
+                      << " | packetSizeB: " << packetSizeB << " | deviceLinkSpeedBps: " << deviceLinkSpeedBps
+                      << " | bufferPercent: " << bufferPercent << std::endl;
         std::cout << YELLOW << "[DEBUG] Camera " << device->getID() << ": Calculated packet delay: " << networkConfig.packetDelayNs << " ns, Calculated transmission delay: " << networkConfig.transmissionDelayNs << " ns" << RESET << std::endl;
         std::cout << GREEN << "[DEBUG] Camera " << device->getID() << ": GevSCPD set to: " << rcg::getInteger(nodemap, "GevSCPD") << " ns, GevSCFTD set to: " << rcg::getInteger(nodemap, "GevSCFTD") << " ns" << RESET << std::endl;
     }
@@ -1108,14 +1250,16 @@ void Camera::setFps(double fps)
         if (!deviceInfos.deprecatedFW)
         {
             rcg::setFloat(nodemap, "AcquisitionFrameRate", fps);
-        if (debug)
-           { std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << " fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << RESET << std::endl;
-    }}
+            if (debug)
+            {
+                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << " fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRate") << RESET << std::endl;
+            }
+        }
         else
         {
             rcg::setFloat(nodemap, "AcquisitionFrameRateAbs", fps);
             if (debug)
-                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << " fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRateAbs") << RESET <<std::endl;
+                std::cout << GREEN << "[DEBUG] Camera " << deviceInfos.id << " fps set to:" << rcg::getFloat(nodemap, "AcquisitionFrameRateAbs") << RESET << std::endl;
         }
     }
     catch (const std::exception &e)
@@ -1123,7 +1267,6 @@ void Camera::setFps(double fps)
         std::cerr << "Failed to set frame rate for camera " << deviceInfos.id << ": " << e.what() << std::endl;
     }
 }
-
 
 void Camera::setExposureTime(double exposureTime) // ToDo correct this
 {

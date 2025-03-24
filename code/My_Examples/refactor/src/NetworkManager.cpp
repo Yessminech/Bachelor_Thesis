@@ -22,6 +22,7 @@
 #include <fstream>   
 #include <algorithm> 
 #include <deque>    
+#include <random>
 
 double fpsUpperBound = getGlobalFpsUpperBound();
 double fpsLowerBound = getGlobalFpsLowerBound();
@@ -445,7 +446,7 @@ void NetworkManager::setExposureAndFps(const std::list<std::shared_ptr<Camera>> 
     }
 }
 
-void NetworkManager::configureNetworkFroSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras)
+void NetworkManager::configureMultiCamerasNetwork(const std::list<std::shared_ptr<Camera>> &openCameras)
 {
     double packetDelayNs;
     for (auto it = openCameras.rbegin(); it != openCameras.rend(); ++it)
@@ -477,31 +478,3 @@ uint32_t ipToDecimal(std::string ip)
     return decimal;
 }
 
-// void NetworkManager::sendActionCommand(const std::list<std::shared_ptr<Camera>> &openCameras)
-// {
-//     openCameras[masterClockId]->getTimestamps();
-//     int64_t currentTimestamp = openCameras[masterClockId]->ptpConfig.timestamp_ns;
-//     int64_t actionTime = currentTimestamp + scheduledDelay;
-//     rcg::setInteger(nodemap, "ActionScheduledTime", executeTime);
-//     uint32_t actionDeviceKey = 4711;
-//     uint32_t groupKey = 1;
-//     uint32_t groupMask = 0xffffffff;
-//     TriggerSource triggerSource = TriggerSource_Action1;
-//     uint32_t actionSelector = 0;
-
-//     for (const auto &camera : openCameras){
-//         camera->setActionCommandDeviceConfig(camera->device, actionDeviceKey, groupKey, groupMask, triggerSource, actionSelector);
-//     }
-//     try
-//     {
-//         // ToDo
-//         GigeTL->IssueScheduledActionCommand(4711, 1, 0xffffffff, actionTime, "192.168.1.255");
-
-//         std::cout << "Action Command sent to Camera ID: " << camera->deviceInfos.id << std::endl;
-//     }
-//     catch (const std::exception &e)
-//     {
-//         std::cerr << "⚠️ Failed to send Action Command to Camera ID: "
-//                   << camera->deviceInfos.id << ": " << e.what() << std::endl;
-//     }
-// }

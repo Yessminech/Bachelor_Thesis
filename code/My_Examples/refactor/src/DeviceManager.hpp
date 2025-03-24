@@ -33,10 +33,15 @@ public:
     const std::list<std::shared_ptr<Camera>> &getopenCameras() const;
     void openCameras(std::list<std::string> deviceIds);
     // +closeCameras()  
+    int64_t getScheduledTime(int64_t scheduledDelayS, std::string masterClockId);
+    void scheduleActionCommands(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::string masterClockId);
 
     bool listAvailableCamerasByID();
     bool listopenCameras();
     bool debug = true;
+
+    uint32_t groupKey = 1;
+    uint32_t groupMask = 0x00000001;
 
 private:
     void enumerateDevicesFromSystems(const std::vector<std::shared_ptr<rcg::System>>& systems);
@@ -47,6 +52,7 @@ private:
     std::list<std::shared_ptr<Camera>> openCamerasList;          // List of cameras
     std::set<std::shared_ptr<rcg::Device>> availableCamerasList; // List of cameras
     std::string defaultCti;
+    
 };
 
 #endif // DEVICEMANAGER_HPP

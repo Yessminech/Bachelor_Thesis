@@ -34,7 +34,7 @@ bool DeviceManager::getAvailableCameras()
 {
     // Clear existing available cameras
     availableCamerasList.clear();
-    
+
     // First try with system-provided paths
     std::vector<std::shared_ptr<rcg::System>> systems;
     try
@@ -46,7 +46,7 @@ bool DeviceManager::getAvailableCameras()
         std::cerr << RED << "Failed to get systems: " << ex.what() << RESET << std::endl;
         return false;
     }
-    
+
     if (!systems.empty())
     {
         enumerateDevicesFromSystems(systems);
@@ -85,36 +85,38 @@ bool DeviceManager::getAvailableCameras()
     return !availableCamerasList.empty();
 }
 
-void DeviceManager::openCameras(std::list<std::string> deviceIds){
-    // device enumeration 
-    for (const auto &deviceId : deviceIds){
+void DeviceManager::openCameras(std::list<std::string> deviceIds)
+{
+    // device enumeration
+    for (const auto &deviceId : deviceIds)
+    {
         openCamera(deviceId);
     }
     return;
 }
 
 // Helper method to enumerate devices from a list of systems
-void DeviceManager::enumerateDevicesFromSystems(const std::vector<std::shared_ptr<rcg::System>>& systems)
+void DeviceManager::enumerateDevicesFromSystems(const std::vector<std::shared_ptr<rcg::System>> &systems)
 {
     for (auto &system : systems)
     {
         try
         {
             system->open();
-            
+
             std::vector<std::shared_ptr<rcg::Interface>> interfaces = system->getInterfaces();
             if (interfaces.empty())
             {
                 system->close();
                 continue;
             }
-            
+
             for (auto &interf : interfaces)
             {
                 try
                 {
                     interf->open();
-                    
+
                     std::vector<std::shared_ptr<rcg::Device>> devices = interf->getDevices();
                     for (auto &device : devices)
                     {
@@ -128,7 +130,7 @@ void DeviceManager::enumerateDevicesFromSystems(const std::vector<std::shared_pt
                             }
                         }
                     }
-                    
+
                     interf->close();
                 }
                 catch (const std::exception &ex)
@@ -136,7 +138,7 @@ void DeviceManager::enumerateDevicesFromSystems(const std::vector<std::shared_pt
                     std::cerr << RED << "Failed to process interface: " << ex.what() << RESET << std::endl;
                 }
             }
-            
+
             system->close();
         }
         catch (const std::exception &ex)
@@ -210,7 +212,7 @@ bool DeviceManager::openCamera(const std::string &deviceId)
             std::cerr << RED << "Failed to open camera: " << deviceId << RESET << std::endl;
             return false;
         }
-    
+
         std::shared_ptr<Camera> newCamera = std::make_shared<Camera>(device, true);
         openCamerasList.push_back(newCamera);
         return true;
@@ -280,3 +282,33 @@ bool DeviceManager::listopenCameras()
         return false;
     }
 }
+
+uint32_t generateRandomKey()
+{
+    srand( (unsigned) time( NULL ) );
+    return rand();
+}
+
+int64_t DeviceManager::getScheduledTime(int64_t scheduledDelayS, std::string masterClockId)
+{
+    auto masterCam = getOpenCameraByID(masterClockId);
+    masterCam->getTimestamps();
+    int64_t currentTimestamp = std::stoll(masterCam->ptpConfig.timestamp_ns);
+    return currentTimestamp + scheduledDelayS * 1e9; // delay in nanoseconds
+}
+
+void DeviceManager::scheduleActionCommands(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::string masterClockId)
+{
+    uint32_t actionGroupKey = 1;
+    uint32_t actionGroupMask = 0x00000001;
+    int64_t scheduledDelayS = 1; // 1 second delay
+
+    for (const auto &camera : openCamerasList)
+    {
+        uint32_t actionDeviceKey = generateRandomKey();
+        camera->setScheduledActionCommand(actionDeviceKey, groupKey, groupMask);
+        int64_t scheduledTime = getScheduledTime(1, masterClockId); // 1 second delay
+        camera->issueScheduledActionCommand(actionDeviceKey, actionGroupKey, actionGroupMask, scheduledDelayS);
+    }
+}
+

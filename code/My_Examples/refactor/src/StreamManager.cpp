@@ -85,7 +85,7 @@ cv::Mat StreamManager::createComposite(const std::vector<cv::Mat> &frames)
 }
 
 // Stream from a specific camera
-void StreamManager::streamFromDevice(std::shared_ptr<Camera> camera, std::atomic<bool>& stopStream, bool saveStream, int threadIndex)
+void StreamManager::startFreeRunStream(std::shared_ptr<Camera> camera, std::atomic<bool>& stopStream, bool saveStream, int threadIndex)
 {
     try
     {
@@ -149,7 +149,7 @@ void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &o
     // Start cameras in reverse order (last to first)
     for (int i = cameraVec.size() - 1; i >= 0; i--) {
         // Pass the index explicitly to control frame placement
-        streamFromDevice(cameraVec[i], stopStream, saveStream, i);
+        startFreeRunStream(cameraVec[i], stopStream, saveStream, i);
         
         // Add a small delay to ensure cameras start in the correct order
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -199,4 +199,20 @@ void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &o
         }
     }    }
     stopStreaming();
+}
+
+
+void StreamManager::scheduleAcquisition(const std::list<std::shared_ptr<Camera>> &openCamerasList, int64_t scheduledDelayS)
+{
+    int numFrames = 1;
+
+    for (const auto &camera : openCamerasList)
+    {
+        camera->callSoftwareTrigger(scheduledDelayS*1e9);
+    }
+    for (const auto &camera : openCamerasList)
+    {
+        camera->storeTriggeredFrames("captured_frames", numFrames);
+    }
+
 }
