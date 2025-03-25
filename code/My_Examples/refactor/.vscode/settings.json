@@ -66,6 +66,10 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp",
-        "codecvt": "cpp"
+        "codecvt": "cpp",
+        "optional": "cpp",
+        "source_location": "cpp",
+        "future": "cpp",
+        "variant": "cpp"
     }
 }

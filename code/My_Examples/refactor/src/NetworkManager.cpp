@@ -47,10 +47,10 @@ void NetworkManager::printPtpConfig(std::shared_ptr<Camera> camera)
         std::cout << GREEN << "Camera ID:                  " << camera->deviceInfos.id << RESET << std::endl;
         std::cout << "PTP Enabled:                " << (ptpConfig.enabled ? "Yes" : "No") << std::endl;
         std::cout << "PTP Status:                 " << ptpConfig.status << std::endl;
-        std::cout << "PTP Clock Accuracy:         " << ptpConfig.clockAccuracy << std::endl;
         std::cout << "PTP Offset From Master:     " << ptpConfig.offsetFromMaster << " ns" << std::endl;
-        std::cout << "Timestamp:                  " << ptpConfig.timestamp_ns << " ns" << std::endl;
-        std::cout << "Timestamp (seconds):        " << ptpConfig.timestamp_s << " s" << std::endl;
+        std::cout << "Timestamp (ns):                  " << ptpConfig.timestamp_ns << " ns" << std::endl;
+        std::cout << "Timestamp (s):        " << ptpConfig.timestamp_s << " s" << std::endl;
+        std::cout << std::endl;
     }
     catch (const std::exception &ex)
     {
@@ -150,44 +150,44 @@ void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &
     }
 }
 
-void NetworkManager::logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset)
-{
-    PtpConfig ptpConfig = camera->ptpConfig;
-    std::ofstream logFile("ptp_offsets.log", std::ios_base::app);
-    if (logFile.is_open())
-    {
-        logFile << "Camera ID: " << camera->deviceInfos.id
-                << ", Offset: " << offset
-                << " ns, Timestamp: " << ptpConfig.timestamp_ns
-                << " ns" << std::endl;
-        logFile.close();
-    }
-    else
-    {
-        std::cerr << "[DEBUG] Unable to open log file to save PTP offset data." << std::endl;
-    }
-}
+// void NetworkManager::logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset)
+// {
+//     PtpConfig ptpConfig = camera->ptpConfig;
+//     std::ofstream logFile("ptp_offsets.log", std::ios_base::app);
+//     if (logFile.is_open())
+//     {
+//         logFile << "Camera ID: " << camera->deviceInfos.id
+//                 << ", Offset: " << offset
+//                 << " ns, Timestamp: " << camera->ptpConfig.timestamp_ns
+//                 << " ns" << std::endl;
+//         logFile.close();
+//     }
+//     else
+//     {
+//         std::cerr << "[DEBUG] Unable to open log file to save PTP offset data." << std::endl;
+//     }
+// }
 
 void NetworkManager::setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, std::shared_ptr<Camera> camera)
 {
     // Get the master camera's timestamp
     masterCamera->getTimestamps();
-    uint64_t masterTimestamp = std::stoull(masterCamera->ptpConfig.timestamp_ns);
+    uint64_t masterTimestamp = masterCamera->ptpConfig.timestamp_ns;
 
     // Get the camera's timestamp
     camera->getTimestamps();
-    uint64_t cameraTimestamp = std::stoull(camera->ptpConfig.timestamp_ns);
+    uint64_t cameraTimestamp = camera->ptpConfig.timestamp_ns;
 
     // Calculate the offset
-    int64_t offset = std::abs(static_cast<int64_t>(masterTimestamp) - static_cast<int64_t>(cameraTimestamp));
+    int64_t offset = masterTimestamp- cameraTimestamp;
 
     // Set the offset
     try
     {
-        if (camera->ptpConfig.offsetFromMaster == 0)
+        if (camera->ptpConfig.offsetFromMaster == 0 && camera->deviceInfos.id != masterClockId)
         {
             auto nodemap = camera->nodemap;
-            rcg::setInteger(nodemap, "PtpOffsetFromMaster", offset);
+            camera->ptpConfig.offsetFromMaster = offset;
         }
     }
     catch (const std::exception &ex)
@@ -197,7 +197,7 @@ void NetworkManager::setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, s
 }
 
 void NetworkManager::writeOffsetHistoryToCsv(
-    const std::unordered_map<std::string, std::deque<int64_t>> &offsetHistory)
+    const std::unordered_map<std::string, std::deque<CameraSample>> &offsetHistory)
 {
     const std::string filename = "ptp_offset_history.csv";
     std::ofstream outFile(filename);
@@ -208,38 +208,40 @@ void NetworkManager::writeOffsetHistoryToCsv(
         return;
     }
 
-    // Write CSV header
+    // Header
     outFile << "Sample";
     for (const auto &[camId, _] : offsetHistory)
     {
-        outFile << "," << camId;
+        outFile << "," << camId << "_timestamp_ns," << camId << "_offset_ns";
     }
     outFile << "\n";
 
-    // Write offset values row-by-row (assumes equal history size for all cameras)
+    // Determine max rows
     size_t maxLength = 0;
     for (const auto &[_, history] : offsetHistory)
-    {
         maxLength = std::max(maxLength, history.size());
-    }
 
+    // Write rows
     for (size_t i = 0; i < maxLength; ++i)
     {
         outFile << i;
         for (const auto &[_, history] : offsetHistory)
         {
             if (i < history.size())
-                outFile << "," << history[i];
+            {
+                outFile << "," << history[i].timestamp_ns << "," << history[i].offset_ns;
+            }
             else
-                outFile << ",";
+            {
+                outFile << ",,";
+            }
         }
         outFile << "\n";
     }
 
     outFile.close();
-    std::cout << CYAN << "[DEBUG] Offset history written to " << filename << RESET << std::endl;
+    std::cout << CYAN << "[DEBUG] Offset + timestamp history written to " << filename << RESET << std::endl;
 }
-
 
 void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::atomic<bool> &stopStream)
 {
@@ -269,9 +271,10 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
         return;
     }
 
-    // Map from camera ID to a deque of offset values
-    std::unordered_map<std::string, std::deque<int64_t>> offsetHistory;
 
+    
+    std::unordered_map<std::string, std::deque<CameraSample>> offsetHistory;
+    
     while (!allSynced && checkCount < ptpMaxCheck && !stopStream.load())
     {
         allSynced = true;
@@ -286,49 +289,44 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
         {
             try
             {
+                camera->getTimestamps();
                 camera->getPtpConfig();
-                int64_t offset = std::abs(camera->ptpConfig.offsetFromMaster);
-
-                logPtpOffset(camera, offset);
+        
                 std::string camId = camera->deviceInfos.id;
-
-                // Maintain fixed-size offset window
+                int64_t offset = (camId == masterClockId) ? 0 : std::abs(camera->ptpConfig.offsetFromMaster);
+                uint64_t timestamp = camera->ptpConfig.timestamp_ns;
+        
                 auto &history = offsetHistory[camId];
                 if (history.size() >= timeWindowSize)
-                {
                     history.pop_front();
-                }
-                history.push_back(offset);
-
-                // Only check stability if we have a full window
-                if (history.size() == timeWindowSize)
+                history.push_back(CameraSample{offset, timestamp});
+        
+                // Only evaluate stability for non-master cameras
+                if (camId != masterClockId && history.size() == timeWindowSize)
                 {
                     bool inWindow = std::all_of(history.begin(), history.end(),
-                        [&](int64_t v) { return v <= ptpOffsetThresholdNs; });
-
+                        [&](const CameraSample &sample) { return sample.offset_ns <= ptpOffsetThresholdNs; });
+        
                     if (!inWindow)
                     {
                         allSynced = false;
                         if (debug)
-                        {
                             std::cout << RED << "[DEBUG] Camera " << camId
-                                      << " not stable within time window. Recent offsets exceed threshold." << RESET << std::endl;
-                        }
+                                      << " not stable within time window." << RESET << std::endl;
                     }
                     else if (debug)
                     {
                         std::cout << GREEN << "[DEBUG] Camera " << camId
-                                  << " stable within time window. All offsets within threshold." << RESET << std::endl;
+                                  << " stable within time window." << RESET << std::endl;
                     }
                 }
-                else
+                else if (camId != masterClockId)
                 {
                     allSynced = false;
                     if (debug)
                     {
                         std::cout << YELLOW << "[DEBUG] Camera " << camId
-                                  << " waiting to accumulate enough samples ("
-                                  << history.size() << "/" << timeWindowSize << ")" << RESET << std::endl;
+                                  << " collecting samples (" << history.size() << "/" << timeWindowSize << ")" << RESET << std::endl;
                     }
                 }
             }
@@ -339,7 +337,6 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
                 allSynced = false;
             }
         }
-
         if (!allSynced && checkCount < ptpMaxCheck && !stopStream.load())
         {
             std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -352,6 +349,11 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
         if (allSynced)
         {
             std::cout << GREEN << "[DEBUG] All cameras are stable and synchronized within the time window." << RESET << std::endl;
+            for (auto &camera : openCamerasList)
+            {
+                camera->getTimestamps();
+                printPtpConfig(camera);
+            }
         }
         else
         {

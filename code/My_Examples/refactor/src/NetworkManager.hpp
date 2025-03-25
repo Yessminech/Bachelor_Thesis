@@ -25,15 +25,19 @@
 #define GREEN "\033[32m"
 #define CYAN "\033[36m"
 
-
+    // Map from camera ID to a deque of offset values
+    struct CameraSample {
+        int64_t offset_ns;
+        uint64_t timestamp_ns;
+    };
 class NetworkManager
 {
 public:
 NetworkManager(
-    bool debug,
-    int ptpSyncTimeout,
-    int ptpOffsetThresholdNs,
-    int ptpMaxCheck);
+    bool debug = true,
+    int ptpSyncTimeout = 800,
+    int ptpOffsetThresholdNs = 100000,
+    int ptpMaxCheck = 40);
     ~NetworkManager();
 
     void enablePtp(const std::list<std::shared_ptr<Camera>> &openCameras);
@@ -43,7 +47,7 @@ NetworkManager(
     void monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &openCamerasList,  std::atomic<bool>& stopStream);
     void monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList,  std::atomic<bool>& stopStream);
     void configureMultiCamerasNetwork(const std::list<std::shared_ptr<Camera>> &openCameras);
-    void logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset);
+    // void logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset);
     void setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, std::shared_ptr<Camera> camera);
     void setExposureAndFps(const std::list<std::shared_ptr<Camera>> &openCameras);
     void configureActionCommandInterface(const std::list<std::shared_ptr<Camera>> &openCameras, uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask, std::string triggerSource, uint32_t actionSelector, uint64_t scheduledDelay);
@@ -51,18 +55,20 @@ NetworkManager(
     void calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay);
     // void calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras);
     void getMinimumExposure (const std::list<std::shared_ptr<Camera>> &openCameras);
-    void writeOffsetHistoryToCsv(const std::unordered_map<std::string, std::deque<int64_t>> &offsetHistory);
-    bool debug = true;
+    void writeOffsetHistoryToCsv(
+        const std::unordered_map<std::string, std::deque<CameraSample>> &offsetHistory);   bool debug = true;
 
 private:
+// ToDo values here make no sense, on construcotor they are set to correct values
     double exposureTimeMicros = 100000;
     double packetSizeB = 9000; // Jumbo frames defined on hardaware (Todo check max)
-    double bufferPercent = 9; // 10.93; // ToDo How to set this value 
+    double bufferPercent = 10.93; // 10.93; // ToDo How to set this value 
     int ptpSyncTimeout = 800; // 800 ms
     int ptpMaxCheck = 20; // 10 checks
-    const int timeWindowSize = 10; // 10 seconds //ToDo check unit
-    int ptpOffsetThresholdNs = 500; // 0.5 us
+    const int timeWindowSize = 20; // 10 seconds //ToDo check unit
+    int ptpOffsetThresholdNs = 100000; // 1 ms
     std::string masterClockId;
     int64_t scheduledDelayS = 1; // 1 second
+    
 };
 #endif // NETWORKMANAGER_HPP

@@ -18,7 +18,7 @@
 
 std::atomic<bool> stopStream(false);
 DeviceManager deviceManager ;
-NetworkManager networkManager = NetworkManager(true, 800, 250, 10);
+NetworkManager networkManager = NetworkManager(true);
 StreamManager streamManager;
 
 void handleSignal(int signal) {

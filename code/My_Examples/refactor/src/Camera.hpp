@@ -40,10 +40,9 @@ struct PtpConfig
 {
   bool enabled;
   std::string status;
-  std::string timestamp_ns;
+  uint64_t timestamp_ns;
   std::string tickFrequency;
-  uint64_t timestamp_s;
-  std::string clockAccuracy;
+  double timestamp_s;
   int offsetFromMaster;
 };
 

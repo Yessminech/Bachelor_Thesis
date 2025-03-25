@@ -52,7 +52,7 @@ Camera::Camera(std::shared_ptr<rcg::Device> device, bool debug, CameraConfig cam
             std::cerr << RED << "Error: Failed to open camera " << device->getID() << ": " << ex.what() << RESET << std::endl;
         }
 
-        nodemap = device->getRemoteNodeMap();
+        this->nodemap = device->getRemoteNodeMap();
 
         // Initialize device information
         setDeviceInfos();
@@ -72,6 +72,11 @@ Camera::Camera(std::shared_ptr<rcg::Device> device, bool debug, CameraConfig cam
         deviceInfos.MAC = getMAC();
         deviceInfos.deprecatedFW = rcg::getString(nodemap, "PtpEnable").empty();
 
+        // Initialize PTP Config
+
+        ptpConfig.timestamp_ns = 0;
+        ptpConfig.timestamp_s = 0.0;
+        ptpConfig.offsetFromMaster = 0;
         // Populate CameraConfig struct
         if (cameraConfig.width > 0 && cameraConfig.height > 0)
         {
@@ -359,15 +364,17 @@ void Camera::getPtpConfig()
             rcg::callCommand(nodemap, "PtpDataSetLatch");
             ptpConfig.enabled = rcg::getBoolean(nodemap, "PtpEnable");
             ptpConfig.status = rcg::getString(nodemap, "PtpStatus");
-            ptpConfig.clockAccuracy = rcg::getString(nodemap, "PtpClockAccuracy");
             ptpConfig.offsetFromMaster = rcg::getInteger(nodemap, "PtpOffsetFromMaster");
+            if (debug)
+            {
+                //  std::cout << GREEN << "PTP offset is " <<ptpConfig.offsetFromMaster << RESET << std::endl;
+            }
         }
         else
         {
             rcg::callCommand(nodemap, "GevIEEE1588DataSetLatch");
             ptpConfig.enabled = rcg::getBoolean(nodemap, "GevIEEE1588");
             ptpConfig.status = rcg::getString(nodemap, "GevIEEE1588Status");
-            ptpConfig.clockAccuracy = "Unavailable";
             try
             {
                 // Basler Cameras
@@ -395,19 +402,20 @@ void Camera::getTimestamps()
     {
         if (!deviceInfos.deprecatedFW)
         {
-            rcg::callCommand(nodemap, "TimestampLatch");
-            ptpConfig.timestamp_ns = rcg::getString(nodemap, "TimestampLatchValue");
+            rcg::callCommand(this->nodemap, "TimestampLatch");
+            ptpConfig.timestamp_ns =rcg::getInteger(this->nodemap, "TimestampLatchValue");
         }
         else
         {
-            rcg::callCommand(nodemap, "GevTimestampControlLatch");
-            ptpConfig.timestamp_ns = rcg::getString(nodemap, "GevTimestampValue");
+            rcg::callCommand(this->nodemap, "GevTimestampControlLatch");
+            ptpConfig.timestamp_ns = rcg::getInteger(this->nodemap, "GevTimestampValue");
         }
-        ptpConfig.timestamp_s = std::stod(ptpConfig.timestamp_ns) / 1e9;
+        ptpConfig.timestamp_s = static_cast<double>(ptpConfig.timestamp_ns) / 1e9;
+        
 
         if (debug)
         {
-            // std::cout << GREEN << "Timestamp success" << RESET << std::endl;
+            // std::cout << GREEN << "[DEBUG] Camera " << device->getID() << " Timestamps (ns): " << ptpConfig.timestamp_ns << RESET << std::endl;
         }
     }
     catch (const std::exception &ex)
@@ -528,7 +536,7 @@ void Camera::updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat
 
     // Generate overlay text with timestamps
     this->getTimestamps();
-    uint64_t timestampNS = std::stoull(ptpConfig.timestamp_ns);
+    uint64_t timestampNS = ptpConfig.timestamp_ns;
 
     std::ostringstream overlayText;
     // overlayText << "TS: " << std::fixed << std::setprecision(6) << timestampNS << " ns"

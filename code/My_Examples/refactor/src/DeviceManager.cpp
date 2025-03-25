@@ -293,7 +293,7 @@ int64_t DeviceManager::getScheduledTime(int64_t scheduledDelayS, std::string mas
 {
     auto masterCam = getOpenCameraByID(masterClockId);
     masterCam->getTimestamps();
-    int64_t currentTimestamp = std::stoll(masterCam->ptpConfig.timestamp_ns);
+    int64_t currentTimestamp = masterCam->ptpConfig.timestamp_ns;
     return currentTimestamp + scheduledDelayS * 1e9; // delay in nanoseconds
 }
 
