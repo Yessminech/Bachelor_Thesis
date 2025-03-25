@@ -59,7 +59,8 @@ int main()
     //deviceManager.openDevices({"Basler acA2440-20gc (23630914)"}); // ToDo, read from terminal 
     deviceManager.listopenCameras();
     ptpSyncFreeRun(deviceManager.getopenCameras());
-    startSyncFreeRunStream();
+    streamManager.scheduleAcquisition(deviceManager.getopenCameras(), 1);
+    // startSyncFreeRunStream();
     // Clean up
     rcg::System::clearSystems();
     deviceManager.~DeviceManager();

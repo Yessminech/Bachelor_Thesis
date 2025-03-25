@@ -1146,8 +1146,16 @@ void Camera::storeTriggeredFrames(const std::string& baseDir, int numFrames)
         stream->open();
         stream->startStreaming();
 
-        std::string camDir = baseDir + "/" + deviceInfos.id;
-        if (mkdir(camDir.c_str(), 0775) != 0 && errno != EEXIST) // Create directory if it doesn't exist
+        std::string camDir = baseDir + "/" + deviceInfos.serialNumber;
+
+        // Ensure base directory exists
+        if (mkdir(baseDir.c_str(), 0775) != 0 && errno != EEXIST)
+        {
+            throw std::runtime_error("Failed to create base directory: " + baseDir);
+        }
+        
+        // Then create camera subdirectory
+        if (mkdir(camDir.c_str(), 0775) != 0 && errno != EEXIST)
         {
             throw std::runtime_error("Failed to create directory: " + camDir);
         }
