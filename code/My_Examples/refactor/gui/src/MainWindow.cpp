@@ -18,7 +18,24 @@ MainWindow::MainWindow(QWidget* parent)
     QWidget* central = new QWidget(this);
     QVBoxLayout* rootLayout = new QVBoxLayout(central);
 
-    // --- Top Button Bar ---
+    setupTopBar(rootLayout);
+    setupStreamAndInfoArea(rootLayout);
+    setupOffsetPlot(rootLayout);
+
+    setCentralWidget(central);
+    setWindowTitle("Camera Viewer");
+    resize(1100, 900);
+
+    timer = new QTimer(this);
+    connectUI();
+}
+
+MainWindow::~MainWindow() {
+    stopStream();
+    if (settingsWindow) delete settingsWindow;
+}
+
+void MainWindow::setupTopBar(QVBoxLayout* parentLayout) {
     QHBoxLayout* topBar = new QHBoxLayout();
     topBar->setAlignment(Qt::AlignTop);
 
@@ -35,19 +52,35 @@ MainWindow::MainWindow(QWidget* parent)
     topBar->addWidget(stopButton);
 
     topBar->addStretch();
-    rootLayout->addLayout(topBar);
+    parentLayout->addLayout(topBar);
+}
 
-    // --- Stream & Info Area ---
+void MainWindow::setupStreamAndInfoArea(QVBoxLayout* parentLayout) {
     QHBoxLayout* middleRow = new QHBoxLayout();
-
     QVBoxLayout* streamLayout = new QVBoxLayout();
 
+    setupVideoFeed(streamLayout);
+    setupCameraCheckboxes(streamLayout);
+    setupControls(streamLayout);
+
+    QVBoxLayout* tableLayout = new QVBoxLayout();
+    setupDelayTable(tableLayout);
+    setupOffsetTable(tableLayout);
+
+    middleRow->addLayout(streamLayout);
+    middleRow->addLayout(tableLayout);
+    parentLayout->addLayout(middleRow);
+}
+
+void MainWindow::setupVideoFeed(QVBoxLayout* layout) {
     videoLabel = new QLabel("Camera feed");
     videoLabel->setFixedSize(640, 480);
     videoLabel->setStyleSheet("background-color: black;");
     videoLabel->setAlignment(Qt::AlignCenter);
-    streamLayout->addWidget(videoLabel);
+    layout->addWidget(videoLabel);
+}
 
+void MainWindow::setupCameraCheckboxes(QVBoxLayout* layout) {
     QHBoxLayout* checkLayout = new QHBoxLayout();
     for (int i = 0; i < 6; ++i) {
         QCheckBox* camBox = new QCheckBox(QString("Cam %1").arg(i), this);
@@ -55,11 +88,33 @@ MainWindow::MainWindow(QWidget* parent)
         cameraCheckboxes.push_back(camBox);
         checkLayout->addWidget(camBox);
     }
-    streamLayout->addLayout(checkLayout);
 
+    QPushButton* openAllButton = new QPushButton("📷 Open All", this);
+    openAllButton->setFixedHeight(28);
+    connect(openAllButton, &QPushButton::clicked, this, [=]() {
+        qDebug() << "Opening all checked cameras...";
+        for (int i = 0; i < cameraCheckboxes.size(); ++i) {
+            if (cameraCheckboxes[i]->isChecked()) {
+                qDebug() << "Opening camera" << i;
+                // Implement opening logic for camera i
+            }
+        }
+    });
+    checkLayout->addWidget(openAllButton);
+    layout->addLayout(checkLayout);
+}
+
+void MainWindow::setupControls(QVBoxLayout* layout) {
     QHBoxLayout* controlsLayout = new QHBoxLayout();
+
     QPushButton* settingsBtn = new QPushButton("⚙️ Settings");
     controlsLayout->addWidget(settingsBtn);
+    connect(settingsBtn, &QPushButton::clicked, this, [=]() {
+        if (!settingsWindow) settingsWindow = new CameraSettingsWindow(this);
+        settingsWindow->show();
+        settingsWindow->raise();
+        settingsWindow->activateWindow();
+    });
 
     exposureEdit = new QLineEdit(this);
     exposureEdit->setPlaceholderText("Exposure (ms)");
@@ -72,21 +127,21 @@ MainWindow::MainWindow(QWidget* parent)
     saveButton->setCheckable(true);
     saveButton->setToolTip("Toggle saving the stream");
     controlsLayout->addWidget(saveButton);
-    streamLayout->addLayout(controlsLayout);
 
-    middleRow->addLayout(streamLayout);
+    layout->addLayout(controlsLayout);
+}
 
-    // --- Delay and Offset Tables ---
-    QVBoxLayout* tableLayout = new QVBoxLayout();
-
+void MainWindow::setupDelayTable(QVBoxLayout* layout) {
     QLabel* delayLabel = new QLabel("Delays");
     QTableWidget* delayTable = new QTableWidget(6, 3);
     delayTable->setHorizontalHeaderLabels({"Cam ID", "Packet Delay", "Transmission Delay"});
     delayTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     delayTable->verticalHeader()->setVisible(false);
-    tableLayout->addWidget(delayLabel);
-    tableLayout->addWidget(delayTable);
+    layout->addWidget(delayLabel);
+    layout->addWidget(delayTable);
+}
 
+void MainWindow::setupOffsetTable(QVBoxLayout* layout) {
     QLabel* offsetLabel = new QLabel("Offsets");
     QTableWidget* offsetTable = new QTableWidget(7, 2);
     offsetTable->setHorizontalHeaderLabels({"Cam ID", "Offset"});
@@ -98,23 +153,18 @@ MainWindow::MainWindow(QWidget* parent)
             QTableWidgetItem* item = new QTableWidgetItem(row == 6 ? (col == 0 ? "Master" : "-") : "-");
             if (row == 6) {
                 item->setBackground(QColor("lightgray"));
-                QFont font;
-                font.setBold(true);
+                QFont font; font.setBold(true);
                 item->setFont(font);
                 if (col == 0) item->setToolTip("This is the master clock");
             }
             offsetTable->setItem(row, col, item);
         }
     }
-    tableLayout->addStretch(); // 👈 Add this BEFORE adding labels/tables
-    tableLayout->addWidget(offsetLabel);
-    tableLayout->addWidget(offsetTable);
-    tableLayout->addStretch(); // 👈 Move this AFTER adding labels/tables
+    layout->addWidget(offsetLabel);
+    layout->addWidget(offsetTable);
+}
 
-    middleRow->addLayout(tableLayout);
-    rootLayout->addLayout(middleRow);
-
-    // --- Offset Plot ---
+void MainWindow::setupOffsetPlot(QVBoxLayout* layout) {
     plot = new QCustomPlot(this);
     plot->addGraph();
     plot->graph(0)->setPen(QPen(Qt::blue));
@@ -123,95 +173,54 @@ MainWindow::MainWindow(QWidget* parent)
     plot->xAxis->setRange(0, 100);
     plot->yAxis->setRange(-20, 20);
     plot->setMinimumHeight(200);
-    rootLayout->addWidget(plot);
+    layout->addWidget(plot);
+}
 
-    setCentralWidget(central);
-    setWindowTitle("Camera Viewer");
-    resize(1100, 900);
-
-    timer = new QTimer(this);
-
+void MainWindow::connectUI() {
     connect(startButton, &QPushButton::clicked, this, &MainWindow::startStream);
     connect(stopButton, &QPushButton::clicked, this, &MainWindow::stopStream);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateFrame);
-    connect(saveButton, &QPushButton::clicked, [=]() {
+    connect(saveButton, &QPushButton::clicked, this, [=]() {
         savingEnabled = saveButton->isChecked();
         saveButton->setText(savingEnabled ? "💾 Save ON" : "💾 Save OFF");
     });
-    connect(settingsBtn, &QPushButton::clicked, this, [=]() {
-        if (!settingsWindow) {
-            settingsWindow = new CameraSettingsWindow(this);
-        }
-        settingsWindow->show();
-        settingsWindow->raise();
-        settingsWindow->activateWindow();
-    });
 }
 
-
-MainWindow::~MainWindow()
-{
-    stopStream();
-    if (settingsWindow)
-    {
-        delete settingsWindow;
-    }
-}
-
-void MainWindow::startStream()
-{
+void MainWindow::startStream() {
     exposureEdit->setEnabled(false);
-
-    if (!cap.isOpened())
-    {
-        cap.open(0);
-    }
-    if (cap.isOpened())
-    {
+    if (!cap.isOpened()) cap.open(0);
+    if (cap.isOpened()) {
         timer->start(30);
-        for (auto *box : cameraCheckboxes)
-        {
-            box->setEnabled(false);
-        }
+        for (auto* box : cameraCheckboxes) box->setEnabled(false);
     }
 }
 
-void MainWindow::stopStream()
-{
+void MainWindow::stopStream() {
     exposureEdit->setEnabled(true);
-
     timer->stop();
-    if (cap.isOpened())
-    {
-        cap.release();
-    }
+    if (cap.isOpened()) cap.release();
     videoLabel->clear();
-    for (auto *box : cameraCheckboxes)
-    {
-        box->setEnabled(true);
-    }
+    for (auto* box : cameraCheckboxes) box->setEnabled(true);
 }
 
-void MainWindow::updateFrame()
-{
+void MainWindow::updateFrame() {
     static int t = 0;
     double y = 10 * sin(0.1 * t);
     plot->graph(0)->addData(t, y);
     plot->graph(0)->data()->removeBefore(t - 100);
     plot->xAxis->setRange(t - 100, t);
     plot->replot();
-    t++;    
+    t++;
+
     cv::Mat frame;
     cap >> frame;
-    if (frame.empty())
-        return;
+    if (frame.empty()) return;
 
     cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
     QImage image(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
     videoLabel->setPixmap(QPixmap::fromImage(image).scaled(videoLabel->size(), Qt::KeepAspectRatio));
 
-    if (savingEnabled)
-    {
+    if (savingEnabled) {
         static int counter = 0;
         std::string filename = "frame_" + std::to_string(counter++) + ".png";
         cv::imwrite(filename, frame);

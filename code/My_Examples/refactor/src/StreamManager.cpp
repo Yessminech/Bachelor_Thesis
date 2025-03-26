@@ -47,6 +47,11 @@ StreamManager::~StreamManager()
 cv::Mat StreamManager::createComposite(const std::vector<cv::Mat> &frames)
 {
     int n = frames.size();
+        if (n == 0) {
+        // Return an empty black frame if no frames are available
+        return cv::Mat::zeros(720, 1280, CV_8UC3);
+    }
+    
     int rows = 1, cols = 1;
     if (n == 1) { rows = 1; cols = 1; }
     else if (n == 2) { rows = 1; cols = 2; }

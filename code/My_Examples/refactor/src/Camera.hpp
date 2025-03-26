@@ -113,6 +113,7 @@ public:
   void setScheduledActionCommand(uint32_t actionDeviceKey, uint32_t groupKey, uint32_t groupMask);
   void issueScheduledActionCommand(uint32_t actionDeviceKey, uint32_t actionGroupKey, uint32_t actionGroupMask, int64_t scheduledDelayS, const std::string &targetIP = "255.255.255.255");
   void callSoftwareTrigger(int64_t scheduledDelayNs=0);
+  void saveFrameAsPng(const cv::Mat &frame, const std::string &baseDir);
 
   // Public Members
   DeviceInfos deviceInfos;

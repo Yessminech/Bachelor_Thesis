@@ -1,6 +1,5 @@
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/UVLADIE3JM/moc_MainWindow.cpp: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/src/MainWindow.hpp \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/moc_predefs.h \
-  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/src/CameraSettingsWindow.hpp \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/src/qcustomplot.h \
   /usr/include/GL/gl.h \
   /usr/include/alloca.h \
@@ -803,16 +802,16 @@
   /usr/include/x86_64-linux-gnu/qt6/QtPrintSupport/qtprintsupportglobal.h \
   /usr/include/x86_64-linux-gnu/qt6/QtPrintSupport/qtprintsupportversion.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QCheckBox \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QComboBox \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QCommonStyle \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QDialog \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QFormLayout \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QHBoxLayout \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QLabel \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QLayout \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QLineEdit \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMainWindow \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QPushButton \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QScrollerProperties \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QTableWidget \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QVBoxLayout \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QWidget \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QtWidgets \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QtWidgetsDepends \

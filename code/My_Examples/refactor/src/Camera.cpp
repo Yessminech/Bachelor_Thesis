@@ -779,6 +779,64 @@ void Camera::saveFrameToVideo(cv::VideoWriter &videoWriter, const cv::Mat &frame
     }
 }
 
+void Camera::saveFrameAsPng(const cv::Mat &frame, const std::string &baseDir)
+{
+    if (frame.empty())
+    {
+        std::cerr << RED << "Error: Cannot save empty frame to PNG." << RESET << std::endl;
+        return;
+    }
+
+    // Create per-camera directory
+    std::string camDir = baseDir + "/" + deviceInfos.serialNumber;
+    if (mkdir(baseDir.c_str(), 0775) != 0 && errno != EEXIST)
+    {
+        perror("mkdir (baseDir)");
+        std::cerr << RED << "Failed to create base directory: " << baseDir << RESET << std::endl;
+        return;
+    }
+
+    if (mkdir(camDir.c_str(), 0775) != 0 && errno != EEXIST)
+    {
+        perror("mkdir (camDir)");
+        std::cerr << RED << "Failed to create camera directory: " << camDir << RESET << std::endl;
+        return;
+    }
+
+    // Convert grayscale to BGR if needed //ToDo
+    cv::Mat pngFrame;
+    if (frame.channels() == 1)
+    {
+        cv::cvtColor(frame, pngFrame, cv::COLOR_GRAY2BGR);
+    }
+    else
+    {
+        pngFrame = frame;
+    }
+
+    // Generate filename using timestamp
+    auto now = std::chrono::high_resolution_clock::now();
+    auto nowNs = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+    std::string filename = camDir + "/frame_" + std::to_string(nowNs) + ".png";
+
+    try
+    {
+        if (!cv::imwrite(filename, pngFrame))
+        {
+            std::cerr << RED << "Failed to write PNG: " << filename << RESET << std::endl;
+        }
+        else if (debug)
+        {
+            std::cout << GREEN << "Saved PNG: " << filename << RESET << std::endl;
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Exception writing PNG: " << ex.what() << RESET << std::endl;
+    }
+}
+
+
 /***********************************************************************/
 /***********************         Calculations     *************************/
 /***********************************************************************/
@@ -873,20 +931,35 @@ void Camera::startStreaming(std::atomic<bool> &stopStream, std::mutex &globalFra
         }
 
         if (!outputFrame.empty())
+{
+    updateGlobalFrame(globalFrameMutex, globalFrames, index, outputFrame, frameCount, lastTime);
+
+    if (saveStream)
+    {
+        if (videoWriter.isOpened())
         {
-            updateGlobalFrame(globalFrameMutex, globalFrames, index, outputFrame, frameCount, lastTime);
-            if (saveStream && videoWriter.isOpened())
+            try
             {
-                try
-                {
-                    saveFrameToVideo(videoWriter, outputFrame);
-                }
-                catch (const std::exception &ex)
-                {
-                    std::cerr << RED << "Exception during video writing: " << ex.what() << RESET << std::endl;
-                }
+                saveFrameToVideo(videoWriter, outputFrame);
+            }
+            catch (const std::exception &ex)
+            {
+                std::cerr << RED << "Exception during video writing: " << ex.what() << RESET << std::endl;
             }
         }
+
+        // Save frame as PNG
+        try
+        {
+            saveFrameAsPng(outputFrame, "captured_frames");
+        }
+        catch (const std::exception &ex)
+        {
+            std::cerr << RED << "Exception during PNG saving: " << ex.what() << RESET << std::endl;
+        }
+    }
+}
+
     }
 
     // Clean up

@@ -273,8 +273,9 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
 
 
     
-    std::unordered_map<std::string, std::deque<CameraSample>> offsetHistory;
-    
+    std::unordered_map<std::string, std::deque<CameraSample>> offsetWindowHistory; // For stability check
+    std::unordered_map<std::string, std::vector<CameraSample>> offsetLogHistory;   // For logging to CSV
+        
     while (!allSynced && checkCount < ptpMaxCheck && !stopStream.load())
     {
         allSynced = true;
@@ -295,16 +296,16 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
                 std::string camId = camera->deviceInfos.id;
                 int64_t offset = (camId == masterClockId) ? 0 : std::abs(camera->ptpConfig.offsetFromMaster);
                 uint64_t timestamp = camera->ptpConfig.timestamp_ns;
-        
-                auto &history = offsetHistory[camId];
-                if (history.size() >= timeWindowSize)
-                    history.pop_front();
-                history.push_back(CameraSample{offset, timestamp});
+                offsetLogHistory[camId].push_back(CameraSample{offset, timestamp});
+                auto &window = offsetWindowHistory[camId];
+                if (window.size() >= timeWindowSize)
+                window.pop_front();
+                window.push_back(CameraSample{offset, timestamp});
         
                 // Only evaluate stability for non-master cameras
-                if (camId != masterClockId && history.size() == timeWindowSize)
+                if (camId != masterClockId && window.size() == timeWindowSize)
                 {
-                    bool inWindow = std::all_of(history.begin(), history.end(),
+                    bool inWindow = std::all_of(window.begin(), window.end(),
                         [&](const CameraSample &sample) { return sample.offset_ns <= ptpOffsetThresholdNs; });
         
                     if (!inWindow)
@@ -326,7 +327,7 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
                     if (debug)
                     {
                         std::cout << YELLOW << "[DEBUG] Camera " << camId
-                                  << " collecting samples (" << history.size() << "/" << timeWindowSize << ")" << RESET << std::endl;
+                                  << " collecting samples (" << window.size() << "/" << timeWindowSize << ")" << RESET << std::endl;
                     }
                 }
             }
@@ -342,8 +343,14 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
             std::this_thread::sleep_for(std::chrono::seconds(3));
         }
     }
-    writeOffsetHistoryToCsv(offsetHistory);
+    std::unordered_map<std::string, std::deque<CameraSample>> converted;
 
+    for (const auto& [key, vec] : offsetLogHistory)
+    {
+        converted[key] = std::deque<CameraSample>(vec.begin(), vec.end());
+    }
+    
+    writeOffsetHistoryToCsv(converted);
     if (debug)
     {
         if (allSynced)
