@@ -45,8 +45,8 @@ public:
     void disablePtp(const std::list<std::shared_ptr<Camera>> &openCameras);
 
     void printPtpConfig(std::shared_ptr<Camera> camera);
-    void monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::atomic<bool> &stopStream);
-    void monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::atomic<bool> &stopStream);
+    void monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &openCamerasList);
+    void monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList);
     void configureMultiCamerasNetwork(const std::list<std::shared_ptr<Camera>> &openCameras);
     // void logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset);
     void setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, std::shared_ptr<Camera> camera);

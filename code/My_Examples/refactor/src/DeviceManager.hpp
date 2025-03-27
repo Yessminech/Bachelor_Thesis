@@ -31,6 +31,7 @@ public:
     std::shared_ptr<rcg::Device> getAvailableCameraByID(const std::string &deviceId);
     std::shared_ptr<Camera> getOpenCameraByID(const std::string &deviceId);
     const std::list<std::shared_ptr<Camera>> &getopenCameras() const;
+    const std::set<std::shared_ptr<rcg::Device>> &getAvailableCamerasList() const;
     void openCameras(std::list<std::string> deviceIds);
     // +closeCameras()  
     int64_t getScheduledTime(int64_t scheduledDelayS, std::string masterClockId);

@@ -361,6 +361,248 @@ CMakeFiles/QtOpenCVDemo.dir/QtOpenCVDemo_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qgridlayout.h \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/UVLADIE3JM/moc_MainWindow.cpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/UVLADIE3JM/../../../src/MainWindow.hpp \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/DeviceManager.hpp \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/Camera.hpp \
+ /usr/local/include/rc_genicam_api/pixel_formats.h \
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
+ /usr/local/include/rc_genicam_api/device.h \
+ /usr/local/include/rc_genicam_api/interface.h \
+ /usr/local/include/rc_genicam_api/system.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/GenApi.h \
+ /usr/include/rc_genicam_api/genicam/Base/GCBase.h \
+ /usr/include/rc_genicam_api/genicam/Base/GCTypes.h \
+ /usr/include/rc_genicam_api/genicam/Base/GCNamespace.h \
+ /usr/include/rc_genicam_api/genicam/GenICamVersion.h \
+ /usr/include/rc_genicam_api/genicam/_GenICamVersion.h \
+ /usr/include/inttypes.h \
+ /usr/include/rc_genicam_api/genicam/Base/GCString.h \
+ /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
+ /usr/include/c++/11/ios /usr/include/c++/11/bits/basic_ios.h \
+ /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \
+ /usr/include/wctype.h /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_base.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h \
+ /usr/include/c++/11/bits/locale_facets.tcc \
+ /usr/include/c++/11/bits/basic_ios.tcc \
+ /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
+ /usr/include/c++/11/bits/istream.tcc \
+ /usr/include/rc_genicam_api/genicam/Base/GCArray.h \
+ /usr/include/rc_genicam_api/genicam/Base/GCException.h \
+ /usr/include/c++/11/cassert /usr/include/c++/11/cstdarg \
+ /usr/include/c++/11/sstream /usr/include/c++/11/bits/sstream.tcc \
+ /usr/include/rc_genicam_api/genicam/Base/GCCompatibility.h \
+ /usr/include/rc_genicam_api/genicam/Base/GCStringVector.h \
+ /usr/include/rc_genicam_api/genicam/Base/GCUtilities.h \
+ /usr/include/rc_genicam_api/genicam/Base/GCLinkage.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/GenApiDll.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/GenApiNamespace.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/Pointer.h \
+ /usr/include/rc_genicam_api/genicam/GenICamFwd.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IEnumeration.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IEnumEntry.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IValue.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/Types.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/Autovector.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IBase.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/Reference.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/INode.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/Container.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IFloat.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IInteger.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ICategory.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IRegister.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IBoolean.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IPort.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IPortStacked.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IPortRecorder.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IPortConstruct.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IChunkPort.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IString.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/INodeMap.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/Synch.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ConcatenatedWrite.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IDestroy.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IDeviceInfo.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ISelector.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ICommand.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/IUserData.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/NodeMapRef.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/NodeMapFactory.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/GenApiVersion.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/NodeCallback.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/Persistence.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/SelectorSet.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ISelectorDigit.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/SelectorState.h \
+ /usr/include/c++/11/locale \
+ /usr/include/c++/11/bits/locale_facets_nonio.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/time_members.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/messages_members.h \
+ /usr/include/libintl.h /usr/include/c++/11/bits/codecvt.h \
+ /usr/include/c++/11/bits/locale_facets_nonio.tcc \
+ /usr/include/c++/11/bits/locale_conv.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/StructPort.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/PortImpl.h \
+ /usr/include/c++/11/mutex /usr/include/c++/11/bits/std_mutex.h \
+ /usr/include/c++/11/bits/unique_lock.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h \
+ /usr/local/include/rc_genicam_api/buffer.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
+ /usr/include/opencv4/opencv2/opencv.hpp \
+ /usr/include/opencv4/opencv2/opencv_modules.hpp \
+ /usr/include/opencv4/opencv2/core.hpp \
+ /usr/include/opencv4/opencv2/core/cvdef.h \
+ /usr/include/opencv4/opencv2/core/version.hpp \
+ /usr/include/opencv4/opencv2/core/hal/interface.h \
+ /usr/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h \
+ /usr/include/opencv4/opencv2/core/base.hpp /usr/include/c++/11/climits \
+ /usr/include/opencv4/opencv2/core/cvstd.hpp \
+ /usr/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
+ /usr/include/opencv4/opencv2/core/neon_utils.hpp \
+ /usr/include/opencv4/opencv2/core/vsx_utils.hpp \
+ /usr/include/opencv4/opencv2/core/check.hpp \
+ /usr/include/opencv4/opencv2/core/traits.hpp \
+ /usr/include/opencv4/opencv2/core/matx.hpp \
+ /usr/include/opencv4/opencv2/core/saturate.hpp \
+ /usr/include/opencv4/opencv2/core/fast_math.hpp \
+ /usr/include/opencv4/opencv2/core/types.hpp /usr/include/c++/11/cfloat \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h \
+ /usr/include/opencv4/opencv2/core/mat.hpp \
+ /usr/include/opencv4/opencv2/core/bufferpool.hpp \
+ /usr/include/opencv4/opencv2/core/mat.inl.hpp \
+ /usr/include/opencv4/opencv2/core/persistence.hpp \
+ /usr/include/opencv4/opencv2/core/operations.hpp \
+ /usr/include/opencv4/opencv2/core/cvstd.inl.hpp \
+ /usr/include/c++/11/complex \
+ /usr/include/opencv4/opencv2/core/utility.hpp \
+ /usr/include/opencv4/opencv2/core/optim.hpp \
+ /usr/include/opencv4/opencv2/core/ovx.hpp \
+ /usr/include/opencv4/opencv2/core/cvdef.h \
+ /usr/include/opencv4/opencv2/calib3d.hpp \
+ /usr/include/opencv4/opencv2/features2d.hpp \
+ /usr/include/opencv4/opencv2/flann/miniflann.hpp \
+ /usr/include/opencv4/opencv2/flann/defines.h \
+ /usr/include/opencv4/opencv2/flann/config.h \
+ /usr/include/opencv4/opencv2/core/affine.hpp \
+ /usr/include/opencv4/opencv2/dnn.hpp \
+ /usr/include/opencv4/opencv2/dnn/dnn.hpp \
+ /usr/include/opencv4/opencv2/core/async.hpp \
+ /usr/include/opencv4/opencv2/dnn/version.hpp \
+ /usr/include/opencv4/opencv2/dnn/dict.hpp \
+ /usr/include/opencv4/opencv2/dnn/layer.hpp \
+ /usr/include/opencv4/opencv2/dnn/dnn.inl.hpp \
+ /usr/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
+ /usr/include/opencv4/opencv2/dnn/dnn.hpp \
+ /usr/include/opencv4/opencv2/flann.hpp \
+ /usr/include/opencv4/opencv2/flann/flann_base.hpp \
+ /usr/include/opencv4/opencv2/flann/general.h \
+ /usr/include/opencv4/opencv2/flann/matrix.h \
+ /usr/include/opencv4/opencv2/flann/params.h \
+ /usr/include/opencv4/opencv2/flann/any.h \
+ /usr/include/opencv4/opencv2/flann/defines.h \
+ /usr/include/opencv4/opencv2/flann/saving.h \
+ /usr/include/opencv4/opencv2/flann/nn_index.h \
+ /usr/include/opencv4/opencv2/flann/result_set.h /usr/include/c++/11/set \
+ /usr/include/c++/11/bits/stl_set.h \
+ /usr/include/c++/11/bits/stl_multiset.h \
+ /usr/include/opencv4/opencv2/flann/all_indices.h \
+ /usr/include/opencv4/opencv2/flann/kdtree_index.h \
+ /usr/include/opencv4/opencv2/flann/dynamic_bitset.h \
+ /usr/include/opencv4/opencv2/flann/dist.h \
+ /usr/include/opencv4/opencv2/flann/heap.h \
+ /usr/include/opencv4/opencv2/flann/allocator.h \
+ /usr/include/opencv4/opencv2/flann/random.h \
+ /usr/include/opencv4/opencv2/flann/kdtree_single_index.h \
+ /usr/include/opencv4/opencv2/flann/kmeans_index.h \
+ /usr/include/opencv4/opencv2/flann/logger.h \
+ /usr/include/opencv4/opencv2/flann/composite_index.h \
+ /usr/include/opencv4/opencv2/flann/linear_index.h \
+ /usr/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
+ /usr/include/opencv4/opencv2/flann/lsh_index.h \
+ /usr/include/opencv4/opencv2/flann/lsh_table.h \
+ /usr/include/c++/11/iomanip /usr/include/c++/11/bits/quoted_string.h \
+ /usr/include/c++/11/math.h \
+ /usr/include/opencv4/opencv2/flann/autotuned_index.h \
+ /usr/include/opencv4/opencv2/flann/ground_truth.h \
+ /usr/include/opencv4/opencv2/flann/index_testing.h \
+ /usr/include/opencv4/opencv2/flann/timer.h \
+ /usr/include/opencv4/opencv2/flann/sampling.h \
+ /usr/include/opencv4/opencv2/highgui.hpp \
+ /usr/include/opencv4/opencv2/imgcodecs.hpp \
+ /usr/include/opencv4/opencv2/videoio.hpp \
+ /usr/include/opencv4/opencv2/imgproc.hpp \
+ /usr/include/opencv4/opencv2/imgproc/segmentation.hpp \
+ /usr/include/opencv4/opencv2/ml.hpp \
+ /usr/include/opencv4/opencv2/ml/ml.inl.hpp \
+ /usr/include/opencv4/opencv2/objdetect.hpp \
+ /usr/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
+ /usr/include/opencv4/opencv2/objdetect/face.hpp \
+ /usr/include/opencv4/opencv2/photo.hpp \
+ /usr/include/opencv4/opencv2/stitching.hpp \
+ /usr/include/opencv4/opencv2/stitching/warpers.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+ /usr/include/opencv4/opencv2/core/cuda.hpp \
+ /usr/include/opencv4/opencv2/core/cuda_types.hpp \
+ /usr/include/opencv4/opencv2/core/cuda.inl.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/util.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
+ /usr/include/c++/11/queue /usr/include/c++/11/deque \
+ /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \
+ /usr/include/c++/11/bits/stl_queue.h \
+ /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/blenders.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
+ /usr/include/opencv4/opencv2/video.hpp \
+ /usr/include/opencv4/opencv2/video/tracking.hpp \
+ /usr/include/opencv4/opencv2/video/background_segm.hpp \
+ /usr/local/include/rc_genicam_api/system.h \
+ /usr/local/include/rc_genicam_api/interface.h \
+ /usr/local/include/rc_genicam_api/nodemap_out.h \
+ /usr/local/include/rc_genicam_api/config.h /usr/include/arpa/inet.h \
+ /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/sys/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
+ /usr/include/x86_64-linux-gnu/bits/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/socket_type.h \
+ /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
+ /usr/include/x86_64-linux-gnu/asm/socket.h \
+ /usr/include/asm-generic/socket.h /usr/include/linux/posix_types.h \
+ /usr/include/linux/stddef.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
+ /usr/include/asm-generic/posix_types.h \
+ /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
+ /usr/include/asm-generic/bitsperlong.h \
+ /usr/include/x86_64-linux-gnu/asm/sockios.h \
+ /usr/include/asm-generic/sockios.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
+ /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/c++/11/regex \
+ /usr/include/c++/11/bitset /usr/include/c++/11/stack \
+ /usr/include/c++/11/bits/stl_stack.h \
+ /usr/include/c++/11/bits/regex_constants.h \
+ /usr/include/c++/11/bits/regex_error.h \
+ /usr/include/c++/11/bits/regex_automaton.h \
+ /usr/include/c++/11/bits/regex_automaton.tcc \
+ /usr/include/c++/11/bits/regex_scanner.h \
+ /usr/include/c++/11/bits/regex_scanner.tcc \
+ /usr/include/c++/11/bits/regex_compiler.h \
+ /usr/include/c++/11/bits/regex_compiler.tcc \
+ /usr/include/c++/11/bits/regex.h /usr/include/c++/11/bits/regex.tcc \
+ /usr/include/c++/11/bits/regex_executor.h \
+ /usr/include/c++/11/bits/regex_executor.tcc \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMainWindow \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmainwindow.h \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QLabel \
@@ -511,25 +753,7 @@ CMakeFiles/QtOpenCVDemo.dir/QtOpenCVDemo_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qfile.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qfiledevice.h \
  /usr/include/c++/11/filesystem /usr/include/c++/11/bits/fs_fwd.h \
- /usr/include/c++/11/bits/fs_path.h /usr/include/c++/11/locale \
- /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \
- /usr/include/wctype.h /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
- /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_base.h \
- /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h \
- /usr/include/c++/11/bits/locale_facets.tcc \
- /usr/include/c++/11/bits/locale_facets_nonio.h \
- /usr/include/x86_64-linux-gnu/c++/11/bits/time_members.h \
- /usr/include/x86_64-linux-gnu/c++/11/bits/messages_members.h \
- /usr/include/libintl.h /usr/include/c++/11/bits/codecvt.h \
- /usr/include/c++/11/bits/locale_facets_nonio.tcc \
- /usr/include/c++/11/bits/locale_conv.h /usr/include/c++/11/iomanip \
- /usr/include/c++/11/bits/quoted_string.h /usr/include/c++/11/sstream \
- /usr/include/c++/11/istream /usr/include/c++/11/ios \
- /usr/include/c++/11/bits/basic_ios.h \
- /usr/include/c++/11/bits/basic_ios.tcc /usr/include/c++/11/ostream \
- /usr/include/c++/11/bits/ostream.tcc \
- /usr/include/c++/11/bits/istream.tcc \
- /usr/include/c++/11/bits/sstream.tcc /usr/include/c++/11/codecvt \
+ /usr/include/c++/11/bits/fs_path.h /usr/include/c++/11/codecvt \
  /usr/include/c++/11/bits/fs_dir.h /usr/include/c++/11/bits/fs_ops.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qfileinfo.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qdiriterator.h \
@@ -555,10 +779,7 @@ CMakeFiles/QtOpenCVDemo.dir/QtOpenCVDemo_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qthreadpool.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qthread.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qdeadlinetimer.h \
- /usr/include/c++/11/future /usr/include/c++/11/mutex \
- /usr/include/c++/11/bits/std_mutex.h \
- /usr/include/c++/11/bits/unique_lock.h \
- /usr/include/c++/11/condition_variable \
+ /usr/include/c++/11/future /usr/include/c++/11/condition_variable \
  /usr/include/c++/11/bits/atomic_futex.h \
  /usr/include/c++/11/bits/std_thread.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qrunnable.h \
@@ -690,10 +911,6 @@ CMakeFiles/QtOpenCVDemo.dir/QtOpenCVDemo_autogen/mocs_compilation.cpp.o: \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/xsavesintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/xtestintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/hresetintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/pmmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/tmmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/smmintrin.h \
@@ -853,7 +1070,6 @@ CMakeFiles/QtOpenCVDemo.dir/QtOpenCVDemo_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qoffscreensurface.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qopengl.h /usr/include/GL/gl.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qopenglext.h \
- /usr/include/inttypes.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qopenglcontext.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/QSurfaceFormat \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qsurfaceformat.h \
@@ -1081,119 +1297,6 @@ CMakeFiles/QtOpenCVDemo.dir/QtOpenCVDemo_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtPrintSupport/qtprintsupportversion.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/QElapsedTimer \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/QTimeZone \
- /usr/include/opencv4/opencv2/opencv.hpp \
- /usr/include/opencv4/opencv2/opencv_modules.hpp \
- /usr/include/opencv4/opencv2/core.hpp \
- /usr/include/opencv4/opencv2/core/cvdef.h \
- /usr/include/opencv4/opencv2/core/version.hpp \
- /usr/include/opencv4/opencv2/core/hal/interface.h \
- /usr/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
- /usr/include/opencv4/opencv2/core/base.hpp /usr/include/c++/11/climits \
- /usr/include/opencv4/opencv2/core/cvstd.hpp \
- /usr/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
- /usr/include/opencv4/opencv2/core/neon_utils.hpp \
- /usr/include/opencv4/opencv2/core/vsx_utils.hpp \
- /usr/include/opencv4/opencv2/core/check.hpp \
- /usr/include/opencv4/opencv2/core/traits.hpp \
- /usr/include/opencv4/opencv2/core/matx.hpp \
- /usr/include/opencv4/opencv2/core/saturate.hpp \
- /usr/include/opencv4/opencv2/core/fast_math.hpp \
- /usr/include/opencv4/opencv2/core/types.hpp /usr/include/c++/11/cfloat \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h \
- /usr/include/opencv4/opencv2/core/mat.hpp \
- /usr/include/opencv4/opencv2/core/bufferpool.hpp \
- /usr/include/opencv4/opencv2/core/mat.inl.hpp \
- /usr/include/opencv4/opencv2/core/persistence.hpp \
- /usr/include/opencv4/opencv2/core/operations.hpp \
- /usr/include/opencv4/opencv2/core/cvstd.inl.hpp \
- /usr/include/c++/11/complex \
- /usr/include/opencv4/opencv2/core/utility.hpp \
- /usr/include/opencv4/opencv2/core/optim.hpp \
- /usr/include/opencv4/opencv2/core/ovx.hpp \
- /usr/include/opencv4/opencv2/core/cvdef.h \
- /usr/include/opencv4/opencv2/calib3d.hpp \
- /usr/include/opencv4/opencv2/features2d.hpp \
- /usr/include/opencv4/opencv2/flann/miniflann.hpp \
- /usr/include/opencv4/opencv2/flann/defines.h \
- /usr/include/opencv4/opencv2/flann/config.h \
- /usr/include/opencv4/opencv2/core/affine.hpp \
- /usr/include/opencv4/opencv2/dnn.hpp \
- /usr/include/opencv4/opencv2/dnn/dnn.hpp \
- /usr/include/opencv4/opencv2/core/async.hpp \
- /usr/include/opencv4/opencv2/dnn/version.hpp \
- /usr/include/opencv4/opencv2/dnn/dict.hpp \
- /usr/include/opencv4/opencv2/dnn/layer.hpp \
- /usr/include/opencv4/opencv2/dnn/dnn.inl.hpp \
- /usr/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
- /usr/include/opencv4/opencv2/dnn/dnn.hpp \
- /usr/include/opencv4/opencv2/flann.hpp \
- /usr/include/opencv4/opencv2/flann/flann_base.hpp \
- /usr/include/opencv4/opencv2/flann/general.h \
- /usr/include/opencv4/opencv2/flann/matrix.h \
- /usr/include/opencv4/opencv2/flann/params.h \
- /usr/include/opencv4/opencv2/flann/any.h \
- /usr/include/opencv4/opencv2/flann/defines.h \
- /usr/include/c++/11/iostream /usr/include/opencv4/opencv2/flann/saving.h \
- /usr/include/opencv4/opencv2/flann/nn_index.h \
- /usr/include/opencv4/opencv2/flann/result_set.h /usr/include/c++/11/set \
- /usr/include/c++/11/bits/stl_set.h \
- /usr/include/c++/11/bits/stl_multiset.h \
- /usr/include/opencv4/opencv2/flann/all_indices.h \
- /usr/include/opencv4/opencv2/flann/kdtree_index.h \
- /usr/include/opencv4/opencv2/flann/dynamic_bitset.h \
- /usr/include/opencv4/opencv2/flann/dist.h \
- /usr/include/opencv4/opencv2/flann/heap.h \
- /usr/include/opencv4/opencv2/flann/allocator.h \
- /usr/include/opencv4/opencv2/flann/random.h \
- /usr/include/opencv4/opencv2/flann/kdtree_single_index.h \
- /usr/include/opencv4/opencv2/flann/kmeans_index.h \
- /usr/include/opencv4/opencv2/flann/logger.h \
- /usr/include/opencv4/opencv2/flann/composite_index.h \
- /usr/include/opencv4/opencv2/flann/linear_index.h \
- /usr/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
- /usr/include/opencv4/opencv2/flann/lsh_index.h \
- /usr/include/opencv4/opencv2/flann/lsh_table.h \
- /usr/include/c++/11/math.h \
- /usr/include/opencv4/opencv2/flann/autotuned_index.h \
- /usr/include/opencv4/opencv2/flann/ground_truth.h \
- /usr/include/opencv4/opencv2/flann/index_testing.h \
- /usr/include/opencv4/opencv2/flann/timer.h \
- /usr/include/opencv4/opencv2/flann/sampling.h \
- /usr/include/opencv4/opencv2/highgui.hpp \
- /usr/include/opencv4/opencv2/imgcodecs.hpp \
- /usr/include/opencv4/opencv2/videoio.hpp \
- /usr/include/opencv4/opencv2/imgproc.hpp \
- /usr/include/opencv4/opencv2/imgproc/segmentation.hpp \
- /usr/include/opencv4/opencv2/ml.hpp \
- /usr/include/opencv4/opencv2/ml/ml.inl.hpp \
- /usr/include/opencv4/opencv2/objdetect.hpp \
- /usr/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
- /usr/include/opencv4/opencv2/objdetect/face.hpp \
- /usr/include/opencv4/opencv2/photo.hpp \
- /usr/include/opencv4/opencv2/stitching.hpp \
- /usr/include/opencv4/opencv2/stitching/warpers.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/warpers.hpp \
- /usr/include/opencv4/opencv2/core/cuda.hpp \
- /usr/include/opencv4/opencv2/core/cuda_types.hpp \
- /usr/include/opencv4/opencv2/core/cuda.inl.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/warpers.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/matchers.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/matchers.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/util.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
- /usr/include/c++/11/queue /usr/include/c++/11/deque \
- /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \
- /usr/include/c++/11/bits/stl_queue.h \
- /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/blenders.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
- /usr/include/opencv4/opencv2/video.hpp \
- /usr/include/opencv4/opencv2/video/tracking.hpp \
- /usr/include/opencv4/opencv2/video/background_segm.hpp \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/QScreen \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/UVLADIE3JM/moc_qcustomplot.cpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/UVLADIE3JM/../../../src/qcustomplot.h

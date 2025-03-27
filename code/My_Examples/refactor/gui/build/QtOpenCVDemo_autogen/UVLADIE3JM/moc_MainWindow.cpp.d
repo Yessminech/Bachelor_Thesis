@@ -1,10 +1,17 @@
 /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/UVLADIE3JM/moc_MainWindow.cpp: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/src/MainWindow.hpp \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/moc_predefs.h \
   /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/src/qcustomplot.h \
+  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
+  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp \
   /usr/include/GL/gl.h \
   /usr/include/alloca.h \
+  /usr/include/arpa/inet.h \
+  /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/socket.h \
+  /usr/include/asm-generic/sockios.h \
   /usr/include/assert.h \
   /usr/include/c++/11/algorithm \
   /usr/include/c++/11/array \
@@ -120,6 +127,7 @@
   /usr/include/c++/11/bits/uses_allocator.h \
   /usr/include/c++/11/bits/uses_allocator_args.h \
   /usr/include/c++/11/bits/vector.tcc \
+  /usr/include/c++/11/cassert \
   /usr/include/c++/11/cctype \
   /usr/include/c++/11/cerrno \
   /usr/include/c++/11/cfloat \
@@ -131,6 +139,7 @@
   /usr/include/c++/11/compare \
   /usr/include/c++/11/complex \
   /usr/include/c++/11/concepts \
+  /usr/include/c++/11/cstdarg \
   /usr/include/c++/11/cstddef \
   /usr/include/c++/11/cstdint \
   /usr/include/c++/11/cstdio \
@@ -178,6 +187,7 @@
   /usr/include/c++/11/pstl/glue_numeric_defs.h \
   /usr/include/c++/11/queue \
   /usr/include/c++/11/random \
+  /usr/include/c++/11/regex \
   /usr/include/c++/11/set \
   /usr/include/c++/11/sstream \
   /usr/include/c++/11/stdexcept \
@@ -214,8 +224,11 @@
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/stddef.h \
   /usr/include/locale.h \
   /usr/include/math.h \
+  /usr/include/netinet/in.h \
   /usr/include/opencv4/opencv2/calib3d.hpp \
   /usr/include/opencv4/opencv2/core.hpp \
   /usr/include/opencv4/opencv2/core/affine.hpp \
@@ -316,6 +329,71 @@
   /usr/include/opencv4/opencv2/video/tracking.hpp \
   /usr/include/opencv4/opencv2/videoio.hpp \
   /usr/include/pthread.h \
+  /usr/include/rc_genicam_api/buffer.h \
+  /usr/include/rc_genicam_api/config.h \
+  /usr/include/rc_genicam_api/device.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCArray.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCBase.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCCompatibility.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCException.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCLinkage.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCNamespace.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCString.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCStringVector.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCTypes.h \
+  /usr/include/rc_genicam_api/genicam/Base/GCUtilities.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/Autovector.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/ConcatenatedWrite.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/Container.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/GenApi.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/GenApiDll.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/GenApiNamespace.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/GenApiVersion.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IBase.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IBoolean.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/ICategory.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IChunkPort.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/ICommand.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IDestroy.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IDeviceInfo.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IEnumEntry.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IEnumeration.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IFloat.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IInteger.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/INode.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/INodeMap.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IPort.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IPortConstruct.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IPortRecorder.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IPortStacked.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IRegister.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/ISelector.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/ISelectorDigit.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IString.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IUserData.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/IValue.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/NodeCallback.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/NodeMapFactory.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/NodeMapRef.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/Persistence.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/Pointer.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/PortImpl.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/Reference.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/SelectorSet.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/SelectorState.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/StructPort.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/Synch.h \
+  /usr/include/rc_genicam_api/genicam/GenApi/Types.h \
+  /usr/include/rc_genicam_api/genicam/GenICamFwd.h \
+  /usr/include/rc_genicam_api/genicam/GenICamVersion.h \
+  /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
+  /usr/include/rc_genicam_api/genicam/_GenICamVersion.h \
+  /usr/include/rc_genicam_api/interface.h \
+  /usr/include/rc_genicam_api/nodemap_out.h \
+  /usr/include/rc_genicam_api/pixel_formats.h \
+  /usr/include/rc_genicam_api/system.h \
   /usr/include/sched.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
@@ -328,7 +406,12 @@
   /usr/include/unistd.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
+  /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
   /usr/include/x86_64-linux-gnu/asm/errno.h \
+  /usr/include/x86_64-linux-gnu/asm/posix_types.h \
+  /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
+  /usr/include/x86_64-linux-gnu/asm/socket.h \
+  /usr/include/x86_64-linux-gnu/asm/sockios.h \
   /usr/include/x86_64-linux-gnu/asm/unistd.h \
   /usr/include/x86_64-linux-gnu/asm/unistd_64.h \
   /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
@@ -346,6 +429,7 @@
   /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
+  /usr/include/x86_64-linux-gnu/bits/in.h \
   /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
@@ -365,6 +449,9 @@
   /usr/include/x86_64-linux-gnu/bits/sched.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
+  /usr/include/x86_64-linux-gnu/bits/socket.h \
+  /usr/include/x86_64-linux-gnu/bits/socket_type.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
@@ -394,7 +481,9 @@
   /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
@@ -939,6 +1028,7 @@
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qwizard.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/socket.h \
   /usr/include/x86_64-linux-gnu/sys/syscall.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/adxintrin.h \

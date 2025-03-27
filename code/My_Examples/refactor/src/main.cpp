@@ -41,8 +41,8 @@ void ptpSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCamerasList)
 {
     networkManager.enablePtp(openCamerasList); // Should be before configureMultiCamerasNetwork
     networkManager.configureMultiCamerasNetwork(openCamerasList);
-    networkManager.monitorPtpStatus(openCamerasList, stopStream);
-    networkManager.monitorPtpOffset(openCamerasList, stopStream);
+    networkManager.monitorPtpStatus(openCamerasList);
+    networkManager.monitorPtpOffset(openCamerasList);
     return;
 }
 

@@ -139,13 +139,88 @@ CMakeFiles/QtOpenCVDemo.dir/src/CameraSettingsWindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVDemo.dir/src/CameraSettingsWindow.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/src/CameraSettingsWindow.cpp -o CMakeFiles/QtOpenCVDemo.dir/src/CameraSettingsWindow.cpp.s
 
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o: CMakeFiles/QtOpenCVDemo.dir/flags.make
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o: CMakeFiles/QtOpenCVDemo.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o -MF CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o.d -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp > CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.i
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.s
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o: CMakeFiles/QtOpenCVDemo.dir/flags.make
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o: CMakeFiles/QtOpenCVDemo.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o -MF CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o.d -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp > CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.i
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.s
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o: CMakeFiles/QtOpenCVDemo.dir/flags.make
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o: CMakeFiles/QtOpenCVDemo.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o -MF CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o.d -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp > CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.i
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.s
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o: CMakeFiles/QtOpenCVDemo.dir/flags.make
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o: CMakeFiles/QtOpenCVDemo.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o -MF CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o.d -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp > CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.i
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.s
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o: CMakeFiles/QtOpenCVDemo.dir/flags.make
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o: CMakeFiles/QtOpenCVDemo.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o -MF CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o.d -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp > CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.i
+
+CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp -o CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.s
+
 # Object files for target QtOpenCVDemo
 QtOpenCVDemo_OBJECTS = \
 "CMakeFiles/QtOpenCVDemo.dir/QtOpenCVDemo_autogen/mocs_compilation.cpp.o" \
 "CMakeFiles/QtOpenCVDemo.dir/src/main.cpp.o" \
 "CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o" \
 "CMakeFiles/QtOpenCVDemo.dir/src/qcustomplot.cpp.o" \
-"CMakeFiles/QtOpenCVDemo.dir/src/CameraSettingsWindow.cpp.o"
+"CMakeFiles/QtOpenCVDemo.dir/src/CameraSettingsWindow.cpp.o" \
+"CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o" \
+"CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o" \
+"CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o" \
+"CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o" \
+"CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o"
 
 # External object files for target QtOpenCVDemo
 QtOpenCVDemo_EXTERNAL_OBJECTS =
@@ -155,6 +230,11 @@ QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/src/main.cpp.o
 QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o
 QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/src/qcustomplot.cpp.o
 QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/src/CameraSettingsWindow.cpp.o
+QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o
+QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o
+QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o
+QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o
+QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o
 QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/build.make
 QtOpenCVDemo: /usr/lib/x86_64-linux-gnu/libQt6PrintSupport.so.6.2.4
 QtOpenCVDemo: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.5.4d
@@ -217,7 +297,7 @@ QtOpenCVDemo: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.5.4d
 QtOpenCVDemo: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.5.4d
 QtOpenCVDemo: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.5.4d
 QtOpenCVDemo: CMakeFiles/QtOpenCVDemo.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable QtOpenCVDemo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable QtOpenCVDemo"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/QtOpenCVDemo.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

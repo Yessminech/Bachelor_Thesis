@@ -166,6 +166,126 @@ QtOpenCVDemo_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/QtOpenCVDemo_autogen/mocs_compilation.cpp.s
 .PHONY : QtOpenCVDemo_autogen/mocs_compilation.cpp.s
 
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.o: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.o
+
+# target to build an object file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.o
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.i: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.i
+
+# target to preprocess a source file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.i
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.s: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.s
+
+# target to generate assembly for a file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp.s
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.o: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.o
+
+# target to build an object file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.o
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.i: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.i
+
+# target to preprocess a source file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.i
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.s: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.s
+
+# target to generate assembly for a file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp.s
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.o: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.o
+
+# target to build an object file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.o
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.i: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.i
+
+# target to preprocess a source file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.i
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.s: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.s
+
+# target to generate assembly for a file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp.s
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.o: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.o
+
+# target to build an object file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.i: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.i
+
+# target to preprocess a source file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.i
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.s: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.s
+
+# target to generate assembly for a file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.s
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.o: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.o
+
+# target to build an object file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.i: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.i
+
+# target to preprocess a source file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.i
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.s: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.s
+
+# target to generate assembly for a file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.s
+
 src/CameraSettingsWindow.o: src/CameraSettingsWindow.cpp.o
 .PHONY : src/CameraSettingsWindow.o
 
@@ -275,6 +395,21 @@ help:
 	@echo "... QtOpenCVDemo_autogen/mocs_compilation.o"
 	@echo "... QtOpenCVDemo_autogen/mocs_compilation.i"
 	@echo "... QtOpenCVDemo_autogen/mocs_compilation.s"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.o"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.i"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.s"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.o"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.i"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.s"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.o"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.i"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.s"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.o"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.i"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.s"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.o"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.i"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.s"
 	@echo "... src/CameraSettingsWindow.o"
 	@echo "... src/CameraSettingsWindow.i"
 	@echo "... src/CameraSettingsWindow.s"

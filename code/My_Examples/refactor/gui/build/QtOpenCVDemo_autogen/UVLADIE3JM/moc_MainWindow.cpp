@@ -25,20 +25,20 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     const uint offsetsAndSize[10];
-    char stringdata0[47];
+    char stringdata0[53];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
 QT_MOC_LITERAL(0, 10), // "MainWindow"
-QT_MOC_LITERAL(11, 11), // "startStream"
-QT_MOC_LITERAL(23, 0), // ""
-QT_MOC_LITERAL(24, 10), // "stopStream"
-QT_MOC_LITERAL(35, 11) // "updateFrame"
+QT_MOC_LITERAL(11, 14), // "startStreaming"
+QT_MOC_LITERAL(26, 0), // ""
+QT_MOC_LITERAL(27, 13), // "stopStreaming"
+QT_MOC_LITERAL(41, 11) // "updateFrame"
 
     },
-    "MainWindow\0startStream\0\0stopStream\0"
+    "MainWindow\0startStreaming\0\0stopStreaming\0"
     "updateFrame"
 };
 #undef QT_MOC_LITERAL
@@ -75,8 +75,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<MainWindow *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->startStream(); break;
-        case 1: _t->stopStream(); break;
+        case 0: _t->startStreaming(); break;
+        case 1: _t->stopStreaming(); break;
         case 2: _t->updateFrame(); break;
         default: ;
         }

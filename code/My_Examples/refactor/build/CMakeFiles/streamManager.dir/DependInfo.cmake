@@ -8,13 +8,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp" "CMakeFiles/streamManager.dir/src/Camera.cpp.o" "gcc" "CMakeFiles/streamManager.dir/src/Camera.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp" "CMakeFiles/streamManager.dir/src/DeviceManager.cpp.o" "gcc" "CMakeFiles/streamManager.dir/src/DeviceManager.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp" "CMakeFiles/streamManager.dir/src/GlobalSettings.cpp.o" "gcc" "CMakeFiles/streamManager.dir/src/GlobalSettings.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp" "CMakeFiles/streamManager.dir/src/NetworkManager.cpp.o" "gcc" "CMakeFiles/streamManager.dir/src/NetworkManager.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp" "CMakeFiles/streamManager.dir/src/StreamManager.cpp.o" "gcc" "CMakeFiles/streamManager.dir/src/StreamManager.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp" "CMakeFiles/streamManager.dir/src/SystemManager.cpp.o" "gcc" "CMakeFiles/streamManager.dir/src/SystemManager.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp" "CMakeFiles/streamManager.dir/src/main.cpp.o" "gcc" "CMakeFiles/streamManager.dir/src/main.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp" "CMakeFiles/streamManager.dir/managers/Camera.cpp.o" "gcc" "CMakeFiles/streamManager.dir/managers/Camera.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp" "CMakeFiles/streamManager.dir/managers/DeviceManager.cpp.o" "gcc" "CMakeFiles/streamManager.dir/managers/DeviceManager.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp" "CMakeFiles/streamManager.dir/managers/GlobalSettings.cpp.o" "gcc" "CMakeFiles/streamManager.dir/managers/GlobalSettings.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp" "CMakeFiles/streamManager.dir/managers/NetworkManager.cpp.o" "gcc" "CMakeFiles/streamManager.dir/managers/NetworkManager.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp" "CMakeFiles/streamManager.dir/managers/StreamManager.cpp.o" "gcc" "CMakeFiles/streamManager.dir/managers/StreamManager.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp" "CMakeFiles/streamManager.dir/managers/SystemManager.cpp.o" "gcc" "CMakeFiles/streamManager.dir/managers/SystemManager.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp" "CMakeFiles/streamManager.dir/managers/main.cpp.o" "gcc" "CMakeFiles/streamManager.dir/managers/main.cpp.o.d"
   )
 
 # Targets to which this target links.

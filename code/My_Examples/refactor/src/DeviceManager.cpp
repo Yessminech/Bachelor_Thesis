@@ -172,6 +172,10 @@ bool DeviceManager::listAvailableCamerasByID()
     }
 }
 
+const std::set<std::shared_ptr<rcg::Device>> &DeviceManager::getAvailableCamerasList() const{
+    return availableCamerasList;
+}
+
 std::shared_ptr<rcg::Device> DeviceManager::getAvailableCameraByID(const std::string &deviceId)
 {
     for (const auto &device : availableCamerasList)

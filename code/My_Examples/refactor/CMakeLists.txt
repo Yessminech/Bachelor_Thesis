@@ -18,7 +18,7 @@ find_package(OpenCV REQUIRED)
 # ToDo Take off useless lines 
 include_directories("/usr/include/rc_genicam_api")
 include_directories("/usr/include/rc_genicam_api/genicam")
-include_directories("~/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/include")
+include_directories("~/Downloads/ArenaSDK_v0.1.91_Linux_x64/ArenaSDK_Linux_x64/include") # ToDo Change the path to the correct one
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 # Manually add the directory containing the library.

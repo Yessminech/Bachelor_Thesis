@@ -69,124 +69,124 @@ include CMakeFiles/networkManager.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/networkManager.dir/flags.make
 
-CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o: CMakeFiles/networkManager.dir/flags.make
-CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp
-CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o -MF CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o.d -o CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp
+CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o: CMakeFiles/networkManager.dir/flags.make
+CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp
+CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o -MF CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o.d -o CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp
 
-CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp > CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.i
+CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp > CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.i
 
-CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp -o CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.s
+CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp -o CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.s
 
-CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o: CMakeFiles/networkManager.dir/flags.make
-CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp
-CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o -MF CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o.d -o CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp
+CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o: CMakeFiles/networkManager.dir/flags.make
+CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp
+CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o -MF CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o.d -o CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp
 
-CMakeFiles/networkManager.dir/src/NetworkManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/src/NetworkManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp > CMakeFiles/networkManager.dir/src/NetworkManager.cpp.i
+CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp > CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.i
 
-CMakeFiles/networkManager.dir/src/NetworkManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/src/NetworkManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp -o CMakeFiles/networkManager.dir/src/NetworkManager.cpp.s
+CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp -o CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.s
 
-CMakeFiles/networkManager.dir/src/Camera.cpp.o: CMakeFiles/networkManager.dir/flags.make
-CMakeFiles/networkManager.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
-CMakeFiles/networkManager.dir/src/Camera.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/networkManager.dir/src/Camera.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/src/Camera.cpp.o -MF CMakeFiles/networkManager.dir/src/Camera.cpp.o.d -o CMakeFiles/networkManager.dir/src/Camera.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
+CMakeFiles/networkManager.dir/managers/Camera.cpp.o: CMakeFiles/networkManager.dir/flags.make
+CMakeFiles/networkManager.dir/managers/Camera.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp
+CMakeFiles/networkManager.dir/managers/Camera.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/networkManager.dir/managers/Camera.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/managers/Camera.cpp.o -MF CMakeFiles/networkManager.dir/managers/Camera.cpp.o.d -o CMakeFiles/networkManager.dir/managers/Camera.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp
 
-CMakeFiles/networkManager.dir/src/Camera.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/src/Camera.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp > CMakeFiles/networkManager.dir/src/Camera.cpp.i
+CMakeFiles/networkManager.dir/managers/Camera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/managers/Camera.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp > CMakeFiles/networkManager.dir/managers/Camera.cpp.i
 
-CMakeFiles/networkManager.dir/src/Camera.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/src/Camera.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp -o CMakeFiles/networkManager.dir/src/Camera.cpp.s
+CMakeFiles/networkManager.dir/managers/Camera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/managers/Camera.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp -o CMakeFiles/networkManager.dir/managers/Camera.cpp.s
 
-CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o: CMakeFiles/networkManager.dir/flags.make
-CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp
-CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o -MF CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o.d -o CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp
+CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o: CMakeFiles/networkManager.dir/flags.make
+CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp
+CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o -MF CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o.d -o CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp
 
-CMakeFiles/networkManager.dir/src/DeviceManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/src/DeviceManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp > CMakeFiles/networkManager.dir/src/DeviceManager.cpp.i
+CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp > CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.i
 
-CMakeFiles/networkManager.dir/src/DeviceManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/src/DeviceManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp -o CMakeFiles/networkManager.dir/src/DeviceManager.cpp.s
+CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp -o CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.s
 
-CMakeFiles/networkManager.dir/src/StreamManager.cpp.o: CMakeFiles/networkManager.dir/flags.make
-CMakeFiles/networkManager.dir/src/StreamManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp
-CMakeFiles/networkManager.dir/src/StreamManager.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/networkManager.dir/src/StreamManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/src/StreamManager.cpp.o -MF CMakeFiles/networkManager.dir/src/StreamManager.cpp.o.d -o CMakeFiles/networkManager.dir/src/StreamManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp
+CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o: CMakeFiles/networkManager.dir/flags.make
+CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp
+CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o -MF CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o.d -o CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp
 
-CMakeFiles/networkManager.dir/src/StreamManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/src/StreamManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp > CMakeFiles/networkManager.dir/src/StreamManager.cpp.i
+CMakeFiles/networkManager.dir/managers/StreamManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/managers/StreamManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp > CMakeFiles/networkManager.dir/managers/StreamManager.cpp.i
 
-CMakeFiles/networkManager.dir/src/StreamManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/src/StreamManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp -o CMakeFiles/networkManager.dir/src/StreamManager.cpp.s
+CMakeFiles/networkManager.dir/managers/StreamManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/managers/StreamManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp -o CMakeFiles/networkManager.dir/managers/StreamManager.cpp.s
 
-CMakeFiles/networkManager.dir/src/SystemManager.cpp.o: CMakeFiles/networkManager.dir/flags.make
-CMakeFiles/networkManager.dir/src/SystemManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp
-CMakeFiles/networkManager.dir/src/SystemManager.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/networkManager.dir/src/SystemManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/src/SystemManager.cpp.o -MF CMakeFiles/networkManager.dir/src/SystemManager.cpp.o.d -o CMakeFiles/networkManager.dir/src/SystemManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp
+CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o: CMakeFiles/networkManager.dir/flags.make
+CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp
+CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o -MF CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o.d -o CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp
 
-CMakeFiles/networkManager.dir/src/SystemManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/src/SystemManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp > CMakeFiles/networkManager.dir/src/SystemManager.cpp.i
+CMakeFiles/networkManager.dir/managers/SystemManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/managers/SystemManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp > CMakeFiles/networkManager.dir/managers/SystemManager.cpp.i
 
-CMakeFiles/networkManager.dir/src/SystemManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/src/SystemManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp -o CMakeFiles/networkManager.dir/src/SystemManager.cpp.s
+CMakeFiles/networkManager.dir/managers/SystemManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/managers/SystemManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp -o CMakeFiles/networkManager.dir/managers/SystemManager.cpp.s
 
-CMakeFiles/networkManager.dir/src/main.cpp.o: CMakeFiles/networkManager.dir/flags.make
-CMakeFiles/networkManager.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp
-CMakeFiles/networkManager.dir/src/main.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/networkManager.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/src/main.cpp.o -MF CMakeFiles/networkManager.dir/src/main.cpp.o.d -o CMakeFiles/networkManager.dir/src/main.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp
+CMakeFiles/networkManager.dir/managers/main.cpp.o: CMakeFiles/networkManager.dir/flags.make
+CMakeFiles/networkManager.dir/managers/main.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp
+CMakeFiles/networkManager.dir/managers/main.cpp.o: CMakeFiles/networkManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/networkManager.dir/managers/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/networkManager.dir/managers/main.cpp.o -MF CMakeFiles/networkManager.dir/managers/main.cpp.o.d -o CMakeFiles/networkManager.dir/managers/main.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp
 
-CMakeFiles/networkManager.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp > CMakeFiles/networkManager.dir/src/main.cpp.i
+CMakeFiles/networkManager.dir/managers/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/networkManager.dir/managers/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp > CMakeFiles/networkManager.dir/managers/main.cpp.i
 
-CMakeFiles/networkManager.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp -o CMakeFiles/networkManager.dir/src/main.cpp.s
+CMakeFiles/networkManager.dir/managers/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/networkManager.dir/managers/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp -o CMakeFiles/networkManager.dir/managers/main.cpp.s
 
 # Object files for target networkManager
 networkManager_OBJECTS = \
-"CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o" \
-"CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o" \
-"CMakeFiles/networkManager.dir/src/Camera.cpp.o" \
-"CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o" \
-"CMakeFiles/networkManager.dir/src/StreamManager.cpp.o" \
-"CMakeFiles/networkManager.dir/src/SystemManager.cpp.o" \
-"CMakeFiles/networkManager.dir/src/main.cpp.o"
+"CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o" \
+"CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o" \
+"CMakeFiles/networkManager.dir/managers/Camera.cpp.o" \
+"CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o" \
+"CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o" \
+"CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o" \
+"CMakeFiles/networkManager.dir/managers/main.cpp.o"
 
 # External object files for target networkManager
 networkManager_EXTERNAL_OBJECTS =
 
-networkManager: CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o
-networkManager: CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o
-networkManager: CMakeFiles/networkManager.dir/src/Camera.cpp.o
-networkManager: CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o
-networkManager: CMakeFiles/networkManager.dir/src/StreamManager.cpp.o
-networkManager: CMakeFiles/networkManager.dir/src/SystemManager.cpp.o
-networkManager: CMakeFiles/networkManager.dir/src/main.cpp.o
+networkManager: CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o
+networkManager: CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o
+networkManager: CMakeFiles/networkManager.dir/managers/Camera.cpp.o
+networkManager: CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o
+networkManager: CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o
+networkManager: CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o
+networkManager: CMakeFiles/networkManager.dir/managers/main.cpp.o
 networkManager: CMakeFiles/networkManager.dir/build.make
 networkManager: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.5.4d
 networkManager: /usr/lib/x86_64-linux-gnu/libopencv_alphamat.so.4.5.4d

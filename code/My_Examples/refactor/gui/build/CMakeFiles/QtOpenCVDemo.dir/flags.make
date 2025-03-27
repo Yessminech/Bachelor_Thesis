@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB
 
-CXX_INCLUDES = -I/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtPrintSupport -isystem /usr/include/opencv4
+CXX_INCLUDES = -I/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/QtOpenCVDemo_autogen/include -I/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src -I/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/.. -I/usr/include/rc_genicam_api -I/usr/include/rc_genicam_api/genicam -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtPrintSupport -isystem /usr/include/opencv4
 
 CXX_FLAGS = -fPIC -std=gnu++17
 

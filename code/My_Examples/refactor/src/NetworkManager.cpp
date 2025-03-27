@@ -58,7 +58,7 @@ void NetworkManager::printPtpConfig(std::shared_ptr<Camera> camera)
     }
 }
 
-void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::atomic<bool> &stopStream)
+void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &openCamerasList)
 {
     auto start_time = std::chrono::steady_clock::now();
     bool synchronized = false;
@@ -68,8 +68,8 @@ void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &
 
     std::cout << "[DEBUG] Starting PTP synchronization monitoring..." << std::endl;
 
-    // Continue until synchronized, timed out, or stopStream is true
-    while (!synchronized && !stopStream.load())
+    // Continue until synchronized, timed out
+    while (!synchronized )
     {
         // Reset counters for each check
         numInit = 0;
@@ -243,7 +243,7 @@ void NetworkManager::writeOffsetHistoryToCsv(
     std::cout << CYAN << "[DEBUG] Offset + timestamp history written to " << filename << RESET << std::endl;
 }
 
-void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::atomic<bool> &stopStream)
+void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList)
 {
     bool allSynced = false;
     int checkCount = 0;
@@ -276,7 +276,7 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
     std::unordered_map<std::string, std::deque<CameraSample>> offsetWindowHistory; // For stability check
     std::unordered_map<std::string, std::vector<CameraSample>> offsetLogHistory;   // For logging to CSV
         
-    while (!allSynced && checkCount < ptpMaxCheck && !stopStream.load())
+    while (!allSynced && checkCount < ptpMaxCheck )
     {
         allSynced = true;
         checkCount++;
@@ -338,7 +338,7 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
                 allSynced = false;
             }
         }
-        if (!allSynced && checkCount < ptpMaxCheck && !stopStream.load())
+        if (!allSynced && checkCount < ptpMaxCheck)
         {
             std::this_thread::sleep_for(std::chrono::seconds(3));
         }

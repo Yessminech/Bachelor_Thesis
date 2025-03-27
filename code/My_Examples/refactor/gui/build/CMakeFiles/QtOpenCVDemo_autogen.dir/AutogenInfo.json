@@ -345,6 +345,36 @@
 			"MU",
 			"UVLADIE3JM/moc_qcustomplot.cpp",
 			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp",
+			"MU",
+			"6YGJER5OH2/moc_Camera.cpp",
+			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp",
+			"MU",
+			"6YGJER5OH2/moc_DeviceManager.cpp",
+			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.hpp",
+			"MU",
+			"6YGJER5OH2/moc_GlobalSettings.cpp",
+			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.hpp",
+			"MU",
+			"6YGJER5OH2/moc_NetworkManager.cpp",
+			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.hpp",
+			"MU",
+			"6YGJER5OH2/moc_StreamManager.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -367,6 +397,10 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src",
+		"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor",
+		"/usr/include/rc_genicam_api",
+		"/usr/include/rc_genicam_api/genicam",
 		"/usr/include/x86_64-linux-gnu/qt6/QtWidgets",
 		"/usr/include/x86_64-linux-gnu/qt6",
 		"/usr/include/x86_64-linux-gnu/qt6/QtCore",
@@ -423,6 +457,31 @@
 		],
 		[
 			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/src/qcustomplot.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp",
 			"MU",
 			null
 		]

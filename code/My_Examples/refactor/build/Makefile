@@ -194,278 +194,278 @@ main/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-src/Camera.o: src/Camera.cpp.o
-.PHONY : src/Camera.o
+managers/Camera.o: managers/Camera.cpp.o
+.PHONY : managers/Camera.o
 
 # target to build an object file
-src/Camera.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/Camera.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/Camera.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/Camera.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/Camera.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/Camera.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Camera.cpp.o
-.PHONY : src/Camera.cpp.o
+managers/Camera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/Camera.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/Camera.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/Camera.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/Camera.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/Camera.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/Camera.cpp.o
+.PHONY : managers/Camera.cpp.o
 
-src/Camera.i: src/Camera.cpp.i
-.PHONY : src/Camera.i
+managers/Camera.i: managers/Camera.cpp.i
+.PHONY : managers/Camera.i
 
 # target to preprocess a source file
-src/Camera.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/Camera.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/Camera.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/Camera.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/Camera.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/Camera.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Camera.cpp.i
-.PHONY : src/Camera.cpp.i
+managers/Camera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/Camera.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/Camera.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/Camera.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/Camera.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/Camera.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/Camera.cpp.i
+.PHONY : managers/Camera.cpp.i
 
-src/Camera.s: src/Camera.cpp.s
-.PHONY : src/Camera.s
+managers/Camera.s: managers/Camera.cpp.s
+.PHONY : managers/Camera.s
 
 # target to generate assembly for a file
-src/Camera.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/Camera.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/Camera.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/Camera.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/Camera.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/Camera.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Camera.cpp.s
-.PHONY : src/Camera.cpp.s
+managers/Camera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/Camera.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/Camera.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/Camera.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/Camera.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/Camera.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/Camera.cpp.s
+.PHONY : managers/Camera.cpp.s
 
-src/DeviceManager.o: src/DeviceManager.cpp.o
-.PHONY : src/DeviceManager.o
+managers/DeviceManager.o: managers/DeviceManager.cpp.o
+.PHONY : managers/DeviceManager.o
 
 # target to build an object file
-src/DeviceManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/DeviceManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/DeviceManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/DeviceManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/DeviceManager.cpp.o
-.PHONY : src/DeviceManager.cpp.o
+managers/DeviceManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/DeviceManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/DeviceManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/DeviceManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/DeviceManager.cpp.o
+.PHONY : managers/DeviceManager.cpp.o
 
-src/DeviceManager.i: src/DeviceManager.cpp.i
-.PHONY : src/DeviceManager.i
+managers/DeviceManager.i: managers/DeviceManager.cpp.i
+.PHONY : managers/DeviceManager.i
 
 # target to preprocess a source file
-src/DeviceManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/DeviceManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/DeviceManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/DeviceManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/DeviceManager.cpp.i
-.PHONY : src/DeviceManager.cpp.i
+managers/DeviceManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/DeviceManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/DeviceManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/DeviceManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/DeviceManager.cpp.i
+.PHONY : managers/DeviceManager.cpp.i
 
-src/DeviceManager.s: src/DeviceManager.cpp.s
-.PHONY : src/DeviceManager.s
+managers/DeviceManager.s: managers/DeviceManager.cpp.s
+.PHONY : managers/DeviceManager.s
 
 # target to generate assembly for a file
-src/DeviceManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/DeviceManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/DeviceManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/DeviceManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/DeviceManager.cpp.s
-.PHONY : src/DeviceManager.cpp.s
+managers/DeviceManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/DeviceManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/DeviceManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/DeviceManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/DeviceManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/DeviceManager.cpp.s
+.PHONY : managers/DeviceManager.cpp.s
 
-src/GlobalSettings.o: src/GlobalSettings.cpp.o
-.PHONY : src/GlobalSettings.o
+managers/GlobalSettings.o: managers/GlobalSettings.cpp.o
+.PHONY : managers/GlobalSettings.o
 
 # target to build an object file
-src/GlobalSettings.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/GlobalSettings.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/GlobalSettings.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/GlobalSettings.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/GlobalSettings.cpp.o
-.PHONY : src/GlobalSettings.cpp.o
+managers/GlobalSettings.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/GlobalSettings.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/GlobalSettings.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/GlobalSettings.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/GlobalSettings.cpp.o
+.PHONY : managers/GlobalSettings.cpp.o
 
-src/GlobalSettings.i: src/GlobalSettings.cpp.i
-.PHONY : src/GlobalSettings.i
+managers/GlobalSettings.i: managers/GlobalSettings.cpp.i
+.PHONY : managers/GlobalSettings.i
 
 # target to preprocess a source file
-src/GlobalSettings.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/GlobalSettings.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/GlobalSettings.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/GlobalSettings.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/GlobalSettings.cpp.i
-.PHONY : src/GlobalSettings.cpp.i
+managers/GlobalSettings.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/GlobalSettings.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/GlobalSettings.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/GlobalSettings.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/GlobalSettings.cpp.i
+.PHONY : managers/GlobalSettings.cpp.i
 
-src/GlobalSettings.s: src/GlobalSettings.cpp.s
-.PHONY : src/GlobalSettings.s
+managers/GlobalSettings.s: managers/GlobalSettings.cpp.s
+.PHONY : managers/GlobalSettings.s
 
 # target to generate assembly for a file
-src/GlobalSettings.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/GlobalSettings.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/GlobalSettings.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/GlobalSettings.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/GlobalSettings.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/GlobalSettings.cpp.s
-.PHONY : src/GlobalSettings.cpp.s
+managers/GlobalSettings.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/GlobalSettings.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/GlobalSettings.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/GlobalSettings.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/GlobalSettings.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/GlobalSettings.cpp.s
+.PHONY : managers/GlobalSettings.cpp.s
 
-src/NetworkManager.o: src/NetworkManager.cpp.o
-.PHONY : src/NetworkManager.o
+managers/NetworkManager.o: managers/NetworkManager.cpp.o
+.PHONY : managers/NetworkManager.o
 
 # target to build an object file
-src/NetworkManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/NetworkManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/NetworkManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/NetworkManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/NetworkManager.cpp.o
-.PHONY : src/NetworkManager.cpp.o
+managers/NetworkManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/NetworkManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/NetworkManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/NetworkManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/NetworkManager.cpp.o
+.PHONY : managers/NetworkManager.cpp.o
 
-src/NetworkManager.i: src/NetworkManager.cpp.i
-.PHONY : src/NetworkManager.i
+managers/NetworkManager.i: managers/NetworkManager.cpp.i
+.PHONY : managers/NetworkManager.i
 
 # target to preprocess a source file
-src/NetworkManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/NetworkManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/NetworkManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/NetworkManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/NetworkManager.cpp.i
-.PHONY : src/NetworkManager.cpp.i
+managers/NetworkManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/NetworkManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/NetworkManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/NetworkManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/NetworkManager.cpp.i
+.PHONY : managers/NetworkManager.cpp.i
 
-src/NetworkManager.s: src/NetworkManager.cpp.s
-.PHONY : src/NetworkManager.s
+managers/NetworkManager.s: managers/NetworkManager.cpp.s
+.PHONY : managers/NetworkManager.s
 
 # target to generate assembly for a file
-src/NetworkManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/NetworkManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/NetworkManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/NetworkManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/NetworkManager.cpp.s
-.PHONY : src/NetworkManager.cpp.s
+managers/NetworkManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/NetworkManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/NetworkManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/NetworkManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/NetworkManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/NetworkManager.cpp.s
+.PHONY : managers/NetworkManager.cpp.s
 
-src/StreamManager.o: src/StreamManager.cpp.o
-.PHONY : src/StreamManager.o
+managers/StreamManager.o: managers/StreamManager.cpp.o
+.PHONY : managers/StreamManager.o
 
 # target to build an object file
-src/StreamManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/StreamManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/StreamManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/StreamManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/StreamManager.cpp.o
-.PHONY : src/StreamManager.cpp.o
+managers/StreamManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/StreamManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/StreamManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/StreamManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/StreamManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/StreamManager.cpp.o
+.PHONY : managers/StreamManager.cpp.o
 
-src/StreamManager.i: src/StreamManager.cpp.i
-.PHONY : src/StreamManager.i
+managers/StreamManager.i: managers/StreamManager.cpp.i
+.PHONY : managers/StreamManager.i
 
 # target to preprocess a source file
-src/StreamManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/StreamManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/StreamManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/StreamManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/StreamManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/StreamManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/StreamManager.cpp.i
-.PHONY : src/StreamManager.cpp.i
+managers/StreamManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/StreamManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/StreamManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/StreamManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/StreamManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/StreamManager.cpp.i
+.PHONY : managers/StreamManager.cpp.i
 
-src/StreamManager.s: src/StreamManager.cpp.s
-.PHONY : src/StreamManager.s
+managers/StreamManager.s: managers/StreamManager.cpp.s
+.PHONY : managers/StreamManager.s
 
 # target to generate assembly for a file
-src/StreamManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/StreamManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/StreamManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/StreamManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/StreamManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/StreamManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/StreamManager.cpp.s
-.PHONY : src/StreamManager.cpp.s
+managers/StreamManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/StreamManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/StreamManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/StreamManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/StreamManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/StreamManager.cpp.s
+.PHONY : managers/StreamManager.cpp.s
 
-src/SystemManager.o: src/SystemManager.cpp.o
-.PHONY : src/SystemManager.o
+managers/SystemManager.o: managers/SystemManager.cpp.o
+.PHONY : managers/SystemManager.o
 
 # target to build an object file
-src/SystemManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/SystemManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/SystemManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/SystemManager.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/SystemManager.cpp.o
-.PHONY : src/SystemManager.cpp.o
+managers/SystemManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/SystemManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/SystemManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/SystemManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/SystemManager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/SystemManager.cpp.o
+.PHONY : managers/SystemManager.cpp.o
 
-src/SystemManager.i: src/SystemManager.cpp.i
-.PHONY : src/SystemManager.i
+managers/SystemManager.i: managers/SystemManager.cpp.i
+.PHONY : managers/SystemManager.i
 
 # target to preprocess a source file
-src/SystemManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/SystemManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/SystemManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/SystemManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/SystemManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/SystemManager.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/SystemManager.cpp.i
-.PHONY : src/SystemManager.cpp.i
+managers/SystemManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/SystemManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/SystemManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/SystemManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/SystemManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/SystemManager.cpp.i
+.PHONY : managers/SystemManager.cpp.i
 
-src/SystemManager.s: src/SystemManager.cpp.s
-.PHONY : src/SystemManager.s
+managers/SystemManager.s: managers/SystemManager.cpp.s
+.PHONY : managers/SystemManager.s
 
 # target to generate assembly for a file
-src/SystemManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/SystemManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/SystemManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/SystemManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/SystemManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/SystemManager.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/SystemManager.cpp.s
-.PHONY : src/SystemManager.cpp.s
+managers/SystemManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/SystemManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/SystemManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/SystemManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/SystemManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/SystemManager.cpp.s
+.PHONY : managers/SystemManager.cpp.s
 
-src/main.o: src/main.cpp.o
-.PHONY : src/main.o
+managers/main.o: managers/main.cpp.o
+.PHONY : managers/main.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/main.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/main.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/main.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/main.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/main.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+managers/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/main.cpp.o
+.PHONY : managers/main.cpp.o
 
-src/main.i: src/main.cpp.i
-.PHONY : src/main.i
+managers/main.i: managers/main.cpp.i
+.PHONY : managers/main.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/main.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/main.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/main.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/main.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/main.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+managers/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/main.cpp.i
+.PHONY : managers/main.cpp.i
 
-src/main.s: src/main.cpp.s
-.PHONY : src/main.s
+managers/main.s: managers/main.cpp.s
+.PHONY : managers/main.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/src/main.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/src/main.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/src/main.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/src/main.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/src/main.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+managers/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/globalSettings.dir/build.make CMakeFiles/globalSettings.dir/managers/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamManager.dir/build.make CMakeFiles/streamManager.dir/managers/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deviceManager.dir/build.make CMakeFiles/deviceManager.dir/managers/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/networkManager.dir/build.make CMakeFiles/networkManager.dir/managers/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/systemManager.dir/build.make CMakeFiles/systemManager.dir/managers/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/managers/main.cpp.s
+.PHONY : managers/main.cpp.s
 
 # Help Target
 help:
@@ -481,27 +481,27 @@ help:
 	@echo "... networkManager"
 	@echo "... streamManager"
 	@echo "... systemManager"
-	@echo "... src/Camera.o"
-	@echo "... src/Camera.i"
-	@echo "... src/Camera.s"
-	@echo "... src/DeviceManager.o"
-	@echo "... src/DeviceManager.i"
-	@echo "... src/DeviceManager.s"
-	@echo "... src/GlobalSettings.o"
-	@echo "... src/GlobalSettings.i"
-	@echo "... src/GlobalSettings.s"
-	@echo "... src/NetworkManager.o"
-	@echo "... src/NetworkManager.i"
-	@echo "... src/NetworkManager.s"
-	@echo "... src/StreamManager.o"
-	@echo "... src/StreamManager.i"
-	@echo "... src/StreamManager.s"
-	@echo "... src/SystemManager.o"
-	@echo "... src/SystemManager.i"
-	@echo "... src/SystemManager.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... managers/Camera.o"
+	@echo "... managers/Camera.i"
+	@echo "... managers/Camera.s"
+	@echo "... managers/DeviceManager.o"
+	@echo "... managers/DeviceManager.i"
+	@echo "... managers/DeviceManager.s"
+	@echo "... managers/GlobalSettings.o"
+	@echo "... managers/GlobalSettings.i"
+	@echo "... managers/GlobalSettings.s"
+	@echo "... managers/NetworkManager.o"
+	@echo "... managers/NetworkManager.i"
+	@echo "... managers/NetworkManager.s"
+	@echo "... managers/StreamManager.o"
+	@echo "... managers/StreamManager.i"
+	@echo "... managers/StreamManager.s"
+	@echo "... managers/SystemManager.o"
+	@echo "... managers/SystemManager.i"
+	@echo "... managers/SystemManager.s"
+	@echo "... managers/main.o"
+	@echo "... managers/main.i"
+	@echo "... managers/main.s"
 .PHONY : help
 
 
