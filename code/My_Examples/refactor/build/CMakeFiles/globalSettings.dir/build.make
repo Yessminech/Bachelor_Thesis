@@ -69,124 +69,156 @@ include CMakeFiles/globalSettings.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/globalSettings.dir/flags.make
 
-CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o: CMakeFiles/globalSettings.dir/flags.make
-CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp
-CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o -MF CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o.d -o CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp
+CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.o: CMakeFiles/globalSettings.dir/flags.make
+CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.o: globalSettings_autogen/mocs_compilation.cpp
+CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.o -MF CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/globalSettings_autogen/mocs_compilation.cpp
 
-CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp > CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.i
+CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/globalSettings_autogen/mocs_compilation.cpp > CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.i
 
-CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp -o CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.s
+CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/globalSettings_autogen/mocs_compilation.cpp -o CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.s
 
-CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o: CMakeFiles/globalSettings.dir/flags.make
-CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp
-CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o -MF CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o.d -o CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp
+CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o: CMakeFiles/globalSettings.dir/flags.make
+CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp
+CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o -MF CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o.d -o CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp
 
-CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp > CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.i
+CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp > CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.i
 
-CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp -o CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.s
+CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp -o CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.s
 
-CMakeFiles/globalSettings.dir/managers/Camera.cpp.o: CMakeFiles/globalSettings.dir/flags.make
-CMakeFiles/globalSettings.dir/managers/Camera.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp
-CMakeFiles/globalSettings.dir/managers/Camera.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/globalSettings.dir/managers/Camera.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/managers/Camera.cpp.o -MF CMakeFiles/globalSettings.dir/managers/Camera.cpp.o.d -o CMakeFiles/globalSettings.dir/managers/Camera.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp
+CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: CMakeFiles/globalSettings.dir/flags.make
+CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp
+CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o -MF CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o.d -o CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp
 
-CMakeFiles/globalSettings.dir/managers/Camera.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/managers/Camera.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp > CMakeFiles/globalSettings.dir/managers/Camera.cpp.i
+CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp > CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.i
 
-CMakeFiles/globalSettings.dir/managers/Camera.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/managers/Camera.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp -o CMakeFiles/globalSettings.dir/managers/Camera.cpp.s
+CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp -o CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.s
 
-CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o: CMakeFiles/globalSettings.dir/flags.make
-CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp
-CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o -MF CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o.d -o CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp
+CMakeFiles/globalSettings.dir/src/Camera.cpp.o: CMakeFiles/globalSettings.dir/flags.make
+CMakeFiles/globalSettings.dir/src/Camera.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
+CMakeFiles/globalSettings.dir/src/Camera.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/globalSettings.dir/src/Camera.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/src/Camera.cpp.o -MF CMakeFiles/globalSettings.dir/src/Camera.cpp.o.d -o CMakeFiles/globalSettings.dir/src/Camera.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp
 
-CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp > CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.i
+CMakeFiles/globalSettings.dir/src/Camera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/src/Camera.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp > CMakeFiles/globalSettings.dir/src/Camera.cpp.i
 
-CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp -o CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.s
+CMakeFiles/globalSettings.dir/src/Camera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/src/Camera.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp -o CMakeFiles/globalSettings.dir/src/Camera.cpp.s
 
-CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o: CMakeFiles/globalSettings.dir/flags.make
-CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp
-CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o -MF CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o.d -o CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp
+CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o: CMakeFiles/globalSettings.dir/flags.make
+CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp
+CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o -MF CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o.d -o CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp
 
-CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp > CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.i
+CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp > CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.i
 
-CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp -o CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.s
+CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp -o CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.s
 
-CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o: CMakeFiles/globalSettings.dir/flags.make
-CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp
-CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o -MF CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o.d -o CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp
+CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o: CMakeFiles/globalSettings.dir/flags.make
+CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp
+CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o -MF CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o.d -o CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp
 
-CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp > CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.i
+CMakeFiles/globalSettings.dir/src/StreamManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/src/StreamManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp > CMakeFiles/globalSettings.dir/src/StreamManager.cpp.i
 
-CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp -o CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.s
+CMakeFiles/globalSettings.dir/src/StreamManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/src/StreamManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp -o CMakeFiles/globalSettings.dir/src/StreamManager.cpp.s
 
-CMakeFiles/globalSettings.dir/managers/main.cpp.o: CMakeFiles/globalSettings.dir/flags.make
-CMakeFiles/globalSettings.dir/managers/main.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp
-CMakeFiles/globalSettings.dir/managers/main.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/globalSettings.dir/managers/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/managers/main.cpp.o -MF CMakeFiles/globalSettings.dir/managers/main.cpp.o.d -o CMakeFiles/globalSettings.dir/managers/main.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp
+CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o: CMakeFiles/globalSettings.dir/flags.make
+CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp
+CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o -MF CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o.d -o CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp
 
-CMakeFiles/globalSettings.dir/managers/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/managers/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp > CMakeFiles/globalSettings.dir/managers/main.cpp.i
+CMakeFiles/globalSettings.dir/src/SystemManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/src/SystemManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp > CMakeFiles/globalSettings.dir/src/SystemManager.cpp.i
 
-CMakeFiles/globalSettings.dir/managers/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/managers/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp -o CMakeFiles/globalSettings.dir/managers/main.cpp.s
+CMakeFiles/globalSettings.dir/src/SystemManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/src/SystemManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp -o CMakeFiles/globalSettings.dir/src/SystemManager.cpp.s
+
+CMakeFiles/globalSettings.dir/src/main.cpp.o: CMakeFiles/globalSettings.dir/flags.make
+CMakeFiles/globalSettings.dir/src/main.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp
+CMakeFiles/globalSettings.dir/src/main.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/globalSettings.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/src/main.cpp.o -MF CMakeFiles/globalSettings.dir/src/main.cpp.o.d -o CMakeFiles/globalSettings.dir/src/main.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp
+
+CMakeFiles/globalSettings.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/src/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp > CMakeFiles/globalSettings.dir/src/main.cpp.i
+
+CMakeFiles/globalSettings.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/src/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp -o CMakeFiles/globalSettings.dir/src/main.cpp.s
+
+CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.o: CMakeFiles/globalSettings.dir/flags.make
+CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.o: /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/qcustomplot.cpp
+CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.o: CMakeFiles/globalSettings.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.o -MF CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.o.d -o CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.o -c /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/qcustomplot.cpp
+
+CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/qcustomplot.cpp > CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.i
+
+CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/qcustomplot.cpp -o CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.s
 
 # Object files for target globalSettings
 globalSettings_OBJECTS = \
-"CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o" \
-"CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o" \
-"CMakeFiles/globalSettings.dir/managers/Camera.cpp.o" \
-"CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o" \
-"CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o" \
-"CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o" \
-"CMakeFiles/globalSettings.dir/managers/main.cpp.o"
+"CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.o" \
+"CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o" \
+"CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o" \
+"CMakeFiles/globalSettings.dir/src/Camera.cpp.o" \
+"CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o" \
+"CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o" \
+"CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o" \
+"CMakeFiles/globalSettings.dir/src/main.cpp.o" \
+"CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.o"
 
 # External object files for target globalSettings
 globalSettings_EXTERNAL_OBJECTS =
 
-globalSettings: CMakeFiles/globalSettings.dir/managers/GlobalSettings.cpp.o
-globalSettings: CMakeFiles/globalSettings.dir/managers/NetworkManager.cpp.o
-globalSettings: CMakeFiles/globalSettings.dir/managers/Camera.cpp.o
-globalSettings: CMakeFiles/globalSettings.dir/managers/DeviceManager.cpp.o
-globalSettings: CMakeFiles/globalSettings.dir/managers/StreamManager.cpp.o
-globalSettings: CMakeFiles/globalSettings.dir/managers/SystemManager.cpp.o
-globalSettings: CMakeFiles/globalSettings.dir/managers/main.cpp.o
+globalSettings: CMakeFiles/globalSettings.dir/globalSettings_autogen/mocs_compilation.cpp.o
+globalSettings: CMakeFiles/globalSettings.dir/src/GlobalSettings.cpp.o
+globalSettings: CMakeFiles/globalSettings.dir/src/NetworkManager.cpp.o
+globalSettings: CMakeFiles/globalSettings.dir/src/Camera.cpp.o
+globalSettings: CMakeFiles/globalSettings.dir/src/DeviceManager.cpp.o
+globalSettings: CMakeFiles/globalSettings.dir/src/StreamManager.cpp.o
+globalSettings: CMakeFiles/globalSettings.dir/src/SystemManager.cpp.o
+globalSettings: CMakeFiles/globalSettings.dir/src/main.cpp.o
+globalSettings: CMakeFiles/globalSettings.dir/src/qcustomplot.cpp.o
 globalSettings: CMakeFiles/globalSettings.dir/build.make
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.5.4d
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_alphamat.so.4.5.4d
@@ -223,6 +255,7 @@ globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_viz.so.4.5.4d
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_wechat_qrcode.so.4.5.4d
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_xobjdetect.so.4.5.4d
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_xphoto.so.4.5.4d
+globalSettings: /usr/lib/x86_64-linux-gnu/libQt5PrintSupport.so.5.15.3
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_highgui.so.4.5.4d
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_datasets.so.4.5.4d
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_plot.so.4.5.4d
@@ -242,8 +275,11 @@ globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_flann.so.4.5.4d
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.5.4d
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.5.4d
 globalSettings: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.5.4d
+globalSettings: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.3
+globalSettings: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.3
+globalSettings: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.3
 globalSettings: CMakeFiles/globalSettings.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable globalSettings"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable globalSettings"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/globalSettings.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

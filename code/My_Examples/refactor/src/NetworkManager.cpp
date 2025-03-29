@@ -504,7 +504,7 @@ uint32_t ipToDecimal(std::string ip)
     return decimal;
 }
 
-void plotOffsets(double ptpThreshold = 1000.0)
+void NetworkManager::plotOffsets(double ptpThreshold)
 {
     const QString offsetDir = "./output/offset";
     const QString plotsDir = "./output/plots";

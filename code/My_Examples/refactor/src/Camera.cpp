@@ -482,6 +482,11 @@ void Camera::processRawFrame(const cv::Mat &rawFrame, cv::Mat &outputFrame, uint
     }
 }
 
+bool Camera::isFpsStableForSaving(double tolerance) const
+{
+    return std::abs(getLastSavedFps() - getLastSavedFps()) <= tolerance;
+}
+
 void Camera::adjustFpsDynamically(double meanFps, double &lastFpsAdjustment)
 {
     double currentFps = getFps();
@@ -496,6 +501,20 @@ void Camera::adjustFpsDynamically(double meanFps, double &lastFpsAdjustment)
 
         std::cout << "[DEBUG] FPS dynamically adjusted to: " << newFps << std::endl;
     }
+}
+
+bool areAllFpsStable(const std::vector<std::shared_ptr<Camera>> &cameras, double tolerance = 1.0)
+{
+    if (cameras.empty()) return false;
+
+    double referenceFps = cameras.front()->getLastSavedFps();
+    for (const auto &cam : cameras)
+    {
+        double camFps = cam->getLastSavedFps();
+        if (std::abs(camFps - referenceFps) > tolerance)
+            return false;
+    }
+    return true;
 }
 
 void Camera::updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index,
@@ -544,6 +563,9 @@ void Camera::updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat
         std::lock_guard<std::mutex> lock(globalFrameMutex);
         globalFrames[index] = frame.clone();
     }
+
+    this->setLastSavedFps(meanFps);
+
 }
 
 void Camera::processFrame(const rcg::Buffer *buffer, cv::Mat &outputFrame)
@@ -920,30 +942,33 @@ void Camera::startStreaming(std::atomic<bool> &stopStream, std::mutex &globalFra
         {
             updateGlobalFrame(globalFrameMutex, globalFrames, index, outputFrame, frameCount, lastTime);
 
-            if (saveStream)
+            if (saveStream && isFpsStableForSaving())  // ✅ only save if stable
             {
                 if (videoWriter.isOpened())
                 {
-                    try
-                    {
-                        saveFrameToVideo(videoWriter, outputFrame);
-                    }
+                    try { saveFrameToVideo(videoWriter, outputFrame); }
                     catch (const std::exception &ex)
                     {
                         std::cerr << RED << "Exception during video writing: " << ex.what() << RESET << std::endl;
                     }
                 }
-
-                // Save frame as PNG
-                try
-                {
-                    saveFrameAsPng(outputFrame, "captured_frames");
-                }
+            
+                try { saveFrameAsPng(outputFrame, "captured_frames"); }
                 catch (const std::exception &ex)
                 {
                     std::cerr << RED << "Exception during PNG saving: " << ex.what() << RESET << std::endl;
                 }
+            
+                // ✅ Update last saved FPS after successful save
+                setLastSavedFps(getLastSavedFps());
             }
+            else if (saveStream)
+            {
+                std::cout << "[INFO] Skipping save — FPS unstable: "
+                          << "Current mean FPS = " << getLastSavedFps()
+                          << ", Last saved FPS = " << getLastSavedFps() << std::endl;
+            }
+            
         }
     }
 

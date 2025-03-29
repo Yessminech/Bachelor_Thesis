@@ -122,6 +122,9 @@ public:
   StreamConfig streamConfig;
   CameraConfig cameraConfig;
   std::shared_ptr<GenApi::CNodeMapRef> nodemap;
+  double getLastSavedFps() const { return lastSavedFps; }
+  void setLastSavedFps(double fps) { lastSavedFps = fps; }
+  bool isFpsStableForSaving(double tolerance = 1.0) const;
 
 private:
   // Private Members
@@ -150,6 +153,7 @@ private:
   std::string hexToMAC(const std::string &hexMAC);
   PfncFormat_ getPixelFormat(const std::string &format);
   int getBitsPerPixel(PfncFormat_ pixelFormat);
+  double lastSavedFps = 0.0;
 
   void logBandwidthDelaysToCSV(const std::string& camID, int64_t packetDelayNs, int64_t transmissionDelayNs);
 

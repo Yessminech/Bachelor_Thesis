@@ -8,13 +8,15 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/Camera.cpp" "CMakeFiles/deviceManager.dir/managers/Camera.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/managers/Camera.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/DeviceManager.cpp" "CMakeFiles/deviceManager.dir/managers/DeviceManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/managers/DeviceManager.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/GlobalSettings.cpp" "CMakeFiles/deviceManager.dir/managers/GlobalSettings.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/managers/GlobalSettings.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/NetworkManager.cpp" "CMakeFiles/deviceManager.dir/managers/NetworkManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/managers/NetworkManager.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/StreamManager.cpp" "CMakeFiles/deviceManager.dir/managers/StreamManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/managers/StreamManager.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/SystemManager.cpp" "CMakeFiles/deviceManager.dir/managers/SystemManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/managers/SystemManager.cpp.o.d"
-  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/managers/main.cpp" "CMakeFiles/deviceManager.dir/managers/main.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/managers/main.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/build/deviceManager_autogen/mocs_compilation.cpp" "CMakeFiles/deviceManager.dir/deviceManager_autogen/mocs_compilation.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/deviceManager_autogen/mocs_compilation.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.cpp" "CMakeFiles/deviceManager.dir/src/Camera.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/Camera.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.cpp" "CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/DeviceManager.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.cpp" "CMakeFiles/deviceManager.dir/src/GlobalSettings.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/GlobalSettings.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp" "CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/NetworkManager.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp" "CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/StreamManager.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp" "CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/SystemManager.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/main.cpp" "CMakeFiles/deviceManager.dir/src/main.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/main.cpp.o.d"
+  "/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/qcustomplot.cpp" "CMakeFiles/deviceManager.dir/src/qcustomplot.cpp.o" "gcc" "CMakeFiles/deviceManager.dir/src/qcustomplot.cpp.o.d"
   )
 
 # Targets to which this target links.
