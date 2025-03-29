@@ -43,6 +43,7 @@ void ptpSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCamerasList)
     networkManager.configureMultiCamerasNetwork(openCamerasList);
     networkManager.monitorPtpStatus(openCamerasList);
     networkManager.monitorPtpOffset(openCamerasList);
+    networkManager.plotOffsets();
     return;
 }
 

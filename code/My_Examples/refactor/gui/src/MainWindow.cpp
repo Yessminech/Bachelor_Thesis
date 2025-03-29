@@ -207,11 +207,11 @@ void MainWindow::addOpenAllButton(QVBoxLayout *layout)
 
         if (!checkedCameraIDs.empty())
         {
-            // deviceManager.openCameras(checkedCameraIDs);
-            // networkManager.enablePtp(openCamerasList); 
-            // networkManager.configureMultiCamerasNetwork(openCamerasList);
-            // networkManager.monitorPtpStatus(openCamerasList);
-            // networkManager.monitorPtpOffset(openCamerasList);
+            deviceManager.openCameras(checkedCameraIDs);
+            networkManager.enablePtp(openCamerasList); 
+            networkManager.configureMultiCamerasNetwork(openCamerasList);
+            networkManager.monitorPtpStatus(openCamerasList);
+            networkManager.monitorPtpOffset(openCamerasList);
             plotOffsetCSV(layout, "./../../ptp_offset_history.csv"); //  CSV should be in the same directory as the executable
             qDebug() << "Requested to open" << checkedCameraIDs.size() << "camera(s).";
         }
@@ -232,25 +232,55 @@ void MainWindow::setupCheckboxUI(QVBoxLayout *layout)
 void MainWindow::setupDelayTable(QVBoxLayout *layout)
 {
     QLabel *delayLabel = new QLabel("Delays");
-    QTableWidget *delayTable = new QTableWidget(6, 3);
-    delayTable->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    delayTable->setFixedHeight(delayTable->verticalHeader()->defaultSectionSize() * 6 + delayTable->horizontalHeader()->height());
+    QTableWidget *delayTable = new QTableWidget(0, 3, this);
 
+    delayTable->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     delayTable->setHorizontalHeaderLabels({"Cam ID", "Packet Delay", "Transmission Delay"});
     delayTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     delayTable->verticalHeader()->setVisible(false);
     delayTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     delayTable->setSelectionMode(QAbstractItemView::NoSelection);
 
-    for (int row = 0; row < 6; ++row)
-    {
-        delayTable->setItem(row, 0, new QTableWidgetItem(QString("Cam %1").arg(row)));
-        delayTable->setItem(row, 1, new QTableWidgetItem("~123 ms"));
-        delayTable->setItem(row, 2, new QTableWidgetItem("~456 ms"));
-    }
-
     layout->addWidget(delayLabel);
     layout->addWidget(delayTable);
+
+    // 🔁 Delay loading by 500ms to allow file generation
+    QTimer::singleShot(500, this, [=]()
+                       { loadDelayTableFromCSV(delayTable, delayLabel); });
+}
+
+void MainWindow::loadDelayTableFromCSV(QTableWidget* delayTable, QLabel* delayLabel)
+{
+    QFile file("./../../bandwidth_delays.csv");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open bandwidth_delays.csv.";
+        delayLabel->setText("Delays (No data)");
+        return;
+    }
+
+    QTextStream in(&file);
+    QString headerLine = in.readLine(); // Skip header: CameraID,PacketDelayNs,TransmissionDelayNs
+
+    int row = 0;
+    delayTable->setRowCount(0); // Clear existing content
+
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty()) continue;
+
+        QStringList fields = line.split(',');
+        if (fields.size() < 3) continue;
+
+        delayTable->insertRow(row);
+        delayTable->setItem(row, 0, new QTableWidgetItem(fields[0]));
+        delayTable->setItem(row, 1, new QTableWidgetItem(fields[1] + " ns"));
+        delayTable->setItem(row, 2, new QTableWidgetItem(fields[2] + " ns"));
+        row++;
+    }
+
+    delayTable->setFixedHeight(
+        delayTable->verticalHeader()->defaultSectionSize() * delayTable->rowCount()
+        + delayTable->horizontalHeader()->height());
 }
 
 void MainWindow::setupOffsetTable(QVBoxLayout *layout)

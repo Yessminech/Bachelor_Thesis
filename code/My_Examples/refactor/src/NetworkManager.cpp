@@ -23,7 +23,16 @@
 #include <algorithm> 
 #include <deque>    
 #include <random>
-
+#include <filesystem>
+#include "qcustomplot.h"
+#include <QFile>
+#include <QTextStream>
+#include <QVector>
+#include <QMap>
+#include <QStringList>
+#include <QDebug>
+#include <QDir>
+#include <QRegularExpression>
 double fpsUpperBound = getGlobalFpsUpperBound();
 double fpsLowerBound = getGlobalFpsLowerBound();
 
@@ -196,12 +205,19 @@ void NetworkManager::setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, s
     }
 }
 
-void NetworkManager::writeOffsetHistoryToCsv(
+void NetworkManager::logOffsetHistoryToCSV(
     const std::unordered_map<std::string, std::deque<CameraSample>> &offsetHistory)
 {
-    const std::string filename = "ptp_offset_history.csv";
-    std::ofstream outFile(filename);
+    // Directories and filename
+    const std::string outputDir = "./output";
+    const std::string offsetDir = outputDir + "/offset";
+    const std::string timestamp = getSessionTimestamp();
+    const std::string filename = offsetDir + "/ptp_offset_history_" + timestamp + ".csv";
 
+    // Ensure directories exist
+    std::filesystem::create_directories(offsetDir);
+
+    std::ofstream outFile(filename);
     if (!outFile.is_open())
     {
         std::cerr << RED << "[DEBUG] Failed to open CSV file for writing: " << filename << RESET << std::endl;
@@ -216,7 +232,7 @@ void NetworkManager::writeOffsetHistoryToCsv(
     }
     outFile << "\n";
 
-    // Determine max rows
+    // Determine max length of history
     size_t maxLength = 0;
     for (const auto &[_, history] : offsetHistory)
         maxLength = std::max(maxLength, history.size());
@@ -242,6 +258,7 @@ void NetworkManager::writeOffsetHistoryToCsv(
     outFile.close();
     std::cout << CYAN << "[DEBUG] Offset + timestamp history written to " << filename << RESET << std::endl;
 }
+
 
 void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList)
 {
@@ -350,7 +367,7 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
         converted[key] = std::deque<CameraSample>(vec.begin(), vec.end());
     }
     
-    writeOffsetHistoryToCsv(converted);
+    logOffsetHistoryToCSV(converted);
     if (debug)
     {
         if (allSynced)
@@ -487,3 +504,116 @@ uint32_t ipToDecimal(std::string ip)
     return decimal;
 }
 
+void plotOffsets(double ptpThreshold = 1000.0)
+{
+    const QString offsetDir = "./output/offset";
+    const QString plotsDir = "./output/plots";
+
+    std::filesystem::create_directories(plotsDir.toStdString());
+
+    // Find latest matching CSV: ptp_offset_history_*.csv
+    QDir dir(offsetDir);
+    QStringList csvFiles = dir.entryList(QStringList() << "ptp_offset_history_*.csv", QDir::Files, QDir::Name);
+
+    if (csvFiles.isEmpty()) {
+        qDebug() << "[ERROR] No ptp_offset_history_*.csv files found in:" << offsetDir;
+        return;
+    }
+
+    QString latestCsv = csvFiles.last(); // Sorted, so last one is newest
+    QString csvPath = offsetDir + "/" + latestCsv;
+
+    // Extract timestamp from filename (for consistent plot naming)
+    QString sessionTimestamp;
+    QRegularExpression re("ptp_offset_history_(\\d{8}_\\d{6})\\.csv");
+    QRegularExpressionMatch match = re.match(latestCsv);
+    if (match.hasMatch()) {
+        sessionTimestamp = match.captured(1);
+    } else {
+        sessionTimestamp = QString::fromStdString(getSessionTimestamp());
+    }
+
+    // Now parse the CSV and plot
+    QFile file(csvPath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "[ERROR] Failed to open CSV file:" << csvPath;
+        return;
+    }
+
+    QTextStream in(&file);
+    QString headerLine = in.readLine();
+    QStringList headers = headerLine.split(',');
+
+    QVector<double> samples;
+    QMap<QString, QVector<double>> offsetData;
+    QStringList offsetHeaders;
+
+    for (const QString &h : headers) {
+        if (h.endsWith("_offset_ns")) {
+            offsetHeaders.append(h);
+            offsetData[h] = QVector<double>();
+        }
+    }
+
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty()) continue;
+
+        QStringList values = line.split(',');
+        if (values.size() < headers.size()) continue;
+
+        samples.append(values[0].toDouble());
+
+        for (const QString &offsetHeader : offsetHeaders) {
+            int idx = headers.indexOf(offsetHeader);
+            if (idx < values.size()) {
+                offsetData[offsetHeader].append(values[idx].toDouble());
+            } else {
+                offsetData[offsetHeader].append(0.0);
+            }
+        }
+    }
+
+    QCustomPlot plot;
+    plot.legend->setVisible(true);
+    plot.legend->setBrush(QBrush(QColor(255, 255, 255, 230)));
+
+    int colorIndex = 0;
+    for (const QString &offsetHeader : offsetHeaders) {
+        plot.addGraph();
+        QString label = offsetHeader;
+        label.replace("_offset_ns", "");
+        plot.graph()->setName(label);
+
+        plot.graph()->setData(samples, offsetData[offsetHeader]);
+        plot.graph()->setPen(QPen(QColor::fromHsv((colorIndex * 80) % 360, 255, 200), 2));
+        colorIndex++;
+    }
+
+    // Add threshold line
+    QCPItemStraightLine *thresholdLine = new QCPItemStraightLine(&plot);
+    thresholdLine->point1->setCoords(0, ptpThreshold);
+    thresholdLine->point2->setCoords(1, ptpThreshold);
+    thresholdLine->setPen(QPen(Qt::red, 1, Qt::DashLine));
+
+    QCPItemText *thresholdLabel = new QCPItemText(&plot);
+    thresholdLabel->position->setCoords(samples.last(), ptpThreshold + 20);
+    thresholdLabel->setText("Threshold");
+    thresholdLabel->setColor(Qt::red);
+    thresholdLabel->setFont(QFont("Sans", 9));
+
+    plot.xAxis->setLabel("Sample Index");
+    plot.yAxis->setLabel("Offset from Master (ns)");
+    plot.rescaleAxes();
+
+    // Save the plot
+    QString plotPath = plotsDir + QString("/ptp_offsets_%1.png").arg(sessionTimestamp);
+    int width = 1200;
+    int height = 600;
+    plot.resize(width, height);
+    if (plot.toPixmap(width, height).save(plotPath)) {
+        qDebug() << "[INFO] Offset plot saved to" << plotPath;
+    } else {
+        qDebug() << "[ERROR] Failed to save plot to" << plotPath;
+    }
+}

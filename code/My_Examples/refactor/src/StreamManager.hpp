@@ -25,7 +25,13 @@ public:
 
     cv::Mat createComposite(const std::vector<cv::Mat> &frames);
     void startFreeRunStream(std::shared_ptr<Camera> camera, std::atomic<bool>& stopStream, bool saveStream, int threadIndex);
-    void startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras, std::atomic<bool>& stopStream, bool saveStream);
+    void startSyncFreeRun(
+        const std::list<std::shared_ptr<Camera>> &openCameras,
+        std::atomic<bool>& stopStream,
+        bool saveStream,
+        std::chrono::milliseconds acquisitionDelay = std::chrono::milliseconds(0)
+    );
+    
     void scheduleAcquisition(const std::list<std::shared_ptr<Camera>> &openCamerasList, int64_t scheduledDelayS = 1);
 
 

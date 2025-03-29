@@ -43,6 +43,7 @@ private:
     void setupCheckboxUI(QVBoxLayout *layout);
     void plotOffsetCSV(QVBoxLayout *layout, const QString &csvFilePath);
     void loadOffsetTableFromCSV(QTableWidget* table, QLabel* label, QVBoxLayout* layout);
+    void loadDelayTableFromCSV(QTableWidget* delayTable, QLabel* delayLabel);
 
     // UI elements
     QPushButton* startButton;

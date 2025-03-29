@@ -143,66 +143,74 @@ void StreamManager::stopStreaming() {
 }
 
 // Start synchronized free-run mode
-void StreamManager::startSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCameras, std::atomic<bool>& stopStream, bool saveStream)
+void StreamManager::startSyncFreeRun(
+    const std::list<std::shared_ptr<Camera>> &openCameras,
+    std::atomic<bool>& stopStream,
+    bool saveStream,
+    std::chrono::milliseconds acquisitionDelay // Optional delay parameter
+)
 {
+    // ⏱ Optional: Wait before starting acquisition
+    if (acquisitionDelay.count() > 0) {
+        std::cout << YELLOW << "Waiting " << acquisitionDelay.count() << " ms before starting acquisition..." << RESET << std::endl;
+        std::this_thread::sleep_for(acquisitionDelay);
+    }
+
     // Reset the counters
     startedThreads = 0;
-    
+
     // Convert list to vector for easier indexed access
     std::vector<std::shared_ptr<Camera>> cameraVec(openCameras.begin(), openCameras.end());
-    
+
     // Start cameras in reverse order (last to first)
     for (int i = cameraVec.size() - 1; i >= 0; i--) {
-        // Pass the index explicitly to control frame placement
         startFreeRunStream(cameraVec[i], stopStream, saveStream, i);
-        
-        // Add a small delay to ensure cameras start in the correct order
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Small delay between starts
     }
-    // Wait for all threads to start successfully.
-    while (startedThreads.load() < openCameras.size())
-    {
+
+    // Wait for all threads to start
+    while (startedThreads.load() < openCameras.size()) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
+
     std::cout << GREEN << "All threads have started successfully." << RESET << std::endl;
-    // Create a composite window that scales nicely.
+
+    // Composite window creation
     const std::string compWindowName = "Composite Stream";
     cv::namedWindow(compWindowName, cv::WINDOW_AUTOSIZE);
     const int compWidth = 1280, compHeight = 720;
     cv::resizeWindow(compWindowName, compWidth, compHeight);
 
-    // Composite display loop.
-    while (!stopStream)
-    {
+    // Composite display loop
+    while (!stopStream) {
         std::vector<cv::Mat> framesCopy;
         {
             std::lock_guard<std::mutex> lock(globalFrameMutex);
             framesCopy = globalFrames;
         }
-        if (!framesCopy.empty())
-        {
+
+        if (!framesCopy.empty()) {
             cv::Mat composite = createComposite(framesCopy);
             cv::imshow(compWindowName, composite);
-                        // Print a message to remind the user how to exit
-                        static bool messageShown = false;
-                        if (!messageShown) {
-                            std::cout << "Press 'q' on the OpenCV window to exit the stream.\n";
-                            messageShown = true;
-                        }
-                    
+
+            static bool messageShown = false;
+            if (!messageShown) {
+                std::cout << "Press 'q' on the OpenCV window to exit the stream.\n";
+                messageShown = true;
+            }
         }
-    // Process keyboard input - check for specific keys
-    int key = cv::waitKey(30);
-    if (key >= 0) {
-        std::cout << "Key pressed: " << static_cast<char>(key) << " (code: " << key << ")\n";
-        
-        // Check for common exit keys
-        if (key == 27 || key == 'q' || key == 'Q') {  // ESC, q, or Q
-            std::cout << "Exit key pressed. Stopping stream...\n";
-            stopStream = true;
-            break;
+
+        int key = cv::waitKey(30);
+        if (key >= 0) {
+            std::cout << "Key pressed: " << static_cast<char>(key) << " (code: " << key << ")\n";
+            if (key == 27 || key == 'q' || key == 'Q') {
+                std::cout << "Exit key pressed. Stopping stream...\n";
+                stopStream = true;
+                break;
+            }
         }
-    }    }
+    }
+
     stopStreaming();
 }
 

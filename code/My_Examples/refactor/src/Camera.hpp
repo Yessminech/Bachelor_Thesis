@@ -141,6 +141,7 @@ private:
   void updateGlobalFrame(std::mutex &globalFrameMutex, std::vector<cv::Mat> &globalFrames, int index,
                          cv::Mat &frame, int &frameCount, std::chrono::steady_clock::time_point &lastTime);
   void saveFrameToVideo(cv::VideoWriter &videoWriter, const cv::Mat &frame);
+  void adjustFpsDynamically(double fps, double &lastFpsAdjustment);
 
   // Utility Methods
   std::string decimalToIP(uint32_t decimalIP);
@@ -149,6 +150,9 @@ private:
   std::string hexToMAC(const std::string &hexMAC);
   PfncFormat_ getPixelFormat(const std::string &format);
   int getBitsPerPixel(PfncFormat_ pixelFormat);
+
+  void logBandwidthDelaysToCSV(const std::string& camID, int64_t packetDelayNs, int64_t transmissionDelayNs);
+
 };
 
 #endif // CAMERA_HPP

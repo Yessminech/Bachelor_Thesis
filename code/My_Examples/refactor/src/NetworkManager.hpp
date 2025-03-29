@@ -56,9 +56,10 @@ public:
     void calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay);
     // void calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras);
     void getMinimumExposure(const std::list<std::shared_ptr<Camera>> &openCameras);
-    void writeOffsetHistoryToCsv(
+    void logOffsetHistoryToCSV(
         const std::unordered_map<std::string, std::deque<CameraSample>> &offsetHistory);
     bool debug = true;
+    void plotOffsets(double ptpThreshold = 1000.0);
 
 private:
     // ToDo values here make no sense, on construcotor they are set to correct values
@@ -72,5 +73,6 @@ private:
     const int timeWindowSize = 20; // 10 seconds //ToDo check unit
     std::string masterClockId;
     int64_t scheduledDelayS = 1; // 1 second
+    
 };
 #endif // NETWORKMANAGER_HPP

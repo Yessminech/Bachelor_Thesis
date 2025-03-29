@@ -1,0 +1,4 @@
+CameraID,PacketDelayNs,TransmissionDelayNs
+CAM_001,560,1120
+CAM_002,560,560
+CAM_003,560,0
