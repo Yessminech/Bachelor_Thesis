@@ -12,7 +12,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets PrintSupport)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Concurrent PrintSupport)
 find_package(OpenCV REQUIRED)
 
 set(SOURCES
@@ -23,6 +23,7 @@ set(SOURCES
     ${CMAKE_SOURCE_DIR}/../src/DeviceManager.cpp
     ${CMAKE_SOURCE_DIR}/../src/StreamManager.cpp
     ${CMAKE_SOURCE_DIR}/../src/NetworkManager.cpp
+    ${CMAKE_SOURCE_DIR}/../src/SystemManager.cpp
     ${CMAKE_SOURCE_DIR}/../src/Camera.cpp
     ${CMAKE_SOURCE_DIR}/../src/GlobalSettings.cpp
 )
@@ -37,6 +38,7 @@ add_executable(QtOpenCVDemo ${SOURCES} ${HEADERS})
 target_link_libraries(QtOpenCVDemo PRIVATE 
     Qt6::Widgets 
     Qt6::PrintSupport 
+    Qt6::Concurrent
     ${OpenCV_LIBS}
     rc_genicam_api
 )

@@ -15,57 +15,63 @@
 
 class CameraSettingsWindow;
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
-    MainWindow(QWidget* parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void initialize();
 
 private slots:
     void startStreaming();
     void stopStreaming();
-    void updateFrame();
 
 private:
     // UI setup helpers
-    void setupTopBar(QVBoxLayout* parentLayout);
-    void setupStreamAndInfoArea(QHBoxLayout* parentLayout);
-    void setupVideoFeed(QVBoxLayout* layout);
-    void setupCameraCheckboxes(QVBoxLayout* layout);
-    void setupDelayTable(QVBoxLayout* layout);
-    void setupOffsetTable(QVBoxLayout* layout);
-    void setupOffsetPlot(QVBoxLayout* layout);
+    void setupTopBar(QVBoxLayout *parentLayout);
+    void setupStreamAndInfoArea(QHBoxLayout *parentLayout);
+
+    void setupCameraCheckboxes(QVBoxLayout *layout);
+    void setupDelayTable(QVBoxLayout *layout);
+    void setupOffsetTable(QVBoxLayout *layout);
+    void setupOffsetPlot(QVBoxLayout *layout);
     void connectUI();
     void displayCameraCheckboxes(QVBoxLayout *layout);
     void addOpenAllButton(QVBoxLayout *layout);
     void setupCheckboxUI(QVBoxLayout *layout);
     void plotOffsetCSV(QVBoxLayout *layout, const QString &csvFilePath);
-    void loadOffsetTableFromCSV(QTableWidget* table, QLabel* label, QVBoxLayout* layout);
-    void loadDelayTableFromCSV(QTableWidget* delayTable, QLabel* delayLabel);
+    void loadOffsetTableFromCSV(QTableWidget *table, QLabel *label, QVBoxLayout *layout);
+    void loadDelayTableFromCSV(QTableWidget *delayTable, QLabel *delayLabel);
 
     // UI elements
-    QPushButton* startButton;
-    QPushButton* stopButton;
-    QPushButton* saveButton;
-    QLineEdit* exposureEdit;
-    QLabel* videoLabel;
-    QVector<QCheckBox*> cameraCheckboxes;
-    QTimer* timer;
-    QCustomPlot* plot;
-    QLabel* plotPlaceholder;
+    QPushButton *startButton;
+    QPushButton *stopButton;
+    QPushButton *saveButton;
+    QLineEdit *exposureEdit;
+    QVector<QCheckBox *> cameraCheckboxes;
+    QTimer *timer;
+    QCustomPlot *plot;
+    QLabel *plotPlaceholder;
+    QPushButton *settingsBtn; // Add this to class MainWindow
 
     // Other components
-    cv::VideoCapture cap;
     bool savingEnabled;
     bool isOpened;
-    CameraSettingsWindow* settingsWindow;
-    QVBoxLayout* plotLayout;
+    CameraSettingsWindow *settingsWindow;
+    QVBoxLayout *plotLayout;
 
     // Managers
     std::set<std::shared_ptr<rcg::Device>> availableCameras;
     std::list<std::shared_ptr<Camera>> openCamerasList;
-    std::list<std::string> checkedCameraIDs; 
+    std::list<std::string> checkedCameraIDs;
+
+    QPushButton *scheduleButton;
+    QTimer *scheduleTimer;
+    int scheduledDelayMs = 0;
+    void openScheduleDialog();
+
+    QLabel* compositeLabel = nullptr;
 
 };

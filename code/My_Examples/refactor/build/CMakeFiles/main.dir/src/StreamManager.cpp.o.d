@@ -349,11 +349,6 @@ CMakeFiles/main.dir/src/StreamManager.cpp.o: \
  /usr/include/opencv4/opencv2/video/tracking.hpp \
  /usr/include/opencv4/opencv2/video/background_segm.hpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/Camera.hpp \
- /usr/local/include/rc_genicam_api/pixel_formats.h \
- /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
- /usr/local/include/rc_genicam_api/device.h \
- /usr/local/include/rc_genicam_api/interface.h \
- /usr/local/include/rc_genicam_api/system.h \
  /usr/include/rc_genicam_api/genicam/GenApi/GenApi.h \
  /usr/include/rc_genicam_api/genicam/Base/GCBase.h \
  /usr/include/rc_genicam_api/genicam/Base/GCTypes.h \
@@ -411,19 +406,26 @@ CMakeFiles/main.dir/src/StreamManager.cpp.o: \
  /usr/include/rc_genicam_api/genicam/GenApi/SelectorState.h \
  /usr/include/rc_genicam_api/genicam/GenApi/StructPort.h \
  /usr/include/rc_genicam_api/genicam/GenApi/PortImpl.h \
- /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h \
- /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h \
- /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h \
  /usr/local/include/rc_genicam_api/buffer.h \
  /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
  /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
+ /usr/local/include/rc_genicam_api/device.h \
+ /usr/local/include/rc_genicam_api/interface.h \
+ /usr/local/include/rc_genicam_api/system.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h \
+ /usr/local/include/rc_genicam_api/pixel_formats.h \
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
+ /usr/include/c++/11/atomic \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.hpp \
  /usr/local/include/rc_genicam_api/system.h \
  /usr/local/include/rc_genicam_api/interface.h \
  /usr/local/include/rc_genicam_api/nodemap_out.h \
  /usr/local/include/rc_genicam_api/config.h /usr/include/c++/11/thread \
  /usr/include/c++/11/bits/std_thread.h \
- /usr/include/c++/11/bits/this_thread_sleep.h /usr/include/signal.h \
+ /usr/include/c++/11/bits/this_thread_sleep.h /usr/include/c++/11/csignal \
+ /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
  /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h \
@@ -452,7 +454,6 @@ CMakeFiles/main.dir/src/StreamManager.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
  /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
- /usr/include/c++/11/atomic /usr/include/c++/11/csignal \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/DeviceManager.hpp \
  /usr/include/arpa/inet.h /usr/include/netinet/in.h \
  /usr/include/x86_64-linux-gnu/sys/socket.h \
@@ -486,6 +487,7 @@ CMakeFiles/main.dir/src/StreamManager.cpp.o: \
  /usr/include/c++/11/bits/regex.h /usr/include/c++/11/bits/regex.tcc \
  /usr/include/c++/11/bits/regex_executor.h \
  /usr/include/c++/11/bits/regex_executor.tcc \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/GlobalSettings.hpp \
  /usr/local/include/rc_genicam_api/stream.h \
  /usr/local/include/rc_genicam_api/device.h \
  /usr/local/include/rc_genicam_api/buffer.h \

@@ -2,6 +2,9 @@
 #include "CameraSettingsWindow.hpp"
 #include "DeviceManager.hpp"
 #include "StreamManager.hpp"
+#include "SystemManager.hpp"
+
+#include "GlobalSettings.hpp"
 #include "NetworkManager.hpp"
 #include "Camera.hpp"
 #include <rc_genicam_api/device.h>
@@ -23,27 +26,22 @@
 #include <QStringList>
 #include <QMap>
 #include <QDebug>
+#include <QtConcurrent/QtConcurrentRun>
 
-DeviceManager deviceManager;
-StreamManager streamManager;
-NetworkManager networkManager;
-std::atomic<bool> stopStream(false);
-void handleSignal(int signal)
-{
-    if (signal == SIGINT)
-    {
-        std::cout << "\nReceived Ctrl+C, stopping streams and cleanup...\n";
-        stopStream.store(true);
-    }
-}
+
+SystemManager systemManager;
+
+extern std::atomic<bool> stopStream;
+void handleSignal(int signal);
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), cap(0), savingEnabled(false), settingsWindow(nullptr)
+    : QMainWindow(parent), savingEnabled(false), settingsWindow(nullptr)
 {
 
-    if (deviceManager.getAvailableCameras())
+    systemManager.initializeSystem();
+    if (systemManager.deviceManager.getAvailableCamerasList().size() > 0)
     {
-        availableCameras = deviceManager.getAvailableCamerasList();
+        availableCameras = systemManager.deviceManager.getAvailableCamerasList();
     }
     else
     {
@@ -55,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *rootLayout = new QVBoxLayout(central);
 
     setupTopBar(rootLayout);
-    // setupOffsetPlot(rootLayout);
+
     // Create a central middle section (stream + tables)
     QHBoxLayout *middleRow = new QHBoxLayout();
     setupStreamAndInfoArea(middleRow);
@@ -79,36 +77,77 @@ MainWindow::~MainWindow()
     stopStreaming();
     if (settingsWindow)
         delete settingsWindow;
+    systemManager.shutdownSystem();
 }
 
 void MainWindow::setupTopBar(QVBoxLayout *parentLayout)
 {
     QHBoxLayout *topBar = new QHBoxLayout();
-    // topBar->setAlignment(Qt::AlignTop);
 
-    QPushButton *settingsBtn = new QPushButton("⚙️ Settings");
+    settingsBtn = new QPushButton("⚙️ Settings");
+    settingsBtn->setToolTip("Disabled until at least one camera is opened");
+    settingsBtn->setEnabled(false);
     topBar->addWidget(settingsBtn);
-    connect(settingsBtn, &QPushButton::clicked, this, [=]()
-            {
-        if (!settingsWindow) settingsWindow = new CameraSettingsWindow(this);
-        settingsWindow->show();
-        settingsWindow->raise();
-        settingsWindow->activateWindow(); });
-
+    
     startButton = new QPushButton("▶️ Start");
-    startButton->setToolTip("Start stream");
+    startButton->setToolTip("Start streaming (disabled until camera is opened)");
+    startButton->setEnabled(false);
     topBar->addWidget(startButton);
-
+    
+    scheduleButton = new QPushButton("📅 Schedule");
+    scheduleButton->setToolTip("Schedule acquisition start (disabled until camera is opened)");
+    scheduleButton->setEnabled(false);
+    topBar->addWidget(scheduleButton);
+    
     stopButton = new QPushButton("⏹ Stop");
-    stopButton->setToolTip("Stop stream");
+    stopButton->setToolTip("Stop streaming (disabled until streaming is started)");
+    stopButton->setEnabled(false);
     topBar->addWidget(stopButton);
-
+    
     saveButton = new QPushButton("💾 Save OFF");
     saveButton->setCheckable(true);
-    saveButton->setToolTip("Toggle saving the stream");
     topBar->addWidget(saveButton);
+    
+
     topBar->addStretch();
     parentLayout->addLayout(topBar);
+}
+
+void MainWindow::openScheduleDialog()
+{
+    QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Schedule Acquisition");
+    dialog->setModal(true);
+
+    QVBoxLayout *layout = new QVBoxLayout(dialog);
+    QLabel *label = new QLabel("Enter delay before acquisition starts (ms):");
+    QSpinBox *delayInput = new QSpinBox();
+    delayInput->setRange(0, 60000);
+    delayInput->setValue(1000);
+
+    QPushButton *saveBtn = new QPushButton("Save");
+    layout->addWidget(label);
+    layout->addWidget(delayInput);
+    layout->addWidget(saveBtn);
+
+    connect(saveBtn, &QPushButton::clicked, this, [=]()
+            {
+        scheduledDelayMs = delayInput->value();
+        dialog->accept();
+
+        if (!scheduleTimer) {
+            scheduleTimer = new QTimer(this);
+            scheduleTimer->setSingleShot(true);
+            connect(scheduleTimer, &QTimer::timeout, this, [=]() {
+                QMessageBox::information(this, "Acquisition Started", "Scheduled acquisition has started.");
+                startStreaming();  // ✅ Reuse your existing method
+            });
+        }
+
+        scheduleTimer->start(scheduledDelayMs);
+        QMessageBox::information(this, "Scheduled", QString("Acquisition will start in %1 ms").arg(scheduledDelayMs)); });
+
+    dialog->exec();
 }
 
 void MainWindow::setupStreamAndInfoArea(QHBoxLayout *parentLayout)
@@ -116,9 +155,16 @@ void MainWindow::setupStreamAndInfoArea(QHBoxLayout *parentLayout)
     QHBoxLayout *middleRow = new QHBoxLayout();
     QVBoxLayout *streamLayout = new QVBoxLayout();
 
-    setupVideoFeed(streamLayout);
+    // ✅ Initialize and add the composite stream label
+    compositeLabel = new QLabel("Multi-Cam Stream", this);
+    compositeLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    compositeLabel->setMinimumSize(480, 270); // just a sane lower bound
+    compositeLabel->setStyleSheet("background-color: black;");
+    compositeLabel->setAlignment(Qt::AlignCenter);
+    streamLayout->addWidget(compositeLabel); // ✅ FIXED: use streamLayout
+
     setupCheckboxUI(streamLayout);
-    //  setupCameraCheckboxes(streamLayout)
+
     QVBoxLayout *tableLayout = new QVBoxLayout();
     setupDelayTable(tableLayout);
     setupOffsetTable(tableLayout);
@@ -126,15 +172,6 @@ void MainWindow::setupStreamAndInfoArea(QHBoxLayout *parentLayout)
     middleRow->addLayout(streamLayout);
     middleRow->addLayout(tableLayout);
     parentLayout->addLayout(middleRow);
-}
-
-void MainWindow::setupVideoFeed(QVBoxLayout *layout)
-{
-    videoLabel = new QLabel("Camera feed");
-    videoLabel->setFixedSize(640, 480);
-    videoLabel->setStyleSheet("background-color: black;");
-    videoLabel->setAlignment(Qt::AlignCenter);
-    layout->addWidget(videoLabel);
 }
 
 void MainWindow::setupCameraCheckboxes(QVBoxLayout *layout)
@@ -166,14 +203,15 @@ void MainWindow::displayCameraCheckboxes(QVBoxLayout *layout)
 {
     if (availableCameras.empty())
     {
+        QMessageBox::critical(this, "No Cameras", "No cameras found. Please restart the program.");
+        this->setEnabled(false); // Or: this->close();
         return;
     }
-
     QHBoxLayout *checkLayout = new QHBoxLayout();
 
     for (const auto &cam : availableCameras)
     {
-        QString camName = QString::fromStdString(cam->getDisplayName());
+        QString camName = QString::fromStdString(cam->getID());
         QCheckBox *camBox = new QCheckBox(camName, this);
         camBox->setEnabled(true);
 
@@ -201,20 +239,42 @@ void MainWindow::addOpenAllButton(QVBoxLayout *layout)
             {
                 std::string camID = (*camIt)->getID();
                 checkedCameraIDs.push_back(camID);
-                qDebug() << "Selected camera ID:" << QString::fromStdString(camID);
+                qDebug() << "Selected camera:" << QString::fromStdString(camID);
             }
         }
 
         if (!checkedCameraIDs.empty())
         {
-            deviceManager.openCameras(checkedCameraIDs);
-            networkManager.enablePtp(openCamerasList); 
-            networkManager.configureMultiCamerasNetwork(openCamerasList);
-            networkManager.monitorPtpStatus(openCamerasList);
-            networkManager.monitorPtpOffset(openCamerasList);
-            plotOffsetCSV(layout, "./../../ptp_offset_history.csv"); //  CSV should be in the same directory as the executable
-            qDebug() << "Requested to open" << checkedCameraIDs.size() << "camera(s).";
-        }
+            systemManager.deviceManager.createCameras(checkedCameraIDs);
+            systemManager.enumerateOpenCameras();
+            openCamerasList = systemManager.deviceManager.getOpenCameras();
+            if (openCamerasList.size() > 1)
+            {                
+                QtConcurrent::run([this]() {
+                    try {
+                        systemManager.networkManager.configurePtpSyncFreeRun(this->openCamerasList);
+                        /// add a msg 
+                    } catch (const std::exception &e) {
+                        qDebug() << "Exception in configurePtpSyncFreeRun:" << e.what();
+                    } catch (...) {
+                        qDebug() << "Unknown exception in configurePtpSyncFreeRun";
+                    }
+                });    
+                plotOffsetCSV(layout, "./../../ptp_offset_history.csv"); //  CSV should be in the same directory as the executable // ToDo wait fr logs ready 
+           
+           }
+
+            // ToDo openAllButton->setEnabled(false);
+
+            settingsBtn->setEnabled(true);
+            settingsBtn->setToolTip("Open camera-specific settings");
+            
+            startButton->setEnabled(true);
+            startButton->setToolTip("Start streaming");
+            
+            scheduleButton->setEnabled(true);
+            scheduleButton->setToolTip("Schedule acquisition start");
+                                }
         else
         {
             qDebug() << "No cameras selected.";
@@ -231,7 +291,12 @@ void MainWindow::setupCheckboxUI(QVBoxLayout *layout)
 
 void MainWindow::setupDelayTable(QVBoxLayout *layout)
 {
+    layout->setSpacing(0);                  // ✅ Remove space between widgets
+    layout->setContentsMargins(0, 0, 0, 0); // ✅ Optional: remove outer margins
+
     QLabel *delayLabel = new QLabel("Delays");
+    delayLabel->setContentsMargins(0, 0, 0, 0);       // ✅ Just in case
+    delayLabel->setStyleSheet("margin-bottom: 0px;"); // ✅ Tighten spacing
     QTableWidget *delayTable = new QTableWidget(0, 3, this);
 
     delayTable->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -241,7 +306,9 @@ void MainWindow::setupDelayTable(QVBoxLayout *layout)
     delayTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     delayTable->setSelectionMode(QAbstractItemView::NoSelection);
 
-    layout->addWidget(delayLabel);
+    // layout->addWidget(delayLabel);
+    delayTable->setStyleSheet("margin-top: 0px; padding-top: 0px;");
+
     layout->addWidget(delayTable);
 
     // 🔁 Delay loading by 500ms to allow file generation
@@ -249,10 +316,11 @@ void MainWindow::setupDelayTable(QVBoxLayout *layout)
                        { loadDelayTableFromCSV(delayTable, delayLabel); });
 }
 
-void MainWindow::loadDelayTableFromCSV(QTableWidget* delayTable, QLabel* delayLabel)
+void MainWindow::loadDelayTableFromCSV(QTableWidget *delayTable, QLabel *delayLabel)
 {
     QFile file("./../../bandwidth_delays.csv");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         qDebug() << "Failed to open bandwidth_delays.csv.";
         delayLabel->setText("Delays (No data)");
         return;
@@ -264,12 +332,15 @@ void MainWindow::loadDelayTableFromCSV(QTableWidget* delayTable, QLabel* delayLa
     int row = 0;
     delayTable->setRowCount(0); // Clear existing content
 
-    while (!in.atEnd()) {
+    while (!in.atEnd())
+    {
         QString line = in.readLine().trimmed();
-        if (line.isEmpty()) continue;
+        if (line.isEmpty())
+            continue;
 
         QStringList fields = line.split(',');
-        if (fields.size() < 3) continue;
+        if (fields.size() < 3)
+            continue;
 
         delayTable->insertRow(row);
         delayTable->setItem(row, 0, new QTableWidgetItem(fields[0]));
@@ -279,13 +350,16 @@ void MainWindow::loadDelayTableFromCSV(QTableWidget* delayTable, QLabel* delayLa
     }
 
     delayTable->setFixedHeight(
-        delayTable->verticalHeader()->defaultSectionSize() * delayTable->rowCount()
-        + delayTable->horizontalHeader()->height());
+        delayTable->verticalHeader()->defaultSectionSize() * delayTable->rowCount() + delayTable->horizontalHeader()->height());
 }
 
 void MainWindow::setupOffsetTable(QVBoxLayout *layout)
 {
+    layout->setSpacing(0); // ✅ Remove spacing between title and table
+    layout->setContentsMargins(0, 0, 0, 0);
     QLabel *offsetLabel = new QLabel("Offsets");
+    layout->setSpacing(0); // ✅ Remove spacing between title and table
+    layout->setContentsMargins(0, 0, 0, 0);
     QTableWidget *offsetTable = new QTableWidget(0, 2, this);
 
     offsetTable->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -295,7 +369,8 @@ void MainWindow::setupOffsetTable(QVBoxLayout *layout)
     offsetTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     offsetTable->setSelectionMode(QAbstractItemView::NoSelection);
 
-    layout->addWidget(offsetLabel);
+    // layout->addWidget(offsetLabel);
+    offsetTable->setStyleSheet("margin-top: 0px; padding-top: 0px;");
     layout->addWidget(offsetTable);
 
     // 🔁 Delay loading by 500ms to allow the file to be generated
@@ -303,10 +378,11 @@ void MainWindow::setupOffsetTable(QVBoxLayout *layout)
                        { loadOffsetTableFromCSV(offsetTable, offsetLabel, layout); });
 }
 
-void MainWindow::loadOffsetTableFromCSV(QTableWidget* offsetTable, QLabel* offsetLabel, QVBoxLayout* layout)
+void MainWindow::loadOffsetTableFromCSV(QTableWidget *offsetTable, QLabel *offsetLabel, QVBoxLayout *layout)
 {
     QFile file("./../../ptp_offset_history.csv");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         qDebug() << "Failed to open CSV file for offset table.";
         offsetLabel->setText("Offsets (No data)");
         return;
@@ -316,16 +392,20 @@ void MainWindow::loadOffsetTableFromCSV(QTableWidget* offsetTable, QLabel* offse
     QStringList headers = in.readLine().split(',');
 
     QStringList offsetHeaders;
-    for (const QString &h : headers) {
-        if (h.endsWith("_offset_ns")) {
+    for (const QString &h : headers)
+    {
+        if (h.endsWith("_offset_ns"))
+        {
             offsetHeaders.append(h);
         }
     }
 
     QStringList lastLine;
-    while (!in.atEnd()) {
+    while (!in.atEnd())
+    {
         QString line = in.readLine();
-        if (!line.trimmed().isEmpty()) {
+        if (!line.trimmed().isEmpty())
+        {
             lastLine = line.split(',');
         }
     }
@@ -333,7 +413,8 @@ void MainWindow::loadOffsetTableFromCSV(QTableWidget* offsetTable, QLabel* offse
     offsetTable->setRowCount(0);
     int masterRow = -1;
 
-    for (int i = 0; i < offsetHeaders.size(); ++i) {
+    for (int i = 0; i < offsetHeaders.size(); ++i)
+    {
         QString fullCamId = offsetHeaders[i];
         fullCamId.replace("_offset_ns", "");
 
@@ -344,21 +425,23 @@ void MainWindow::loadOffsetTableFromCSV(QTableWidget* offsetTable, QLabel* offse
 
         offsetTable->insertRow(i);
 
-        QTableWidgetItem* idItem = new QTableWidgetItem(fullCamId);
-        idItem->setToolTip("Camera ID: " + fullCamId);  // Tooltip with full ID
+        QTableWidgetItem *idItem = new QTableWidgetItem(fullCamId);
+        idItem->setToolTip("Camera ID: " + fullCamId); // Tooltip with full ID
 
-        QTableWidgetItem* offsetItem = new QTableWidgetItem(ok ? QString::number(offsetValue) + " ns" : "-");
+        QTableWidgetItem *offsetItem = new QTableWidgetItem(ok ? QString::number(offsetValue) + " ns" : "-");
 
         offsetTable->setItem(i, 0, idItem);
         offsetTable->setItem(i, 1, offsetItem);
 
-        if (ok && qFuzzyCompare(offsetValue + 1.0, 1.0)) {
+        if (ok && qFuzzyCompare(offsetValue + 1.0, 1.0))
+        {
             masterRow = i;
         }
     }
 
     // Highlight master row
-    if (masterRow >= 0) {
+    if (masterRow >= 0)
+    {
         QTableWidgetItem *idItem = offsetTable->item(masterRow, 0);
         QTableWidgetItem *offsetItem = offsetTable->item(masterRow, 1);
 
@@ -377,16 +460,13 @@ void MainWindow::loadOffsetTableFromCSV(QTableWidget* offsetTable, QLabel* offse
     }
 
     offsetTable->setFixedHeight(
-        offsetTable->verticalHeader()->defaultSectionSize() * offsetTable->rowCount()
-        + offsetTable->horizontalHeader()->height());
+        offsetTable->verticalHeader()->defaultSectionSize() * offsetTable->rowCount() + offsetTable->horizontalHeader()->height());
 }
-
 
 void MainWindow::connectUI()
 {
     connect(startButton, &QPushButton::clicked, this, &MainWindow::startStreaming);
     connect(stopButton, &QPushButton::clicked, this, &MainWindow::stopStreaming);
-    connect(timer, &QTimer::timeout, this, &MainWindow::updateFrame);
     connect(saveButton, &QPushButton::clicked, this, [=]()
             {
         savingEnabled = saveButton->isChecked();
@@ -395,10 +475,46 @@ void MainWindow::connectUI()
 
 void MainWindow::startStreaming()
 {
-    openCamerasList = deviceManager.getopenCameras();
-    exposureEdit->setEnabled(false);
+    std::chrono::milliseconds delay(scheduledDelayMs);
+    openCamerasList = systemManager.deviceManager.getOpenCameras();
+    if (openCamerasList.empty()) {
+        std::cerr << "❌ No open cameras found! Aborting stream." << std::endl;
+        return;
+    }
+    std::cout << "📡 Starting streaming with " << openCamerasList.size() << " cameras." << std::endl;
+
+    // exposureEdit->setEnabled(false);
+    stopStream = false;
+    std::cout << "🔍 Calling streamManager.startPtpSyncFreeRun..." << std::endl;
+    std::cout << "⏺ streamManager pointer: " << &systemManager.streamManager << std::endl;
+
     if (!isOpened)
-        streamManager.startSyncFreeRun(openCamerasList, stopStream, savingEnabled);
+        saveButton->setEnabled(false);
+        systemManager.streamManager.startPtpSyncFreeRun(
+        openCamerasList,
+        stopStream,
+        savingEnabled,
+        delay,
+        [=](const cv::Mat &compositeFrame)
+        {
+            if (compositeFrame.empty())
+                return;
+
+            cv::Mat rgbFrame;
+            cv::cvtColor(compositeFrame, rgbFrame, cv::COLOR_BGR2RGB);
+
+            QImage img(rgbFrame.data, rgbFrame.cols, rgbFrame.rows, rgbFrame.step, QImage::Format_RGB888);
+            QPixmap pixmap = QPixmap::fromImage(img.copy());
+
+            QMetaObject::invokeMethod(compositeLabel, [=]()
+            {
+                compositeLabel->setPixmap(pixmap.scaled(
+                    compositeLabel->width(), compositeLabel->height(), 
+                    Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            });
+        });            
+        std::cout << "✅ startPtpSyncFreeRun returned." << std::endl;
+
     isOpened = true;
     if (isOpened)
     {
@@ -406,44 +522,40 @@ void MainWindow::startStreaming()
         for (auto *box : cameraCheckboxes)
             box->setEnabled(false);
     }
+    stopButton->setEnabled(true);
+stopButton->setToolTip("Stop streaming");
+
 }
 
 void MainWindow::stopStreaming()
 {
+    if (scheduleTimer && scheduleTimer->isActive())
+    {
+        scheduleTimer->stop();
+        QMessageBox::information(this, "Scheduled Acquisition", "Scheduled acquisition was canceled.");
+    }
+    stopButton->setEnabled(false);
+    stopButton->setToolTip("Disabled until streaming starts");
+    
+    startButton->setEnabled(false);
+    startButton->setToolTip("Start streaming (disabled until camera is opened)");
+    
+    settingsBtn->setEnabled(false);
+    settingsBtn->setToolTip("Disabled until at least one camera is opened");
+    
+    scheduleButton->setEnabled(false);
+    scheduleButton->setToolTip("Schedule acquisition start (disabled until camera is opened)");
+    
     exposureEdit->setEnabled(true);
     timer->stop();
-    if (cap.isOpened())
-        cap.release();
-    videoLabel->clear();
+
+    // ✅ Actually stop the stream manager
+    stopStream = true;
+    systemManager.streamManager.stopStreaming(); // just like terminal
+    isOpened = false;
+    saveButton->setEnabled(true);
     for (auto *box : cameraCheckboxes)
         box->setEnabled(true);
-}
-
-void MainWindow::updateFrame()
-{
-    static int t = 0;
-    double y = 10 * sin(0.1 * t);
-    plot->graph(0)->addData(t, y);
-    plot->graph(0)->data()->removeBefore(t - 100);
-    plot->xAxis->setRange(t - 100, t);
-    plot->replot();
-    t++;
-
-    cv::Mat frame;
-    cap >> frame;
-    if (frame.empty())
-        return;
-
-    cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
-    QImage image(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
-    videoLabel->setPixmap(QPixmap::fromImage(image).scaled(videoLabel->size(), Qt::KeepAspectRatio));
-
-    if (savingEnabled)
-    {
-        static int counter = 0;
-        std::string filename = "frame_" + std::to_string(counter++) + ".png";
-        cv::imwrite(filename, frame);
-    }
 }
 
 void MainWindow::plotOffsetCSV(QVBoxLayout *layout, const QString &csvFilePath)

@@ -255,6 +255,9 @@ QT_ADDITIONAL_PACKAGES_PREFIX_PATH:STRING=
 //The directory containing a CMake configuration file for Qt6Charts.
 Qt6Charts_DIR:PATH=Qt6Charts_DIR-NOTFOUND
 
+//The directory containing a CMake configuration file for Qt6Concurrent.
+Qt6Concurrent_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt6Concurrent
+
 //The directory containing a CMake configuration file for Qt6CoreTools.
 Qt6CoreTools_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools
 

@@ -286,6 +286,30 @@ home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManag
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.s
 .PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.s
 
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.o: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.o
+
+# target to build an object file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.o
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.o
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.i: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.i
+
+# target to preprocess a source file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.i
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.i
+
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.s: home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.s
+
+# target to generate assembly for a file
+home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVDemo.dir/build.make CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.s
+.PHONY : home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.s
+
 src/CameraSettingsWindow.o: src/CameraSettingsWindow.cpp.o
 .PHONY : src/CameraSettingsWindow.o
 
@@ -410,6 +434,9 @@ help:
 	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.o"
 	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.i"
 	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.s"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.o"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.i"
+	@echo "... home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.s"
 	@echo "... src/CameraSettingsWindow.o"
 	@echo "... src/CameraSettingsWindow.i"
 	@echo "... src/CameraSettingsWindow.s"

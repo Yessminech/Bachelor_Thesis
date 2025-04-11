@@ -1,0 +1,8 @@
+<map id="Camera" name="Camera">
+<area shape="rect" id="node1" title=" " alt="" coords="5,307,1280,751"/>
+<area shape="rect" id="node2" href="$structDeviceInfos.html" title=" " alt="" coords="62,5,285,244"/>
+<area shape="rect" id="node3" href="$structCameraConfig.html" title=" " alt="" coords="309,57,507,193"/>
+<area shape="rect" id="node4" href="$structNetworkConfig.html" title=" " alt="" coords="531,49,755,200"/>
+<area shape="rect" id="node5" href="$structStreamConfig.html" title=" " alt="" coords="779,79,917,171"/>
+<area shape="rect" id="node6" href="$structPtpConfig.html" title=" " alt="" coords="941,49,1139,200"/>
+</map>

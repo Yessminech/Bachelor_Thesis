@@ -1,0 +1,34 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,157,60,184"/>
+<area shape="rect" id="node2" href="$classSystemManager.html#a1c1ba12c1709183b2bd1bd48ebebe24c" title=" " alt="" coords="121,5,362,32"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#ae87714a32069a99bdee647bb2c4a6c65" title=" " alt="" coords="176,56,307,83"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#a99cfd7f582dfad8278b8ebaddcaa9e41" title=" " alt="" coords="195,107,288,133"/>
+<area shape="rect" id="node6" href="$classSystemManager.html#a051494c0cf33bac6dbd8e4c0eb3ed9ae" title=" " alt="" coords="138,157,345,184"/>
+<area shape="rect" id="node12" href="$classSystemManager.html#af801ab01222b0c07d25a8fa780d423e4" title=" " alt="" coords="141,208,342,235"/>
+<area shape="rect" id="node14" href="$classSystemManager.html#afa1d2e6e0615b3bba9a7c6086b39360f" title=" " alt="" coords="117,259,365,285"/>
+<area shape="rect" id="node15" href="$classSystemManager.html#addb2328a323747f21afb826811f288ab" title=" " alt="" coords="108,309,375,336"/>
+<area shape="rect" id="node3" href="$SystemManager_8cpp.html#aa025f45ed88b3ae4067ae664cf12f853" title=" " alt="" coords="517,5,623,32"/>
+<area shape="rect" id="node7" href="$classDeviceManager.html#a36a89dec4c09c02f7269093b346c37b6" title=" " alt="" coords="455,157,685,184"/>
+<area shape="rect" id="node10" href="$classNetworkManager.html#a72d16c3ed9d65f8f9ac365fd576d9077" title=" " alt="" coords="465,107,675,133"/>
+<area shape="rect" id="node11" href="$classDeviceManager.html#aa5df5c2756fda96dc9438e1c85071699" title=" " alt="" coords="447,208,693,235"/>
+<area shape="rect" id="node8" href="$classDeviceManager.html#a5de621ae914e130ad5a5e977c02272f4" title=" " alt="" coords="827,157,1051,184"/>
+<area shape="rect" id="node9" href="$classDeviceManager.html#a6374a294f1d0d15f18ab35aea1fb6158" title=" " alt="" coords="1161,157,1456,184"/>
+<area shape="rect" id="node13" href="$classNetworkManager.html#a97139087ce2feb24bce02b5e26ef1cf5" title=" " alt="" coords="836,208,1043,235"/>
+<area shape="rect" id="node16" href="$classNetworkManager.html#abf0d6140725e709b57318ab3b9c8ddc6" title=" " alt="" coords="447,309,693,336"/>
+<area shape="rect" id="node29" href="$classStreamManager.html#ac6965e57bedc21b34b532d49654c4ab1" title=" " alt="" coords="423,487,717,513"/>
+<area shape="rect" id="node17" href="$classNetworkManager.html#af1c10e78fbe4fd4af3343c8b48652f05" title=" " alt="" coords="765,259,1113,285"/>
+<area shape="rect" id="node23" href="$classNetworkManager.html#a580689530037e60c278f61c2d541e86c" title=" " alt="" coords="813,411,1066,437"/>
+<area shape="rect" id="node27" href="$classNetworkManager.html#a5cff683bdb24c9f3359fc259e73cc036" title=" " alt="" coords="812,309,1067,336"/>
+<area shape="rect" id="node28" href="$classNetworkManager.html#ae34ac9fc3697d706c4938c61f44ecd59" title=" " alt="" coords="1202,360,1415,387"/>
+<area shape="rect" id="node18" href="$classNetworkManager.html#acd8737d274da2f02b0e1635b4b9f63bb" title=" " alt="" coords="1183,233,1435,260"/>
+<area shape="rect" id="node20" href="$classNetworkManager.html#a88d3b203ca5c2d28212c5da9f8cdde7d" title=" " alt="" coords="1173,284,1444,311"/>
+<area shape="rect" id="node19" href="$GlobalSettings_8cpp.html#a4e4d4e3815c368773a4dfcfc9d19666c" title=" " alt="" coords="1553,233,1740,260"/>
+<area shape="rect" id="node21" href="$GlobalSettings_8cpp.html#ae20198dd587799aa9d5579c3597f7fb4" title=" " alt="" coords="1553,284,1741,311"/>
+<area shape="rect" id="node22" href="$classNetworkManager.html#a2894fa4186d5341d1ceea4930cd1f448" title=" " alt="" coords="1504,335,1789,361"/>
+<area shape="rect" id="node24" href="$classNetworkManager.html#ae856b2f8ac57cb540414667eccc6832a" title=" " alt="" coords="1165,461,1453,488"/>
+<area shape="rect" id="node26" href="$classNetworkManager.html#a8f23d31231702bcd91a3cf101a8394e6" title=" " alt="" coords="1191,411,1426,437"/>
+<area shape="rect" id="node25" href="$GlobalSettings_8hpp.html#a292086bff16224cc0653061c22440e60" title=" " alt="" coords="1563,436,1730,463"/>
+<area shape="rect" id="node30" href="$classStreamManager.html#a9f70fad5bf4dd5108911c05af8f649e3" title="Arrange frames into a composite grid. Supports up to 6 cameras." alt="" coords="817,512,1062,539"/>
+<area shape="rect" id="node31" href="$classStreamManager.html#a0257fcf9f99184dee55ffe95ab5a9c4c" title=" " alt="" coords="807,563,1071,589"/>
+<area shape="rect" id="node32" href="$classStreamManager.html#abfb94b1e01cc9952b575a78995532e30" title=" " alt="" coords="825,461,1054,488"/>
+</map>

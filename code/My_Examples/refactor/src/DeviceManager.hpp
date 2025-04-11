@@ -14,46 +14,50 @@
 #include <iomanip>
 #include <regex>
 
-#define RESET "\033[0m"
-#define RED "\033[31m"
-#define YELLOW "\033[33m"
-#define GREEN "\033[32m"
-
 class DeviceManager
 {
 public:
+    // === Constructor / Destructor ===
     DeviceManager();
     ~DeviceManager();
 
-    // ToDo load Xml // void configureCamera(const std::string &cameraId, const std::string &params);
-
-    bool getAvailableCameras();
-    std::shared_ptr<rcg::Device> getAvailableCameraByID(const std::string &deviceId);
-    std::shared_ptr<Camera> getOpenCameraByID(const std::string &deviceId);
-    const std::list<std::shared_ptr<Camera>> &getopenCameras() const;
-    const std::set<std::shared_ptr<rcg::Device>> &getAvailableCamerasList() const;
-    void openCameras(std::list<std::string> deviceIds);
-    // +closeCameras()  
-    int64_t getScheduledTime(int64_t scheduledDelayS, std::string masterClockId);
+    // === Camera Operations ===
+    void getAvailableCameras();
+    void createCameras(std::list<std::string> deviceIds);
     void scheduleActionCommands(const std::list<std::shared_ptr<Camera>> &openCamerasList, std::string masterClockId);
 
-    bool listAvailableCamerasByID();
+    // === Cameras Enumeration ===
+    const std::set<std::shared_ptr<rcg::Device>> &getAvailableCamerasList() const;
+    std::shared_ptr<rcg::Device> getAvailableCameraByID(const std::string &deviceId);
+    std::list<std::string> listAvailableCamerasByID();
+    const std::list<std::shared_ptr<Camera>> &getOpenCameras() const;
+    std::shared_ptr<Camera> getOpenCameraByID(const std::string &deviceId);
     bool listopenCameras();
-    bool debug = true;
 
+    // === Setters ===
+    void setPixelFormatAll(std::string pixelFormat);
+    void setExposureTimeAll(double exposureTime);
+    void setGainAll(float gain);
+    void setHeightAll(int height);
+    void setWidthAll(int width);
+
+    // === Configuration ===
     uint32_t groupKey = 1;
     uint32_t groupMask = 0x00000001;
 
 private:
-    void enumerateDevicesFromSystems(const std::vector<std::shared_ptr<rcg::System>>& systems);
-    bool openCamera(const std::string &deviceId);
+    // === Camera Operations ===
+    bool createCamera(const std::string &deviceId);
     bool closeCamera(const std::string &deviceId);
+
+    // === Internal Helpers ===
+    void enumerateDevicesFromSystems(const std::vector<std::shared_ptr<rcg::System>> &systems);
+    int64_t getScheduledTime(int64_t scheduledDelayS, std::string masterClockId);
     bool listCamera(std::shared_ptr<Camera> camera);
 
-    std::list<std::shared_ptr<Camera>> openCamerasList;          // List of cameras
-    std::set<std::shared_ptr<rcg::Device>> availableCamerasList; // List of cameras
-    std::string defaultCti;
-    
+    // === Private Members ===
+    std::list<std::shared_ptr<Camera>> openCamerasList;
+    std::set<std::shared_ptr<rcg::Device>> availableCamerasList;
 };
 
 #endif // DEVICEMANAGER_HPP

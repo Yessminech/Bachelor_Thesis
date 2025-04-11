@@ -14,6 +14,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/NetworkManager.cpp.o.d"
   "CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o"
   "CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/StreamManager.cpp.o.d"
+  "CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.o"
+  "CMakeFiles/QtOpenCVDemo.dir/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/src/SystemManager.cpp.o.d"
   "CMakeFiles/QtOpenCVDemo.dir/src/CameraSettingsWindow.cpp.o"
   "CMakeFiles/QtOpenCVDemo.dir/src/CameraSettingsWindow.cpp.o.d"
   "CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o"

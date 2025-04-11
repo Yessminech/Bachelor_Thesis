@@ -3,7 +3,7 @@
 #include <thread>
 
 PtpMonitorWorker::PtpMonitorWorker(const std::list<std::shared_ptr<Camera>>& cameras, int timeout, bool debugFlag)
-    : openCamerasList(cameras), ptpSyncTimeout(timeout), debug(debugFlag) {}
+    : openCamerasList(cameras), monitorPtpStatusTimeoutMs(timeout), debug(debugFlag) {}
 
 void PtpMonitorWorker::run() {
     auto start_time = std::chrono::steady_clock::now();
@@ -40,7 +40,7 @@ void PtpMonitorWorker::run() {
             return;
         }
 
-        if (std::chrono::steady_clock::now() - start_time > std::chrono::seconds(ptpSyncTimeout)) {
+        if (std::chrono::steady_clock::now() - start_time > std::chrono::seconds(monitorPtpStatusTimeoutMs)) {
             emit statusUpdate("PTP sync timed out.");
             emit finished(false);
             return;

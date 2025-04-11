@@ -4,11 +4,6 @@ CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o: \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/src/MainWindow.hpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/DeviceManager.hpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/Camera.hpp \
- /usr/local/include/rc_genicam_api/pixel_formats.h \
- /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
- /usr/local/include/rc_genicam_api/device.h \
- /usr/local/include/rc_genicam_api/interface.h \
- /usr/local/include/rc_genicam_api/system.h \
  /usr/include/rc_genicam_api/genicam/GenApi/GenApi.h \
  /usr/include/rc_genicam_api/genicam/Base/GCBase.h \
  /usr/include/rc_genicam_api/genicam/Base/GCTypes.h \
@@ -248,22 +243,11 @@ CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o: \
  /usr/include/c++/11/bits/locale_conv.h \
  /usr/include/rc_genicam_api/genicam/GenApi/StructPort.h \
  /usr/include/rc_genicam_api/genicam/GenApi/PortImpl.h \
- /usr/include/c++/11/mutex /usr/include/c++/11/chrono \
- /usr/include/c++/11/ratio /usr/include/c++/11/limits \
- /usr/include/c++/11/bits/parse_numbers.h \
- /usr/include/c++/11/bits/std_mutex.h \
- /usr/include/c++/11/bits/unique_lock.h \
- /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h \
- /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h \
- /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h \
- /usr/local/include/rc_genicam_api/buffer.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
- /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
  /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \
  /usr/include/opencv4/opencv2/core/cvdef.h \
- /usr/include/opencv4/opencv2/core/version.hpp \
+ /usr/include/opencv4/opencv2/core/version.hpp /usr/include/c++/11/limits \
  /usr/include/opencv4/opencv2/core/hal/interface.h \
  /usr/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h \
@@ -331,7 +315,11 @@ CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o: \
  /usr/include/opencv4/opencv2/core/operations.hpp \
  /usr/include/opencv4/opencv2/core/cvstd.inl.hpp \
  /usr/include/c++/11/complex \
- /usr/include/opencv4/opencv2/core/utility.hpp \
+ /usr/include/opencv4/opencv2/core/utility.hpp /usr/include/c++/11/mutex \
+ /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
+ /usr/include/c++/11/bits/parse_numbers.h \
+ /usr/include/c++/11/bits/std_mutex.h \
+ /usr/include/c++/11/bits/unique_lock.h \
  /usr/include/opencv4/opencv2/core/optim.hpp \
  /usr/include/opencv4/opencv2/core/ovx.hpp \
  /usr/include/opencv4/opencv2/core/cvdef.h \
@@ -421,7 +409,18 @@ CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o: \
  /usr/include/opencv4/opencv2/video.hpp \
  /usr/include/opencv4/opencv2/video/tracking.hpp \
  /usr/include/opencv4/opencv2/video/background_segm.hpp \
+ /usr/local/include/rc_genicam_api/buffer.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkAdapter.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/ChunkPort.h \
+ /usr/local/include/rc_genicam_api/device.h \
+ /usr/local/include/rc_genicam_api/interface.h \
  /usr/local/include/rc_genicam_api/system.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/EventAdapterGeneric.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/EventAdapter.h \
+ /usr/include/rc_genicam_api/genicam/GenApi/EventPort.h \
+ /usr/local/include/rc_genicam_api/pixel_formats.h \
+ /usr/include/rc_genicam_api/genicam/GenTL/PFNC.h \
+ /usr/include/c++/11/atomic /usr/local/include/rc_genicam_api/system.h \
  /usr/local/include/rc_genicam_api/interface.h \
  /usr/local/include/rc_genicam_api/nodemap_out.h \
  /usr/local/include/rc_genicam_api/config.h /usr/include/arpa/inet.h \
@@ -476,7 +475,6 @@ CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasicatomic.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic_cxx11.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qgenericatomic.h \
- /usr/include/c++/11/atomic \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qglobalstatic.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qnumeric.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qversiontagging.h \
@@ -1297,7 +1295,7 @@ CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o: \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/StreamManager.hpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/NetworkManager.hpp \
  /usr/include/c++/11/thread /usr/include/c++/11/bits/this_thread_sleep.h \
- /usr/include/signal.h \
+ /usr/include/c++/11/csignal /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
  /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h \
@@ -1326,7 +1324,11 @@ CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
  /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
- /usr/include/c++/11/csignal \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/SystemManager.hpp \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/SystemManager.hpp \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/DeviceManager.hpp \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/StreamManager.hpp \
+ /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/GlobalSettings.hpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/NetworkManager.hpp \
  /home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/../src/Camera.hpp \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/QImage \
@@ -1338,4 +1340,10 @@ CMakeFiles/QtOpenCVDemo.dir/src/MainWindow.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/QTextStream \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/QStringList \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/QMap \
- /usr/include/x86_64-linux-gnu/qt6/QtCore/QDebug
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QDebug \
+ /usr/include/x86_64-linux-gnu/qt6/QtConcurrent/QtConcurrentRun \
+ /usr/include/x86_64-linux-gnu/qt6/QtConcurrent/qtconcurrentrun.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtConcurrent/qtconcurrentcompilertest.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtConcurrent/qtconcurrent_global.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtConcurrent/qtconcurrentrunbase.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtConcurrent/qtconcurrentstoredfunctioncall.h

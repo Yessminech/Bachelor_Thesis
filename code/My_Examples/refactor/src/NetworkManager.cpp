@@ -33,40 +33,39 @@
 #include <QDebug>
 #include <QDir>
 #include <QRegularExpression>
+
 double fpsUpperBound = getGlobalFpsUpperBound();
 double fpsLowerBound = getGlobalFpsLowerBound();
 
-NetworkManager::NetworkManager(
-    bool debug,
-    int ptpSyncTimeout,
-    int ptpOffsetThresholdNs,
-    int ptpMaxCheck)
-    : debug(debug),
-      ptpSyncTimeout(ptpSyncTimeout),
-      ptpOffsetThresholdNs(ptpOffsetThresholdNs),
-      ptpMaxCheck(ptpMaxCheck) {}
+/**************************************************************************************/
+/***********************         Constructor / Destructor     *************************/
+/**************************************************************************************/
+
+NetworkManager::NetworkManager(){};
 
 NetworkManager::~NetworkManager() {}
 
-void NetworkManager::printPtpConfig(std::shared_ptr<Camera> camera)
+/*************************************************************************/
+/***********************         PTP Control     *************************/
+/*************************************************************************/
+
+void NetworkManager::enablePtp(const std::list<std::shared_ptr<Camera>> &openCameras)
 {
-    try
+    for (const auto &camera : openCameras)
     {
-        PtpConfig ptpConfig = camera->ptpConfig;
-        std::cout << GREEN << "Camera ID:                  " << camera->deviceInfos.id << RESET << std::endl;
-        std::cout << "PTP Enabled:                " << (ptpConfig.enabled ? "Yes" : "No") << std::endl;
-        std::cout << "PTP Status:                 " << ptpConfig.status << std::endl;
-        std::cout << "PTP Offset From Master:     " << ptpConfig.offsetFromMaster << " ns" << std::endl;
-        std::cout << "Timestamp (ns):                  " << ptpConfig.timestamp_ns << " ns" << std::endl;
-        std::cout << "Timestamp (s):        " << ptpConfig.timestamp_s << " s" << std::endl;
-        std::cout << std::endl;
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "Error: Failed to get timestamp: " << ex.what() << RESET << std::endl;
+        camera->setPtpConfig(true);
     }
 }
 
+void NetworkManager::disablePtp(const std::list<std::shared_ptr<Camera>> &openCameras)
+{
+    for (const auto &camera : openCameras)
+    {
+        camera->setPtpConfig(false);
+    }
+}
+
+//ToDo correct units with ai 
 void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &openCamerasList)
 {
     auto start_time = std::chrono::steady_clock::now();
@@ -78,8 +77,15 @@ void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &
     std::cout << "[DEBUG] Starting PTP synchronization monitoring..." << std::endl;
 
     // Continue until synchronized, timed out
-    while (!synchronized )
+    while (!synchronized && 
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - start_time).count() < monitorPtpStatusTimeoutMs)
     {
+
+        // Print current status
+        std::cout << "[DEBUG] Current status: " << numInit << " initializing, "
+                  << numMaster << " masters, " << numSlave << " slaves" << std::endl;
+
         // Reset counters for each check
         numInit = 0;
         numMaster = 0;
@@ -107,13 +113,6 @@ void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &
                 {
                     numInit++;
                 }
-
-                // Print individual camera status if in debug mode
-                if (debug)
-                {
-                    // std::cout << "Camera " << camera->deviceInfos.id << ": "
-                    //           << ptpConfig.status << " (Master Clock: " << masterClockId << ")" << std::endl;
-                }
             }
             catch (const std::exception &ex)
             {
@@ -132,9 +131,10 @@ void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &
         }
 
         // Check for timeout
-        if (std::chrono::steady_clock::now() - start_time > std::chrono::seconds(ptpSyncTimeout))
+        if (std::chrono::steady_clock::now() - start_time > std::chrono::milliseconds(monitorPtpStatusTimeoutMs))
         {
-            std::cerr << RED << "[DEBUG] PTP synchronization timed out after " << ptpSyncTimeout
+            std::cerr << RED << "[DEBUG] PTP synchronization timed out after " 
+                      << (monitorPtpStatusTimeoutMs / 1000.0) // Convert to seconds for display
                       << " seconds. Current status: " << numInit << " initializing, "
                       << numMaster << " masters, " << numSlave << " slaves" << RESET << std::endl;
             break;
@@ -143,7 +143,10 @@ void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &
         // If not synchronized yet, wait before checking again
         if (!synchronized)
         {
-            std::cout << "[DEBUG] Waiting for PTP synchronization..." << std::endl;
+            if (debug)
+            {
+                std::cout << YELLOW << "[DEBUG] Waiting for PTP synchronization..." << RESET << std::endl;
+            }
             std::this_thread::sleep_for(std::chrono::seconds(10));
         }
     }
@@ -158,107 +161,6 @@ void NetworkManager::monitorPtpStatus(const std::list<std::shared_ptr<Camera>> &
         }
     }
 }
-
-// void NetworkManager::logPtpOffset(std::shared_ptr<Camera> camera, int64_t offset)
-// {
-//     PtpConfig ptpConfig = camera->ptpConfig;
-//     std::ofstream logFile("ptp_offsets.log", std::ios_base::app);
-//     if (logFile.is_open())
-//     {
-//         logFile << "Camera ID: " << camera->deviceInfos.id
-//                 << ", Offset: " << offset
-//                 << " ns, Timestamp: " << camera->ptpConfig.timestamp_ns
-//                 << " ns" << std::endl;
-//         logFile.close();
-//     }
-//     else
-//     {
-//         std::cerr << "[DEBUG] Unable to open log file to save PTP offset data." << std::endl;
-//     }
-// }
-
-void NetworkManager::setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, std::shared_ptr<Camera> camera)
-{
-    // Get the master camera's timestamp
-    masterCamera->getTimestamps();
-    uint64_t masterTimestamp = masterCamera->ptpConfig.timestamp_ns;
-
-    // Get the camera's timestamp
-    camera->getTimestamps();
-    uint64_t cameraTimestamp = camera->ptpConfig.timestamp_ns;
-
-    // Calculate the offset
-    int64_t offset = masterTimestamp- cameraTimestamp;
-
-    // Set the offset
-    try
-    {
-        if (camera->ptpConfig.offsetFromMaster == 0 && camera->deviceInfos.id != masterClockId)
-        {
-            auto nodemap = camera->nodemap;
-            camera->ptpConfig.offsetFromMaster = offset;
-        }
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << RED << "[DEBUG] Error setting offset for camera " << camera->deviceInfos.id << ": " << ex.what() << RESET << std::endl;
-    }
-}
-
-void NetworkManager::logOffsetHistoryToCSV(
-    const std::unordered_map<std::string, std::deque<CameraSample>> &offsetHistory)
-{
-    // Directories and filename
-    const std::string outputDir = "./output";
-    const std::string offsetDir = outputDir + "/offset";
-    const std::string timestamp = getSessionTimestamp();
-    const std::string filename = offsetDir + "/ptp_offset_history_" + timestamp + ".csv";
-
-    // Ensure directories exist
-    std::filesystem::create_directories(offsetDir);
-
-    std::ofstream outFile(filename);
-    if (!outFile.is_open())
-    {
-        std::cerr << RED << "[DEBUG] Failed to open CSV file for writing: " << filename << RESET << std::endl;
-        return;
-    }
-
-    // Header
-    outFile << "Sample";
-    for (const auto &[camId, _] : offsetHistory)
-    {
-        outFile << "," << camId << "_timestamp_ns," << camId << "_offset_ns";
-    }
-    outFile << "\n";
-
-    // Determine max length of history
-    size_t maxLength = 0;
-    for (const auto &[_, history] : offsetHistory)
-        maxLength = std::max(maxLength, history.size());
-
-    // Write rows
-    for (size_t i = 0; i < maxLength; ++i)
-    {
-        outFile << i;
-        for (const auto &[_, history] : offsetHistory)
-        {
-            if (i < history.size())
-            {
-                outFile << "," << history[i].timestamp_ns << "," << history[i].offset_ns;
-            }
-            else
-            {
-                outFile << ",,";
-            }
-        }
-        outFile << "\n";
-    }
-
-    outFile.close();
-    std::cout << CYAN << "[DEBUG] Offset + timestamp history written to " << filename << RESET << std::endl;
-}
-
 
 void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &openCamerasList)
 {
@@ -287,8 +189,6 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
         std::cerr << RED << "[DEBUG] Error: No master camera found in the camera list" << RESET << std::endl;
         return;
     }
-
-
     
     std::unordered_map<std::string, std::deque<CameraSample>> offsetWindowHistory; // For stability check
     std::unordered_map<std::string, std::vector<CameraSample>> offsetLogHistory;   // For logging to CSV
@@ -387,20 +287,54 @@ void NetworkManager::monitorPtpOffset(const std::list<std::shared_ptr<Camera>> &
     }
 }
 
-void NetworkManager::enablePtp(const std::list<std::shared_ptr<Camera>> &openCameras)
+void NetworkManager::setOffsetfromMaster(std::shared_ptr<Camera> masterCamera, std::shared_ptr<Camera> camera)
 {
-    for (const auto &camera : openCameras)
+    // Get the master camera's timestamp
+    masterCamera->getTimestamps();
+    uint64_t masterTimestamp = masterCamera->ptpConfig.timestamp_ns;
+
+    // Get the camera's timestamp
+    camera->getTimestamps();
+    uint64_t cameraTimestamp = camera->ptpConfig.timestamp_ns;
+
+    // Calculate the offset
+    int64_t offset = masterTimestamp- cameraTimestamp;
+
+    // Set the offset
+    try
     {
-        camera->setPtpConfig(true);
+        if (camera->ptpConfig.offsetFromMaster == 0 && camera->deviceInfos.id != masterClockId)
+        {
+            auto nodemap = camera->nodemap;
+            camera->ptpConfig.offsetFromMaster = offset;
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "[DEBUG] Error setting offset for camera " << camera->deviceInfos.id << ": " << ex.what() << RESET << std::endl;
     }
 }
 
-void NetworkManager::disablePtp(const std::list<std::shared_ptr<Camera>> &openCameras)
+/*************************************************************************************/
+/***********************         Bandwidth Configuration     *************************/
+/*************************************************************************************/
+
+void NetworkManager::configureBandwidth(const std::list<std::shared_ptr<Camera>> &openCameras)
 {
-    for (const auto &camera : openCameras)
+    double packetDelayNs;
+    for (auto it = openCameras.rbegin(); it != openCameras.rend(); ++it)
     {
-        camera->setPtpConfig(false);
+        const auto &camera = *it;
+        // double deviceLinkSpeedBps = camera->networkConfig.deviceLinkSpeedBps;
+        double deviceLinkSpeedBps = 125000000;               //  125000000 Lucid and 100000000 for Basler
+        camera->setPacketSizeB(packetSizeB);
+        double camIndex = std::distance(openCameras.begin(), std::find(openCameras.begin(), openCameras.end(), camera));
+        double numCams = openCameras.size();
+        camera->setBandwidthDelays(camera, camIndex, numCams, packetSizeB, deviceLinkSpeedBps, bufferPercent);
+        packetDelayNs = camera->networkConfig.packetDelayNs;
     }
+    calculateMaxFps(openCameras, packetDelayNs);
+    setExposureAndFps(openCameras);
 }
 
 void NetworkManager::calculateMaxFps(const std::list<std::shared_ptr<Camera>> &openCameras, double packetDelay)
@@ -419,28 +353,13 @@ void NetworkManager::calculateMaxFps(const std::list<std::shared_ptr<Camera>> &o
     setGlobalFpsUpperBound(currentMinFps);
 }
 
-// void NetworkManager::calculateMaxFpsFromExposure(const std::list<std::shared_ptr<Camera>> &openCameras)
-// {
-//     double currentMinFps = fpsUpperBound;
-//     for (const auto &camera : openCameras)
-//     {
-//         double exposure = camera->cameraConfig.exposure;
-//         double fpsFromExposure = 1 / (exposure * 1e-6); // Corrected units: exposure in microseconds
-//         double clampedFps = std::max(fpsLowerBound, std::min(fpsFromExposure, fpsUpperBound));
-//         if (clampedFps < currentMinFps) {
-//             currentMinFps = clampedFps;
-//         }
-//     }
-//     fpsUpperBound = currentMinFps;
-// }
-
 void NetworkManager::getMinimumExposure(const std::list<std::shared_ptr<Camera>> &openCameras)
 {
     for (const auto &camera : openCameras)
     {
-        camera->setExposureTime(exposureTimeMicros);
+        camera->setExposureTime(minExposureTimeMicros);
     }
-    double currentMinExposure = exposureTimeMicros;
+    double currentMinExposure = minExposureTimeMicros;
     for (const auto &camera : openCameras)
     {
         double exposure = camera->getExposureTime();
@@ -449,46 +368,117 @@ void NetworkManager::getMinimumExposure(const std::list<std::shared_ptr<Camera>>
             currentMinExposure = exposure;
         }
     }
-    exposureTimeMicros = currentMinExposure;
+    minExposureTimeMicros = currentMinExposure;
 }
 
 void NetworkManager::setExposureAndFps(const std::list<std::shared_ptr<Camera>> &openCameras)
 {
     fpsUpperBound = getGlobalFpsUpperBound();
     getMinimumExposure(openCameras);
-    std::cout << "Setting exposure to " << exposureTimeMicros << " and fps to:" << fpsUpperBound << " accross all cameras." << std::endl;
+    if (debug)
+    {
+        std::cout << YELLOW << "[DEBUG] Setting exposure to " << minExposureTimeMicros << " and fps to: " << fpsUpperBound << " across all cameras." << RESET << std::endl;
+    }
     for (const auto &camera : openCameras)
     {
         camera->setFps(fpsUpperBound);
-        if (exposureTimeMicros <= 1000000 / fpsUpperBound)
+        if (minExposureTimeMicros <= 1000000 / fpsUpperBound)
         {
-            camera->setExposureTime(exposureTimeMicros); // time in microseconds
+            camera->setExposureTime(minExposureTimeMicros); // time in microseconds
         }
         else
         {
-            std::cout << "Exposure Time" << exposureTimeMicros << "exceeds maximal exposure: " << 1000000 / fpsUpperBound << std::endl;
+            std::cout << "Exposure Time" << minExposureTimeMicros << "exceeds maximal exposure: " << 1000000 / fpsUpperBound << std::endl;
             camera->setExposureTime(1000000 / fpsUpperBound); // time in microseconds
         }
     }
 }
 
-void NetworkManager::configureMultiCamerasNetwork(const std::list<std::shared_ptr<Camera>> &openCameras)
+void NetworkManager::configurePtpSyncFreeRun(const std::list<std::shared_ptr<Camera>> &openCamerasList)
 {
-    double packetDelayNs;
-    for (auto it = openCameras.rbegin(); it != openCameras.rend(); ++it)
+    enablePtp(openCamerasList); // Should be before configureBandwidth
+    configureBandwidth(openCamerasList);
+    monitorPtpStatus(openCamerasList);
+    monitorPtpOffset(openCamerasList);
+    plotOffsets();
+    return;
+}
+
+/***************************************************************************************/
+/***********************         Logging and Visualization     *************************/
+/***************************************************************************************/
+
+void NetworkManager::printPtpConfig(std::shared_ptr<Camera> camera)
+{
+    try
     {
-        const auto &camera = *it;
-        // double deviceLinkSpeedBps = camera->networkConfig.deviceLinkSpeedBps;
-        double deviceLinkSpeedBps = 125000000;               //  125000000 Lucid and 100000000 for Basler
-        camera->setDeviceLinkThroughput(deviceLinkSpeedBps); // ToDo check if correct
-        camera->setPacketSizeB(packetSizeB);
-        double camIndex = std::distance(openCameras.begin(), std::find(openCameras.begin(), openCameras.end(), camera));
-        double numCams = openCameras.size();
-        camera->setBandwidthDelays(camera, camIndex, numCams, packetSizeB, deviceLinkSpeedBps, bufferPercent);
-        packetDelayNs = camera->networkConfig.packetDelayNs;
+        PtpConfig ptpConfig = camera->ptpConfig;
+        std::cout << GREEN << "Camera ID:                  " << camera->deviceInfos.id << RESET << std::endl;
+        std::cout << "PTP Enabled:                " << (ptpConfig.enabled ? "Yes" : "No") << std::endl;
+        std::cout << "PTP Status:                 " << ptpConfig.status << std::endl;
+        std::cout << "PTP Offset From Master:     " << ptpConfig.offsetFromMaster << " ns" << std::endl;
+        std::cout << "Timestamp (ns):                  " << ptpConfig.timestamp_ns << " ns" << std::endl;
+        std::cout << "Timestamp (s):        " << ptpConfig.timestamp_s << " s" << std::endl;
+        std::cout << std::endl;
     }
-    calculateMaxFps(openCameras, packetDelayNs);
-    setExposureAndFps(openCameras);
+    catch (const std::exception &ex)
+    {
+        std::cerr << RED << "Error: Failed to get timestamp: " << ex.what() << RESET << std::endl;
+    }
+}
+
+void NetworkManager::logOffsetHistoryToCSV(
+    const std::unordered_map<std::string, std::deque<CameraSample>> &offsetHistory)
+{
+    // Directories and filename
+    const std::string outputDir = "./output";
+    const std::string offsetDir = outputDir + "/offset";
+    const std::string timestamp = getSessionTimestamp();
+    const std::string filename = offsetDir + "/ptp_offset_history_" + timestamp + ".csv";
+
+    // Ensure directories exist
+    std::filesystem::create_directories(offsetDir);
+
+    std::ofstream outFile(filename);
+    if (!outFile.is_open())
+    {
+        std::cerr << RED << "[DEBUG] Failed to open CSV file for writing: " << filename << RESET << std::endl;
+        return;
+    }
+
+    // Header
+    outFile << "Sample";
+    for (const auto &[camId, _] : offsetHistory)
+    {
+        outFile << "," << camId << "_timestamp_ns," << camId << "_offset_ns";
+    }
+    outFile << "\n";
+
+    // Determine max length of history
+    size_t maxLength = 0;
+    for (const auto &[_, history] : offsetHistory)
+        maxLength = std::max(maxLength, history.size());
+
+    // Write rows
+    for (size_t i = 0; i < maxLength; ++i)
+    {
+        outFile << i;
+        for (const auto &[_, history] : offsetHistory)
+        {
+            if (i < history.size())
+            {
+                outFile << "," << history[i].timestamp_ns << "," << history[i].offset_ns;
+            }
+            else
+            {
+                outFile << ",,";
+            }
+        }
+        outFile << "\n";
+    }
+
+    outFile.close();
+    std::cout << CYAN << "[DEBUG] Offset + timestamp history written to " << filename << RESET << std::endl;
 }
 
 uint32_t ipToDecimal(std::string ip)

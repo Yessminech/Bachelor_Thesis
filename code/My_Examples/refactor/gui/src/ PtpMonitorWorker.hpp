@@ -20,6 +20,6 @@ signals:
 
 private:
     std::list<std::shared_ptr<Camera>> openCamerasList;
-    int ptpSyncTimeout;
+    int monitorPtpStatusTimeoutMs;
     bool debug;
 };

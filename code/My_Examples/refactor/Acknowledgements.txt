@@ -1,0 +1,5 @@
+This source code was developed as part of a project by Fraunhofer IPK.
+
+Authors:
+- Yessmine Chabchoub (Concept and Implementation)
+- MSc. Oliver Krumperk (Scientific Supervision)
