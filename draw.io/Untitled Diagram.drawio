@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.2.12">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1598" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1940" dy="1214" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -127,6 +127,15 @@
         <mxCell id="vhEBLpPC3kUjtr3fbvUP-25" value="Add Device to availableCamerasList" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;glass=0;strokeWidth=1;shadow=0;fontFamily=Helvetica;align=center;verticalAlign=middle;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="750" y="505" width="130" height="40" as="geometry" />
         </mxCell>
+        <mxCell id="axEu8G4GEFhDie_bkXok-48" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="vhEBLpPC3kUjtr3fbvUP-28" target="axEu8G4GEFhDie_bkXok-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="450" />
+              <mxPoint x="1050" y="410" />
+              <mxPoint x="815" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="vhEBLpPC3kUjtr3fbvUP-28" value="Skip Unlisted Device" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;glass=0;strokeWidth=1;shadow=0;fontFamily=Helvetica;align=center;verticalAlign=middle;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="910" y="430" width="120" height="40" as="geometry" />
         </mxCell>
@@ -194,6 +203,9 @@
         </mxCell>
         <mxCell id="axEu8G4GEFhDie_bkXok-44" value="Display availableCamerasList" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;glass=0;strokeWidth=1;shadow=0;fontFamily=Helvetica;align=center;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="910" y="505" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="axEu8G4GEFhDie_bkXok-46" value="check the next device" style="text;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=10;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="880" y="390" width="150" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
