@@ -231,7 +231,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="EXqpWNbiDpRJT4fsSZz9" name="ptp">
-    <mxGraphModel dx="935" dy="950" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1291" dy="1160" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -239,10 +239,10 @@
           <mxGeometry x="1461" y="18" width="292" height="293" as="geometry" />
         </mxCell>
         <mxCell id="bv26DCfJTggJkswew7jJ-2" value="Clock Role Negotiation" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=right;" parent="1" vertex="1">
-          <mxGeometry x="632" y="15" width="311" height="496" as="geometry" />
+          <mxGeometry x="632" y="15" width="311" height="492" as="geometry" />
         </mxCell>
         <mxCell id="eBXfCSAGQBaB-G7FnNcw-60" value="PTP Enabling" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=right;" parent="1" vertex="1">
-          <mxGeometry x="16" y="82" width="273" height="288" as="geometry" />
+          <mxGeometry x="16" y="82" width="273" height="284" as="geometry" />
         </mxCell>
         <mxCell id="eBXfCSAGQBaB-G7FnNcw-3" value="" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=10;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;exitX=0.5;exitY=1;exitDx=0;exitDy=0;align=center;verticalAlign=middle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3IyXWKiL8-jkARKWKnSE-11" target="eBXfCSAGQBaB-G7FnNcw-55" edge="1">
           <mxGeometry y="20" relative="1" as="geometry">
@@ -289,7 +289,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="eBXfCSAGQBaB-G7FnNcw-55" value="Enable&amp;nbsp;&lt;b&gt;GevIEEE1588&lt;/b&gt;&amp;nbsp;&lt;div&gt;Node&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;glass=0;strokeWidth=1;shadow=0;fontFamily=Helvetica;align=center;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="29" y="255" width="93" height="40" as="geometry" />
+          <mxGeometry x="21" y="255" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="5gbituFaBea4jkaz3WXh-14" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;endArrow=block;endFill=0;" parent="1" target="bv26DCfJTggJkswew7jJ-17" edge="1">
           <mxGeometry relative="1" as="geometry">
