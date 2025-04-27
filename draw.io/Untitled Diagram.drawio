@@ -241,7 +241,7 @@
         <mxCell id="bv26DCfJTggJkswew7jJ-2" value="2. Clock Role Negotiation" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=right;" parent="1" vertex="1">
           <mxGeometry x="610" y="62" width="492" height="389" as="geometry" />
         </mxCell>
-        <mxCell id="eBXfCSAGQBaB-G7FnNcw-60" value="Enable PTP" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=right;" parent="1" vertex="1">
+        <mxCell id="eBXfCSAGQBaB-G7FnNcw-60" value="PTP Enabling" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=right;" parent="1" vertex="1">
           <mxGeometry x="146" y="60" width="423" height="128" as="geometry" />
         </mxCell>
         <mxCell id="eBXfCSAGQBaB-G7FnNcw-3" value="" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=10;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;exitX=0.5;exitY=1;exitDx=0;exitDy=0;align=center;verticalAlign=middle;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="eBXfCSAGQBaB-G7FnNcw-34" target="eBXfCSAGQBaB-G7FnNcw-55" edge="1">
