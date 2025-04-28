@@ -1,9 +1,0 @@
-<map id="src/GlobalSettings.hpp" name="src/GlobalSettings.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="448,5,616,32"/>
-<area shape="rect" id="node2" href="$Camera_8cpp.html" title=" " alt="" coords="5,80,128,107"/>
-<area shape="rect" id="node3" href="$DeviceManager_8cpp.html" title=" " alt="" coords="152,80,325,107"/>
-<area shape="rect" id="node4" href="$GlobalSettings_8cpp.html" title=" " alt="" coords="350,80,517,107"/>
-<area shape="rect" id="node5" href="$NetworkManager_8cpp.html" title=" " alt="" coords="541,80,723,107"/>
-<area shape="rect" id="node6" href="$StreamManager_8cpp.html" title=" " alt="" coords="747,80,922,107"/>
-<area shape="rect" id="node7" href="$SystemManager_8cpp.html" title=" " alt="" coords="946,80,1123,107"/>
-</map>

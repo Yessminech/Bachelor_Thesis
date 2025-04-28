@@ -1,0 +1,4 @@
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles/gui.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles/edit_cache.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles/rebuild_cache.dir
+/home/test/Documents/ba/Bachelor_Thesis/code/My_Examples/refactor/gui/build/CMakeFiles/gui_autogen.dir

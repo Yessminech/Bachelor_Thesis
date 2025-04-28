@@ -146,7 +146,7 @@ void configureSyncFreeRun(const std::shared_ptr<GenApi::CNodeMapRef> &nodemap, c
             rcg::setEnum(nodemap, "TriggerMode", "Off");
             rcg::setBoolean(nodemap, "AcquisitionFrameRateEnable", true);
             // rcg::setEnum(nodemap, "AcquisitionFrameRateAuto", "Off");
-            double maxFrameRate = 10; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
+            double maxFrameRate = 20; // rcg::getFloat(nodemap, "AcquisitionFrameRate");
             try
             {
                 rcg::setFloat(nodemap, "AcquisitionFrameRate", maxFrameRate);
