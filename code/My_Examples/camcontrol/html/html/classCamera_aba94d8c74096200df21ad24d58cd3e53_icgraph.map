@@ -1,0 +1,5 @@
+<map id="Camera::calculateRawFrameSizeB" name="Camera::calculateRawFrameSizeB">
+<area shape="rect" id="node1" title="Calculates the size of a raw frame in bytes." alt="" coords="567,5,812,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#ac11e2f7edacaee539f6b5f9a680e2f24" title="Calculates the frame transmission cycle time." alt="" coords="216,5,519,32"/>
+<area shape="rect" id="node3" href="$classCamera.html#aad519696c05985c71fa6944edb2ee080" title="Calculates the achievable frames per second." alt="" coords="5,5,168,32"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="DeviceManager::getAvailableCameraByID" name="DeviceManager::getAvailableCameraByID">
+<area shape="rect" id="node1" title="Returns a device by its ID." alt="" coords="1232,193,1527,219"/>
+<area shape="rect" id="node2" href="$classDeviceManager.html#a5de621ae914e130ad5a5e977c02272f4" title="Creates a camera by device ID." alt="" coords="945,153,1169,179"/>
+<area shape="rect" id="node10" href="$classDeviceManager.html#ab0ab314042a5d622db73d67b3bbdedf4" title="Enumerates devices from given systems." alt="" coords="929,215,1184,256"/>
+<area shape="rect" id="node3" href="$classDeviceManager.html#a36a89dec4c09c02f7269093b346c37b6" title="Creates Camera objects for the specified device IDs." alt="" coords="631,147,861,174"/>
+<area shape="rect" id="node4" href="$classSystemManager.html#a66e896c8491898746732c76fe733d57d" title=" " alt="" coords="309,5,550,47"/>
+<area shape="rect" id="node6" href="$classSystemManager.html#a051494c0cf33bac6dbd8e4c0eb3ed9ae" title=" " alt="" coords="326,71,533,98"/>
+<area shape="rect" id="node7" href="$classSystemManager.html#af801ab01222b0c07d25a8fa780d423e4" title=" " alt="" coords="329,122,530,149"/>
+<area shape="rect" id="node8" href="$classSystemManager.html#afafb2e37213d40237e75284d5bc6eb9e" title=" " alt="" coords="327,173,532,199"/>
+<area shape="rect" id="node9" href="$classSystemManager.html#addb2328a323747f21afb826811f288ab" title=" " alt="" coords="296,223,563,250"/>
+<area shape="rect" id="node5" href="$cli_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="99,122,154,149"/>
+<area shape="rect" id="node11" href="$classDeviceManager.html#a8a18f2eeb06ca5683d69aed675dbffcb" title="Discovers available cameras on the network." alt="" coords="611,243,881,270"/>
+<area shape="rect" id="node12" href="$classSystemManager.html#ad083133600bc7f1b8f3946a5b6cb0e1a" title=" " alt="" coords="297,274,562,301"/>
+<area shape="rect" id="node13" href="$classSystemManager.html#a2f8a3e2e1929be50ef8702629f50bb94" title=" " alt="" coords="5,274,248,301"/>
+</map>

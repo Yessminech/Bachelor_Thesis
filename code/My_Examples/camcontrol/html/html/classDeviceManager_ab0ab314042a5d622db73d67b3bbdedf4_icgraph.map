@@ -1,0 +1,6 @@
+<map id="DeviceManager::enumerateDevicesFromSystems" name="DeviceManager::enumerateDevicesFromSystems">
+<area shape="rect" id="node1" title="Enumerates devices from given systems." alt="" coords="928,5,1183,47"/>
+<area shape="rect" id="node2" href="$classDeviceManager.html#a8a18f2eeb06ca5683d69aed675dbffcb" title="Discovers available cameras on the network." alt="" coords="609,13,880,39"/>
+<area shape="rect" id="node3" href="$classSystemManager.html#ad083133600bc7f1b8f3946a5b6cb0e1a" title=" " alt="" coords="296,13,561,39"/>
+<area shape="rect" id="node4" href="$classSystemManager.html#a2f8a3e2e1929be50ef8702629f50bb94" title=" " alt="" coords="5,13,248,39"/>
+</map>

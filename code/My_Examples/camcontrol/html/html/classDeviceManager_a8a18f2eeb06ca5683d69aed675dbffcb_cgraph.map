@@ -1,0 +1,7 @@
+<map id="DeviceManager::getAvailableCameras" name="DeviceManager::getAvailableCameras">
+<area shape="rect" id="node1" title="Discovers available cameras on the network." alt="" coords="5,46,276,73"/>
+<area shape="rect" id="node2" href="$classDeviceManager.html#adc4c1e62f3f57bd1568a27891c2503a9" title="Enumerates devices from default systems." alt="" coords="324,5,579,47"/>
+<area shape="rect" id="node4" href="$classDeviceManager.html#ab0ab314042a5d622db73d67b3bbdedf4" title="Enumerates devices from given systems." alt="" coords="324,71,579,112"/>
+<area shape="rect" id="node3" href="$classDeviceManager.html#a43697adcb530c627f78ee0d18b357ca7" title="Returns a device by its serial number." alt="" coords="627,13,925,39"/>
+<area shape="rect" id="node5" href="$classDeviceManager.html#a6374a294f1d0d15f18ab35aea1fb6158" title="Returns a device by its ID." alt="" coords="629,78,923,105"/>
+</map>

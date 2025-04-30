@@ -1,0 +1,4 @@
+<map id="Camera::saveFrameToPng" name="Camera::saveFrameToPng">
+<area shape="rect" id="node1" title="Saves a frame as a PNG file." alt="" coords="232,5,423,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#ad9f2f078e719c799e1a677a12ea52b44" title="Starts streaming frames from the camera." alt="" coords="5,5,184,32"/>
+</map>

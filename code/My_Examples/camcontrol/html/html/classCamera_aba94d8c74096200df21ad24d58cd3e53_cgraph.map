@@ -1,0 +1,4 @@
+<map id="Camera::calculateRawFrameSizeB" name="Camera::calculateRawFrameSizeB">
+<area shape="rect" id="node1" title="Calculates the size of a raw frame in bytes." alt="" coords="5,5,251,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#ab9adc7920595086ce1731ec4c987b1dd" title="Returns the number of bits per pixel for a pixel format." alt="" coords="299,5,477,32"/>
+</map>

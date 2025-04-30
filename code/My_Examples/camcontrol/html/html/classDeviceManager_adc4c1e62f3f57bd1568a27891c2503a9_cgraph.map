@@ -1,0 +1,4 @@
+<map id="DeviceManager::enumerateDevicesFromDefault" name="DeviceManager::enumerateDevicesFromDefault">
+<area shape="rect" id="node1" title="Enumerates devices from default systems." alt="" coords="5,5,260,47"/>
+<area shape="rect" id="node2" href="$classDeviceManager.html#a43697adcb530c627f78ee0d18b357ca7" title="Returns a device by its serial number." alt="" coords="308,13,607,39"/>
+</map>

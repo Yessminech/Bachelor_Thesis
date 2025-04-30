@@ -1,0 +1,6 @@
+<map id="Camera::decimalToIP" name="Camera::decimalToIP">
+<area shape="rect" id="node1" title="Converts a decimal IP address to string." alt="" coords="575,5,733,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#ae840f24b0124bdbce1f84f9a345458fa" title="Returns the current IP address." alt="" coords="185,5,348,32"/>
+<area shape="rect" id="node4" href="$classCamera.html#ad53ddaba9bcc76a479020938de83daab" title="Converts a hexadecimal IP address to string." alt="" coords="396,31,527,57"/>
+<area shape="rect" id="node3" href="$classCamera.html#a7a1de593de374d1627a2c8d2320095e6" title="Constructs a Camera object." alt="" coords="5,5,137,32"/>
+</map>

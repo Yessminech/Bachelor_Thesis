@@ -1,0 +1,4 @@
+<map id="DeviceManager::listopenCameras" name="DeviceManager::listopenCameras">
+<area shape="rect" id="node1" title="Lists the currently open cameras." alt="" coords="5,5,248,32"/>
+<area shape="rect" id="node2" href="$classDeviceManager.html#adac223e4ad4bf72dcbcaf4ea2b5504eb" title="Lists a single camera." alt="" coords="296,5,499,32"/>
+</map>

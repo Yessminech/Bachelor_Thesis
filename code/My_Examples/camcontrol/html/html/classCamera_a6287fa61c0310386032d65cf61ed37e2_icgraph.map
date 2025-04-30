@@ -1,0 +1,5 @@
+<map id="Camera::processRawFrame" name="Camera::processRawFrame">
+<area shape="rect" id="node1" title="Processes a raw frame into an output frame." alt="" coords="452,5,652,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#ad66067095b7ae7b2727a48a5d9d8ab3b" title="Processes a frame received from the device." alt="" coords="232,5,404,32"/>
+<area shape="rect" id="node3" href="$classCamera.html#ad9f2f078e719c799e1a677a12ea52b44" title="Starts streaming frames from the camera." alt="" coords="5,5,184,32"/>
+</map>

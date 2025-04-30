@@ -1,0 +1,9 @@
+<map id="SystemManager::enumerateCameras" name="SystemManager::enumerateCameras">
+<area shape="rect" id="node1" title=" " alt="" coords="5,74,271,101"/>
+<area shape="rect" id="node2" href="$classDeviceManager.html#a8a18f2eeb06ca5683d69aed675dbffcb" title="Discovers available cameras on the network." alt="" coords="319,45,589,71"/>
+<area shape="rect" id="node7" href="$classDeviceManager.html#a8e9faffa5ae7cf3ce2e292219bb82c32" title="Lists all available camera IDs." alt="" coords="348,96,560,137"/>
+<area shape="rect" id="node3" href="$classDeviceManager.html#adc4c1e62f3f57bd1568a27891c2503a9" title="Enumerates devices from default systems." alt="" coords="637,5,892,47"/>
+<area shape="rect" id="node5" href="$classDeviceManager.html#ab0ab314042a5d622db73d67b3bbdedf4" title="Enumerates devices from given systems." alt="" coords="637,71,892,112"/>
+<area shape="rect" id="node4" href="$classDeviceManager.html#a43697adcb530c627f78ee0d18b357ca7" title="Returns a device by its serial number." alt="" coords="940,13,1239,39"/>
+<area shape="rect" id="node6" href="$classDeviceManager.html#a6374a294f1d0d15f18ab35aea1fb6158" title="Returns a device by its ID." alt="" coords="942,78,1237,105"/>
+</map>

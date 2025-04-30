@@ -1,0 +1,7 @@
+<map id="DeviceManager::getOpenCameraByID" name="DeviceManager::getOpenCameraByID">
+<area shape="rect" id="node1" title="Returns an open camera by its ID." alt="" coords="564,31,833,57"/>
+<area shape="rect" id="node2" href="$classDeviceManager.html#a3f93dff8d6545e06c2ac5d4b782bfd7d" title="Closes a camera by device ID." alt="" coords="299,5,516,32"/>
+<area shape="rect" id="node4" href="$classSystemManager.html#afafb2e37213d40237e75284d5bc6eb9e" title=" " alt="" coords="305,56,510,83"/>
+<area shape="rect" id="node3" href="$classDeviceManager.html#ad91a247c8acfd51c533be52313ce7ddd" title=" " alt="" coords="5,5,251,32"/>
+<area shape="rect" id="node5" href="$cli_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="101,56,155,83"/>
+</map>

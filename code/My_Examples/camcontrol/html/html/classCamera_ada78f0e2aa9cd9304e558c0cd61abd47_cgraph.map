@@ -1,0 +1,4 @@
+<map id="Camera::logBandwidthDelaysToCSV" name="Camera::logBandwidthDelaysToCSV">
+<area shape="rect" id="node1" title="Logs bandwidth delays to a CSV file." alt="" coords="5,5,260,32"/>
+<area shape="rect" id="node2" href="$GlobalSettings_8hpp.html#a292086bff16224cc0653061c22440e60" title="Returns the session timestamp as a string." alt="" coords="308,5,475,32"/>
+</map>

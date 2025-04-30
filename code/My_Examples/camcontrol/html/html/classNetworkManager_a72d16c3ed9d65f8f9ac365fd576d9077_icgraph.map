@@ -1,0 +1,5 @@
+<map id="NetworkManager::disablePtp" name="NetworkManager::disablePtp">
+<area shape="rect" id="node1" title="Disables PTP synchronization on a list of open cameras." alt="" coords="363,5,573,32"/>
+<area shape="rect" id="node2" href="$classSystemManager.html#a051494c0cf33bac6dbd8e4c0eb3ed9ae" title=" " alt="" coords="108,5,315,32"/>
+<area shape="rect" id="node3" href="$cli_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,5,60,32"/>
+</map>

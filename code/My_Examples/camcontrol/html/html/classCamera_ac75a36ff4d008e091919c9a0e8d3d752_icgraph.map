@@ -1,0 +1,4 @@
+<map id="Camera::updateGlobalFrame" name="Camera::updateGlobalFrame">
+<area shape="rect" id="node1" title="Updates the global frame buffer." alt="" coords="232,5,441,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#ad9f2f078e719c799e1a677a12ea52b44" title="Starts streaming frames from the camera." alt="" coords="5,5,184,32"/>
+</map>

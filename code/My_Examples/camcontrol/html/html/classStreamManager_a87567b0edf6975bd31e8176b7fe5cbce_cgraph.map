@@ -1,0 +1,6 @@
+<map id="StreamManager::startPtpSyncFreeRun" name="StreamManager::startPtpSyncFreeRun">
+<area shape="rect" id="node1" title="Starts synchronized streaming from multiple cameras using PTP synchronization." alt="" coords="5,56,275,83"/>
+<area shape="rect" id="node2" href="$classStreamManager.html#a9f70fad5bf4dd5108911c05af8f649e3" title="Creates a composite display grid from multiple camera frames." alt="" coords="332,5,577,32"/>
+<area shape="rect" id="node3" href="$classStreamManager.html#a0257fcf9f99184dee55ffe95ab5a9c4c" title="Launches a camera streaming thread in free&#45;run mode." alt="" coords="323,56,587,83"/>
+<area shape="rect" id="node4" href="$classStreamManager.html#abfb94b1e01cc9952b575a78995532e30" title="Stops all streaming threads and cleans up resources." alt="" coords="340,107,569,133"/>
+</map>

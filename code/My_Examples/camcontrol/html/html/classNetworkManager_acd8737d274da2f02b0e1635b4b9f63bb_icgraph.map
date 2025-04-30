@@ -1,0 +1,8 @@
+<map id="NetworkManager::calculateMaxFps" name="NetworkManager::calculateMaxFps">
+<area shape="rect" id="node1" title="Calculates the theoretical maximum frames per second (FPS) based on packet delay." alt="" coords="1012,31,1264,57"/>
+<area shape="rect" id="node2" href="$classNetworkManager.html#a22ca4e3eadd1f887bb5f90f98570709f" title="Configures network bandwidth settings." alt="" coords="693,31,964,57"/>
+<area shape="rect" id="node3" href="$classNetworkManager.html#a5131787ff8e8985e848e8456c1e6b202" title="Configures cameras for PTP&#45;synchronized free&#45;run streaming." alt="" coords="423,23,645,65"/>
+<area shape="rect" id="node4" href="$classSystemManager.html#af801ab01222b0c07d25a8fa780d423e4" title=" " alt="" coords="141,5,342,32"/>
+<area shape="rect" id="node6" href="$classSystemManager.html#addb2328a323747f21afb826811f288ab" title=" " alt="" coords="108,56,375,83"/>
+<area shape="rect" id="node5" href="$cli_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,31,60,57"/>
+</map>

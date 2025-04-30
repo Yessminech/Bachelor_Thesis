@@ -1,0 +1,4 @@
+<map id="Camera::calculateFrameTransmissionCycle" name="Camera::calculateFrameTransmissionCycle">
+<area shape="rect" id="node1" title="Calculates the frame transmission cycle time." alt="" coords="216,5,519,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#aad519696c05985c71fa6944edb2ee080" title="Calculates the achievable frames per second." alt="" coords="5,5,168,32"/>
+</map>

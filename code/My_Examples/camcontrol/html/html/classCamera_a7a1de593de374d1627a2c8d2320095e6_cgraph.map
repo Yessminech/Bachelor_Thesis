@@ -1,0 +1,11 @@
+<map id="Camera::Camera" name="Camera::Camera">
+<area shape="rect" id="node1" title="Constructs a Camera object." alt="" coords="5,132,137,159"/>
+<area shape="rect" id="node2" href="$classCamera.html#ae840f24b0124bdbce1f84f9a345458fa" title="Returns the current IP address." alt="" coords="193,56,356,83"/>
+<area shape="rect" id="node6" href="$classCamera.html#abfa5e73af0569daf079c9e7604a42bb4" title="Returns the MAC address." alt="" coords="209,132,341,159"/>
+<area shape="rect" id="node9" href="$classCamera.html#a5d4c34805e90431d2cd05d413e1b49f2" title="Returns pixel format from format string." alt="" coords="185,183,364,209"/>
+<area shape="rect" id="node3" href="$classCamera.html#ad182e9d0e07bc9c87566614760513aa2" title="Converts a decimal IP address to string." alt="" coords="619,5,777,32"/>
+<area shape="rect" id="node4" href="$classCamera.html#ad53ddaba9bcc76a479020938de83daab" title="Converts a hexadecimal IP address to string." alt="" coords="421,31,552,57"/>
+<area shape="rect" id="node5" href="$classCamera.html#ade437e0323ff584e94503a936e7d62fd" title="Checks if an IP string is dotted decimal format." alt="" coords="413,81,561,108"/>
+<area shape="rect" id="node7" href="$classCamera.html#a47b57e67b9197bbdf36b2d181645897d" title="Converts a decimal MAC address to string." alt="" coords="609,157,787,184"/>
+<area shape="rect" id="node8" href="$classCamera.html#a05ed4e9639c78b82efec2e7b72a95c1a" title="Converts a hexadecimal MAC address to string." alt="" coords="412,183,561,209"/>
+</map>

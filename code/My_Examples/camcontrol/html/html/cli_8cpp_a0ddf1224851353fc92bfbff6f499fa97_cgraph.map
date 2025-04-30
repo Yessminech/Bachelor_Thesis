@@ -1,0 +1,38 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,367,60,393"/>
+<area shape="rect" id="node2" href="$classSystemManager.html#a66e896c8491898746732c76fe733d57d" title=" " alt="" coords="121,359,362,401"/>
+<area shape="rect" id="node8" href="$cli_8cpp.html#ae87714a32069a99bdee647bb2c4a6c65" title=" " alt="" coords="176,476,307,503"/>
+<area shape="rect" id="node9" href="$cli_8cpp.html#a99cfd7f582dfad8278b8ebaddcaa9e41" title="Library component of the TU Berlin industrial automation framework." alt="" coords="195,527,288,553"/>
+<area shape="rect" id="node10" href="$classSystemManager.html#a051494c0cf33bac6dbd8e4c0eb3ed9ae" title=" " alt="" coords="138,197,345,224"/>
+<area shape="rect" id="node13" href="$classSystemManager.html#af801ab01222b0c07d25a8fa780d423e4" title=" " alt="" coords="141,253,342,280"/>
+<area shape="rect" id="node28" href="$classSystemManager.html#afafb2e37213d40237e75284d5bc6eb9e" title=" " alt="" coords="139,425,344,452"/>
+<area shape="rect" id="node32" href="$classSystemManager.html#addb2328a323747f21afb826811f288ab" title=" " alt="" coords="108,308,375,335"/>
+<area shape="rect" id="node3" href="$classDeviceManager.html#a36a89dec4c09c02f7269093b346c37b6" title="Creates Camera objects for the specified device IDs." alt="" coords="442,309,673,336"/>
+<area shape="rect" id="node6" href="$classDeviceManager.html#a46948952d8a01fccc65158dec681858b" title="Lists the currently open cameras." alt="" coords="436,411,679,437"/>
+<area shape="rect" id="node4" href="$classDeviceManager.html#a5de621ae914e130ad5a5e977c02272f4" title="Creates a camera by device ID." alt="" coords="763,309,987,336"/>
+<area shape="rect" id="node5" href="$classDeviceManager.html#a6374a294f1d0d15f18ab35aea1fb6158" title="Returns a device by its ID." alt="" coords="1059,309,1353,336"/>
+<area shape="rect" id="node7" href="$classDeviceManager.html#adac223e4ad4bf72dcbcaf4ea2b5504eb" title="Lists a single camera." alt="" coords="774,512,977,539"/>
+<area shape="rect" id="node11" href="$classNetworkManager.html#a72d16c3ed9d65f8f9ac365fd576d9077" title="Disables PTP synchronization on a list of open cameras." alt="" coords="452,141,663,168"/>
+<area shape="rect" id="node12" href="$classDeviceManager.html#aa5df5c2756fda96dc9438e1c85071699" title="Returns the list of currently open cameras." alt="" coords="435,192,680,219"/>
+<area shape="rect" id="node14" href="$classNetworkManager.html#a5131787ff8e8985e848e8456c1e6b202" title="Configures cameras for PTP&#45;synchronized free&#45;run streaming." alt="" coords="446,243,669,285"/>
+<area shape="rect" id="node15" href="$classNetworkManager.html#a22ca4e3eadd1f887bb5f90f98570709f" title="Configures network bandwidth settings." alt="" coords="740,56,1011,83"/>
+<area shape="rect" id="node21" href="$classNetworkManager.html#a97139087ce2feb24bce02b5e26ef1cf5" title="Enables PTP (Precision Time Protocol) synchronization on a list of open cameras." alt="" coords="772,107,979,133"/>
+<area shape="rect" id="node22" href="$classNetworkManager.html#a580689530037e60c278f61c2d541e86c" title="Monitors and logs PTP offsets over time." alt="" coords="749,157,1002,184"/>
+<area shape="rect" id="node26" href="$classNetworkManager.html#a5cff683bdb24c9f3359fc259e73cc036" title="Monitors the PTP synchronization status of open cameras." alt="" coords="748,259,1003,285"/>
+<area shape="rect" id="node27" href="$classNetworkManager.html#ae34ac9fc3697d706c4938c61f44ecd59" title="Plots the offset trends over time for PTP synchronization analysis." alt="" coords="1099,208,1313,235"/>
+<area shape="rect" id="node16" href="$classNetworkManager.html#acd8737d274da2f02b0e1635b4b9f63bb" title="Calculates the theoretical maximum frames per second (FPS) based on packet delay." alt="" coords="1080,5,1332,32"/>
+<area shape="rect" id="node18" href="$classNetworkManager.html#a88d3b203ca5c2d28212c5da9f8cdde7d" title="Sets the exposure and frame rate of the cameras based on bandwidth and exposure constraints." alt="" coords="1071,56,1341,83"/>
+<area shape="rect" id="node17" href="$GlobalSettings_8cpp.html#a4e4d4e3815c368773a4dfcfc9d19666c" title="Sets the global FPS upper bound." alt="" coords="1451,5,1637,32"/>
+<area shape="rect" id="node19" href="$GlobalSettings_8cpp.html#ae20198dd587799aa9d5579c3597f7fb4" title="Gets the global FPS upper bound." alt="" coords="1450,56,1638,83"/>
+<area shape="rect" id="node20" href="$classNetworkManager.html#a2894fa4186d5341d1ceea4930cd1f448" title="Retrieves the real minimum exposure time set on the cameras." alt="" coords="1401,107,1687,133"/>
+<area shape="rect" id="node23" href="$classNetworkManager.html#ae856b2f8ac57cb540414667eccc6832a" title="Logs the history of PTP offsets to a CSV file." alt="" coords="1062,107,1350,133"/>
+<area shape="rect" id="node25" href="$classNetworkManager.html#a8f23d31231702bcd91a3cf101a8394e6" title="Prints the PTP configuration details of a camera." alt="" coords="1089,157,1323,184"/>
+<area shape="rect" id="node24" href="$GlobalSettings_8hpp.html#a292086bff16224cc0653061c22440e60" title="Returns the session timestamp as a string." alt="" coords="1461,183,1627,209"/>
+<area shape="rect" id="node29" href="$classDeviceManager.html#a6e25f6e110c117449b53e10ca0c65192" title="Returns an open camera by its ID." alt="" coords="423,461,692,488"/>
+<area shape="rect" id="node30" href="$classDeviceManager.html#a48de9e5e15c8d95c2d3cc4ef739b0f4c" title="Sets the exposure time for all open cameras." alt="" coords="426,512,689,539"/>
+<area shape="rect" id="node31" href="$classDeviceManager.html#a546e00328c31f53a9e94a583908ffe7d" title="Sets the pixel format for all open cameras." alt="" coords="434,563,681,589"/>
+<area shape="rect" id="node33" href="$classStreamManager.html#a87567b0edf6975bd31e8176b7fe5cbce" title="Starts synchronized streaming from multiple cameras using PTP synchronization." alt="" coords="423,360,692,387"/>
+<area shape="rect" id="node34" href="$classStreamManager.html#a9f70fad5bf4dd5108911c05af8f649e3" title="Creates a composite display grid from multiple camera frames." alt="" coords="753,461,998,488"/>
+<area shape="rect" id="node35" href="$classStreamManager.html#a0257fcf9f99184dee55ffe95ab5a9c4c" title="Launches a camera streaming thread in free&#45;run mode." alt="" coords="743,360,1007,387"/>
+<area shape="rect" id="node36" href="$classStreamManager.html#abfb94b1e01cc9952b575a78995532e30" title="Stops all streaming threads and cleans up resources." alt="" coords="761,411,990,437"/>
+</map>

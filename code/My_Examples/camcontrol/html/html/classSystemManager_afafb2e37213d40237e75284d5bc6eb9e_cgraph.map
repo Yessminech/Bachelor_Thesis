@@ -1,0 +1,9 @@
+<map id="SystemManager::setFeature" name="SystemManager::setFeature">
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,211,108"/>
+<area shape="rect" id="node2" href="$classDeviceManager.html#a36a89dec4c09c02f7269093b346c37b6" title="Creates Camera objects for the specified device IDs." alt="" coords="278,5,509,32"/>
+<area shape="rect" id="node5" href="$classDeviceManager.html#a6e25f6e110c117449b53e10ca0c65192" title="Returns an open camera by its ID." alt="" coords="259,56,528,83"/>
+<area shape="rect" id="node6" href="$classDeviceManager.html#a48de9e5e15c8d95c2d3cc4ef739b0f4c" title="Sets the exposure time for all open cameras." alt="" coords="262,107,525,133"/>
+<area shape="rect" id="node7" href="$classDeviceManager.html#a546e00328c31f53a9e94a583908ffe7d" title="Sets the pixel format for all open cameras." alt="" coords="270,157,517,184"/>
+<area shape="rect" id="node3" href="$classDeviceManager.html#a5de621ae914e130ad5a5e977c02272f4" title="Creates a camera by device ID." alt="" coords="576,5,800,32"/>
+<area shape="rect" id="node4" href="$classDeviceManager.html#a6374a294f1d0d15f18ab35aea1fb6158" title="Returns a device by its ID." alt="" coords="848,5,1143,32"/>
+</map>

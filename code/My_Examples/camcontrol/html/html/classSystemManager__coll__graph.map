@@ -1,0 +1,6 @@
+<map id="SystemManager" name="SystemManager">
+<area shape="rect" id="node1" title="Library component of the TU Berlin industrial automation framework." alt="" coords="305,761,612,1117"/>
+<area shape="rect" id="node2" href="$classDeviceManager.html" title="Library component of the TU Berlin industrial automation framework." alt="" coords="5,20,280,684"/>
+<area shape="rect" id="node3" href="$classStreamManager.html" title="Library component of the TU Berlin industrial automation framework." alt="" coords="305,145,613,559"/>
+<area shape="rect" id="node4" href="$classNetworkManager.html" title="NetworkManager class handles camera synchronization, PTP configuration, bandwidth optimization,..." alt="" coords="637,5,952,699"/>
+</map>

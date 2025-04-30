@@ -1,0 +1,12 @@
+<map id="setGlobalFpsUpperBound" name="setGlobalFpsUpperBound">
+<area shape="rect" id="node1" title="Sets the global FPS upper bound." alt="" coords="1312,33,1499,60"/>
+<area shape="rect" id="node2" href="$classCamera.html#a73d0377e77c2e760d29381cd1073c2cd" title="Adjusts FPS dynamically to maintain target values." alt="" coords="1025,7,1251,33"/>
+<area shape="rect" id="node5" href="$classNetworkManager.html#acd8737d274da2f02b0e1635b4b9f63bb" title="Calculates the theoretical maximum frames per second (FPS) based on packet delay." alt="" coords="1012,59,1264,85"/>
+<area shape="rect" id="node3" href="$classCamera.html#ac75a36ff4d008e091919c9a0e8d3d752" title="Updates the global frame buffer." alt="" coords="724,7,933,33"/>
+<area shape="rect" id="node4" href="$classCamera.html#ad9f2f078e719c799e1a677a12ea52b44" title="Starts streaming frames from the camera." alt="" coords="445,5,623,32"/>
+<area shape="rect" id="node6" href="$classNetworkManager.html#a22ca4e3eadd1f887bb5f90f98570709f" title="Configures network bandwidth settings." alt="" coords="693,60,964,87"/>
+<area shape="rect" id="node7" href="$classNetworkManager.html#a5131787ff8e8985e848e8456c1e6b202" title="Configures cameras for PTP&#45;synchronized free&#45;run streaming." alt="" coords="423,57,645,98"/>
+<area shape="rect" id="node8" href="$classSystemManager.html#af801ab01222b0c07d25a8fa780d423e4" title=" " alt="" coords="141,39,342,65"/>
+<area shape="rect" id="node10" href="$classSystemManager.html#addb2328a323747f21afb826811f288ab" title=" " alt="" coords="108,89,375,116"/>
+<area shape="rect" id="node9" href="$cli_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,64,60,91"/>
+</map>

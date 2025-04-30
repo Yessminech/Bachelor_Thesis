@@ -1,0 +1,16 @@
+<map id="NetworkManager::configurePtpSyncFreeRun" name="NetworkManager::configurePtpSyncFreeRun">
+<area shape="rect" id="node1" title="Configures cameras for PTP&#45;synchronized free&#45;run streaming." alt="" coords="5,125,228,166"/>
+<area shape="rect" id="node2" href="$classNetworkManager.html#a22ca4e3eadd1f887bb5f90f98570709f" title="Configures network bandwidth settings." alt="" coords="276,31,547,57"/>
+<area shape="rect" id="node8" href="$classNetworkManager.html#a97139087ce2feb24bce02b5e26ef1cf5" title="Enables PTP (Precision Time Protocol) synchronization on a list of open cameras." alt="" coords="308,81,515,108"/>
+<area shape="rect" id="node9" href="$classNetworkManager.html#a580689530037e60c278f61c2d541e86c" title="Monitors and logs PTP offsets over time." alt="" coords="285,132,538,159"/>
+<area shape="rect" id="node13" href="$classNetworkManager.html#a5cff683bdb24c9f3359fc259e73cc036" title="Monitors the PTP synchronization status of open cameras." alt="" coords="284,183,539,209"/>
+<area shape="rect" id="node14" href="$classNetworkManager.html#ae34ac9fc3697d706c4938c61f44ecd59" title="Plots the offset trends over time for PTP synchronization analysis." alt="" coords="632,233,845,260"/>
+<area shape="rect" id="node3" href="$classNetworkManager.html#acd8737d274da2f02b0e1635b4b9f63bb" title="Calculates the theoretical maximum frames per second (FPS) based on packet delay." alt="" coords="613,5,865,32"/>
+<area shape="rect" id="node5" href="$classNetworkManager.html#a88d3b203ca5c2d28212c5da9f8cdde7d" title="Sets the exposure and frame rate of the cameras based on bandwidth and exposure constraints." alt="" coords="603,56,874,83"/>
+<area shape="rect" id="node4" href="$GlobalSettings_8cpp.html#a4e4d4e3815c368773a4dfcfc9d19666c" title="Sets the global FPS upper bound." alt="" coords="980,5,1167,32"/>
+<area shape="rect" id="node6" href="$GlobalSettings_8cpp.html#ae20198dd587799aa9d5579c3597f7fb4" title="Gets the global FPS upper bound." alt="" coords="979,56,1167,83"/>
+<area shape="rect" id="node7" href="$classNetworkManager.html#a2894fa4186d5341d1ceea4930cd1f448" title="Retrieves the real minimum exposure time set on the cameras." alt="" coords="931,107,1216,133"/>
+<area shape="rect" id="node10" href="$classNetworkManager.html#ae856b2f8ac57cb540414667eccc6832a" title="Logs the history of PTP offsets to a CSV file." alt="" coords="595,132,883,159"/>
+<area shape="rect" id="node12" href="$classNetworkManager.html#a8f23d31231702bcd91a3cf101a8394e6" title="Prints the PTP configuration details of a camera." alt="" coords="621,183,856,209"/>
+<area shape="rect" id="node11" href="$GlobalSettings_8hpp.html#a292086bff16224cc0653061c22440e60" title="Returns the session timestamp as a string." alt="" coords="990,183,1157,209"/>
+</map>

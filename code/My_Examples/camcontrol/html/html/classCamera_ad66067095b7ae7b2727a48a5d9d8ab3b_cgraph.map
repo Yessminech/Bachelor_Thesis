@@ -1,0 +1,4 @@
+<map id="Camera::processFrame" name="Camera::processFrame">
+<area shape="rect" id="node1" title="Processes a frame received from the device." alt="" coords="5,5,177,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#a6287fa61c0310386032d65cf61ed37e2" title="Processes a raw frame into an output frame." alt="" coords="225,5,425,32"/>
+</map>

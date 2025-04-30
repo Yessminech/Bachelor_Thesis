@@ -1,0 +1,4 @@
+<map id="Camera::isFpsStableForSaving" name="Camera::isFpsStableForSaving">
+<area shape="rect" id="node1" title="Checks if FPS is stable enough for saving." alt="" coords="5,5,225,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#ad8910a05e1991b732f25ea3a7db7f141" title="Returns the last saved FPS value." alt="" coords="273,5,465,32"/>
+</map>

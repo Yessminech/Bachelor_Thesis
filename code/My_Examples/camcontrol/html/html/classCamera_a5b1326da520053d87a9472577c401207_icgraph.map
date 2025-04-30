@@ -1,0 +1,6 @@
+<map id="Camera::getFps" name="Camera::getFps">
+<area shape="rect" id="node1" title="Gets the configured frames per second." alt="" coords="764,5,889,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#a73d0377e77c2e760d29381cd1073c2cd" title="Adjusts FPS dynamically to maintain target values." alt="" coords="489,5,716,32"/>
+<area shape="rect" id="node3" href="$classCamera.html#ac75a36ff4d008e091919c9a0e8d3d752" title="Updates the global frame buffer." alt="" coords="232,5,441,32"/>
+<area shape="rect" id="node4" href="$classCamera.html#ad9f2f078e719c799e1a677a12ea52b44" title="Starts streaming frames from the camera." alt="" coords="5,5,184,32"/>
+</map>

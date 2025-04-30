@@ -1,0 +1,7 @@
+<map id="Camera" name="Camera">
+<area shape="rect" id="node1" title="Represents a camera device and manages its operations." alt="" coords="296,307,641,1293"/>
+<area shape="rect" id="node2" href="$structDeviceInfos.html" title="Library component of the TU Berlin industrial automation framework." alt="" coords="5,5,228,244"/>
+<area shape="rect" id="node3" href="$structCameraConfig.html" title="Camera&#45;specific configuration settings." alt="" coords="252,57,451,193"/>
+<area shape="rect" id="node4" href="$structNetworkConfig.html" title="Network configuration parameters." alt="" coords="474,49,698,200"/>
+<area shape="rect" id="node5" href="$structPtpConfig.html" title="Configuration for Precision Time Protocol (PTP) synchronization." alt="" coords="722,49,919,200"/>
+</map>

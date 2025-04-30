@@ -1,0 +1,5 @@
+<map id="Camera::hexToMAC" name="Camera::hexToMAC">
+<area shape="rect" id="node1" title="Converts a hexadecimal MAC address to string." alt="" coords="365,5,515,32"/>
+<area shape="rect" id="node2" href="$classCamera.html#abfa5e73af0569daf079c9e7604a42bb4" title="Returns the MAC address." alt="" coords="185,5,317,32"/>
+<area shape="rect" id="node3" href="$classCamera.html#a7a1de593de374d1627a2c8d2320095e6" title="Constructs a Camera object." alt="" coords="5,5,137,32"/>
+</map>
